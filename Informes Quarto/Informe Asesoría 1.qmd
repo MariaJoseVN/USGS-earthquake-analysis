@@ -1,0 +1,35 @@
+---
+lang: es
+bibliography: referencias.bib
+format:
+  pdf:
+    toc: false
+    toc-title: "Índice"
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    papersize: letter
+    geometry:
+      - margin=2.5cm
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+\thispagestyle{empty}
+\newgeometry{margin=0cm}
+
+![](Imágenes y Recursos/Portada Informe Corporativo Blanco y Negro Minimalista.png){width=100%}
+
+\restoregeometry
+\newpage
+
+\tableofcontents
+\newpage
+
+# Introducción
+
+Completar.
+
+# Bibliografía
