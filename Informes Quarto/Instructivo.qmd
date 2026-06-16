@@ -1,0 +1,181 @@
+---
+title: "Instructivo para redactar el informe en Quarto"
+lang: es
+format:
+  pdf:
+    toc: true
+    toc-title: "Índice"
+    number-sections: true
+    colorlinks: true
+    linkcolor: black
+    urlcolor: black
+    citecolor: black
+---
+
+# Propósito
+
+Este instructivo resume criterios prácticos para redactar el informe de asesoría en Quarto con un formato profesional de consultoría.
+
+El objetivo no es construir una tarea académica basada en comandos o salidas de software, sino un documento técnico que integre problema, datos, métodos, resultados y conclusiones en una narración clara.
+
+# Estructura recomendada
+
+El informe principal debería contener las siguientes secciones:
+
+- Resumen ejecutivo.
+- Antecedentes, objetivo y alcance.
+- Descripción de datos y parámetros de descarga.
+- Metodología y justificación estadística.
+- Resultados con tablas y figuras numeradas.
+- Discusión de resultados, supuestos, limitaciones y sensibilidad.
+- Conclusiones y recomendaciones.
+- Referencias.
+- Anexos reproducibles.
+
+# Redacción profesional
+
+Conviene escribir pensando en una contraparte técnica o institucional.
+
+Recomendaciones:
+
+- Explicar primero el problema y luego los resultados.
+- Justificar las decisiones metodológicas.
+- Evitar presentar código como parte central del informe.
+- Usar tablas y figuras solo cuando ayuden a responder el encargo.
+- Interpretar cada resultado relevante.
+- Evitar afirmar que el análisis predice terremotos o constituye una alerta sísmica.
+
+# Tablas con leyenda automática
+
+En Quarto, las tablas pueden tener título y numeración automática. Para que funcione, la leyenda debe ir justo después de la tabla y debe incluir un identificador que comience con `tbl-`.
+
+Ejemplo:
+
+```markdown
+| Parámetro | Valor utilizado | Justificación |
+|---|---|---|
+| Fuente | USGS Earthquake Catalog | Fuente principal indicada en el encargo |
+| Período | 2000-2025 | Período cerrado para mejorar reproducibilidad |
+| Magnitud mínima | M >= 6,5 | Umbral usado para focalizar eventos grandes |
+
+: Parámetros de descarga utilizados para construir la base de análisis. {#tbl-parametros-descarga}
+```
+
+En el PDF, Quarto mostrará automáticamente una leyenda del tipo:
+
+`Tabla 1. Parámetros de descarga utilizados para construir la base de análisis.`
+
+Para mencionar la tabla dentro del texto, se usa el identificador:
+
+```markdown
+Los filtros de descarga se resumen en @tbl-parametros-descarga.
+```
+
+Quarto reemplazará esa referencia por el número correspondiente.
+
+# Figuras con leyenda automática
+
+Las figuras también pueden tener título y numeración automática. El identificador debe comenzar con `fig-`.
+
+Ejemplo con una imagen guardada:
+
+```markdown
+![Distribución espacial preliminar de los eventos sísmicos analizados.](imagenes/mapa_eventos.png){#fig-mapa-eventos}
+```
+
+En el PDF, Quarto generará una leyenda del tipo:
+
+`Figura 1. Distribución espacial preliminar de los eventos sísmicos analizados.`
+
+Para citarla dentro del texto:
+
+```markdown
+La distribución espacial de los eventos se presenta en @fig-mapa-eventos.
+```
+
+# Figuras creadas con R
+
+Si una figura se genera con código R, la leyenda se define dentro del chunk.
+
+Ejemplo:
+
+````markdown
+```{.r}
+#| label: fig-conteos-anuales
+#| fig-cap: "Conteo anual de eventos sísmicos registrados en el período de análisis."
+
+# código del gráfico
+```
+````
+
+Para citar la figura:
+
+```markdown
+La evolución anual de los eventos se muestra en @fig-conteos-anuales.
+```
+
+# Tablas creadas con R
+
+Si una tabla se genera con R, también se puede numerar automáticamente.
+
+Ejemplo:
+
+````markdown
+```{.r}
+#| label: tbl-resumen-magnitud
+#| tbl-cap: "Resumen descriptivo de la magnitud de los eventos analizados."
+
+# código que imprime la tabla
+```
+````
+
+Para citarla:
+
+```markdown
+Los estadísticos descriptivos de magnitud se presentan en @tbl-resumen-magnitud.
+```
+
+# Buenas prácticas para títulos de tablas y figuras
+
+Los títulos deben ser descriptivos, no genéricos.
+
+Evitar:
+
+- `Tabla de datos`.
+- `Gráfico 1`.
+- `Histograma`.
+
+Preferir:
+
+- `Parámetros de descarga utilizados para construir la base de análisis.`
+- `Distribución de magnitudes de los eventos sísmicos registrados por USGS.`
+- `Conteo anual de eventos con magnitud mayor o igual a 6,5.`
+
+# Referencias bibliográficas
+
+Las referencias del informe se administran desde el archivo `referencias.bib`.
+
+Para citar una fuente:
+
+```markdown
+La relación frecuencia-magnitud fue formulada originalmente por Gutenberg y Richter [@gutenberg_richter_1944].
+```
+
+Para citar varias fuentes:
+
+```markdown
+La completitud de los catálogos sísmicos es una decisión relevante para este tipo de análisis [@wiemer_wyss_2000; @cabello_etal_2025].
+```
+
+# Anexos reproducibles
+
+El código, consultas de descarga y detalles técnicos extensos deberían ir en anexos.
+
+El cuerpo principal del informe debe concentrarse en:
+
+- Qué se hizo.
+- Por qué se hizo.
+- Qué resultados se obtuvieron.
+- Qué significan esos resultados para la asesoría.
+
+Los anexos deben permitir reconstruir el trabajo sin interrumpir la lectura técnica del informe.

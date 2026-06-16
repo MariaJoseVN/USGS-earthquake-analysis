@@ -1,6 +1,12 @@
 ---
 lang: es
 bibliography: referencias.bib
+crossref:
+  fig-title: "Figura"
+  tbl-title: "Tabla"
+  title-delim: "."
+  fig-prefix: "Figura"
+  tbl-prefix: "Tabla"
 format:
   pdf:
     toc: false
@@ -79,6 +85,8 @@ Completar con período, magnitud mínima, zona geográfica, profundidad, estado 
 | Zona geográfica | completar | completar |
 | Formato | completar | completar |
 
+: Parámetros de descarga utilizados para construir la base de análisis. {#tbl-parametros-descarga}
+
 ## Variables consideradas
 
 Describir las variables disponibles y las variables derivadas que se utilizarán en el análisis.
@@ -88,6 +96,8 @@ Describir las variables disponibles y las variables derivadas que se utilizarán
 | completar | completar | completar |
 | completar | completar | completar |
 | completar | completar | completar |
+
+: Variables consideradas en el análisis estadístico. {#tbl-variables}
 
 ## Depuración y control de calidad
 
@@ -112,6 +122,8 @@ Completar con las figuras previstas y su propósito.
 | completar | completar | pendiente |
 | completar | completar | pendiente |
 | completar | completar | pendiente |
+
+: Visualizaciones previstas para comunicar los resultados del informe. {#tbl-visualizaciones}
 
 ## Procedimientos estadísticos
 
@@ -190,3 +202,30 @@ Incluir código o enlaces a scripts solo como respaldo reproducible, no como par
 Agregar tablas, figuras o detalles técnicos que respalden el informe sin interrumpir la lectura principal.
 
 # Bibliografía
+
+<!--
+Plantillas para mantener numeración automática en Quarto:
+
+Figura desde archivo:
+![Título descriptivo de la figura.](ruta/a/la/imagen.png){#fig-nombre-corto}
+En el texto puedes citarla como @fig-nombre-corto.
+
+Figura creada con R:
+Crear un chunk R con label: fig-nombre-corto y fig-cap: "Título descriptivo de la figura."
+El código del gráfico va dentro de ese chunk.
+En el texto puedes citarla como @fig-nombre-corto.
+
+Tabla escrita en Markdown:
+| Columna 1 | Columna 2 |
+|---|---|
+| completar | completar |
+
+: Título descriptivo de la tabla. {#tbl-nombre-corto}
+
+En el texto puedes citarla como @tbl-nombre-corto.
+
+Tabla creada con R:
+Crear un chunk R con label: tbl-nombre-corto y tbl-cap: "Título descriptivo de la tabla."
+El código que imprime la tabla va dentro de ese chunk.
+En el texto puedes citarla como @tbl-nombre-corto.
+-->
