@@ -8,9 +8,12 @@ format:
     toc-depth: 3
     number-sections: true
     colorlinks: true
+    linkcolor: black
+    urlcolor: black
+    citecolor: black
     papersize: letter
     geometry:
-      - margin=2.5cm
+      - margin=0cm
 execute:
   echo: false
   warning: false
@@ -18,18 +21,172 @@ execute:
 ---
 
 \thispagestyle{empty}
-\newgeometry{margin=0cm}
-
-![](Imágenes y Recursos/Portada Informe Corporativo Blanco y Negro Minimalista.png){width=100%}
-
-\restoregeometry
+\AddToHookNext{shipout/background}{
+  \put(-4pt,-\dimexpr\paperheight+4pt\relax){
+    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{Imágenes y Recursos/Portada Informe Corporativo Blanco y Negro Minimalista.png}}
+  }
+}
+\null
 \newpage
+
+\newgeometry{margin=2.5cm}
 
 \tableofcontents
 \newpage
 
-# Introducción
+# Resumen ejecutivo
 
-Completar.
+Completar en máximo una página.
+
+Debe presentar una síntesis clara para una contraparte técnica o institucional. Incluir brevemente el problema abordado, la fuente de datos, el período analizado, el enfoque metodológico, los hallazgos principales y las recomendaciones generales.
+
+# Antecedentes, objetivo y alcance
+
+## Antecedentes
+
+Completar con el contexto de la asesoría, la necesidad de la contraparte y la relevancia de analizar catálogos abiertos de terremotos.
+
+## Objetivo general
+
+Completar con el objetivo principal del informe.
+
+## Objetivos específicos
+
+- Completar.
+- Completar.
+- Completar.
+
+## Alcance del informe
+
+Completar indicando qué cubre el análisis y qué queda fuera. Recordar que el informe no corresponde a predicción de terremotos, alerta sísmica ni evaluación formal de amenaza.
+
+# Descripción de datos y parámetros de descarga
+
+## Fuente de datos
+
+Completar con la fuente utilizada, formato de descarga y fecha de obtención de los datos.
+
+## Parámetros de descarga
+
+Completar con período, magnitud mínima, zona geográfica, profundidad, estado de revisión y formato del archivo.
+
+| Parámetro | Valor utilizado | Justificación |
+|---|---|---|
+| Fuente | completar | completar |
+| Fecha de descarga | completar | completar |
+| Período | completar | completar |
+| Magnitud mínima | completar | completar |
+| Zona geográfica | completar | completar |
+| Formato | completar | completar |
+
+## Variables consideradas
+
+Describir las variables disponibles y las variables derivadas que se utilizarán en el análisis.
+
+| Variable | Descripción | Uso en el análisis |
+|---|---|---|
+| completar | completar | completar |
+| completar | completar | completar |
+| completar | completar | completar |
+
+## Depuración y control de calidad
+
+Completar con criterios de limpieza, revisión de duplicados, valores faltantes, consistencia temporal, consistencia espacial y decisiones de exclusión.
+
+# Metodología y justificación estadística
+
+## Enfoque metodológico
+
+Completar con una explicación narrativa del enfoque utilizado. Evitar describir solo comandos o salidas de software; explicar por qué cada procedimiento es adecuado para responder el encargo.
+
+## Indicadores descriptivos
+
+Completar con los indicadores que serán utilizados para caracterizar la sismicidad.
+
+## Visualizaciones
+
+Completar con las figuras previstas y su propósito.
+
+| Figura | Propósito | Estado |
+|---|---|---|
+| completar | completar | pendiente |
+| completar | completar | pendiente |
+| completar | completar | pendiente |
+
+## Procedimientos estadísticos
+
+Completar con pruebas, comparaciones, modelos o criterios inferenciales si corresponde.
+
+## Supuestos y criterios metodológicos
+
+Completar con los supuestos principales y su justificación.
+
+# Resultados
+
+## Caracterización general
+
+Completar con la descripción general de la base analizada.
+
+## Resultados temporales
+
+Completar con tablas o figuras numeradas sobre evolución anual, mensual o por período.
+
+## Resultados espaciales
+
+Completar con mapas, distribución geográfica o comparación entre zonas.
+
+## Magnitud y profundidad
+
+Completar con resultados asociados a magnitud, profundidad y categorías relevantes.
+
+## Comparaciones principales
+
+Completar con las comparaciones solicitadas según el encargo.
+
+# Discusión de resultados, supuestos, limitaciones y sensibilidad
+
+## Interpretación de resultados
+
+Completar conectando los resultados con la pregunta de asesoría.
+
+## Supuestos y limitaciones
+
+Completar considerando completitud del catálogo, diferencias de monitoreo, dependencia temporal por réplicas, tipo de magnitud, incertidumbre de localización y sesgos por umbral.
+
+## Análisis de sensibilidad
+
+Completar con sensibilidad ante umbral de magnitud, período, definición espacial, profundidad o estado de revisión.
+
+# Conclusiones y recomendaciones
+
+## Conclusiones
+
+- Completar.
+- Completar.
+- Completar.
+
+## Recomendaciones
+
+- Completar.
+- Completar.
+- Completar.
+
+# Referencias
+
+Completar con las citas utilizadas en el texto. Las referencias se administran desde `referencias.bib`.
+
+# Anexos reproducibles
+
+## Parámetros de descarga
+
+Completar con la URL, consulta, filtros o procedimiento utilizado para obtener los datos.
+
+## Código de procesamiento
+
+Incluir código o enlaces a scripts solo como respaldo reproducible, no como parte central de la narración del informe.
+
+## Material complementario
+
+Agregar tablas, figuras o detalles técnicos que respalden el informe sin interrumpir la lectura principal.
 
 # Bibliografía
