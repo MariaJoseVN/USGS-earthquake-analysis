@@ -42,13 +42,13 @@ sismos <- sismos %>%
     longitude,
     depth,
     mag,
-    magType,
-    place,
-    type,
+    magType, #Varía según quien midio. Puede que sea con parámetros diferentes
+    place, 
+    type, #Todos son Terremotos, nosé que otra categoría podría haber
     status,
-    net,
+    net, #En su mayoría son "USA" ¿Por que?
     locationSource,
-    magSource
+    magSource #Revisar la relación entre MagType y MagSource !!!!
   )
 View(sismos)
 skim(sismos)
