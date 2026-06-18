@@ -12,7 +12,7 @@ sismos_raw <- read_csv(ruta_base, show_col_types = FALSE) #Datos crudos
 
 #Analisis Preliminar de la estructura de los datos----
 
-#View(sismos_raw)
+View(sismos_raw)
 summary(sismos_raw)
 dim(sismos_raw) #Observacioes por filas y columnas
 str(sismos_raw) #Naturaleza de la variable
@@ -20,10 +20,9 @@ glimpse(sismos_raw) #Filas, columnas y head...
 
 ##Análisis de Datos Faltantes----
 miss_var_summary(sismos_raw)
-skim(sismos_raw) #Tambien entrega más resúmenes
+skim(sismos_raw) # Resumen de Datos faltantes, estadisticas básicas y distributivas.
 
 # Preparar variables básicas para análisis temporal
-
 sismos <- sismos_raw %>%
   mutate(
     fecha_hora_utc = ymd_hms(time, tz = "UTC"),
@@ -31,5 +30,25 @@ sismos <- sismos_raw %>%
     año = year(fecha_hora_utc),
     mes = month(fecha_hora_utc)
   )
-
-#View(sismos)
+#Selección de Variables para el análisis general
+sismos <- sismos %>%
+  select(
+    id,
+    fecha_hora_utc,
+    fecha,
+    año,
+    mes,
+    latitude,
+    longitude,
+    depth,
+    mag,
+    magType,
+    place,
+    type,
+    status,
+    net,
+    locationSource,
+    magSource
+  )
+View(sismos)
+skim(sismos)
