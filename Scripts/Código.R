@@ -52,3 +52,8 @@ sismos <- sismos %>%
   )
 View(sismos)
 skim(sismos)
+
+#Ejecutar scripts posteriores----
+source("Scripts/01_analisis_descriptivo.R")
+source("Scripts/02_visualizaciones.R")
+source("Scripts/03_tablas_informe.R")
