@@ -14,7 +14,7 @@ sismos_raw <- read_csv(ruta_base, show_col_types = FALSE) #Datos crudos
 
 View(sismos_raw)
 summary(sismos_raw)
-dim(sismos_raw) #Observacioes por filas y columnas
+dim(sismos_raw) #Observacioes por filas y columnas / 1186 observaciones y 22 variables
 str(sismos_raw) #Naturaleza de la variable
 glimpse(sismos_raw) #Filas, columnas y head...
 
