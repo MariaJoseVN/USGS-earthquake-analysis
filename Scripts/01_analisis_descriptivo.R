@@ -12,3 +12,5 @@
 #Frecuencia temporal----
 
 #Distribucion espacial----
+
+
