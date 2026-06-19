@@ -2,9 +2,9 @@
 library(readr)
 library(dplyr)
 library(lubridate)
-library(naniar) #Analisar datos faltantes
-library(skimr) #Analisar datos faltantes y resumen de estadisticas básicas
-
+library(naniar) #Analizar datos faltantes
+library(skimr) #Analizar datos faltantes y resumen de estadisticas básicas
+library(janitor) #Analizar datos duplicados
 #Rutas y Carga de datos----
 ruta_base <- "BBDD/query.csv"
 
@@ -22,7 +22,7 @@ glimpse(sismos_raw) #Filas, columnas y head...
 miss_var_summary(sismos_raw)
 skim(sismos_raw) # Resumen de Datos faltantes, estadisticas básicas y distributivas.
 
-# Preparar variables básicas para análisis temporal
+#Preparar variables básicas para análisis temporal
 sismos <- sismos_raw %>%
   mutate(
     fecha_hora_utc = ymd_hms(time, tz = "UTC"),
@@ -30,7 +30,7 @@ sismos <- sismos_raw %>%
     año = year(fecha_hora_utc),
     mes = month(fecha_hora_utc)
   )
-#Selección de Variables para el análisis general
+##Selección de Variables para el análisis general preliminar----
 sismos <- sismos %>%
   select(
     id,
@@ -52,6 +52,46 @@ sismos <- sismos %>%
   )
 View(sismos)
 skim(sismos)
+
+##Revisión de Duplicados----
+
+###duplicados por identificador único (id)----
+anyDuplicated(sismos$id) #0 duplicados
+###duplicados por caracterización del evento----
+anyDuplicated(sismos[, c("fecha_hora_utc", "latitude", "longitude", "depth", "mag")]) #0 duplicados
+
+##Revisión de eventos no tectónicos----
+eventos_no_tectonicos <- sismos %>%filter(type != "earthquake")
+eventos_no_tectonicos
+count(eventos_no_tectonicos) #Solo existe eventos relacionados a eventos tectónicos
+
+
+##Consistencia Temporal----
+#¿Todas las observaciones tienen fecha y hora?
+sum(is.na(sismos$fecha_hora_utc)) #La respuesta es no, todas las observaciones tienen fecha y hora.
+#¿Las fechas están dentro del período definido para la asesoría?
+eventos_fuera_periodo <- sismos %>%filter(fecha < as.Date("2000-01-01") | fecha > as.Date("2025-12-31"))
+eventos_fuera_periodo
+count(eventos_fuera_periodo)
+#Otras revisiones
+range(sismos$fecha) #estan dentro del intervalo estipulado en la documentación
+
+##Consistencia Espacial----
+#coordenadas geográficamente posibles
+
+rango_espacial <- sismos %>%
+  summarise(
+    latitud_minima = min(latitude, na.rm = TRUE),
+    latitud_maxima = max(latitude, na.rm = TRUE),
+    longitud_minima = min(longitude, na.rm = TRUE),
+    longitud_maxima = max(longitude, na.rm = TRUE),
+    profundidad_minima = min(depth, na.rm = TRUE),
+    profundidad_maxima = max(depth, na.rm = TRUE)
+  )
+rango_espacial
+#Latitud válida: entre -90 y 90
+#Longitud válida: entre -180 y 180
+#Profundidad válida: >= 0
 
 #Ejecutar scripts posteriores----
 source("Scripts/01_analisis_descriptivo.R")
