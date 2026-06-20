@@ -51,6 +51,7 @@ sismos %>%
   janitor::tabyl(profundidad_cat)
 
 
+#ZONAS
 library(sf) #sf permite trabajar en R con puntos, polígonos y archivos geográficos como GeoJSON.
 
 #Lee el área del Cinturón de Fuego
