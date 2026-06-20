@@ -176,3 +176,9 @@ cambio_mensual <- conteo_mensual %>%
   )
 
 View(cambio_mensual)
+
+
+
+
+
+
