@@ -55,6 +55,23 @@ magnitud_maxima_anual <- sismos %>%
   arrange(año)
 View(magnitud_maxima_anual)
 
+#Número y proporción de eventos según magnitud----
+eventos_categoria_magnitud <- sismos %>%
+  count(
+    magnitud_cat,
+    name = "numero_eventos",
+    .drop = FALSE
+  ) %>%
+  mutate(
+    proporcion = numero_eventos / if_else(
+      sum(numero_eventos) == 0,
+      1,
+      sum(numero_eventos)
+    ),
+    porcentaje = proporcion * 100
+  )
+View(eventos_categoria_magnitud)
+
 
 #Profundidad media----
 sismos %>%
