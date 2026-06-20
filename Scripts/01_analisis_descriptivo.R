@@ -31,6 +31,8 @@ numero_total_eventos <- nrow(sismos)       # 1186
 sismos %>%
   summarise(
     magnitud_media = mean(mag, na.rm = TRUE),
+    magnitud_mediana = median(mag, na.rm = TRUE),
+    magnitud_desviacion = sd(mag, na.rm = TRUE),
     magnitud_maxima = max(mag, na.rm = TRUE),
     cuantil_25 = quantile(mag, 0.25, na.rm = TRUE),
     cuantil_50 = quantile(mag, 0.50, na.rm = TRUE),
@@ -39,11 +41,40 @@ sismos %>%
     cuantil_95 = quantile(mag, 0.95, na.rm = TRUE)
   )
 
+#Magnitud máxima anual----
+magnitud_maxima_anual <- sismos %>%
+  group_by(año) %>%
+  summarise(
+    magnitud_maxima = max(mag, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    año = año_inicio:año_fin,
+    fill = list(magnitud_maxima = 0)
+  ) %>%
+  arrange(año)
+View(magnitud_maxima_anual)
+
+
 #Profundidad media----
 sismos %>%
   summarise(
     profundidad_media = mean(depth, na.rm = TRUE)
   )
+#Profundidad media, máxima y cuantiles----
+sismos %>%
+  summarise(
+    profundidad_media = mean(depth, na.rm = TRUE),
+    profundidad_mediana = median(depth, na.rm = TRUE),
+    profundidad_desviacion = sd(depth, na.rm = TRUE),
+    profundidad_maxima = max(depth, na.rm = TRUE),
+    cuantil_25 = quantile(depth, 0.25, na.rm = TRUE),
+    cuantil_50 = quantile(depth, 0.50, na.rm = TRUE),
+    cuantil_75 = quantile(depth, 0.75, na.rm = TRUE),
+    cuantil_90 = quantile(depth, 0.90, na.rm = TRUE),
+    cuantil_95 = quantile(depth, 0.95, na.rm = TRUE)
+  )
+
 
 #Proporción de eventos según profundidad----
 sismos %>%
