@@ -261,13 +261,210 @@ par(mfrow = c(1, 1))
 
 ##Eventos anuales del catalogo completo----
 
-barplot(
+pos_barras_anual_catalogo <- barplot(
   height = conteo_anual$n_catalogo_completo,
   names.arg = conteo_anual$año,
-  main = "Eventos anuales - Catálogo completo",
-  ylab = "Número de eventos",
-  xlab = "Año",
-  col = "steelblue",
+  main = "Eventos anuales - Catalogo completo",
+  ylab = "Numero de eventos",
+  xlab = "Años",
+  col = "gray80",
+  border = "gray30",
   las = 2,
-  cex.names = 0.7
+  cex.names = 0.7,
+  ylim = c(0, max(conteo_anual$n_catalogo_completo) + 8),
+  axes = FALSE
 )
+
+text(
+  x = pos_barras_anual_catalogo,
+  y = conteo_anual$n_catalogo_completo,
+  labels = conteo_anual$n_catalogo_completo,
+  pos = 3,
+  cex = 0.7
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = summary(serie_anual_catalogo_completo)["Mean"],
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo anual", "Media anual"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+##Eventos anuales M >= 7.0----
+
+pos_barras_anual_m70 <- barplot(
+  height = conteo_anual$n_eventos_m70_o_mayor,
+  names.arg = conteo_anual$año,
+  main = "Eventos anuales - M >= 7.0",
+  ylab = "Numero de eventos",
+  xlab = "Años",
+  col = "gray80",
+  border = "gray30",
+  las = 2,
+  cex.names = 0.7,
+  ylim = c(0, max(conteo_anual$n_eventos_m70_o_mayor) + 4),
+  axes = FALSE
+)
+
+text(
+  x = pos_barras_anual_m70,
+  y = conteo_anual$n_eventos_m70_o_mayor,
+  labels = conteo_anual$n_eventos_m70_o_mayor,
+  pos = 3,
+  cex = 0.7
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = summary(serie_anual_m70)["Mean"],
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo anual", "Media anual"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+##Eventos por decada del catalogo completo----
+
+pos_barras_decadal_catalogo <- barplot(
+  height = conteo_decadal$n_catalogo_completo,
+  names.arg = conteo_decadal$decada,
+  main = "Eventos por decada - Catalogo completo",
+  ylab = "Numero de eventos",
+  xlab = "Decada",
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  cex.names = 0.8,
+  ylim = c(0, max(conteo_decadal$n_catalogo_completo) * 1.15),
+  axes = FALSE
+)
+
+text(
+  x = pos_barras_decadal_catalogo,
+  y = conteo_decadal$n_catalogo_completo,
+  labels = conteo_decadal$n_catalogo_completo,
+  pos = 3,
+  cex = 0.8
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = mean(conteo_decadal$n_catalogo_completo, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo decadal", "Media decadal"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+##Eventos por decada M >= 7.0----
+
+pos_barras_decadal_m70 <- barplot(
+  height = conteo_decadal$n_eventos_m70_o_mayor,
+  names.arg = conteo_decadal$decada,
+  main = "Eventos por decada - M >= 7.0",
+  ylab = "Numero de eventos",
+  xlab = "Decada",
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  cex.names = 0.8,
+  ylim = c(0, max(conteo_decadal$n_eventos_m70_o_mayor) * 1.15),
+  axes = FALSE
+)
+
+text(
+  x = pos_barras_decadal_m70,
+  y = conteo_decadal$n_eventos_m70_o_mayor,
+  labels = conteo_decadal$n_eventos_m70_o_mayor,
+  pos = 3,
+  cex = 0.8
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = mean(conteo_decadal$n_eventos_m70_o_mayor, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo decadal", "Media decadal"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+
