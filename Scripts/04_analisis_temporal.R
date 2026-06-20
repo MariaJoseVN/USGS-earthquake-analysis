@@ -258,7 +258,7 @@ axis(
 par(mfrow = c(1, 1))
 
 #Caracterizacion descriptiva temporal----
-
+##Pregunta Orientadora de manera anual:-----
 ##Eventos anuales del catalogo completo----
 
 pos_barras_anual_catalogo <- barplot(
@@ -430,7 +430,6 @@ pos_barras_decadal_m70 <- barplot(
   ylim = c(0, max(conteo_decadal$n_eventos_m70_o_mayor) * 1.15),
   axes = FALSE
 )
-
 text(
   x = pos_barras_decadal_m70,
   y = conteo_decadal$n_eventos_m70_o_mayor,
@@ -438,21 +437,18 @@ text(
   pos = 3,
   cex = 0.8
 )
-
 axis(
   side = 2,
   las = 1,
   lwd = 0,
   lwd.ticks = 1
 )
-
 abline(
   h = mean(conteo_decadal$n_eventos_m70_o_mayor, na.rm = TRUE),
   col = "black",
   lty = 2,
   lwd = 1.5
 )
-
 legend(
   "topright",
   legend = c("Conteo decadal", "Media decadal"),
@@ -464,7 +460,70 @@ legend(
   bty = "n",
   cex = 0.8
 )
-
 box()
 
+#Pregunta Orientadora caso decada:-----
+#¿Cómo ha variado la ocurrencia anual o decadal de eventos M >= 7,0?
+#no conviene comparar 84 eventos contra décadas completas de 10 años
+
+##Tasa promedio anual por decada----
+
+conteo_decadal <- conteo_decadal %>%
+  mutate(
+    años_observados = case_when(
+      decada == 2000 ~ 10,
+      decada == 2010 ~ 10,
+      decada == 2020 ~ 6
+    ),
+    tasa_anual_catalogo_completo = n_catalogo_completo / años_observados,
+    tasa_anual_m70_o_mayor = n_eventos_m70_o_mayor / años_observados,
+    tasa_anual_m75_o_mayor = n_eventos_m75_o_mayor / años_observados,
+    tasa_anual_m80_o_mayor = n_eventos_m80_o_mayor / años_observados
+  )
+
+print(conteo_decadal, n = Inf)
+
+#Ahora si la comparación Gráfica es más justa para responder la pregunta orientadora
+
+pos_barras_tasa_decadal_m70 <- barplot(
+  height = conteo_decadal$tasa_anual_m70_o_mayor,
+  names.arg = conteo_decadal$decada,
+  main = "Tasa anual promedio por decada - M >= 7.0",
+  ylab = "Eventos promedio por año",
+  xlab = "Decada",
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  cex.names = 0.8,
+  ylim = c(0, max(conteo_decadal$tasa_anual_m70_o_mayor) * 1.2),
+  axes = FALSE
+)
+text(
+  x = pos_barras_tasa_decadal_m70,
+  y = conteo_decadal$tasa_anual_m70_o_mayor,
+  labels = round(conteo_decadal$tasa_anual_m70_o_mayor, 1),
+  pos = 3,
+  cex = 0.8
+)
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+box()
+
+legend(
+  "topright",
+  legend = c("Tasa anual promedio", "Media de tasas"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+##posible pregunta inferencial, es o son significativas estas diferencias?
 
