@@ -9,6 +9,7 @@ crossref:
   tbl-prefix: "Tabla"
 format:
   pdf:
+    pdf-engine: lualatex
     toc: false
     toc-title: "Índice"
     toc-depth: 3
@@ -29,7 +30,7 @@ execute:
 \thispagestyle{empty}
 \AddToHookNext{shipout/background}{
   \put(-4pt,-\dimexpr\paperheight+4pt\relax){
-    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{Imágenes y Recursos/Portada Informe Corporativo Blanco y Negro Minimalista.png}}
+    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{Imágenes y Recursos/portada-informe.png}}
   }
 }
 \null
@@ -42,62 +43,82 @@ execute:
 
 # Resumen ejecutivo
 
-Completar en máximo una página.
-
-Debe presentar una síntesis clara para una contraparte técnica o institucional. Incluir brevemente el problema abordado, la fuente de datos, el período analizado, el enfoque metodológico, los hallazgos principales y las recomendaciones generales.
-
 # Antecedentes, objetivo y alcance
 
 ## Antecedentes
 
-Completar con el contexto de la asesoría, la necesidad de la contraparte y la relevancia de analizar catálogos abiertos de terremotos.
+La actividad sísmica constituye un fenómeno geofísico que ocurre de manera transveral a lo largo del mundo. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos observados a escala global. Su relevancia radica en una posible caracterización territorial, gestión institucional y/o la comprensión de patrones espaciales y temporales asociadosa zonas tectónicamente activas.
+
+La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), utilizado por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
 ## Objetivo general
 
-Completar con el objetivo principal del informe.
+El presente pre-informe se desarrolla en el marco de una asesoría estadística orientada a transformar los datos públicos de eventos sísmicos en información cuantitativa confiable, documentada e interpretable. La contraparte solicitante requiere una caracterización de grandes terremotos a nivel mundial, con especial interés en su distribución espacial, evolución temporal, comparación entre zonas geográficas de interés, recurrencia y presencia de eventos extremos, con resultados interpretables y facilmente replicables.
+
+El análisis se concentra en eventos de magnitud $M \geq 6{,}5$. Umbral que permite focalizar la revisión en terremotos relevantes según el interés de estudio solicitado.
 
 ## Objetivos específicos
 
-- Completar.
-- Completar.
-- Completar.
+- Documentar la fuente de datos, fecha de descarga, parámetros de consulta y criterios de selección utilizados para construir la base de análisis.
+- Realizar un control de calidad de los datos, considerando duplicados, valores faltantes, consistencia temporal, consistencia espacial y tipo de evento.
+- Describir la distribución de los eventos según magnitud, profundidad, frecuencia anual, frecuencia decadal y ocurrencia de eventos extremos.
+- Comparar preliminarmente la actividad sísmica observada en el Cinturón de Fuego del Pacífico respecto del resto del mundo, utilizando una definición geográfica explícita y reproducible.
+- Identificar limitaciones metodológicas relevantes del análisis.
 
 ## Alcance del informe
 
-Completar indicando qué cubre el análisis y qué queda fuera. Recordar que el informe no corresponde a predicción de terremotos, alerta sísmica ni evaluación formal de amenaza.
+- Este pre-informe corresponde a una primera etapa de estadística descriptiva y exploratoria. El análisis cubre eventos sísmicos globales registrados en el catálogo USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$. La unidad de análisis es el evento sísmico registrado en el catálogo, considerando variables de tiempo, ubicación geográfica, magnitud, profundidad, tipo de magnitud, fuente de localización, fuente de magnitud y estado de revisión.
+
+- El pre-informe incluye trazabilidad de la descarga, revisión de calidad de datos, construcción de variables derivadas, caracterización descriptiva general, análisis temporal mediante conteos anuales y decadales, y una comparación espacial preliminar entre el Cinturón de Fuego del Pacífico y el resto del mundo.
+
+- El pre-informe no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
+
+- Los resultados deben interpretarse como evidencia estadística descriptiva basada en el catálogo disponible.
 
 # Descripción de datos y parámetros de descarga
 
 ## Fuente de datos
 
-Completar con la fuente utilizada, formato de descarga y fecha de obtención de los datos.
+La fuente principal de información utilizada corresponde al catálogo público de terremotos de la United States Geological Survey (USGS), específicamente el sitio [USGS Earthquake Catalog Search.](https://earthquake.usgs.gov/earthquakes/search/)
 
 ## Parámetros de descarga
 
-Completar con período, magnitud mínima, zona geográfica, profundidad, estado de revisión y formato del archivo.
+La configuración utilizada se documenta en la siguiente bitácora de descarga.
 
-| Parámetro | Valor utilizado | Justificación |
-|---|---|---|
-| Fuente | completar | completar |
-| Fecha de descarga | completar | completar |
-| Período | completar | completar |
-| Magnitud mínima | completar | completar |
-| Zona geográfica | completar | completar |
-| Formato | completar | completar |
+| Parámetro | Valor registrado |
+|------------------------------------|------------------------------------|
+| Fuente | [USGS Earthquake Catalog Search](https://earthquake.usgs.gov/earthquakes/search/) |
+| Formato de descarga | `CSV` |
+| Archivo crudo conservado | `BBDD/query.csv` |
+| Fecha de descarga | 15/06/2026 |
+| Hora de descarga | 22:05 |
+| Encargo asociado | Análisis global de grandes terremotos |
+| Cobertura geográfica | `Mundial (World / Worldwide)` |
+| Inicio del período | `2000-01-01 00:00:00 UTC` |
+| Fin del período | `2025-12-31 23:59:59 UTC` |
+| Magnitud mínima | $M \geq 6{,}5$ |
+| Magnitud máxima | `Sin filtro` |
+| Profundidad mínima | `Sin filtro` |
+| Profundidad máxima | `Sin filtro` |
+| Estado de revisión | `Any` |
+| Tipo de evento | `Sin filtro específico` |
+| Ordenamiento | `Time - Oldest First` |
 
-: Parámetros de descarga utilizados para construir la base de análisis. {#tbl-parametros-descarga}
+: Parámetros de descarga
+
+El formato `.CSV` fue utilizado como base principal del procesamiento estadístico, aunque paralelamente se utilizó un formato `.GeoJson` con las mismas caracteristicas en el software `Qgis`.
 
 ## Variables consideradas
 
 Describir las variables disponibles y las variables derivadas que se utilizarán en el análisis.
 
-| Variable | Descripción | Uso en el análisis |
-|---|---|---|
-| completar | completar | completar |
-| completar | completar | completar |
-| completar | completar | completar |
+| Variable  | Descripción | Uso en el análisis |
+|-----------|-------------|--------------------|
+| completar | completar   | completar          |
+| completar | completar   | completar          |
+| completar | completar   | completar          |
 
-: Variables consideradas en el análisis estadístico. {#tbl-variables}
+: Variables consideradas en el análisis estadístico.
 
 ## Depuración y control de calidad
 
@@ -117,13 +138,13 @@ Completar con los indicadores que serán utilizados para caracterizar la sismici
 
 Completar con las figuras previstas y su propósito.
 
-| Figura | Propósito | Estado |
-|---|---|---|
+| Figura    | Propósito | Estado    |
+|-----------|-----------|-----------|
 | completar | completar | pendiente |
 | completar | completar | pendiente |
 | completar | completar | pendiente |
 
-: Visualizaciones previstas para comunicar los resultados del informe. {#tbl-visualizaciones}
+: Visualizaciones previstas para comunicar los resultados del informe.
 
 ## Procedimientos estadísticos
 
@@ -203,6 +224,7 @@ Agregar tablas, figuras o detalles técnicos que respalden el informe sin interr
 
 # Bibliografía
 
+```{=html}
 <!--
 Plantillas para mantener numeración automática en Quarto:
 
@@ -229,3 +251,4 @@ Crear un chunk R con label: tbl-nombre-corto y tbl-cap: "Título descriptivo de 
 El código que imprime la tabla va dentro de ese chunk.
 En el texto puedes citarla como @tbl-nombre-corto.
 -->
+```
