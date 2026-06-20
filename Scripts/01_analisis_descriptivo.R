@@ -91,8 +91,6 @@ sismos %>%
     cuantil_90 = quantile(depth, 0.90, na.rm = TRUE),
     cuantil_95 = quantile(depth, 0.95, na.rm = TRUE)
   )
-
-
 #Proporción de eventos según profundidad----
 sismos %>%
   janitor::tabyl(profundidad_cat)
