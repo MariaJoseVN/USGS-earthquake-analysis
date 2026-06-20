@@ -527,3 +527,99 @@ legend(
 
 ##posible pregunta inferencial, es o son significativas estas diferencias?
 
+
+#Tiempo medio y mediano entre eventos relevantes (M >= 7.0)----
+#la idea es comparar cada evento M >= 7.0 con el evento M >= 7.0 inmediatamente anterior
+
+##Eventos M >= 7.0 ordenados temporalmente----
+
+eventos_m70 <- sismos_temporal %>%
+  filter(evento_m70) %>%
+  arrange(fecha_hora_utc) %>%
+  mutate(
+    dias_desde_evento_anterior = as.numeric(
+      difftime(fecha_hora_utc, lag(fecha_hora_utc), units = "days")
+    )
+  )
+
+print(eventos_m70, n = Inf)
+
+##Resumen de tiempos entre eventos M >= 7.0----
+
+resumen_recurrencia_m70 <- eventos_m70 %>%
+  summarise(
+    n_eventos = n(),
+    n_intervalos = sum(!is.na(dias_desde_evento_anterior)),
+    tiempo_medio_dias = mean(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_mediano_dias = median(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_minimo_dias = min(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_maximo_dias = max(dias_desde_evento_anterior, na.rm = TRUE)
+  )
+
+print(resumen_recurrencia_m70)
+
+###Gráfico----
+
+hist(
+  eventos_m70$dias_desde_evento_anterior,
+  main = "Distribucion de dias entre eventos M >= 7.0",
+  xlab = "Dias desde el evento anterior",
+  ylab = "Frecuencia",
+  col = "gray80",
+  border = "gray30"
+)
+
+abline(
+  v = resumen_recurrencia_m70$tiempo_medio_dias,
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+abline(
+  v = resumen_recurrencia_m70$tiempo_mediano_dias,
+  col = "red",
+  lty = 3,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Media", "Mediana"),
+  col = c("black", "red"),
+  lty = c(2, 3),
+  lwd = c(1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+###La recurrencia de eventos M >= 7.0 entre décadas----
+resumen_recurrencia_decadal_m70 <- eventos_m70 %>%
+  filter(!is.na(dias_desde_evento_anterior)) %>%
+  group_by(decada) %>%
+  summarise(
+    n_intervalos = n(),
+    tiempo_medio_dias = mean(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_mediano_dias = median(dias_desde_evento_anterior, na.rm = TRUE),
+    q1_dias = quantile(dias_desde_evento_anterior, 0.25, na.rm = TRUE),
+    q3_dias = quantile(dias_desde_evento_anterior, 0.75, na.rm = TRUE),
+    tiempo_minimo_dias = min(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_maximo_dias = max(dias_desde_evento_anterior, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+print(resumen_recurrencia_decadal_m70)
+
+boxplot(
+  dias_desde_evento_anterior ~ decada,
+  data = eventos_m70 %>% filter(!is.na(dias_desde_evento_anterior)),
+  main = "Dias entre eventos M >= 7.0 por decada",
+  xlab = "Decada",
+  ylab = "Dias desde el evento anterior",
+  col = "gray80",
+  border = "gray30"
+)
+
+box()
