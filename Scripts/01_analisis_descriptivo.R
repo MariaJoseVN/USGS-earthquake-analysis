@@ -45,84 +45,95 @@ sismos %>%
     profundidad_media = mean(depth, na.rm = TRUE)
   )
 
-
 #Proporción de eventos según profundidad----
 sismos %>%
   janitor::tabyl(profundidad_cat)
 
 
-#ZONAS
-library(sf) #sf permite trabajar en R con puntos, polígonos y archivos geográficos como GeoJSON.
 
-#Lee el área del Cinturón de Fuego
-#st_read() importa el GeoJSON.
-#El objeto contiene los polígonos que delimitan operacionalmente el Cinturón de Fuego.
-area_cinturon_fuego <- st_read(
-  "SIG/area_cinturon_fuego.geojson",
+
+#Zonas----
+library(sf)
+
+#Leer las regiones
+area_regiones <- st_read(
+  "SIG/area_regiones.geojson",
   quiet = TRUE
 )
 
 #Convertir los terremotos en puntos
 puntos_sismos <- st_as_sf(
-  sismos,
+  sismos %>% select(-any_of("zona")),
   coords = c("longitude", "latitude"),
-  crs = st_crs(area_cinturon_fuego)
-)
+  crs = 4326,
+  remove = FALSE
+) %>%
+  st_transform(st_crs(area_regiones))
 
 #Manejar el antimeridiano
-#Desactiva temporalmente el procesamiento esférico, 
-#porque el polígono cruza el antimeridiano y contiene coordenadas a ambos lados de los 180 grados de longitud.
 sf_use_s2(FALSE)
 
-#Crear la variable zona
-sismos <- sismos %>%
-  mutate(
-    zona = if_else(
-      lengths(st_intersects(puntos_sismos, area_cinturon_fuego)) > 0,
-      "Cinturón de Fuego",
-      "Resto del mundo"
-    )
+#Asignar cada terremoto a su región
+puntos_sismos <- puntos_sismos %>%
+  st_join(
+    area_regiones %>% select(Region),
+    join = st_intersects,
+    left = TRUE
   )
 
-#Comprueba, para cada terremoto de puntos_sismos, si su ubicación 
-# intersecta alguno de los polígonos de area_cinturon_fuego.
-st_intersects(puntos_sismos, area_cinturon_fuego)
+#Crear la variable zona
+sismos <- puntos_sismos %>%
+  mutate(
+    zona = if_else(
+      is.na(Region),
+      "Resto del mundo",
+      as.character(Region)
+    )
+  ) %>%
+  st_drop_geometry() %>%
+  select(-Region)
 
-# Reactivar el procesamiento esférico
+#Reactivar el procesamiento esférico
 sf_use_s2(TRUE)
 
 #Total de eventos por zona----
 total_eventos_zona <- sismos %>%
-  count(zona, name = "total_eventos")
+  count(zona, name = "total_eventos") %>%
+  tidyr::complete(
+    zona = unique(c(
+      as.character(area_regiones$Region),
+      "Resto del mundo"
+    )),
+    fill = list(total_eventos = 0)
+  ) %>%
+  arrange(desc(total_eventos))
+
 View(total_eventos_zona)
 
-#Contar por zona y año
-eventos_zona_anio <- sismos %>%
-  count(año, zona, name = "numero_eventos") %>%
-  tidyr::pivot_wider(
-    names_from = zona,
-    values_from = numero_eventos,
-    values_fill = 0
-  ) %>%
-  arrange(año)
-View(eventos_zona_anio)
-
-#Contar por zona y año, pero de otra forma, que podria servir para algun tipo de grafico
+#Eventos por zona y año----
 eventos_zona_anio <- sismos %>%
   count(zona, año, name = "numero_eventos") %>%
+  tidyr::complete(
+    zona = unique(c(
+      as.character(area_regiones$Region),
+      "Resto del mundo"
+    )),
+    año = año_inicio:año_fin,
+    fill = list(numero_eventos = 0)
+  ) %>%
   arrange(año, zona)
-View(eventos_zona_anio)
 
+View(eventos_zona_anio)   # cinturonFuego - mesoAtlantico - alpinoHimalayo - RestoMundo
 
-
-#Mostrar todas las columnas en la consola:
+#Mostrar todas las columnas
 options(tibble.width = Inf)
+
 #Estadísticos descriptivos por zona----
 sismos %>%
   group_by(zona) %>%
   summarise(
     numero_eventos = n(),
-    tasa_anual = numero_eventos / cantidad_años,
+    tasa_anual = n() / cantidad_años,
     magnitud_media = mean(mag, na.rm = TRUE),
     magnitud_mediana = median(mag, na.rm = TRUE),
     magnitud_desviacion = sd(mag, na.rm = TRUE),
@@ -136,13 +147,49 @@ sismos %>%
     profundidad_desviacion = sd(depth, na.rm = TRUE),
     profundidad_maxima = max(depth, na.rm = TRUE),
     .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    zona = unique(c(
+      as.character(area_regiones$Region),
+      "Resto del mundo"
+    ))
+  ) %>%
+  mutate(
+    across(
+      where(is.numeric),
+      ~ replace(.x, is.na(.x) | is.infinite(.x), 0)
+    )
   )
+
 #Categorías de profundidad por zona----
 sismos %>%
   count(zona, profundidad_cat, name = "numero_eventos") %>%
+  tidyr::complete(
+    zona = unique(c(
+      as.character(area_regiones$Region),
+      "Resto del mundo"
+    )),
+    profundidad_cat = c(
+      "Superficial",
+      "Intermedio",
+      "Profundo"
+    ),
+    fill = list(numero_eventos = 0)
+  ) %>%
   group_by(zona) %>%
   mutate(
-    proporcion = numero_eventos / sum(numero_eventos),
+    proporcion = numero_eventos / if_else(
+      sum(numero_eventos) == 0,
+      1,
+      sum(numero_eventos)
+    ),
     porcentaje = proporcion * 100
   ) %>%
   ungroup()
+
+
+
+
+
+
+
