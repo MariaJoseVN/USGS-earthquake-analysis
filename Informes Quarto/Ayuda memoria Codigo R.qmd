@@ -69,16 +69,21 @@ El codigo implementado fue:
 ```r
 sismos <- sismos %>%
   mutate(
-    magnitud_cat = case_when(
-      mag >= 6.5 & mag < 7.0 ~ "Fuerte",
-      mag >= 7.0 & mag < 7.8 ~ "Mayor",
-      mag >= 7.8 ~ "Grande o extremo",
-      TRUE ~ NA_character_
+    magnitud_cat = factor(
+      case_when(
+        mag >= 6.5 & mag < 7.0 ~ "Fuerte",
+        mag >= 7.0 & mag < 7.8 ~ "Mayor",
+        mag >= 7.8 ~ "Grande o extremo",
+        TRUE ~ NA_character_
+      ),
+      levels = c("Fuerte", "Mayor", "Grande o extremo")
     )
   )
 ```
 
 Luego `magnitud_cat` se agrega al objeto `sismos` dentro del `select()`, inmediatamente despues de `mag`, para que quede disponible en los scripts posteriores.
+
+Se definio como factor ordenado para que tablas y graficos respeten el orden conceptual de severidad: primero `Fuerte`, luego `Mayor` y finalmente `Grande o extremo`.
 
 # Justificacion de la categorizacion de magnitud
 
@@ -145,4 +150,3 @@ El objeto `sismos` conserva variables necesarias para el analisis posterior:
 - lugar, tipo de evento, estado y fuentes.
 
 Esta seleccion mantiene la base suficientemente rica para analisis descriptivos, espaciales y temporales, sin arrastrar todas las columnas originales del archivo crudo.
-

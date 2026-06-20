@@ -71,7 +71,32 @@ conteo_decadal <- sismos_temporal %>%
 
 print(conteo_decadal, n = Inf)
 
+##Conteos por categoria de magnitud----
+# Estos conteos permiten describir la composicion temporal del catalogo
+# segun categorias de magnitud, sin reemplazar los conteos por umbrales.
+
+conteo_anual_magnitud_cat <- sismos_temporal %>%
+  group_by(año, magnitud_cat) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  )
+
+print(conteo_anual_magnitud_cat, n = Inf)
+
+conteo_decadal_magnitud_cat <- sismos_temporal %>%
+  group_by(decada, magnitud_cat) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  )
+
+print(conteo_decadal_magnitud_cat, n = Inf)
+
 #Serie Temporal de Conteos----
+# Las series temporales principales se mantienen para el catalogo completo y M >= 7.0.
+# Las categorias de magnitud se utilizaran mas adelante para describir la composicion
+# anual y decadal del catalogo, evitando sobrecargar el analisis con multiples series.
 
 ##Serie mensual del catálogo completo----
 serie_mensual_catalogo_completo <- ts(
@@ -116,6 +141,9 @@ summary(serie_anual_m70)
 #Visualizacipon de Series Temporales----
 
 #Visualizacion inicial de series temporales----
+# En esta visualizacion inicial se prioriza la evolucion general del catalogo
+# y de los eventos M >= 7.0. La comparacion por magnitud_cat se reserva para
+# graficos de composicion anual y decadal.
 
 indice_mensual <- 1:nrow(conteo_mensual)
 indice_anual <- conteo_anual$año
@@ -465,6 +493,68 @@ legend(
   bty = "n",
   cex = 0.8
 )
+box()
+
+##Composicion anual por categoria de magnitud----
+# Estos graficos muestran como se distribuye el catalogo entre eventos
+# Fuertes, Mayores y Grandes o extremos en el tiempo.
+
+tabla_anual_magnitud <- table(
+  sismos_temporal$año,
+  sismos_temporal$magnitud_cat
+)
+
+barplot(
+  t(tabla_anual_magnitud),
+  beside = FALSE,
+  main = "Eventos anuales por categoria de magnitud",
+  ylab = "Numero de eventos",
+  xlab = "Años",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  las = 2,
+  cex.names = 0.7
+)
+
+legend(
+  "topright",
+  legend = colnames(tabla_anual_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+##Composicion decadal por categoria de magnitud----
+
+tabla_decadal_magnitud <- table(
+  sismos_temporal$decada,
+  sismos_temporal$magnitud_cat
+)
+
+barplot(
+  t(tabla_decadal_magnitud),
+  beside = FALSE,
+  main = "Eventos por decada segun categoria de magnitud",
+  ylab = "Numero de eventos",
+  xlab = "Decada",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  las = 1,
+  cex.names = 0.8
+)
+
+legend(
+  "topright",
+  legend = colnames(tabla_decadal_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
+)
+
 box()
 
 #Pregunta Orientadora caso decada:-----
