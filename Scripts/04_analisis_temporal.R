@@ -71,28 +71,6 @@ conteo_decadal <- sismos_temporal %>%
 
 print(conteo_decadal, n = Inf)
 
-##Conteos por categoria de magnitud----
-# Estos conteos permiten describir la composicion temporal del catalogo
-# segun categorias de magnitud, sin reemplazar los conteos por umbrales.
-
-conteo_anual_magnitud_cat <- sismos_temporal %>%
-  group_by(año, magnitud_cat) %>%
-  summarise(
-    n_eventos = n(),
-    .groups = "drop"
-  )
-
-print(conteo_anual_magnitud_cat, n = Inf)
-
-conteo_decadal_magnitud_cat <- sismos_temporal %>%
-  group_by(decada, magnitud_cat) %>%
-  summarise(
-    n_eventos = n(),
-    .groups = "drop"
-  )
-
-print(conteo_decadal_magnitud_cat, n = Inf)
-
 #Serie Temporal de Conteos----
 # Las series temporales principales se mantienen para el catalogo completo y M >= 7.0.
 # Las categorias de magnitud se utilizaran mas adelante para describir la composicion
@@ -495,71 +473,12 @@ legend(
 )
 box()
 
-##Composicion anual por categoria de magnitud----
-# Estos graficos muestran como se distribuye el catalogo entre eventos
-# Fuertes, Mayores y Grandes o extremos en el tiempo.
-
-tabla_anual_magnitud <- table(
-  sismos_temporal$año,
-  sismos_temporal$magnitud_cat
-)
-
-barplot(
-  t(tabla_anual_magnitud),
-  beside = FALSE,
-  main = "Eventos anuales por categoria de magnitud",
-  ylab = "Numero de eventos",
-  xlab = "Años",
-  col = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  las = 2,
-  cex.names = 0.7
-)
-
-legend(
-  "topright",
-  legend = colnames(tabla_anual_magnitud),
-  fill = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-
-##Composicion decadal por categoria de magnitud----
-
-tabla_decadal_magnitud <- table(
-  sismos_temporal$decada,
-  sismos_temporal$magnitud_cat
-)
-
-barplot(
-  t(tabla_decadal_magnitud),
-  beside = FALSE,
-  main = "Eventos por decada segun categoria de magnitud",
-  ylab = "Numero de eventos",
-  xlab = "Decada",
-  col = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  las = 1,
-  cex.names = 0.8
-)
-
-legend(
-  "topright",
-  legend = colnames(tabla_decadal_magnitud),
-  fill = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-
 #Pregunta Orientadora caso decada:-----
 #¿Cómo ha variado la ocurrencia anual o decadal de eventos M >= 7,0?
 #no conviene comparar 84 eventos contra décadas completas de 10 años
+# En terminos de magnitud_cat, el umbral M >= 7.0 agrupa las categorias
+# "Mayor" y "Grande o extremo". Por eso esta pregunta se mantiene por umbral,
+# pero su interpretacion se conecta con la clasificacion de magnitud.
 
 ##Tasa promedio anual por decada----
 
@@ -625,6 +544,8 @@ legend(
 
 #Tiempo medio y mediano entre eventos relevantes (M >= 7.0)----
 #la idea es comparar cada evento M >= 7.0 con el evento M >= 7.0 inmediatamente anterior
+# En terminos de magnitud_cat, este analisis de recurrencia considera eventos
+# clasificados como "Mayor" o "Grande o extremo".
 
 ##Eventos M >= 7.0 ordenados temporalmente----
 
@@ -661,7 +582,21 @@ hist(
   xlab = "Dias desde el evento anterior",
   ylab = "Frecuencia",
   col = "gray80",
-  border = "gray30"
+  border = "gray30",
+  axes = FALSE
+)
+
+axis(
+  side = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
 )
 
 abline(
@@ -691,6 +626,11 @@ legend(
 box()
 
 ###La recurrencia de eventos M >= 7.0 entre décadas----
+# Esta comparacion por decada mantiene el umbral M >= 7.0.
+# Por lo tanto, compara la recurrencia temporal de eventos clasificados como
+# "Mayor" o "Grande o extremo" segun magnitud_cat.
+# No se compara por categoria separada para evitar grupos con pocos intervalos.
+
 resumen_recurrencia_decadal_m70 <- eventos_m70 %>%
   filter(!is.na(dias_desde_evento_anterior)) %>%
   group_by(decada) %>%
@@ -707,14 +647,185 @@ resumen_recurrencia_decadal_m70 <- eventos_m70 %>%
 
 print(resumen_recurrencia_decadal_m70)
 
+eventos_m70_recurrencia_decadal <- eventos_m70 %>%
+  filter(!is.na(dias_desde_evento_anterior))
+
+decadas_recurrencia_m70 <- sort(unique(eventos_m70_recurrencia_decadal$decada))
+
 boxplot(
   dias_desde_evento_anterior ~ decada,
-  data = eventos_m70 %>% filter(!is.na(dias_desde_evento_anterior)),
+  data = eventos_m70_recurrencia_decadal,
   main = "Dias entre eventos M >= 7.0 por decada",
   xlab = "Decada",
   ylab = "Dias desde el evento anterior",
   col = "gray80",
-  border = "gray30"
+  border = "gray30",
+  axes = FALSE
+)
+
+axis(
+  side = 1,
+  at = seq_along(decadas_recurrencia_m70),
+  labels = decadas_recurrencia_m70,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+box()
+
+
+#Analisis complementario por categoria de magnitud----
+# Despues de revisar los conteos por umbrales, se incorpora magnitud_cat.
+# Esta variable proviene de la revision bibliografica y agrupa eventos en
+# categorias excluyentes: Fuerte, Mayor y Grande o extremo.
+# A diferencia de los umbrales acumulativos, estas categorias permiten leer
+# la composicion temporal del catalogo sin contar el mismo evento en varios grupos.
+
+##Conteos por categoria de magnitud----
+
+conteo_anual_magnitud_cat <- sismos_temporal %>%
+  group_by(año, magnitud_cat) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  )
+
+print(conteo_anual_magnitud_cat, n = Inf)
+
+conteo_decadal_magnitud_cat <- sismos_temporal %>%
+  group_by(decada, magnitud_cat) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  )
+
+print(conteo_decadal_magnitud_cat, n = Inf)
+
+##Composicion anual por categoria de magnitud----
+# Estos graficos muestran como se distribuye el catalogo entre eventos
+# Fuertes, Mayores y Grandes o extremos en el tiempo.
+
+tabla_anual_magnitud <- table(
+  sismos_temporal$año,
+  sismos_temporal$magnitud_cat
+)
+
+matriz_anual_magnitud <- t(tabla_anual_magnitud)
+
+pos_barras_anual_magnitud <- barplot(
+  matriz_anual_magnitud,
+  beside = FALSE,
+  main = "Eventos anuales por categoria de magnitud",
+  ylab = "Numero de eventos",
+  xlab = "Años",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  las = 2,
+  cex.names = 0.7,
+  ylim = c(0, max(colSums(matriz_anual_magnitud)) * 1.15),
+  axes = FALSE
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+pos_texto_anual_magnitud <- apply(
+  matriz_anual_magnitud,
+  2,
+  cumsum
+) - matriz_anual_magnitud / 2
+
+x_texto_anual_magnitud <- matrix(
+  rep(pos_barras_anual_magnitud, each = nrow(matriz_anual_magnitud)),
+  nrow = nrow(matriz_anual_magnitud)
+)
+
+text(
+  x = as.vector(x_texto_anual_magnitud),
+  y = as.vector(pos_texto_anual_magnitud),
+  labels = ifelse(as.vector(matriz_anual_magnitud) > 0, as.vector(matriz_anual_magnitud), ""),
+  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_anual_magnitud)),
+  cex = 0.45
+)
+
+legend(
+  "topright",
+  legend = colnames(tabla_anual_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+##Composicion decadal por categoria de magnitud----
+
+tabla_decadal_magnitud <- table(
+  sismos_temporal$decada,
+  sismos_temporal$magnitud_cat
+)
+
+matriz_decadal_magnitud <- t(tabla_decadal_magnitud)
+
+pos_barras_decadal_magnitud <- barplot(
+  matriz_decadal_magnitud,
+  beside = FALSE,
+  main = "Eventos por decada segun categoria de magnitud",
+  ylab = "Numero de eventos",
+  xlab = "Decada",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  las = 1,
+  cex.names = 0.8,
+  ylim = c(0, max(colSums(matriz_decadal_magnitud)) * 1.15),
+  axes = FALSE
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+pos_texto_decadal_magnitud <- apply(
+  matriz_decadal_magnitud,
+  2,
+  cumsum
+) - matriz_decadal_magnitud / 2
+
+x_texto_decadal_magnitud <- matrix(
+  rep(pos_barras_decadal_magnitud, each = nrow(matriz_decadal_magnitud)),
+  nrow = nrow(matriz_decadal_magnitud)
+)
+
+text(
+  x = as.vector(x_texto_decadal_magnitud),
+  y = as.vector(pos_texto_decadal_magnitud),
+  labels = ifelse(as.vector(matriz_decadal_magnitud) > 0, as.vector(matriz_decadal_magnitud), ""),
+  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_decadal_magnitud)),
+  cex = 0.8
+)
+
+legend(
+  "topright",
+  legend = colnames(tabla_decadal_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
 )
 
 box()

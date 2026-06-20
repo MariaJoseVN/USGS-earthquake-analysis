@@ -107,16 +107,9 @@ Cada tabla resume:
 - `n_eventos_m75_o_mayor`
 - `n_eventos_m80_o_mayor`
 
-Esta estructura permite comparar el comportamiento del catalogo completo con eventos de mayor magnitud sin duplicar bases ni perder trazabilidad.
+Esta estructura permite comparar el comportamiento del catalogo completo con eventos de mayor magnitud sin duplicar bases ni perder trazabilidad. En esta primera etapa se priorizaron los umbrales acumulativos (`M >= 7.0`, `M >= 7.5`, `M >= 8.0`), porque permiten responder preguntas directas sobre eventos relevantes y mantener comparabilidad con la recomendacion inicial de trabajar con sismos grandes.
 
-Con la incorporacion de `magnitud_cat` en `Codigo.R`, tambien se agregaron conteos por categoria de magnitud:
-
-- `conteo_anual_magnitud_cat`
-- `conteo_decadal_magnitud_cat`
-
-Estos objetos permiten describir la composicion temporal del catalogo entre eventos `Fuerte`, `Mayor` y `Grande o extremo`. Se decidio agregarlos para complementar los conteos por umbrales, no para reemplazarlos. Los umbrales acumulativos (`M >= 7.0`, `M >= 7.5`, `M >= 8.0`) siguen siendo utiles para preguntas especificas, mientras que `magnitud_cat` permite una lectura por grupos excluyentes de severidad.
-
-No se incorporo un conteo mensual por categoria en esta etapa, porque habria exigido completar todas las combinaciones mes-categoria con ceros y podria sobrecargar el preinforme descriptivo. Para la primera lectura temporal, se priorizo la composicion anual y decadal.
+La variable `magnitud_cat` se reserva para una etapa complementaria posterior. Esa decision ordena mejor la narrativa: primero se describe la evidencia temporal mediante umbrales simples y acumulativos; luego, con apoyo de la revision bibliografica, se observa la composicion del catalogo usando categorias excluyentes de severidad.
 
 ## Tratamiento de meses sin eventos
 
@@ -255,15 +248,6 @@ Este formato fue aplicado a:
 - eventos por decada del catalogo completo;
 - eventos por decada `M >= 7.0`.
 
-Luego se agregaron dos graficos de composicion por categoria de magnitud:
-
-- eventos anuales por categoria de magnitud;
-- eventos decadales por categoria de magnitud.
-
-Estos graficos usan barras apiladas para mostrar como se reparte el total de eventos entre `Fuerte`, `Mayor` y `Grande o extremo`. La variable `magnitud_cat` fue definida como factor ordenado en `Codigo.R`, por lo que los graficos respetan el orden conceptual de severidad.
-
-La razon metodologica para usar barras apiladas es que el objetivo no es comparar una serie independiente por cada categoria, sino observar la composicion interna del catalogo a lo largo del tiempo. Asi, el grafico conserva el total anual o decadal y al mismo tiempo muestra que parte corresponde a cada nivel de magnitud.
-
 # Pregunta orientadora: variacion anual o decadal de eventos M >= 7.0
 
 La pregunta guia fue:
@@ -351,6 +335,34 @@ La interpretacion correcta es:
 > recurrencia temporal global de eventos grandes dentro del catalogo analizado.
 
 Esto debe separarse de afirmaciones sobre peligro sismico local o prediccion. El analisis describe ocurrencia observada; no predice terremotos.
+
+# Analisis complementario por categoria de magnitud
+
+Despues de completar el analisis temporal por umbrales, se incorporo una segunda lectura usando `magnitud_cat`. Esta variable proviene de la discusion bibliografica realizada en `Codigo.R` y clasifica los eventos en tres grupos excluyentes:
+
+- `Fuerte`
+- `Mayor`
+- `Grande o extremo`
+
+La razon para dejar este bloque al final del script es metodologica. Los umbrales acumulativos son mas directos para responder preguntas como "cuantos eventos hubo sobre cierta magnitud", mientras que las categorias permiten observar la composicion interna del catalogo. Dicho de otro modo: `M >= 7.0`, `M >= 7.5` y `M >= 8.0` comparan niveles de exigencia; `magnitud_cat` compara grupos de severidad que no se superponen entre si.
+
+Se agregaron dos conteos:
+
+- `conteo_anual_magnitud_cat`
+- `conteo_decadal_magnitud_cat`
+
+No se incorporo un conteo mensual por categoria en esta etapa, porque habria exigido completar todas las combinaciones mes-categoria con ceros y podria sobrecargar el preinforme descriptivo. Para la primera lectura por categorias, se priorizo la composicion anual y decadal.
+
+Luego se agregaron dos graficos de composicion por categoria de magnitud:
+
+- eventos anuales por categoria de magnitud;
+- eventos decadales por categoria de magnitud.
+
+Estos graficos usan barras apiladas para mostrar como se reparte el total de eventos entre `Fuerte`, `Mayor` y `Grande o extremo`. Como `magnitud_cat` fue definida como factor ordenado en `Codigo.R`, los graficos respetan el orden conceptual de severidad.
+
+La razon metodologica para usar barras apiladas es que el objetivo no es comparar una serie independiente por cada categoria, sino observar la composicion interna del catalogo a lo largo del tiempo. Asi, el grafico conserva el total anual o decadal y al mismo tiempo muestra que parte corresponde a cada nivel de magnitud.
+
+Posteriormente se agregaron etiquetas con las frecuencias absolutas dentro de cada segmento de las barras apiladas. Esta decision busca que el grafico sea autoexplicativo: la contraparte puede identificar no solo la composicion visual, sino tambien el numero de eventos que aporta cada categoria en cada año o decada. En el grafico anual se usan etiquetas mas pequeñas para evitar saturacion visual; en el grafico decadal las etiquetas pueden ser mas grandes porque hay menos barras.
 
 # Limitaciones a recordar
 
