@@ -98,9 +98,51 @@ View(total_eventos_zona)
 
 #Contar por zona y año
 eventos_zona_anio <- sismos %>%
+  count(año, zona, name = "numero_eventos") %>%
+  tidyr::pivot_wider(
+    names_from = zona,
+    values_from = numero_eventos,
+    values_fill = 0
+  ) %>%
+  arrange(año)
+View(eventos_zona_anio)
+
+#Contar por zona y año, pero de otra forma, que podria servir para algun tipo de grafico
+eventos_zona_anio <- sismos %>%
   count(zona, año, name = "numero_eventos") %>%
   arrange(año, zona)
 View(eventos_zona_anio)
 
 
 
+#Mostrar todas las columnas en la consola:
+options(tibble.width = Inf)
+#Estadísticos descriptivos por zona----
+sismos %>%
+  group_by(zona) %>%
+  summarise(
+    numero_eventos = n(),
+    tasa_anual = numero_eventos / cantidad_años,
+    magnitud_media = mean(mag, na.rm = TRUE),
+    magnitud_mediana = median(mag, na.rm = TRUE),
+    magnitud_desviacion = sd(mag, na.rm = TRUE),
+    magnitud_maxima = max(mag, na.rm = TRUE),
+    magnitud_cuantil_25 = quantile(mag, 0.25, na.rm = TRUE),
+    magnitud_cuantil_75 = quantile(mag, 0.75, na.rm = TRUE),
+    magnitud_cuantil_90 = quantile(mag, 0.90, na.rm = TRUE),
+    magnitud_cuantil_95 = quantile(mag, 0.95, na.rm = TRUE),
+    profundidad_media = mean(depth, na.rm = TRUE),
+    profundidad_mediana = median(depth, na.rm = TRUE),
+    profundidad_desviacion = sd(depth, na.rm = TRUE),
+    profundidad_maxima = max(depth, na.rm = TRUE),
+    .groups = "drop"
+  )
+#Categorías de profundidad por zona----
+sismos %>%
+  count(zona, profundidad_cat, name = "numero_eventos") %>%
+  group_by(zona) %>%
+  mutate(
+    proporcion = numero_eventos / sum(numero_eventos),
+    porcentaje = proporcion * 100
+  ) %>%
+  ungroup()
