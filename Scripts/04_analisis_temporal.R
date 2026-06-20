@@ -3,6 +3,11 @@
 
 
 #Preparacion temporal----
+# La variable magnitud_cat fue creada previamente en Codigo.R.
+# Esta clasifica los eventos en: Fuerte, Mayor y Grande o extremo.
+# Los indicadores evento_m70, evento_m75 y evento_m80 se mantienen para responder
+# preguntas especificas basadas en umbrales de magnitud.
+
 sismos_temporal <- sismos %>%
   mutate(
     fecha_mes = floor_date(fecha, unit = "month"),

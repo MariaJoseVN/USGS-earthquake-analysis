@@ -41,6 +41,17 @@ sismos <- sismos %>%
     )
   )
 
+#Preparar variables para analisis categorico de magnitud----
+sismos <- sismos %>%
+  mutate(
+    magnitud_cat = case_when(
+      mag >= 6.5 & mag < 7.0 ~ "Fuerte",
+      mag >= 7.0 & mag < 7.8 ~ "Mayor",
+      mag >= 7.8 ~ "Grande o extremo",
+      TRUE ~ NA_character_
+    )
+  )
+
 ##Selección de Variables para el análisis general preliminar----
 sismos <- sismos %>%
   select(
@@ -54,6 +65,7 @@ sismos <- sismos %>%
     depth,
     profundidad_cat,
     mag,
+    magnitud_cat,
     magType, #Varía según quien midio. Puede que sea con parámetros diferentes
     place, 
     type, #Todos son Terremotos, nosé que otra categoría podría haber
