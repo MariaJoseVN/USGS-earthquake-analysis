@@ -12,7 +12,7 @@ sismos_raw <- read_csv(ruta_base, show_col_types = FALSE) #Datos crudos
 
 #Analisis Preliminar de la estructura de los datos----
 
-View(sismos_raw)
+#View(sismos_raw)
 summary(sismos_raw)
 dim(sismos_raw) #Observacioes por filas y columnas / 1186 observaciones y 22 variables
 str(sismos_raw) #Naturaleza de la variable
@@ -22,7 +22,7 @@ glimpse(sismos_raw) #Filas, columnas y head...
 miss_var_summary(sismos_raw)
 skim(sismos_raw) # Resumen de Datos faltantes, estadisticas básicas y distributivas.
 
-#Preparar variables básicas para análisis temporal
+#Preparar variables básicas para análisis temporal----
 sismos <- sismos_raw %>%
   mutate(
     fecha_hora_utc = ymd_hms(time, tz = "UTC"),
@@ -30,6 +30,17 @@ sismos <- sismos_raw %>%
     año = year(fecha_hora_utc),
     mes = month(fecha_hora_utc)
   )
+
+#Preparar variables para análisis categórico de profundidad----
+sismos <- sismos %>%
+  mutate(
+    profundidad_cat = case_when(
+      depth >= 0 & depth <= 70 ~ "Superficial",
+      depth > 70 & depth <= 300 ~ "Intermedio",
+      depth > 300 ~ "Profundo"
+    )
+  )
+
 ##Selección de Variables para el análisis general preliminar----
 sismos <- sismos %>%
   select(
@@ -41,6 +52,7 @@ sismos <- sismos %>%
     latitude,
     longitude,
     depth,
+    profundidad_cat,
     mag,
     magType, #Varía según quien midio. Puede que sea con parámetros diferentes
     place, 
@@ -77,8 +89,8 @@ count(eventos_fuera_periodo)
 range(sismos$fecha) #estan dentro del intervalo estipulado en la documentación
 
 ##Consistencia Espacial----
-#coordenadas geográficamente posibles
 
+#coordenadas geográficamente posibles
 rango_espacial <- sismos %>%
   summarise(
     latitud_minima = min(latitude, na.rm = TRUE),
@@ -98,4 +110,3 @@ source("Scripts/01_analisis_descriptivo.R")
 source("Scripts/02_visualizaciones.R")
 source("Scripts/03_tablas_informe.R")
 source("Scripts/04_analisis_temporal.R")
-source("01.1_analisis_descriptivo_prueba.R")
