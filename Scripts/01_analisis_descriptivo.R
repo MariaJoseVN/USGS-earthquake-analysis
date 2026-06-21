@@ -300,50 +300,69 @@ histograma_magnitud <- hist(
   plot = FALSE
 )
 
-par(
-  bg = "white",
-  mar = c(5, 4, 4, 2) + 0.1
-)
-
-plot(
-  histograma_magnitud,
-  freq = TRUE,
-  main = "Distribución de eventos según magnitud",
-  xlab = "Magnitud",
-  ylab = "Número de eventos",
-  col = "gray80",
-  border = "gray30",
-  ylim = c(
-    0,
-    max(histograma_magnitud$counts) * 1.10
+graficar_distribucion_magnitud <- function() {
+  par(
+    bg = "white",
+    mar = c(5, 4, 4, 2) + 0.1
   )
+  
+  plot(
+    histograma_magnitud,
+    freq = TRUE,
+    main = "Distribución de eventos según magnitud",
+    xlab = "Magnitud",
+    ylab = "Número de eventos",
+    col = "gray80",
+    border = "gray30",
+    ylim = c(
+      0,
+      max(histograma_magnitud$counts) * 1.10
+    )
+  )
+  
+  abline(
+    v = mean(sismos$mag, na.rm = TRUE),
+    col = "black",
+    lty = 2,
+    lwd = 1.5
+  )
+  
+  abline(
+    v = median(sismos$mag, na.rm = TRUE),
+    col = "red",
+    lty = 3,
+    lwd = 1.5
+  )
+  
+  legend(
+    "topright",
+    legend = c("Media", "Mediana"),
+    col = c("black", "red"),
+    lty = c(2, 3),
+    lwd = c(1.5, 1.5),
+    bty = "n",
+    cex = 0.8
+  )
+  
+  box()
+}
+
+dir.create(
+  "Informes Quarto/Imágenes y Recursos",
+  recursive = TRUE,
+  showWarnings = FALSE
 )
 
-abline(
-  v = mean(sismos$mag, na.rm = TRUE),
-  col = "black",
-  lty = 2,
-  lwd = 1.5
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/distribucion-eventos-magnitud.png",
+  width = 1600,
+  height = 1000,
+  res = 180
 )
+graficar_distribucion_magnitud()
+dev.off()
 
-abline(
-  v = median(sismos$mag, na.rm = TRUE),
-  col = "red",
-  lty = 3,
-  lwd = 1.5
-)
-
-legend(
-  "topright",
-  legend = c("Media", "Mediana"),
-  col = c("black", "red"),
-  lty = c(2, 3),
-  lwd = c(1.5, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
+graficar_distribucion_magnitud()
 
 #Distribución general de profundidad----
 histograma_profundidad <- hist(

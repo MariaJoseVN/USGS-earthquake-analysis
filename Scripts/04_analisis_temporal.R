@@ -473,6 +473,329 @@ legend(
 )
 box()
 
+#Guardar graficos temporales para informe----
+dir.create(
+  "Informes Quarto/Imágenes y Recursos",
+  recursive = TRUE,
+  showWarnings = FALSE
+)
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/eventos-anuales-catalogo.png",
+  width = 1600,
+  height = 950,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(6, 4, 4, 2) + 0.1
+)
+
+pos_barras_anual_catalogo_informe <- barplot(
+  height = conteo_anual$n_catalogo_completo,
+  names.arg = conteo_anual$año,
+  main = "Eventos anuales - Catálogo completo",
+  ylab = "Número de eventos",
+  xlab = "Año",
+  col = "gray80",
+  border = "gray30",
+  las = 2,
+  cex.names = 0.7,
+  ylim = c(0, max(conteo_anual$n_catalogo_completo) + 8),
+  axes = FALSE
+)
+
+text(
+  x = pos_barras_anual_catalogo_informe,
+  y = conteo_anual$n_catalogo_completo,
+  labels = conteo_anual$n_catalogo_completo,
+  pos = 3,
+  cex = 0.65
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = mean(conteo_anual$n_catalogo_completo, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo anual", "Media anual"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+dev.off()
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/tasa-decadal-m70.png",
+  width = 1400,
+  height = 900,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
+pos_barras_tasa_decadal_m70_informe <- barplot(
+  height = conteo_decadal$tasa_anual_m70_o_mayor,
+  names.arg = conteo_decadal$decada,
+  main = "Tasa anual promedio por década - M >= 7,0",
+  ylab = "Eventos promedio por año",
+  xlab = "Década",
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  ylim = c(0, max(conteo_decadal$tasa_anual_m70_o_mayor) * 1.25),
+  axes = FALSE
+)
+
+text(
+  x = pos_barras_tasa_decadal_m70_informe,
+  y = conteo_decadal$tasa_anual_m70_o_mayor,
+  labels = format(round(conteo_decadal$tasa_anual_m70_o_mayor, 1), decimal.mark = ","),
+  pos = 3,
+  cex = 0.85
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+abline(
+  h = mean(conteo_decadal$tasa_anual_m70_o_mayor, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Tasa anual promedio", "Media de tasas"),
+  fill = c("gray80", NA),
+  border = c("gray30", NA),
+  lty = c(NA, 2),
+  col = c(NA, "black"),
+  lwd = c(NA, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+dev.off()
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/serie-mensual-catalogo.png",
+  width = 1600,
+  height = 900,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
+plot(
+  indice_mensual,
+  conteo_mensual$n_catalogo_completo,
+  type = "l",
+  main = "Serie mensual - Catálogo completo",
+  ylab = "Número de eventos",
+  xlab = "Mes observado",
+  col = "darkblue",
+  lwd = 1,
+  xaxt = "n"
+)
+
+abline(
+  h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
+  col = "darkblue",
+  lty = 2,
+  lwd = 1.5
+)
+
+axis(
+  side = 1,
+  at = seq(12, nrow(conteo_mensual), by = 24),
+  labels = seq(12, nrow(conteo_mensual), by = 24),
+  las = 2,
+  cex.axis = 0.7
+)
+
+legend(
+  "topright",
+  legend = c("Conteo observado", "Media"),
+  col = c("darkblue", "darkblue"),
+  lty = c(1, 2),
+  lwd = c(1, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+dev.off()
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/serie-anual-m70.png",
+  width = 1600,
+  height = 900,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(6, 4, 4, 2) + 0.1
+)
+
+plot(
+  indice_anual,
+  conteo_anual$n_eventos_m70_o_mayor,
+  type = "l",
+  main = "Serie anual - M >= 7,0",
+  ylab = "Número de eventos",
+  xlab = "Año",
+  col = "red",
+  lwd = 1.5,
+  xaxt = "n"
+)
+
+abline(
+  h = mean(conteo_anual$n_eventos_m70_o_mayor, na.rm = TRUE),
+  col = "red",
+  lty = 2,
+  lwd = 1.5
+)
+
+axis(
+  side = 1,
+  at = marcas_anuales,
+  labels = marcas_anuales,
+  las = 2,
+  cex.axis = 0.7
+)
+
+legend(
+  "topright",
+  legend = c("Conteo observado", "Media"),
+  col = c("red", "red"),
+  lty = c(1, 2),
+  lwd = c(1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+dev.off()
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/recurrencia-decadal-m70.png",
+  width = 1400,
+  height = 900,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
+boxplot(
+  dias_desde_evento_anterior ~ decada,
+  data = eventos_m70_recurrencia_decadal,
+  main = "Días entre eventos M >= 7,0 por década",
+  xlab = "Década",
+  ylab = "Días desde el evento anterior",
+  col = "gray80",
+  border = "gray30"
+)
+
+box()
+dev.off()
+
+png(
+  filename = "Informes Quarto/Imágenes y Recursos/composicion-decadal-magnitud-cat.png",
+  width = 1400,
+  height = 900,
+  res = 180
+)
+
+par(
+  bg = "white",
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
+pos_barras_decadal_magnitud_informe <- barplot(
+  matriz_decadal_magnitud,
+  beside = FALSE,
+  main = "Eventos por década según categoría de magnitud",
+  ylab = "Número de eventos",
+  xlab = "Década",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  ylim = c(0, max(colSums(matriz_decadal_magnitud)) * 1.15),
+  axes = FALSE
+)
+
+axis(
+  side = 2,
+  las = 1,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+pos_texto_decadal_magnitud_informe <- apply(
+  matriz_decadal_magnitud,
+  2,
+  cumsum
+) - matriz_decadal_magnitud / 2
+
+x_texto_decadal_magnitud_informe <- matrix(
+  rep(pos_barras_decadal_magnitud_informe, each = nrow(matriz_decadal_magnitud)),
+  nrow = nrow(matriz_decadal_magnitud)
+)
+
+text(
+  x = as.vector(x_texto_decadal_magnitud_informe),
+  y = as.vector(pos_texto_decadal_magnitud_informe),
+  labels = ifelse(as.vector(matriz_decadal_magnitud) > 0, as.vector(matriz_decadal_magnitud), ""),
+  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_decadal_magnitud)),
+  cex = 0.8
+)
+
+legend(
+  "topright",
+  legend = colnames(tabla_decadal_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+dev.off()
+
 #Pregunta Orientadora caso decada:-----
 #¿Cómo ha variado la ocurrencia anual o decadal de eventos M >= 7,0?
 #no conviene comparar 84 eventos contra décadas completas de 10 años
