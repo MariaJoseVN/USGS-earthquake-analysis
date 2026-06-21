@@ -143,24 +143,33 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-**Valores faltantes:** Se revisa la presencia de valores faltantes en las variables centrales del análisis: `id`, `time`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`. Estas variables no presentan valores faltantes, por lo que no se requiere aplicar imputación, interpolación ni exclusión de registros para el análisis principal.
+### Valores faltantes 
+Se revisa la presencia de valores faltantes en las variables centrales del análisis: `id`, `time`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`. Estas variables no presentan valores faltantes, por lo que no se requiere aplicar imputación, interpolación ni exclusión de registros para el análisis principal.
 
 Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`, sí presentan valores faltantes. Dado que estas variables describen aspectos instrumentales, incertidumbre o métricas de procesamiento, no se utilizan como eje del presente análisis. Se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
 
-**Duplicados:** Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
+### Duplicados
+ Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
 
-**Tipo de evento y estado de revisión:** Se verifican `type` y `status`. Todos los registros corresponden a `earthquake` y todos presentan estado `reviewed`. Por esta razón, no se requiere aplicar filtros adicionales por tipo de evento ni por estado de revisión.
+### Tipo de evento y estado de revisión 
+Se verifican `type` y `status`. Todos los registros corresponden a `earthquake` y todos presentan estado `reviewed`. Por esta razón, no se requiere aplicar filtros adicionales por tipo de evento ni por estado de revisión.
 
-**Consistencia temporal:** La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
+### Consistencia temporal
+ La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
 
-**Consistencia espacial:** Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
+### Consistencia espacial
+ Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
 
-**Magnitud y unidades de medida:** Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
+### Magnitud y unidades de medida
+ Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
 
 A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
 
 
 ## Caracterización Descriptiva
+
+
+
 
 ## Caracterización Temporal
 
@@ -214,8 +223,10 @@ Variable & Origen & Descripción breve & Análisis \\
 \end{longtable}
 \endgroup
 
-
+\newpage
 ## Caracterización Descriptiva
+### 
+
 
 
 ## Caracterización Temporal
@@ -242,17 +253,25 @@ Completar con las citas utilizadas en el texto. Las referencias se administran d
 
 # Anexos reproducibles
 
-## Parámetros de descarga
+## Caracterización descriptiva 
 
-Completar con la URL, consulta, filtros o procedimiento utilizado para obtener los datos.
-
-## Código de procesamiento
-
-Incluir código o enlaces a scripts solo como respaldo reproducible, no como parte central de la narración del informe.
-
-## Material complementario
-
-Agregar tablas, figuras o detalles técnicos que respalden el informe sin interrumpir la lectura principal.
+### 
+\begingroup
+\small
+\begin{longtable}{lr}
+\caption{Síntesis del período y tamaño del catálogo analizado.}
+\label{tbl-conteo-periodo} \\
+\toprule
+Indicador & Valor \\
+\midrule
+Año de inicio & 2000 \\
+Año de término & 2025 \\
+Años analizados & 26 \\
+Meses analizados & 312 \\
+Eventos con $M \geq 6{,}5$ & 1.186 \\
+\bottomrule
+\end{longtable}
+\endgroup
 
 # Bibliografía
 
