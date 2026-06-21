@@ -186,7 +186,7 @@ El diagnóstico distingue entre variables centrales del análisis y variables au
 
 Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
-Como resultado de esta etapa, el análisis se consolida en el objeto `sismos`, la base depurada que reemplaza a `sismos_raw` como insumo único de las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superaron el control de calidad y las variables derivadas que se construyen a medida que avanza la investigación, correspondientes a la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la Tabla \ref{tbl-variables-consideradas}.
+Como resultado de esta etapa, el análisis se consolida en el objeto `sismos`, la base depurada que reemplaza a `sismos_raw` como insumo único de las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superaron el control de calidad y las variables derivadas que se construyen a medida que avanza la investigación, correspondientes a la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
 ## Caracterización descriptiva
 
@@ -266,6 +266,7 @@ Se clasifica la profundidad de los eventos por zona, distinguiendo entre categor
 \refstepcounter{table}
 
 \label{tbl-variables-consideradas}
+\hypertarget{dest-tbl-variables-consideradas}{}
 
 \begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
 \toprule
@@ -456,7 +457,7 @@ En consecuencia, la base depurada queda consolidada en el objeto `sismos`, que c
 - Variables derivadas de categorización: `profundidad_cat` y `magnitud_cat`.
 - Variables derivadas de comparación espacial e indicadores de magnitud: `zona`, `evento_m70`, `evento_m75` y `evento_m80`.
 
-De este modo, `sismos` reúne todas las variables solicitadas en el encargo que pasaron la depuración junto con las derivadas que se construyen conforme avanza la investigación. La composición completa, con el origen y el propósito analítico de cada variable, se detalla en la Tabla \ref{tbl-variables-consideradas}.
+De este modo, `sismos` reúne todas las variables solicitadas en el encargo que pasaron la depuración junto con las derivadas que se construyen conforme avanza la investigación. La composición completa, con el origen y el propósito analítico de cada variable, se detalla en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
@@ -487,8 +488,8 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \hfill
 \begin{minipage}[t]{0.47\textwidth}
 \centering
-\phantomsection
 \refstepcounter{table}
+\phantomsection
 \label{tbl-resumen-mag}
 \begin{tabular}{lr}
 \toprule
