@@ -167,7 +167,8 @@ A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la
 
 
 ## Caracterización Descriptiva
-
+### Delimitación temporal y conteo de eventos
+Se definió el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación. En dicho intervalo, la base `sismos` contiene 1186 terremotos con magnitud mayor o igual a 6.5. Ésta etapa permite fijar el alcance temporal del estudio y establecer el total de eventos sobre el cual se calculan las tasas de ocurrencia.
 
 
 
