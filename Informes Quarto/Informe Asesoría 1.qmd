@@ -186,6 +186,8 @@ El diagnóstico distingue entre variables centrales del análisis y variables au
 
 Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
+Como resultado de esta etapa, el análisis se consolida en el objeto `sismos`, la base depurada que reemplaza a `sismos_raw` como insumo único de las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superaron el control de calidad y las variables derivadas que se construyen a medida que avanza la investigación, correspondientes a la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la Tabla \ref{tbl-variables-consideradas}.
+
 ## Caracterización descriptiva
 
 ### Delimitación temporal y conteo de eventos
@@ -446,6 +448,15 @@ Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran
 Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
 
 A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
+
+En consecuencia, la base depurada queda consolidada en el objeto `sismos`, que constituye el insumo único de los análisis descriptivo, temporal y espacial. A diferencia de `sismos_raw`, este objeto conserva exclusivamente las variables relevantes para el encargo e incorpora de manera progresiva las variables derivadas que requiere cada etapa. Su composición distingue:
+
+- Variables originales solicitadas que superaron el control de calidad: `id`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`, además de la marca temporal `time` transformada a `fecha_hora_utc`.
+- Variables derivadas temporales y de calendario: `fecha`, `año`, `mes`, `fecha_mes` y `decada`.
+- Variables derivadas de categorización: `profundidad_cat` y `magnitud_cat`.
+- Variables derivadas de comparación espacial e indicadores de magnitud: `zona`, `evento_m70`, `evento_m75` y `evento_m80`.
+
+De este modo, `sismos` reúne todas las variables solicitadas en el encargo que pasaron la depuración junto con las derivadas que se construyen conforme avanza la investigación. La composición completa, con el origen y el propósito analítico de cada variable, se detalla en la Tabla \ref{tbl-variables-consideradas}.
 
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
