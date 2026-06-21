@@ -234,7 +234,8 @@ sismos %>%
   ungroup()
 
 
-#Estadísticos descriptivos iniciales por zona----
+#Estadísticos descriptivos iniciales por zona---- 
+### corresponde al 4.3 del informe final
 estadisticos_zona <- sismos %>%
   group_by(zona) %>%
   summarise(

@@ -170,11 +170,41 @@ A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la
 ### Delimitación temporal y conteo de eventos
 Se definió el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación. En dicho intervalo, la base `sismos` contiene 1186 terremotos con magnitud mayor o igual a 6.5. Ésta etapa permite fijar el alcance temporal del estudio y establecer el total de eventos sobre el cual se calculan las tasas de ocurrencia.
 
+### Caracterización descriptiva de la variable magnitud sísmica (mag)
+Se caracterizan las magnitudes de los terremotos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
+
+Además, se calcula la magnitud máxima por año para identificar la mayor intensidad registrada en cada período anual. Finalmente, se resume la distribución de eventos según categoría de magnitud, obteniendo el número, proporción y porcentaje de terremotos en cada grupo.
+
+Esta etapa permite describir la severidad de los eventos sísmicos, comparar su comportamiento anual y evaluar la concentración de terremotos según rangos de magnitud.
+
+### Caracterización descriptiva de la profundidad sísmica
+Se caracterizan las profundidades de los eventos sísmicos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
+
+Además, se resume la distribución de eventos según categoría de profundidad, identificando la proporción de terremotos en cada rango definido.
+
+Esta etapa permite describir la profundidad típica de los eventos, evaluar su variabilidad y reconocer la concentración de terremotos según niveles de profundidad.
+
+
 
 
 ## Caracterización Temporal
 
-## Caracterización Espacial
+
+## Caracterización Espacial 
+### Georreferenciación y asignación de zona
+Se incorporan polígonos geográficos de zonas sísmicas (Cinturón de fuego, Cinturon Alpino-Himalayo, Dorsal Meso-Atlantica y Resto del mundo) y se transforman los registros de terremotos en puntos espaciales a partir de sus coordenadas de longitud y latitud. Luego, cada evento se asigna a una zona mediante intersección espacial; los eventos sin coincidencia territorial se clasifican como “Resto del mundo”.
+
+### Conteo de eventos por zona y año
+Se calcula el total de eventos por zona y su distribución anual entre 2000 y 2025. Para mantener consistencia temporal y territorial, se completan las combinaciones zona-año sin registros con valor cero.
+
+### Estadísticos descriptivos por zona
+Se resumen los principales indicadores por zona, incluyendo número de eventos, proporción, porcentaje, tasa anual, tasa mensual, magnitud y profundidad. Esta etapa permite comparar la frecuencia, severidad y características de los eventos entre zonas sísmicas.
+
+### Distribución de profundidad por zona
+Se clasifica la profundidad de los eventos por zona, distinguiendo entre categorías superficial, intermedia y profunda. Luego, se calcula el número, proporción y porcentaje de eventos en cada categoría, permitiendo caracterizar la estructura de profundidad de cada zona sísmica.
+
+
+
 
 # Resultados
 
