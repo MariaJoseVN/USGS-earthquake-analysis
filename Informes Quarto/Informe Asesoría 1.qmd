@@ -43,44 +43,48 @@ execute:
 
 # Resumen ejecutivo
 
-# Antecedentes
 
+# Antecedentes
 La actividad sísmica constituye un fenómeno geofísico que ocurre de manera transveral a lo largo del mundo. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos observados a escala global. Su relevancia radica en una posible caracterización territorial, gestión institucional y/o la comprensión de patrones espaciales y temporales asociadosa zonas tectónicamente activas.
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
-# Objetivo general
 
+# Objetivo general
 El presente pre-informe se desarrolla en el marco de una asesoría estadística orientada a transformar los datos públicos de eventos sísmicos en información cuantitativa confiable, documentada e interpretable. La contraparte solicitante requiere una caracterización de grandes terremotos a nivel mundial, con especial interés en su distribución espacial, evolución temporal, comparación entre zonas geográficas de interés, recurrencia y presencia de eventos extremos, con resultados interpretables y facilmente replicables.
 
 El análisis se concentra en eventos de magnitud $M \geq 6{,}5$. Umbral que permite focalizar la revisión en terremotos relevantes según el interés de estudio solicitado.
 
-## Objetivos específicos
 
+## Objetivos específicos
 - Documentar la fuente de datos, fecha de descarga, parámetros de consulta y criterios de selección que se utilizan para construir la base de análisis.
 - Realizar un control de calidad de los datos, considerando duplicados, valores faltantes, consistencia temporal, consistencia espacial y tipo de evento.
 - Describir la distribución de los eventos según magnitud, profundidad, frecuencia anual, frecuencia decadal y ocurrencia de eventos extremos.
 - Comparar preliminarmente la actividad sísmica observada en el Cinturón de Fuego del Pacífico respecto del resto del mundo, utilizando una definición geográfica explícita y reproducible.
 - Identificar limitaciones metodológicas relevantes del análisis.
 
+
 # Alcance del informe
+- Este pre-informe corresponde a una primera etapa de análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. El estudio considera eventos registrados en el catálogo de la USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$.
 
-- Este pre-informe corresponde a una primera etapa de estadística descriptiva y exploratoria. El análisis cubre eventos sísmicos globales registrados en el catálogo USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$. La unidad de análisis es el evento sísmico registrado en el catálogo, considerando principalmente `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`.
-
-- El pre-informe incluye trazabilidad de la descarga, revisión de calidad de datos, construcción de variables derivadas, caracterización descriptiva general, análisis temporal mediante conteos anuales y decadales, y una comparación espacial preliminar entre el Cinturón de Fuego del Pacífico y el resto del mundo.
+La unidad de análisis corresponde a cada evento sísmico registrado en dicho catálogo, considerando principalmente las variables `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`. En consecuencia, las conclusiones presentadas se derivan exclusivamente de los datos descargados desde la USGS, por lo que deben interpretarse dentro de los límites, cobertura y características propias de esta fuente de información.
 
 - El pre-informe no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
-- Los resultados deben interpretarse como evidencia estadística descriptiva basada en el catálogo disponible.
+- El desarrollo del pre-informe se realizará utilizando Positron como entorno de trabajo para R y QGIS para la manipulación y visualización de datos georreferenciados.
+
+Asimismo, se podrá utilizar NotebookLM únicamente como apoyo para la lectura en español de bibliografía que originalmente se encuentre en inglés, con el fin de facilitar su comprensión por parte del equipo de trabajo.
+
+Como apoyo complementario al proceso de programación, se incorporará el uso de una extensión de ChatGPT en Positron, principalmente para orientar la estructura del código, proponer formas más simples y ordenadas de ejecutar los procedimientos, y buscar soluciones ante errores puntuales de ejecución, priorizando funciones nativas de R y recurriendo a librerías externas solo cuando sea necesario.
+
+Ninguna herramienta de inteligencia artificial podrá generar redacción, interpretación, análisis, conclusiones ni contenido final del informe. Su uso quedará sujeto al acuerdo de todos los integrantes del equipo de trabajo.
 
 # Descripción de datos y parámetros de descarga
 
 ## Fuente de datos
-
 La fuente principal de información corresponde al catálogo público de terremotos de la United States Geological Survey (USGS), específicamente el sitio [USGS Earthquake Catalog Search.](https://earthquake.usgs.gov/earthquakes/search/)
 
 ## Parámetros de descarga
-
 La configuración utilizada se documenta en la siguiente bitácora de descarga.
 
 \begingroup
@@ -121,7 +125,6 @@ Ordenamiento & \texttt{Time - Oldest First} \\
 El formato `.CSV` se utiliza como base principal del procesamiento estadístico, aunque paralelamente se utiliza un formato `.GeoJson` con las mismas caracteristicas en el software `Qgis`.
 
 ### Datos Originales
-
 Una vez que los datos se descargan desde USGS según los parámetros indicados en la Tabla \ref{tbl-parametros-descarga}, el archivo crudo `BBDD/query.csv` se importa en R y se almacena inicialmente como el objeto **`sismos_raw`**. Esta base conserva las variables originales entregadas por USGS, sin modificaciones previas, y constituye el punto de partida del proceso de depuración, selección y construcción de variables derivadas.
 
 Las variables originales del catálogo pueden organizarse en distintos grupos según su función:
@@ -140,7 +143,6 @@ Además, la base original contiene variables asociadas a la medición instrument
 # Metodología y justificación estadística
 
 ## Depuración y control de calidad
-
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
 ### Valores faltantes 
@@ -185,10 +187,33 @@ Además, se resume la distribución de eventos según categoría de profundidad,
 Esta etapa permite describir la profundidad típica de los eventos, evaluar su variabilidad y reconocer la concentración de terremotos según niveles de profundidad.
 
 
-
-
 ## Caracterización Temporal
+### Preparación de variables temporales e indicadores de magnitud
+Se prepara la base sismos para el análisis temporal mediante la creación de variables auxiliares de agrupación mensual y decadal. La variable fecha_mes estandariza cada evento al primer día del mes correspondiente, mientras que década permite agrupar los registros en períodos de diez años.
 
+Adicionalmente, se definen indicadores lógicos para identificar eventos sísmicos con magnitud mayor o igual a 7.0, 7.5 y 8.0. Si bien las bases de la asesoría solicitan específicamente el análisis de eventos con magnitud mayor o igual a 7.0, se incorporan también los umbrales de 7.5 y 8.0 con el propósito de profundizar en el estudio de grandes terremotos y eventos extremos. Estos tres niveles de magnitud, establecidos en intervalos consecutivos de 0.5 unidades, permiten comparar la frecuencia de eventos según distintos grados de severidad, facilitando un análisis más detallado de la distribución de terremotos extremos dentro del catálogo.
+
+### Conteos y tasas temporales de ocurrencia
+Se caracteriza la frecuencia de eventos sísmicos mediante conteos mensuales, anuales y decadales, considerando el catálogo completo y los umbrales de magnitud M ≥ 7.0, M ≥ 7.5 y M ≥ 8.0. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual permite comparar la ocurrencia entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
+
+Adicionalmente, se calculan tasas anuales promedio por década, ajustando los conteos según la cantidad efectiva de años observados en cada período. Esta corrección permite comparar décadas completas e incompletas de manera proporcional, evitando sesgos por distinta duración temporal.
+
+Esta etapa permite describir la evolución de la ocurrencia sísmica en distintas escalas de tiempo y establecer una base cuantitativa para comparar la frecuencia de eventos generales y de mayor magnitud.
+
+### Construcción de series temporales mensuales y anuales
+Se construyen series temporales para el catálogo completo y para los eventos con magnitud mayor o igual a 7.0, considerando dos escalas de agregación: mensual y anual. En el caso mensual, la serie se define con inicio en enero de 2000 y frecuencia igual a 12, mientras que en el caso anual se utiliza frecuencia igual a 1, representando observaciones por año calendario. Esta etapa permite estructurar los conteos como series temporales regulares, facilitando su resumen estadístico, visualización y análisis posterior. La escala mensual permite observar fluctuaciones de corto plazo, mientras que la escala anual entrega una lectura más estable de la evolución general de la sismicidad durante el período 2000-2025.
+
+Se calculan medidas descriptivas básicas para cada serie temporal mensual y anual mediante la función summary(). Estos resúmenes permiten identificar niveles mínimos, máximos, medias y distribución general de los conteos observados. Esta etapa entrega una primera referencia cuantitativa sobre la frecuencia típica de eventos sísmicos y permite distinguir períodos o registros que se alejan del comportamiento promedio del catálogo.
+
+### Recurrencia temporal de eventos M ≥ 7.0
+Se seleccionan los eventos con magnitud mayor o igual a 7.0, se ordenan cronológicamente y se calcula el número de días transcurridos entre eventos consecutivos. Luego, se resumen estos intervalos mediante media, mediana, mínimo, máximo y cuartiles por década.
+
+Este análisis permite describir el tiempo típico entre terremotos relevantes y comparar su recurrencia temporal entre distintos períodos.
+
+### Composición por categoría de magnitud
+Se calculan conteos anuales y decadales según la variable magnitud_cat, que clasifica los eventos en categorías excluyentes: “Fuerte”, “Mayor” y “Grande o extremo”. Estas categorías fueron construidas a partir de los nombres y criterios de clasificación de magnitud identificados en la bibliografía revisada.
+
+Esta etapa permite describir la composición temporal del catálogo y distinguir qué categorías explican principalmente la frecuencia observada en cada año o década.
 
 ## Caracterización Espacial 
 ### Georreferenciación y asignación de zona
@@ -205,11 +230,9 @@ Se clasifica la profundidad de los eventos por zona, distinguiendo entre categor
 
 
 
-
 # Resultados
 
 ## Depuración y control de calidad
-
 \begingroup
 \small
 \setlength{\tabcolsep}{4pt}
@@ -255,6 +278,7 @@ Variable & Origen & Descripción breve & Análisis \\
 \endgroup
 
 \newpage
+
 ## Caracterización Descriptiva
 ### 
 
