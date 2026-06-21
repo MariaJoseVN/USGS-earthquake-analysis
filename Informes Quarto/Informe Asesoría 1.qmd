@@ -43,15 +43,13 @@ execute:
 
 # Resumen ejecutivo
 
-# Antecedentes, objetivo y alcance
-
-## Antecedentes
+# Antecedentes
 
 La actividad sísmica constituye un fenómeno geofísico que ocurre de manera transveral a lo largo del mundo. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos observados a escala global. Su relevancia radica en una posible caracterización territorial, gestión institucional y/o la comprensión de patrones espaciales y temporales asociadosa zonas tectónicamente activas.
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), utilizado por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
-## Objetivo general
+# Objetivo general
 
 El presente pre-informe se desarrolla en el marco de una asesoría estadística orientada a transformar los datos públicos de eventos sísmicos en información cuantitativa confiable, documentada e interpretable. La contraparte solicitante requiere una caracterización de grandes terremotos a nivel mundial, con especial interés en su distribución espacial, evolución temporal, comparación entre zonas geográficas de interés, recurrencia y presencia de eventos extremos, con resultados interpretables y facilmente replicables.
 
@@ -65,7 +63,7 @@ El análisis se concentra en eventos de magnitud $M \geq 6{,}5$. Umbral que perm
 - Comparar preliminarmente la actividad sísmica observada en el Cinturón de Fuego del Pacífico respecto del resto del mundo, utilizando una definición geográfica explícita y reproducible.
 - Identificar limitaciones metodológicas relevantes del análisis.
 
-## Alcance del informe
+# Alcance del informe
 
 - Este pre-informe corresponde a una primera etapa de estadística descriptiva y exploratoria. El análisis cubre eventos sísmicos globales registrados en el catálogo USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$. La unidad de análisis es el evento sísmico registrado en el catálogo, considerando principalmente `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`.
 
