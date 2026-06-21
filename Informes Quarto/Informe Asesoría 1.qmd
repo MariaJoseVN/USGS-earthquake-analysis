@@ -340,7 +340,7 @@ La clasificación por `magnitud_cat` complementa esta interpretación: 67,37% de
 
 La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperref[tbl-magnitud-maxima-anual]{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
 
-La variable `depth` presenta una distribución más asimétrica que `mag`. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. En términos de `profundidad_cat`, predominan los eventos superficiales con 76,98% del catálogo, seguidos por eventos intermedios (12,65%) y profundos (10,37%). Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe una cola de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}} y \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}})}.
+La variable `depth` presenta una distribución más asimétrica que `mag`. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. En términos de `profundidad_cat`, predominan los eventos superficiales con 76,98% del catálogo, seguidos por eventos intermedios (12,65%) y profundos (10,37%). El histograma de `depth` refuerza esta lectura, al mostrar una alta concentración de eventos a baja profundidad y una cola hacia valores mayores. Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe un conjunto de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}}, \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}} y \hyperref[fig-distribucion-profundidad]{figura~\ref*{fig-distribucion-profundidad}})}.
 
 ## Caracterización temporal
 
@@ -608,6 +608,15 @@ Profundo & 123 & $10{,}37$ \\
 \bottomtablecaption{tbl-categoria-profundidad}{Número y proporción de eventos por categoría de profundidad.}
 \end{minipage}
 \endgroup
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/distribucion-eventos-profundidad.png}}
+\caption{Distribución de eventos según profundidad para el catálogo analizado.}
+\label{fig-distribucion-profundidad}
+\end{figure}
+```
 
 \newpage
 
