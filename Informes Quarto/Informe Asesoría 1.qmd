@@ -160,25 +160,8 @@ Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `hor
 A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
 
 
-## Enfoque metodológico
+## Caracterización Descriptiva
 
-Dado que esta etapa corresponde a un pre-informe descriptivo, la metodología se orienta a resumir patrones observados en el catálogo, identificar diferencias relevantes entre zonas y documentar decisiones reproducibles, sin formular aún modelos predictivos ni inferencias causales.
-
-Desde el punto de vista estadístico, la primera etapa corresponde a una caracterización descriptiva de los eventos. Esta decisión es necesaria porque antes de comparar zonas o períodos se requiere conocer la estructura general de la base: cuántos eventos contiene, cómo se distribuye `mag`, cómo se comporta `depth`, qué proporción de eventos pertenece a cada categoría y qué zonas concentran mayor frecuencia. Para ello se utilizan conteos, proporciones, tasas anuales y mensuales, medidas de tendencia central, dispersión y cuantiles.
-
-El uso de media y mediana permite resumir el comportamiento central de `mag` y `depth`, mientras que la desviación estándar y los cuantiles permiten describir dispersión, asimetría y presencia de valores altos. Los cuantiles 0,90 y 0,95 son especialmente útiles en este encargo porque permiten observar el tramo superior de la distribución, donde se ubican los eventos de mayor magnitud o profundidad sin depender únicamente del valor máximo.
-
-La comparación descriptiva por `zona` se justifica porque el encargo no solo requiere una lectura global, sino también una comparación espacial interpretable. Para ello, los eventos se clasifican mediante una delimitación geográfica reproducible y se calculan indicadores por zona: número de eventos, porcentaje del total, tasa anual, tasa mensual, medidas resumen de `mag`, medidas resumen de `depth` y distribución por `profundidad_cat`. Esta estrategia permite transformar coordenadas individuales (`latitude`, `longitude`) en unidades comparables para la asesoría.
-
-En una segunda etapa se aborda el análisis temporal. La variable `time`, previamente transformada en variables como `fecha_hora_utc`, `fecha_mes`, `año` y `decada`, permite agrupar los eventos en intervalos regulares. Se utilizan conteos mensuales, anuales y decadales porque la pregunta estadística se refiere a la frecuencia de ocurrencia en el tiempo, no solo a eventos aislados. Los conteos mensuales permiten construir una serie regular; los conteos anuales facilitan la lectura interanual; y los conteos decadales resumen cambios de largo plazo.
-
-Cuando un mes no presenta eventos bajo el umbral definido, se registra un conteo igual a cero. Esta decisión no corresponde a imputación de datos faltantes, sino a la representación correcta de una ausencia observada de eventos en una serie de conteos. Para comparar décadas, se utilizan tasas anuales promedio, ya que el período 2020-2025 no constituye una década completa y no sería adecuado compararlo directamente con décadas de diez años mediante conteos acumulados.
-
-Además, se incorporan umbrales de magnitud como $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$ para focalizar el análisis temporal en grandes terremotos y eventos extremos. Estos umbrales permiten responder preguntas específicas sobre eventos de mayor severidad, mientras que `magnitud_cat` permite describir la composición del catálogo mediante categorías excluyentes.
-
-Computacionalmente, la metodología se implementa mediante scripts modulares en R. El archivo principal `Código.R` prepara la base y coordina scripts específicos para análisis descriptivo, visualizaciones, tablas y análisis temporal. Esta organización permite distribuir tareas entre integrantes del equipo y mantener trazabilidad entre `sismos_raw`, la base procesada `sismos` y los resultados del informe.
-
-En síntesis, la metodología combina estadística descriptiva, comparación espacial, agregación temporal y análisis de eventos extremos. Su propósito es producir evidencia clara y reproducible sobre la sismicidad global observada, reconociendo que los resultados describen patrones del catálogo y no constituyen predicción de terremotos ni evaluación formal de amenaza sísmica.
 
 ## Indicadores descriptivos
 
@@ -253,53 +236,21 @@ Variable & Origen & Descripción breve & Análisis \\
 \endgroup
 
 
+## Caracterización Descriptiva
 
 
+## Caracterización Temporal
 
 
-## Caracterización general
+# Discusión de resultados
 
-Completar con la descripción general de la base analizada.
-
-## Resultados temporales
-
-Completar con tablas o figuras numeradas sobre evolución anual, mensual o por período.
-
-## Resultados espaciales
-
-Completar con mapas, distribución geográfica o comparación entre zonas.
-
-## Magnitud y profundidad
-
-Completar con resultados asociados a magnitud, profundidad y categorías relevantes.
-
-## Comparaciones principales
-
-Completar con las comparaciones solicitadas según el encargo.
-
-# Discusión de resultados, supuestos, limitaciones y sensibilidad
-
-## Interpretación de resultados
-
-Completar conectando los resultados con la pregunta de asesoría.
-
-## Supuestos y limitaciones
-
-Completar considerando completitud del catálogo, diferencias de monitoreo, dependencia temporal por réplicas, tipo de magnitud, incertidumbre de localización y sesgos por umbral.
-
-## Análisis de sensibilidad
-
-Completar con sensibilidad ante umbral de magnitud, período, definición espacial, profundidad o estado de revisión.
-
-# Conclusiones y recomendaciones
-
-## Conclusiones
+# Conclusiones 
 
 - Completar.
 - Completar.
 - Completar.
 
-## Recomendaciones
+# Recomendaciones
 
 - Completar.
 - Completar.
