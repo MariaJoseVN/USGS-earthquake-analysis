@@ -62,6 +62,25 @@ La actividad sísmica constituye un fenómeno geofísico que ocurre de manera tr
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
+## Distribución global de la sismicidad {#sec-distribucion-sismicidad}
+
+La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas [@usgs_faq_terremotos]. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81% de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17%; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas [@usgs_faq_terremotos].
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-zonas-sismicas.png}}
+\caption{División de las placas tectónicas a escala global. Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe.}
+\label{fig-zonas-sismicas}
+\end{figure}
+```
+
+La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+
+## Categorización de los eventos según magnitud
+
+La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. @gutenberg_richter_1944 proporcionan una base clásica para distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$. @kagan_jackson_2016 refuerzan la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos. @ammon_etal_2010 destacan la relevancia instrumental y científica de los eventos $M \geq 8{,}0$ dentro del registro global. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
+
 # Objetivo general
 
 El presente pre-informe se desarrolla en el marco de una asesoría estadística orientada a transformar los datos públicos de eventos sísmicos en información cuantitativa confiable, documentada e interpretable. La contraparte solicitante requiere una caracterización de grandes terremotos a nivel mundial, con especial interés en su distribución espacial, evolución temporal, comparación entre zonas geográficas de interés, recurrencia y presencia de eventos extremos, con resultados interpretables y fácilmente replicables.
@@ -373,13 +392,28 @@ La interpretación espacial debe considerar que `Resto del mundo` no representa 
 
 # Referencias
 
-Completar con las citas utilizadas en el texto. Las referencias se administran desde `referencias.bib`.
+Las referencias se administran desde `referencias.bib` y se generan automáticamente a partir de las citas utilizadas en el texto.
+
+::: {#refs}
+:::
 
 ```{=latex}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 ```
 
 # Anexos reproducibles
+
+## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
+
+Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la United States Geological Survey [@usgs_faq_terremotos].
+
+El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81% de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
+
+El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17% de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes [@usgs_faq_terremotos].
+
+El tercer cinturón sigue el trazado sumergido de la **Dorsal Meso-Atlántica**, donde dos placas tectónicas se separan, configurando un límite divergente. Gran parte de esta dorsal se encuentra a gran profundidad bajo el océano y alejada de los centros poblados; no obstante, Islandia, situada directamente sobre ella, ha registrado sismos de hasta $M\,6{,}9$ [@usgs_faq_terremotos].
+
+El resto de los eventos se distribuye de manera dispersa en distintas regiones del planeta. Aunque la sismicidad relevante se concentra en los cinturones descritos, también pueden ocurrir terremotos dañinos fuera de ellos, habitualmente separados por largos períodos de tiempo [@usgs_faq_terremotos]. Esta condición justifica la categoría residual "Resto del mundo" empleada en la comparación espacial.
 
 ## Control de calidad de la base USGS {#sec-anexo-control-calidad}
 
