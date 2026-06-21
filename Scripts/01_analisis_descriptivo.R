@@ -156,6 +156,69 @@ total_eventos_zona <- sismos %>%
 
 View(total_eventos_zona)
 
+#Gráfico de eventos por zona para el informe----
+if (dir.exists("Informes Quarto/Imágenes y Recursos")) {
+  eventos_por_zona_grafico <- total_eventos_zona %>%
+    mutate(
+      porcentaje = total_eventos / sum(total_eventos) * 100
+    )
+
+  colores_zona_informe <- c(
+    "Cinturon de Fuego" = "#E06B70",
+    "Dorsal Meso-Atlantica" = "#C7B17A",
+    "Cinturon Alpino-Himalayo" = "#5AC8AE",
+    "Resto del mundo" = "#BDBDBD"
+  )
+
+  png(
+    filename = "Informes Quarto/Imágenes y Recursos/eventos-por-zona.png",
+    width = 1800,
+    height = 1200,
+    res = 180
+  )
+
+  par_anterior <- par(no.readonly = TRUE)
+  par(
+    bg = "white",
+    mar = c(10.5, 5, 4, 2) + 0.1
+  )
+
+  barras_zona <- barplot(
+    eventos_por_zona_grafico$total_eventos,
+    names.arg = eventos_por_zona_grafico$zona,
+    col = colores_zona_informe[eventos_por_zona_grafico$zona],
+    border = "gray30",
+    las = 2,
+    ylim = c(
+      0,
+      max(eventos_por_zona_grafico$total_eventos) * 1.18
+    ),
+    ylab = "Numero de eventos",
+    main = "Eventos por zona sismica"
+  )
+
+  text(
+    x = barras_zona,
+    y = eventos_por_zona_grafico$total_eventos,
+    labels = paste0(
+      eventos_por_zona_grafico$total_eventos,
+      " (",
+      format(
+        eventos_por_zona_grafico$porcentaje,
+        decimal.mark = ",",
+        nsmall = 1
+      ),
+      "%)"
+    ),
+    pos = 3,
+    cex = 0.85
+  )
+
+  box()
+  par(par_anterior)
+  dev.off()
+}
+
 #Eventos por zona y año----
 eventos_zona_anio <- sismos %>%
   count(zona, año, name = "numero_eventos") %>%

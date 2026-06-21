@@ -163,7 +163,7 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables centrales no presentan problemas que requieran imputación, interpolación, corrección temporal, corrección espacial o consolidación de duplicados. En cambio, algunas variables auxiliares asociadas a incertidumbre o procesamiento instrumental presentan valores faltantes, por lo que se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Estas ultimas asociadas a incertidumbre o procesamiento instrumental presentan la mayoría de  valores faltantes y no se consideran para el resto de análisis, por lo que se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
 
 Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
@@ -193,35 +193,27 @@ Esta etapa permite describir la profundidad típica de los eventos, evaluar su v
 
 ### Preparación de variables temporales e indicadores de magnitud
 
-Se prepara la base `sismos` para el análisis temporal mediante la creación de variables auxiliares de agrupación mensual y decadal. La variable `fecha_mes` estandariza cada evento al primer día del mes correspondiente, mientras que `decada` permite agrupar los registros en períodos de diez años.
+El análisis temporal se desarrolla como una extensión de la caracterización descriptiva, incorporando una estructura de conteos que permite observar la ocurrencia sísmica en distintas escalas de agregación. Para ello, la base `sismos` se prepara mediante variables auxiliares de calendario: `fecha_mes`, que estandariza cada evento al primer día del mes correspondiente, y `decada`, que agrupa los registros en períodos de diez años.
 
-Adicionalmente, se definen indicadores lógicos para identificar eventos sísmicos con magnitud mayor o igual a $7{,}0$, $7{,}5$ y $8{,}0$. Si bien las bases de la asesoría solicitan específicamente el análisis de eventos con magnitud mayor o igual a $7{,}0$, se incorporan también los umbrales de $7{,}5$ y $8{,}0$ con el propósito de profundizar en el estudio de grandes terremotos y eventos extremos. Estos tres niveles de magnitud, establecidos en intervalos consecutivos de $0{,}5$ unidades, permiten comparar la frecuencia de eventos según distintos grados de severidad, facilitando un análisis más detallado de la distribución de terremotos extremos dentro del catálogo.
+Además, se definen indicadores para identificar eventos con magnitud mayor o igual a $7{,}0$, $7{,}5$ y $8{,}0$. El umbral $M \geq 7{,}0$ responde directamente al foco solicitado por la asesoría, mientras que los niveles $7{,}5$ y $8{,}0$ permiten contrastar la frecuencia de eventos de mayor severidad dentro del mismo catálogo.
 
 ### Conteos y tasas temporales de ocurrencia
 
-Se caracteriza la frecuencia de eventos sísmicos mediante conteos mensuales, anuales y decadales, considerando el catálogo completo y los umbrales de magnitud $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual permite comparar la ocurrencia entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
+La frecuencia de eventos se caracteriza mediante conteos mensuales, anuales y decadales, tanto para el catálogo completo como para los umbrales de magnitud definidos. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual facilita la comparación entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
 
-Adicionalmente, se calculan tasas anuales promedio por década, ajustando los conteos según la cantidad efectiva de años observados en cada período. Esta corrección permite comparar décadas completas e incompletas de manera proporcional, evitando sesgos por distinta duración temporal.
-
-Esta etapa permite describir la evolución de la ocurrencia sísmica en distintas escalas de tiempo y establecer una base cuantitativa para comparar la frecuencia de eventos generales y de mayor magnitud.
+Para la comparación decadal se calculan tasas anuales promedio, ajustando los conteos por la cantidad efectiva de años observados en cada período. Esta decisión es necesaria porque el tramo 2020-2025 corresponde a una década incompleta; por lo tanto, su lectura se realiza en eventos por año observado y no solo mediante frecuencias absolutas.
 
 ### Construcción de series temporales mensuales y anuales
 
-Se construyen series temporales para el catálogo completo y para los eventos con magnitud mayor o igual a $7{,}0$, considerando dos escalas de agregación: mensual y anual. En el caso mensual, la serie se define con inicio en enero de 2000 y frecuencia igual a 12, mientras que en el caso anual se utiliza frecuencia igual a 1, representando observaciones por año calendario. Esta etapa permite estructurar los conteos como series temporales regulares, facilitando su resumen estadístico, visualización y análisis posterior. La escala mensual permite observar fluctuaciones de corto plazo, mientras que la escala anual entrega una lectura más estable de la evolución general de la sismicidad durante el período 2000-2025.
-
-Se calculan medidas descriptivas básicas para cada serie temporal mensual y anual mediante la función `summary()`. Estos resúmenes permiten identificar niveles mínimos, máximos, medias y distribución general de los conteos observados. Esta etapa entrega una primera referencia cuantitativa sobre la frecuencia típica de eventos sísmicos y permite distinguir períodos o registros que se alejan del comportamiento promedio del catálogo.
+Los conteos mensuales y anuales se organizan como series temporales regulares para el catálogo completo y para los eventos $M \geq 7{,}0$. En la serie mensual se completan explícitamente los meses sin eventos con valor cero, ya que representan ausencia de registros en el catálogo y no pérdida de información temporal. Luego se calculan resúmenes descriptivos básicos, con el fin de identificar niveles típicos, valores extremos y variación general de la ocurrencia observada.
 
 ### Recurrencia temporal de eventos $M \geq 7{,}0$
 
-Se seleccionan los eventos con magnitud mayor o igual a $7{,}0$, se ordenan cronológicamente y se calcula el número de días transcurridos entre eventos consecutivos. Luego, se resumen estos intervalos mediante media, mediana, mínimo, máximo y cuartiles por década.
-
-Este análisis permite describir el tiempo típico entre terremotos relevantes y comparar su recurrencia temporal entre distintos períodos.
+La recurrencia temporal se evalúa para los eventos $M \geq 7{,}0$, ordenándolos cronológicamente y calculando los días transcurridos entre eventos consecutivos. Estos intervalos se resumen mediante media, mediana, mínimo, máximo y cuartiles por década. Dado que el catálogo es global, esta medida se interpreta como recurrencia temporal dentro del conjunto de eventos analizado y no como recurrencia física de una falla, región o zona sismotectónica específica.
 
 ### Composición por categoría de magnitud
 
-Se calculan conteos anuales y decadales según la variable `magnitud_cat`, que clasifica los eventos en categorías excluyentes: “Fuerte”, “Mayor” y “Grande o extremo”. Estas categorías se construyen a partir de los nombres y criterios de clasificación de magnitud identificados en la bibliografía revisada.
-
-Esta etapa permite describir la composición temporal del catálogo y distinguir qué categorías explican principalmente la frecuencia observada en cada año o década.
+Finalmente, se revisa la composición anual y decadal según `magnitud_cat`, que clasifica los eventos en categorías excluyentes: “Fuerte”, “Mayor” y “Grande o extremo”. Esta lectura complementa los umbrales acumulativos y permite identificar qué niveles de severidad explican principalmente la frecuencia observada en cada período.
 
 ## Caracterización espacial
 
@@ -318,9 +310,11 @@ La clasificación por `magnitud_cat` complementa esta interpretación: 67,37% de
 
 La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperref[tbl-magnitud-maxima-anual]{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
 
-## Caracterización Temporal
+La variable `depth` presenta una distribución más asimétrica que `mag`. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. En términos de `profundidad_cat`, predominan los eventos superficiales con 76,98% del catálogo, seguidos por eventos intermedios (12,65%) y profundos (10,37%). Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe una cola de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}} y \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}})}.
 
-El análisis temporal muestra que el catálogo registra en promedio 45,6 eventos por año entre 2000 y 2025. El mayor conteo anual se observa en 2010, con 61 eventos, mientras que el menor se observa en 2024, con 28 eventos. En conjunto, la serie anual presenta fluctuaciones entre años, sin que la lectura descriptiva evidencie por sí sola una tendencia sostenida en todo el período. \emph{(véase \hyperref[tbl-conteo-anual-temporal]{tabla~\ref*{tbl-conteo-anual-temporal}})}.
+## Caracterización temporal
+
+Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media, sin mostrar una tendencia sostenida para todo el período. \emph{(véase \hyperref[tbl-conteo-anual-temporal]{tabla~\ref*{tbl-conteo-anual-temporal}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -331,9 +325,9 @@ El análisis temporal muestra que el catálogo registra en promedio 45,6 eventos
 \end{figure}
 ```
 
-El gráfico anual confirma que la ocurrencia se mantiene alrededor de la media del período, con algunos años de mayor actividad relativa, como 2007, 2010, 2011, 2013, 2014 y 2015. En cambio, los conteos más bajos se observan hacia 2019, 2020 y 2024. Esta variabilidad anual es esperable en un fenómeno de ocurrencia irregular y justifica complementar la lectura anual con una agregación por décadas.
+La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
 
-Para los eventos con $M \geq 7{,}0$, el catálogo registra 387 eventos en el período completo, equivalentes a un promedio de 14,9 eventos por año. El mayor conteo anual de este subconjunto se observa en 2010, con 24 eventos, y el menor en 2017, con 7 eventos. Al comparar por décadas mediante tasas anuales promedio, la década de 2010 presenta el valor más alto, con 16,0 eventos $M \geq 7{,}0$ por año, seguida por la década de 2000 con 14,3 y el período 2020-2025 con 14,0. \emph{(véase \hyperref[tbl-conteo-decadal-temporal]{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
+En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020-2025 con 14,0. Como 2020-2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperref[tbl-conteo-decadal-temporal]{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -344,23 +338,34 @@ Para los eventos con $M \geq 7{,}0$, el catálogo registra 387 eventos en el per
 \end{figure}
 ```
 
-La comparación por tasas muestra que el período 2020-2025 no debe leerse mediante conteos absolutos, ya que corresponde a una década incompleta. Al ajustar por años observados, la tasa de eventos $M \geq 7{,}0$ del período 2020-2025 queda cercana a la década de 2000 y por debajo de la década de 2010. Por ello, la diferencia más relevante en esta etapa descriptiva se observa en la década de 2010, que concentra la mayor tasa anual promedio.
+La tasa decadal muestra que 2020-2025 queda en un nivel cercano a la década de 2000 y por debajo de la década de 2010. Por lo tanto, la diferencia descriptiva más clara se concentra en la década de 2010, que presenta la mayor ocurrencia relativa de eventos $M \geq 7{,}0$ dentro del período analizado.
 
-La recurrencia entre eventos con $M \geq 7{,}0$ se resume mediante los días transcurridos entre eventos consecutivos. La media del intervalo es 24,5 días y la mediana es 15,6 días, lo que indica que la recurrencia típica es menor que el promedio debido a la presencia de algunos intervalos largos. El intervalo máximo alcanza 176,8 días, mientras que el mínimo es cercano a cero días, asociado a eventos registrados con muy poca diferencia temporal. \emph{(véase \hyperref[tbl-recurrencia-m70]{tabla~\ref*{tbl-recurrencia-m70}})}.
+La recurrencia temporal global se resume a partir de los días transcurridos entre eventos consecutivos $M \geq 7{,}0$. La media del intervalo es 24,5 días y la mediana es 15,6 días, lo que indica una distribución asimétrica: la mayoría de los intervalos se ubica bajo el promedio, mientras que algunos períodos más extensos sin eventos elevan la media. El intervalo máximo alcanza 176,8 días y el mínimo es cercano a cero días, asociado a registros con muy poca separación temporal. \emph{(véase \hyperref[tbl-recurrencia-m70]{tabla~\ref*{tbl-recurrencia-m70}})}.
 
-Como respaldo complementario de la metodología temporal, se revisan las series temporales mensuales y anuales, la recurrencia por década y la composición decadal por `magnitud_cat` en el anexo reproducible a modo de contraste y como posibles rutas de estudio a futuro. \emph{(véanse \hyperref[fig-serie-mensual-catalogo]{figura~\ref*{fig-serie-mensual-catalogo}}, \hyperref[fig-serie-anual-m70]{figura~\ref*{fig-serie-anual-m70}}, \hyperref[fig-recurrencia-decadal-m70]{figura~\ref*{fig-recurrencia-decadal-m70}} y \hyperref[fig-composicion-decadal-magnitud-cat]{figura~\ref*{fig-composicion-decadal-magnitud-cat}})}.
+El anexo temporal conserva el respaldo detallado de las series mensuales y anuales, la recurrencia por década y la composición decadal por `magnitud_cat`. \emph{(véanse \hyperref[fig-serie-mensual-catalogo]{figura~\ref*{fig-serie-mensual-catalogo}}, \hyperref[fig-serie-anual-m70]{figura~\ref*{fig-serie-anual-m70}}, \hyperref[fig-recurrencia-decadal-m70]{figura~\ref*{fig-recurrencia-decadal-m70}} y \hyperref[fig-composicion-decadal-magnitud-cat]{figura~\ref*{fig-composicion-decadal-magnitud-cat}})}.
 
 ## Caracterización Espacial
 
+La asignación espacial mediante la variable `zona` muestra una concentración marcada de eventos en `Cinturon de Fuego`, con 892 registros, equivalentes al 75,21% del catálogo. En segundo lugar se ubica `Resto del mundo`, con 203 eventos (17,12%), seguido por `Cinturon Alpino-Himalayo` con 63 eventos (5,31%) y `Dorsal Meso-Atlantica` con 28 eventos (2,36%). Esta distribución confirma que la mayor parte de los grandes terremotos del período se localiza en torno al principal cinturón sísmico del Pacífico. \emph{(véase \hyperref[tbl-eventos-zona]{tabla~\ref*{tbl-eventos-zona}})}.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{\detokenize{Imágenes y Recursos/eventos-por-zona.png}}
+\caption{Distribución de eventos según zona sísmica asignada.}
+\label{fig-eventos-por-zona}
+\end{figure}
+```
+
+La comparación por tasas mantiene la misma estructura: `Cinturon de Fuego` registra en promedio 34,3 eventos por año, mientras que `Resto del mundo` alcanza 7,8. Las demás zonas presentan frecuencias considerablemente menores, con 2,4 eventos anuales en `Cinturon Alpino-Himalayo` y 1,1 en `Dorsal Meso-Atlantica`. Por tanto, la diferencia espacial más relevante se observa en la frecuencia de ocurrencia, más que en la magnitud central de los eventos.
+
+En términos de `mag`, las medias por zona son cercanas entre sí, con valores alrededor de 6,9 en `Cinturon de Fuego`, `Resto del mundo` y `Cinturon Alpino-Himalayo`. En cambio, `depth` muestra una diferenciación más clara: `Dorsal Meso-Atlantica` presenta eventos exclusivamente superficiales, mientras que `Resto del mundo` concentra la mayor proporción relativa de eventos profundos. El detalle de estadísticos por zona, la distribución anual y la clasificación por `profundidad_cat` se mantiene en el anexo espacial para no sobrecargar el cuerpo del informe. \emph{(véanse \hyperref[tbl-estadisticos-zona]{tabla~\ref*{tbl-estadisticos-zona}}, \hyperref[tbl-eventos-zona-anio]{tabla~\ref*{tbl-eventos-zona-anio}} y \hyperref[tbl-profundidad-zona]{tabla~\ref*{tbl-profundidad-zona}})}.
+
+La interpretación espacial debe considerar que `Resto del mundo` no representa ausencia de actividad tectónica, sino eventos que no intersectan los polígonos definidos para las tres zonas principales. En consecuencia, los resultados dependen de la delimitación geográfica usada para construir `zona` y deben leerse como una comparación operativa, reproducible y consistente con la cartografía del estudio.
+
 # Discusión de resultados
 
-# Conclusiones
-
-- Completar.
-- Completar.
-- Completar.
-
-# Recomendaciones
+# Conclusiones y Recomendaciones
 
 - Completar.
 - Completar.
@@ -369,6 +374,10 @@ Como respaldo complementario de la metodología temporal, se revisan las series 
 # Referencias
 
 Completar con las citas utilizadas en el texto. Las referencias se administran desde `referencias.bib`.
+
+```{=latex}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+```
 
 # Anexos reproducibles
 
@@ -407,14 +416,17 @@ A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
-\small
-\Needspace{10\baselineskip}
+\scriptsize
+\renewcommand{\arraystretch}{0.86}
+\setlength{\tabcolsep}{3pt}
+\Needspace{44\baselineskip}
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+\centering
 \phantomsection
 \refstepcounter{table}
-
 \label{tbl-conteo-periodo}
-
-\begin{longtable}{lr}
+\begin{tabular}{lr}
 \toprule
 Indicador & Valor \\
 \midrule
@@ -424,20 +436,16 @@ Años analizados & 26 \\
 Meses analizados & 312 \\
 Eventos con $M \geq 6{,}5$ & 1.186 \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
+\end{tabular}
 \bottomtablecaption{tbl-conteo-periodo}{Síntesis del período y tamaño del catálogo analizado.}
-\endgroup
-\begingroup
-\small
-\Needspace{18\baselineskip}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\centering
 \phantomsection
 \refstepcounter{table}
-
 \label{tbl-resumen-mag}
-
-\begin{longtable}{lr}
+\begin{tabular}{lr}
 \toprule
 Indicador & Valor \\
 \midrule
@@ -451,42 +459,36 @@ Cuantil 75 & $7{,}10$ \\
 Cuantil 90 & $7{,}50$ \\
 Cuantil 95 & $7{,}70$ \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
+\end{tabular}
 \bottomtablecaption{tbl-resumen-mag}{Resumen descriptivo de la magnitud de los eventos.}
-\endgroup
-\begingroup
-\small
-\Needspace{10\baselineskip}
+\end{minipage}
+\par
+\vspace{0.35em}
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+\centering
 \phantomsection
 \refstepcounter{table}
-
 \label{tbl-categoria-magnitud}
-
-\begin{longtable}{lrr}
+\begin{tabular}{lrr}
 \toprule
-\texttt{magnitud\_cat} & Eventos & Porcentaje \\
+\texttt{magnitud\_cat} & Eventos & \% \\
 \midrule
-Fuerte & 799 & $67{,}37\%$ \\
-Mayor & 328 & $27{,}66\%$ \\
-Grande o extremo & 59 & $4{,}97\%$ \\
+Fuerte & 799 & $67{,}37$ \\
+Mayor & 328 & $27{,}66$ \\
+Grande o extremo & 59 & $4{,}97$ \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
+\end{tabular}
 \bottomtablecaption{tbl-categoria-magnitud}{Número y proporción de eventos por categoría de magnitud.}
-\endgroup
-\begingroup
-\small
-\setlength{\tabcolsep}{6pt}
-\Needspace{16\baselineskip}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\centering
 \phantomsection
 \refstepcounter{table}
-
 \label{tbl-magnitud-maxima-anual}
-
-\begin{longtable}{rr rr rr}
+{\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{rr@{\hspace{0.35em}}rr@{\hspace{0.35em}}rr}
 \toprule
 Año & Máx. & Año & Máx. & Año & Máx. \\
 \midrule
@@ -500,10 +502,51 @@ Año & Máx. & Año & Máx. & Año & Máx. \\
 2007 & $8{,}40$ & 2016 & $7{,}90$ & 2025 & $8{,}80$ \\
 2008 & $7{,}90$ & 2017 & $8{,}20$ &      &        \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
+\end{tabular}}
 \bottomtablecaption{tbl-magnitud-maxima-anual}{Magnitud máxima anual observada.}
+\end{minipage}
+\par
+\vspace{0.35em}
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+\centering
+\phantomsection
+\refstepcounter{table}
+\label{tbl-resumen-depth}
+\begin{tabular}{lr}
+\toprule
+Indicador & Valor \\
+\midrule
+Media & $93{,}10$ km \\
+Mediana & $26{,}00$ km \\
+Desviación estándar & $164{,}10$ km \\
+Máximo & $676{,}40$ km \\
+Cuantil 25 & $13{,}00$ km \\
+Cuantil 50 & $26{,}00$ km \\
+Cuantil 75 & $57{,}98$ km \\
+Cuantil 90 & $354{,}75$ km \\
+Cuantil 95 & $576{,}60$ km \\
+\bottomrule
+\end{tabular}
+\bottomtablecaption{tbl-resumen-depth}{Resumen descriptivo de la profundidad de los eventos.}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\centering
+\phantomsection
+\refstepcounter{table}
+\label{tbl-categoria-profundidad}
+\begin{tabular}{lrr}
+\toprule
+\texttt{profundidad\_cat} & Eventos & \% \\
+\midrule
+Superficial & 913 & $76{,}98$ \\
+Intermedio & 150 & $12{,}65$ \\
+Profundo & 123 & $10{,}37$ \\
+\bottomrule
+\end{tabular}
+\bottomtablecaption{tbl-categoria-profundidad}{Número y proporción de eventos por categoría de profundidad.}
+\end{minipage}
 \endgroup
 
 \newpage
@@ -647,7 +690,129 @@ Máximo (días) & $176{,}8$ \\
 \end{figure}
 ```
 
-# Bibliografía
+\newpage
+
+## Caracterización espacial {#sec-anexo-caracterizacion-espacial}
+
+\begingroup
+\small
+\Needspace{10\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-eventos-zona}
+
+\begin{longtable}{lrrr}
+\toprule
+Zona & Eventos & Porcentaje & Tasa anual \\
+\midrule
+\texttt{Cinturon de Fuego} & 892 & $75{,}21\%$ & $34{,}3$ \\
+\texttt{Resto del mundo} & 203 & $17{,}12\%$ & $7{,}8$ \\
+\texttt{Cinturon Alpino-Himalayo} & 63 & $5{,}31\%$ & $2{,}4$ \\
+\texttt{Dorsal Meso-Atlantica} & 28 & $2{,}36\%$ & $1{,}1$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-eventos-zona}{Número, porcentaje y tasa anual promedio de eventos por zona.}
+\endgroup
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\Needspace{12\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-estadisticos-zona}
+
+\begin{longtable}{lrrrrrrr}
+\toprule
+Zona & Eventos & \% & Media mag & Mediana mag & Máx. mag & Mediana depth & Máx. depth \\
+\midrule
+\texttt{Cinturon de Fuego} & 892 & $75{,}21$ & $6{,}90$ & $6{,}80$ & $9{,}10$ & $29{,}4$ & $676{,}4$ \\
+\texttt{Resto del mundo} & 203 & $17{,}12$ & $6{,}92$ & $6{,}80$ & $8{,}60$ & $16{,}0$ & $664{,}0$ \\
+\texttt{Cinturon Alpino-Himalayo} & 63 & $5{,}31$ & $6{,}91$ & $6{,}70$ & $7{,}80$ & $16{,}1$ & $231{,}0$ \\
+\texttt{Dorsal Meso-Atlantica} & 28 & $2{,}36$ & $6{,}69$ & $6{,}60$ & $7{,}10$ & $10{,}0$ & $35{,}0$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-estadisticos-zona}{Estadísticos principales de magnitud y profundidad por zona.}
+\endgroup
+
+\newpage
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\Needspace{30\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-eventos-zona-anio}
+
+\begin{longtable}{rrrrr}
+\toprule
+Año & C. Fuego & Resto & C. Alpino-Himalayo & Dorsal Meso-Atlántica \\
+\midrule
+2000 & 35 & 11 & 0 & 2 \\
+2001 & 35 & 5 & 2 & 0 \\
+2002 & 25 & 7 & 4 & 0 \\
+2003 & 38 & 8 & 3 & 2 \\
+2004 & 37 & 4 & 3 & 0 \\
+2005 & 32 & 8 & 3 & 2 \\
+2006 & 30 & 9 & 1 & 0 \\
+2007 & 49 & 8 & 0 & 1 \\
+2008 & 26 & 12 & 4 & 4 \\
+2009 & 40 & 2 & 2 & 1 \\
+2010 & 46 & 11 & 4 & 0 \\
+2011 & 48 & 6 & 4 & 0 \\
+2012 & 30 & 9 & 1 & 1 \\
+2013 & 39 & 11 & 4 & 1 \\
+2014 & 43 & 10 & 1 & 0 \\
+2015 & 40 & 9 & 7 & 2 \\
+2016 & 34 & 6 & 5 & 1 \\
+2017 & 29 & 6 & 2 & 2 \\
+2018 & 34 & 8 & 1 & 1 \\
+2019 & 27 & 6 & 0 & 0 \\
+2020 & 20 & 3 & 3 & 3 \\
+2021 & 30 & 15 & 0 & 0 \\
+2022 & 33 & 6 & 1 & 2 \\
+2023 & 43 & 5 & 5 & 0 \\
+2024 & 19 & 9 & 0 & 0 \\
+2025 & 30 & 9 & 3 & 3 \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-eventos-zona-anio}{Conteo anual de eventos por zona asignada.}
+\endgroup
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\Needspace{12\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-profundidad-zona}
+
+\begin{longtable}{lrrr}
+\toprule
+Zona & Superficial & Intermedio & Profundo \\
+\midrule
+\texttt{Cinturon de Fuego} & 688 ($77{,}1\%$) & 121 ($13{,}6\%$) & 83 ($9{,}3\%$) \\
+\texttt{Resto del mundo} & 145 ($71{,}4\%$) & 18 ($8{,}9\%$) & 40 ($19{,}7\%$) \\
+\texttt{Cinturon Alpino-Himalayo} & 52 ($82{,}5\%$) & 11 ($17{,}5\%$) & 0 ($0{,}0\%$) \\
+\texttt{Dorsal Meso-Atlantica} & 28 ($100{,}0\%$) & 0 ($0{,}0\%$) & 0 ($0{,}0\%$) \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-profundidad-zona}{Distribución de eventos por categoría de profundidad y zona.}
+\endgroup
+
 
 ```{=html}
 <!--
