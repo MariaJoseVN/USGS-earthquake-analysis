@@ -234,7 +234,52 @@ sismos %>%
   ungroup()
 
 
-
+#Estadísticos descriptivos iniciales por zona----
+estadisticos_zona <- sismos %>%
+  group_by(zona) %>%
+  summarise(
+    numero_eventos = n(),
+    proporcion_eventos = n() / numero_total_eventos,
+    porcentaje_eventos = proporcion_eventos * 100,
+    tasa_anual = n() / cantidad_años,
+    tasa_mensual = n() / cantidad_meses,
+    magnitud_media = mean(mag, na.rm = TRUE),
+    magnitud_mediana = median(mag, na.rm = TRUE),
+    magnitud_desviacion = sd(mag, na.rm = TRUE),
+    magnitud_maxima = max(mag, na.rm = TRUE),
+    magnitud_cuantil_25 = quantile(mag, 0.25, na.rm = TRUE),
+    magnitud_cuantil_50 = quantile(mag, 0.50, na.rm = TRUE),
+    magnitud_cuantil_75 = quantile(mag, 0.75, na.rm = TRUE),
+    magnitud_cuantil_90 = quantile(mag, 0.90, na.rm = TRUE),
+    magnitud_cuantil_95 = quantile(mag, 0.95, na.rm = TRUE),
+    profundidad_media = mean(depth, na.rm = TRUE),
+    profundidad_mediana = median(depth, na.rm = TRUE),
+    profundidad_desviacion = sd(depth, na.rm = TRUE),
+    profundidad_maxima = max(depth, na.rm = TRUE),
+    profundidad_cuantil_25 = quantile(depth, 0.25, na.rm = TRUE),
+    profundidad_cuantil_50 = quantile(depth, 0.50, na.rm = TRUE),
+    profundidad_cuantil_75 = quantile(depth, 0.75, na.rm = TRUE),
+    profundidad_cuantil_90 = quantile(depth, 0.90, na.rm = TRUE),
+    profundidad_cuantil_95 = quantile(depth, 0.95, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    zona = unique(c(
+      as.character(area_regiones$Region),
+      "Resto del mundo"
+    ))
+  ) %>%
+  mutate(
+    across(
+      where(is.numeric),
+      ~ replace(
+        .x,
+        is.na(.x) | is.infinite(.x),
+        0
+      )
+    )
+  )
+View(estadisticos_zona)
 
 
 
