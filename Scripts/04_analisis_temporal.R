@@ -1,12 +1,18 @@
 #Consideraciones----
-#Este script utiliza la base preparada en Codigo.R.
+#Este script utiliza la base preparada en Código.R.
+#Su propósito es explorar la dimensión temporal de los eventos sísmicos.
+#No guarda gráficos; las salidas se revisan directamente en consola y panel gráfico.
+
+#Reiniciar dispositivo gráfico----
+#Si una ejecución anterior dejó abierto un dispositivo externo, por ejemplo png(),
+#los gráficos pueden no aparecer en el panel gráfico. Esta línea limpia la sesión
+#antes de iniciar el análisis temporal.
+graphics.off()
 
 
-#Preparacion temporal----
-# La variable magnitud_cat fue creada previamente en Codigo.R.
-# Esta clasifica los eventos en: Fuerte, Mayor y Grande o extremo.
-# Los indicadores evento_m70, evento_m75 y evento_m80 se mantienen para responder
-# preguntas especificas basadas en umbrales de magnitud.
+#Preparación temporal----
+#La base sismos ya contiene fecha_hora_utc, fecha, año, mes y magnitud_cat.
+#Aquí se agregan variables auxiliares para agregación mensual, decadal y umbrales.
 
 sismos_temporal <- sismos %>%
   mutate(
@@ -17,8 +23,14 @@ sismos_temporal <- sismos %>%
     evento_m80 = mag >= 8.0
   )
 
-#Conteos/Frecuencias----
+print(sismos_temporal)
+
+
+#Conteos temporales----
 ##Conteo mensual para catálogo completo y eventos por umbral de magnitud----
+#La serie mensual se completa con ceros porque los meses sin eventos representan
+#ausencia observada de terremotos en el catálogo, no datos faltantes.
+
 conteo_mensual <- sismos_temporal %>%
   group_by(fecha_mes) %>%
   summarise(
@@ -27,8 +39,8 @@ conteo_mensual <- sismos_temporal %>%
     n_eventos_m75_o_mayor = sum(evento_m75, na.rm = TRUE),
     n_eventos_m80_o_mayor = sum(evento_m80, na.rm = TRUE),
     .groups = "drop"
-  ) %>%         #Solo ejecutando hasta esta parte ya obtendriamos un resultado, pero resulta que hay 11 meses no registraron terremotos y al agrupar se consideran como "NA" en lugar de rellenar con "ceros"
-  tidyr::complete( #Este fragmento extra añade los "ceros" en lugar de dejar los "NA"
+  ) %>%
+  tidyr::complete(
     fecha_mes = seq.Date(
       from = as.Date("2000-01-01"),
       to = as.Date("2025-12-01"),
@@ -45,7 +57,8 @@ conteo_mensual <- sismos_temporal %>%
 print(conteo_mensual, n = Inf)
 
 
-##Conteo anual para catalogo completo y eventos por umbral de magnitud----
+##Conteo anual para catálogo completo y eventos por umbral de magnitud----
+
 conteo_anual <- sismos_temporal %>%
   group_by(año) %>%
   summarise(
@@ -58,7 +71,11 @@ conteo_anual <- sismos_temporal %>%
 
 print(conteo_anual, n = Inf)
 
-##Conteo decadal para catalogo completo y eventos por umbral de magnitud----
+
+##Conteo decadal y tasas anuales promedio----
+#La tasa anual promedio permite comparar décadas completas con 2020-2025,
+#que corresponde a un período observado de seis años.
+
 conteo_decadal <- sismos_temporal %>%
   group_by(decada) %>%
   summarise(
@@ -67,85 +84,109 @@ conteo_decadal <- sismos_temporal %>%
     n_eventos_m75_o_mayor = sum(evento_m75, na.rm = TRUE),
     n_eventos_m80_o_mayor = sum(evento_m80, na.rm = TRUE),
     .groups = "drop"
+  ) %>%
+  mutate(
+    años_observados = case_when(
+      decada == 2000 ~ 10,
+      decada == 2010 ~ 10,
+      decada == 2020 ~ 6
+    ),
+    tasa_anual_catalogo_completo = n_catalogo_completo / años_observados,
+    tasa_anual_m70_o_mayor = n_eventos_m70_o_mayor / años_observados,
+    tasa_anual_m75_o_mayor = n_eventos_m75_o_mayor / años_observados,
+    tasa_anual_m80_o_mayor = n_eventos_m80_o_mayor / años_observados
   )
 
 print(conteo_decadal, n = Inf)
 
-#Serie Temporal de Conteos----
-# Las series temporales principales se mantienen para el catalogo completo y M >= 7.0.
-# Las categorias de magnitud se utilizaran mas adelante para describir la composicion
-# anual y decadal del catalogo, evitando sobrecargar el analisis con multiples series.
 
+#Series temporales----
 ##Serie mensual del catálogo completo----
+
 serie_mensual_catalogo_completo <- ts(
   conteo_mensual$n_catalogo_completo,
   start = c(2000, 1),
   frequency = 12
 )
 
-serie_mensual_catalogo_completo
+print(serie_mensual_catalogo_completo)
 summary(serie_mensual_catalogo_completo)
 
+
 ##Serie mensual de eventos M >= 7.0----
+
 serie_mensual_m70 <- ts(
   conteo_mensual$n_eventos_m70_o_mayor,
   start = c(2000, 1),
   frequency = 12
 )
 
-serie_mensual_m70
+print(serie_mensual_m70)
 summary(serie_mensual_m70)
 
+
 ##Serie anual del catálogo completo----
+
 serie_anual_catalogo_completo <- ts(
   conteo_anual$n_catalogo_completo,
   start = 2000,
   frequency = 1
 )
 
-serie_anual_catalogo_completo
+print(serie_anual_catalogo_completo)
 summary(serie_anual_catalogo_completo)
 
+
 ##Serie anual de eventos M >= 7.0----
+
 serie_anual_m70 <- ts(
   conteo_anual$n_eventos_m70_o_mayor,
   start = 2000,
   frequency = 1
 )
 
-serie_anual_m70
+print(serie_anual_m70)
 summary(serie_anual_m70)
 
-#Visualizacipon de Series Temporales----
 
-#Visualizacion inicial de series temporales----
-# En esta visualizacion inicial se prioriza la evolucion general del catalogo
-# y de los eventos M >= 7.0. La comparacion por magnitud_cat se reserva para
-# graficos de composicion anual y decadal.
+#Gráficos de series temporales----
 
 indice_mensual <- 1:nrow(conteo_mensual)
 indice_anual <- conteo_anual$año
-
-marcas_mensuales <- seq(12, nrow(conteo_mensual), by = 12)
+marcas_mensuales <- seq(12, nrow(conteo_mensual), by = 24)
 marcas_anuales <- conteo_anual$año
 
-par(mfrow = c(2, 1))
 
-##Visualización Mensual completa----
+##Serie mensual - catálogo completo----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 plot(
   indice_mensual,
   conteo_mensual$n_catalogo_completo,
   type = "l",
   main = "Serie mensual - Catálogo completo",
+  xlab = "Mes observado",
   ylab = "Número de eventos",
-  xlab = "Meses observado",
   col = "darkblue",
   lwd = 1,
   xaxt = "n"
 )
 
-abline(h = summary(serie_mensual_catalogo_completo)["Mean"], col = "darkblue", lty = 2, lwd = 1.5)
+axis(
+  side = 1,
+  at = marcas_mensuales,
+  labels = marcas_mensuales,
+  las = 2,
+  cex.axis = 0.7
+)
+
+abline(
+  h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
+  col = "darkblue",
+  lty = 2,
+  lwd = 1.5
+)
 
 legend(
   "topright",
@@ -157,71 +198,23 @@ legend(
   cex = 0.8
 )
 
-axis(
-  side = 1,
-  at = marcas_mensuales,
-  labels = marcas_mensuales,
-  las = 2,
-  cex.axis = 0.7
-)
+box()
 
-##Visualización Mensual mayor 70----
 
-plot(
-  indice_mensual,
-  conteo_mensual$n_eventos_m70_o_mayor,
-  type = "l",
-  main = "Serie mensual - M >= 7.0",
-  ylab = "Número de eventos",
-  xlab = "Meses observado",
-  col = "red",
-  lwd = 1,
-  xaxt = "n"
-)
+##Serie anual - catálogo completo----
 
-abline(h = summary(serie_mensual_m70)["Mean"], col = "red", lty = 2, lwd = 1.5)
+par(mfrow = c(1, 1), bg = "white", mar = c(6, 4, 4, 2) + 0.1)
 
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("red", "red"),
-  lty = c(1, 2),
-  lwd = c(1, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-axis(
-  side = 1,
-  at = marcas_mensuales,
-  labels = marcas_mensuales,
-  las = 2,
-  cex.axis = 0.7
-)
-
-##Visualización anual completa----
 plot(
   indice_anual,
   conteo_anual$n_catalogo_completo,
   type = "l",
   main = "Serie anual - Catálogo completo",
+  xlab = "Año",
   ylab = "Número de eventos",
-  xlab = "Años",
   col = "darkblue",
-  lwd = 1,
+  lwd = 1.5,
   xaxt = "n"
-)
-
-abline(h = summary(serie_anual_catalogo_completo)["Mean"], col = "darkblue", lty = 2, lwd = 1.5)
-
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("darkblue", "darkblue"),
-  lty = c(1, 2),
-  lwd = c(1, 1.5),
-  bty = "n",
-  cex = 0.8
 )
 
 axis(
@@ -232,30 +225,40 @@ axis(
   cex.axis = 0.7
 )
 
-##Visualización anual mayor 70----
+abline(
+  h = mean(conteo_anual$n_catalogo_completo, na.rm = TRUE),
+  col = "darkblue",
+  lty = 2,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Conteo observado", "Media"),
+  col = c("darkblue", "darkblue"),
+  lty = c(1, 2),
+  lwd = c(1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+
+##Serie anual - eventos M >= 7.0----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(6, 4, 4, 2) + 0.1)
 
 plot(
   indice_anual,
   conteo_anual$n_eventos_m70_o_mayor,
   type = "l",
   main = "Serie anual - M >= 7.0",
+  xlab = "Año",
   ylab = "Número de eventos",
-  xlab = "Años",
   col = "red",
-  lwd = 1,
+  lwd = 1.5,
   xaxt = "n"
-)
-
-abline(h = summary(serie_anual_m70)["Mean"], col = "red", lty = 2, lwd = 1.5)
-
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("red", "red"),
-  lty = c(1, 2),
-  lwd = c(1, 1.5),
-  bty = "n",
-  cex = 0.8
 )
 
 axis(
@@ -266,18 +269,37 @@ axis(
   cex.axis = 0.7
 )
 
-par(mfrow = c(1, 1))
+abline(
+  h = mean(conteo_anual$n_eventos_m70_o_mayor, na.rm = TRUE),
+  col = "red",
+  lty = 2,
+  lwd = 1.5
+)
 
-#Caracterizacion descriptiva temporal----
-##Pregunta Orientadora de manera anual:-----
-##Eventos anuales del catalogo completo----
+legend(
+  "topright",
+  legend = c("Conteo observado", "Media"),
+  col = c("red", "red"),
+  lty = c(1, 2),
+  lwd = c(1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+
+#Caracterización anual y decadal----
+##Eventos anuales del catálogo completo----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(6, 4, 4, 2) + 0.1)
 
 pos_barras_anual_catalogo <- barplot(
   height = conteo_anual$n_catalogo_completo,
   names.arg = conteo_anual$año,
-  main = "Eventos anuales - Catalogo completo",
-  ylab = "Numero de eventos",
-  xlab = "Años",
+  main = "Eventos anuales - Catálogo completo",
+  xlab = "Año",
+  ylab = "Número de eventos",
   col = "gray80",
   border = "gray30",
   las = 2,
@@ -291,235 +313,10 @@ text(
   y = conteo_anual$n_catalogo_completo,
   labels = conteo_anual$n_catalogo_completo,
   pos = 3,
-  cex = 0.7
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-abline(
-  h = summary(serie_anual_catalogo_completo)["Mean"],
-  col = "black",
-  lty = 2,
-  lwd = 1.5
-)
-
-legend(
-  "topright",
-  legend = c("Conteo anual", "Media anual"),
-  fill = c("gray80", NA),
-  border = c("gray30", NA),
-  lty = c(NA, 2),
-  col = c(NA, "black"),
-  lwd = c(NA, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-
-##Eventos anuales M >= 7.0----
-
-pos_barras_anual_m70 <- barplot(
-  height = conteo_anual$n_eventos_m70_o_mayor,
-  names.arg = conteo_anual$año,
-  main = "Eventos anuales - M >= 7.0",
-  ylab = "Numero de eventos",
-  xlab = "Años",
-  col = "gray80",
-  border = "gray30",
-  las = 2,
-  cex.names = 0.7,
-  ylim = c(0, max(conteo_anual$n_eventos_m70_o_mayor) + 4),
-  axes = FALSE
-)
-
-text(
-  x = pos_barras_anual_m70,
-  y = conteo_anual$n_eventos_m70_o_mayor,
-  labels = conteo_anual$n_eventos_m70_o_mayor,
-  pos = 3,
-  cex = 0.7
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-abline(
-  h = summary(serie_anual_m70)["Mean"],
-  col = "black",
-  lty = 2,
-  lwd = 1.5
-)
-
-legend(
-  "topright",
-  legend = c("Conteo anual", "Media anual"),
-  fill = c("gray80", NA),
-  border = c("gray30", NA),
-  lty = c(NA, 2),
-  col = c(NA, "black"),
-  lwd = c(NA, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-
-##Eventos por decada del catalogo completo----
-
-pos_barras_decadal_catalogo <- barplot(
-  height = conteo_decadal$n_catalogo_completo,
-  names.arg = conteo_decadal$decada,
-  main = "Eventos por decada - Catalogo completo",
-  ylab = "Numero de eventos",
-  xlab = "Decada",
-  col = "gray80",
-  border = "gray30",
-  las = 1,
-  cex.names = 0.8,
-  ylim = c(0, max(conteo_decadal$n_catalogo_completo) * 1.15),
-  axes = FALSE
-)
-
-text(
-  x = pos_barras_decadal_catalogo,
-  y = conteo_decadal$n_catalogo_completo,
-  labels = conteo_decadal$n_catalogo_completo,
-  pos = 3,
-  cex = 0.8
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-abline(
-  h = mean(conteo_decadal$n_catalogo_completo, na.rm = TRUE),
-  col = "black",
-  lty = 2,
-  lwd = 1.5
-)
-
-legend(
-  "topright",
-  legend = c("Conteo decadal", "Media decadal"),
-  fill = c("gray80", NA),
-  border = c("gray30", NA),
-  lty = c(NA, 2),
-  col = c(NA, "black"),
-  lwd = c(NA, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-
-##Eventos por decada M >= 7.0----
-
-pos_barras_decadal_m70 <- barplot(
-  height = conteo_decadal$n_eventos_m70_o_mayor,
-  names.arg = conteo_decadal$decada,
-  main = "Eventos por decada - M >= 7.0",
-  ylab = "Numero de eventos",
-  xlab = "Decada",
-  col = "gray80",
-  border = "gray30",
-  las = 1,
-  cex.names = 0.8,
-  ylim = c(0, max(conteo_decadal$n_eventos_m70_o_mayor) * 1.15),
-  axes = FALSE
-)
-text(
-  x = pos_barras_decadal_m70,
-  y = conteo_decadal$n_eventos_m70_o_mayor,
-  labels = conteo_decadal$n_eventos_m70_o_mayor,
-  pos = 3,
-  cex = 0.8
-)
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-abline(
-  h = mean(conteo_decadal$n_eventos_m70_o_mayor, na.rm = TRUE),
-  col = "black",
-  lty = 2,
-  lwd = 1.5
-)
-legend(
-  "topright",
-  legend = c("Conteo decadal", "Media decadal"),
-  fill = c("gray80", NA),
-  border = c("gray30", NA),
-  lty = c(NA, 2),
-  col = c(NA, "black"),
-  lwd = c(NA, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-box()
-
-#Guardar graficos temporales para informe----
-dir.create(
-  "Informes Quarto/Imágenes y Recursos",
-  recursive = TRUE,
-  showWarnings = FALSE
-)
-
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/eventos-anuales-catalogo.png",
-  width = 1600,
-  height = 950,
-  res = 180
-)
-
-par(
-  bg = "white",
-  mar = c(6, 4, 4, 2) + 0.1
-)
-
-pos_barras_anual_catalogo_informe <- barplot(
-  height = conteo_anual$n_catalogo_completo,
-  names.arg = conteo_anual$año,
-  main = "Eventos anuales - Catálogo completo",
-  ylab = "Número de eventos",
-  xlab = "Año",
-  col = "gray80",
-  border = "gray30",
-  las = 2,
-  cex.names = 0.7,
-  ylim = c(0, max(conteo_anual$n_catalogo_completo) + 8),
-  axes = FALSE
-)
-
-text(
-  x = pos_barras_anual_catalogo_informe,
-  y = conteo_anual$n_catalogo_completo,
-  labels = conteo_anual$n_catalogo_completo,
-  pos = 3,
   cex = 0.65
 )
 
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 abline(
   h = mean(conteo_anual$n_catalogo_completo, na.rm = TRUE),
@@ -541,26 +338,18 @@ legend(
 )
 
 box()
-dev.off()
 
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/tasa-decadal-m70.png",
-  width = 1400,
-  height = 900,
-  res = 180
-)
 
-par(
-  bg = "white",
-  mar = c(5, 4, 4, 2) + 0.1
-)
+##Tasa anual promedio por década - eventos M >= 7.0----
 
-pos_barras_tasa_decadal_m70_informe <- barplot(
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+pos_barras_tasa_decadal_m70 <- barplot(
   height = conteo_decadal$tasa_anual_m70_o_mayor,
   names.arg = conteo_decadal$decada,
-  main = "Tasa anual promedio por década - M >= 7,0",
-  ylab = "Eventos promedio por año",
+  main = "Tasa anual promedio por década - M >= 7.0",
   xlab = "Década",
+  ylab = "Eventos promedio por año",
   col = "gray80",
   border = "gray30",
   las = 1,
@@ -569,19 +358,14 @@ pos_barras_tasa_decadal_m70_informe <- barplot(
 )
 
 text(
-  x = pos_barras_tasa_decadal_m70_informe,
+  x = pos_barras_tasa_decadal_m70,
   y = conteo_decadal$tasa_anual_m70_o_mayor,
-  labels = format(round(conteo_decadal$tasa_anual_m70_o_mayor, 1), decimal.mark = ","),
+  labels = round(conteo_decadal$tasa_anual_m70_o_mayor, 1),
   pos = 3,
   cex = 0.85
 )
 
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 abline(
   h = mean(conteo_decadal$tasa_anual_m70_o_mayor, na.rm = TRUE),
@@ -603,273 +387,9 @@ legend(
 )
 
 box()
-dev.off()
-
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/serie-mensual-catalogo.png",
-  width = 1600,
-  height = 900,
-  res = 180
-)
-
-par(
-  bg = "white",
-  mar = c(5, 4, 4, 2) + 0.1
-)
-
-plot(
-  indice_mensual,
-  conteo_mensual$n_catalogo_completo,
-  type = "l",
-  main = "Serie mensual - Catálogo completo",
-  ylab = "Número de eventos",
-  xlab = "Mes observado",
-  col = "darkblue",
-  lwd = 1,
-  xaxt = "n"
-)
-
-abline(
-  h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
-  col = "darkblue",
-  lty = 2,
-  lwd = 1.5
-)
-
-axis(
-  side = 1,
-  at = seq(12, nrow(conteo_mensual), by = 24),
-  labels = seq(12, nrow(conteo_mensual), by = 24),
-  las = 2,
-  cex.axis = 0.7
-)
-
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("darkblue", "darkblue"),
-  lty = c(1, 2),
-  lwd = c(1, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-dev.off()
-
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/serie-anual-m70.png",
-  width = 1600,
-  height = 900,
-  res = 180
-)
-
-par(
-  bg = "white",
-  mar = c(6, 4, 4, 2) + 0.1
-)
-
-plot(
-  indice_anual,
-  conteo_anual$n_eventos_m70_o_mayor,
-  type = "l",
-  main = "Serie anual - M >= 7,0",
-  ylab = "Número de eventos",
-  xlab = "Año",
-  col = "red",
-  lwd = 1.5,
-  xaxt = "n"
-)
-
-abline(
-  h = mean(conteo_anual$n_eventos_m70_o_mayor, na.rm = TRUE),
-  col = "red",
-  lty = 2,
-  lwd = 1.5
-)
-
-axis(
-  side = 1,
-  at = marcas_anuales,
-  labels = marcas_anuales,
-  las = 2,
-  cex.axis = 0.7
-)
-
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("red", "red"),
-  lty = c(1, 2),
-  lwd = c(1.5, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-dev.off()
-
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/recurrencia-decadal-m70.png",
-  width = 1400,
-  height = 900,
-  res = 180
-)
-
-par(
-  bg = "white",
-  mar = c(5, 4, 4, 2) + 0.1
-)
-
-boxplot(
-  dias_desde_evento_anterior ~ decada,
-  data = eventos_m70_recurrencia_decadal,
-  main = "Días entre eventos M >= 7,0 por década",
-  xlab = "Década",
-  ylab = "Días desde el evento anterior",
-  col = "gray80",
-  border = "gray30"
-)
-
-box()
-dev.off()
-
-png(
-  filename = "Informes Quarto/Imágenes y Recursos/composicion-decadal-magnitud-cat.png",
-  width = 1400,
-  height = 900,
-  res = 180
-)
-
-par(
-  bg = "white",
-  mar = c(5, 4, 4, 2) + 0.1
-)
-
-pos_barras_decadal_magnitud_informe <- barplot(
-  matriz_decadal_magnitud,
-  beside = FALSE,
-  main = "Eventos por década según categoría de magnitud",
-  ylab = "Número de eventos",
-  xlab = "Década",
-  col = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  ylim = c(0, max(colSums(matriz_decadal_magnitud)) * 1.15),
-  axes = FALSE
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-pos_texto_decadal_magnitud_informe <- apply(
-  matriz_decadal_magnitud,
-  2,
-  cumsum
-) - matriz_decadal_magnitud / 2
-
-x_texto_decadal_magnitud_informe <- matrix(
-  rep(pos_barras_decadal_magnitud_informe, each = nrow(matriz_decadal_magnitud)),
-  nrow = nrow(matriz_decadal_magnitud)
-)
-
-text(
-  x = as.vector(x_texto_decadal_magnitud_informe),
-  y = as.vector(pos_texto_decadal_magnitud_informe),
-  labels = ifelse(as.vector(matriz_decadal_magnitud) > 0, as.vector(matriz_decadal_magnitud), ""),
-  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_decadal_magnitud)),
-  cex = 0.8
-)
-
-legend(
-  "topright",
-  legend = colnames(tabla_decadal_magnitud),
-  fill = c("gray85", "gray60", "gray30"),
-  border = "gray30",
-  bty = "n",
-  cex = 0.8
-)
-
-box()
-dev.off()
-
-#Pregunta Orientadora caso decada:-----
-#¿Cómo ha variado la ocurrencia anual o decadal de eventos M >= 7,0?
-#no conviene comparar 84 eventos contra décadas completas de 10 años
-# En terminos de magnitud_cat, el umbral M >= 7.0 agrupa las categorias
-# "Mayor" y "Grande o extremo". Por eso esta pregunta se mantiene por umbral,
-# pero su interpretacion se conecta con la clasificacion de magnitud.
-
-##Tasa promedio anual por decada----
-
-conteo_decadal <- conteo_decadal %>%
-  mutate(
-    años_observados = case_when(
-      decada == 2000 ~ 10,
-      decada == 2010 ~ 10,
-      decada == 2020 ~ 6
-    ),
-    tasa_anual_catalogo_completo = n_catalogo_completo / años_observados,
-    tasa_anual_m70_o_mayor = n_eventos_m70_o_mayor / años_observados,
-    tasa_anual_m75_o_mayor = n_eventos_m75_o_mayor / años_observados,
-    tasa_anual_m80_o_mayor = n_eventos_m80_o_mayor / años_observados
-  )
-
-print(conteo_decadal, n = Inf)
-
-#Ahora si la comparación Gráfica es más justa para responder la pregunta orientadora
-
-pos_barras_tasa_decadal_m70 <- barplot(
-  height = conteo_decadal$tasa_anual_m70_o_mayor,
-  names.arg = conteo_decadal$decada,
-  main = "Tasa anual promedio por decada - M >= 7.0",
-  ylab = "Eventos promedio por año",
-  xlab = "Decada",
-  col = "gray80",
-  border = "gray30",
-  las = 1,
-  cex.names = 0.8,
-  ylim = c(0, max(conteo_decadal$tasa_anual_m70_o_mayor) * 1.2),
-  axes = FALSE
-)
-text(
-  x = pos_barras_tasa_decadal_m70,
-  y = conteo_decadal$tasa_anual_m70_o_mayor,
-  labels = round(conteo_decadal$tasa_anual_m70_o_mayor, 1),
-  pos = 3,
-  cex = 0.8
-)
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-box()
-
-legend(
-  "topright",
-  legend = c("Tasa anual promedio", "Media de tasas"),
-  fill = c("gray80", NA),
-  border = c("gray30", NA),
-  lty = c(NA, 2),
-  col = c(NA, "black"),
-  lwd = c(NA, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-##posible pregunta inferencial, es o son significativas estas diferencias?
 
 
-#Tiempo medio y mediano entre eventos relevantes (M >= 7.0)----
-#la idea es comparar cada evento M >= 7.0 con el evento M >= 7.0 inmediatamente anterior
-# En terminos de magnitud_cat, este analisis de recurrencia considera eventos
-# clasificados como "Mayor" o "Grande o extremo".
-
+#Recurrencia temporal----
 ##Eventos M >= 7.0 ordenados temporalmente----
 
 eventos_m70 <- sismos_temporal %>%
@@ -883,7 +403,8 @@ eventos_m70 <- sismos_temporal %>%
 
 print(eventos_m70, n = Inf)
 
-##Resumen de tiempos entre eventos M >= 7.0----
+
+##Resumen de días entre eventos M >= 7.0----
 
 resumen_recurrencia_m70 <- eventos_m70 %>%
   summarise(
@@ -891,36 +412,31 @@ resumen_recurrencia_m70 <- eventos_m70 %>%
     n_intervalos = sum(!is.na(dias_desde_evento_anterior)),
     tiempo_medio_dias = mean(dias_desde_evento_anterior, na.rm = TRUE),
     tiempo_mediano_dias = median(dias_desde_evento_anterior, na.rm = TRUE),
+    q1_dias = quantile(dias_desde_evento_anterior, 0.25, na.rm = TRUE),
+    q3_dias = quantile(dias_desde_evento_anterior, 0.75, na.rm = TRUE),
     tiempo_minimo_dias = min(dias_desde_evento_anterior, na.rm = TRUE),
     tiempo_maximo_dias = max(dias_desde_evento_anterior, na.rm = TRUE)
   )
 
 print(resumen_recurrencia_m70)
 
-###Gráfico----
+
+##Distribución de días entre eventos M >= 7.0----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 hist(
   eventos_m70$dias_desde_evento_anterior,
-  main = "Distribucion de dias entre eventos M >= 7.0",
-  xlab = "Dias desde el evento anterior",
+  main = "Días entre eventos M >= 7.0",
+  xlab = "Días desde el evento anterior",
   ylab = "Frecuencia",
   col = "gray80",
   border = "gray30",
   axes = FALSE
 )
 
-axis(
-  side = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
+axis(side = 1, lwd = 0, lwd.ticks = 1)
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 abline(
   v = resumen_recurrencia_m70$tiempo_medio_dias,
@@ -948,14 +464,15 @@ legend(
 
 box()
 
-###La recurrencia de eventos M >= 7.0 entre décadas----
-# Esta comparacion por decada mantiene el umbral M >= 7.0.
-# Por lo tanto, compara la recurrencia temporal de eventos clasificados como
-# "Mayor" o "Grande o extremo" segun magnitud_cat.
-# No se compara por categoria separada para evitar grupos con pocos intervalos.
 
-resumen_recurrencia_decadal_m70 <- eventos_m70 %>%
-  filter(!is.na(dias_desde_evento_anterior)) %>%
+##Recurrencia por década----
+#La comparación por década se interpreta como recurrencia temporal global del
+#catálogo analizado, no como recurrencia física de una zona tectónica específica.
+
+eventos_m70_recurrencia_decadal <- eventos_m70 %>%
+  filter(!is.na(dias_desde_evento_anterior))
+
+resumen_recurrencia_decadal_m70 <- eventos_m70_recurrencia_decadal %>%
   group_by(decada) %>%
   summarise(
     n_intervalos = n(),
@@ -970,48 +487,23 @@ resumen_recurrencia_decadal_m70 <- eventos_m70 %>%
 
 print(resumen_recurrencia_decadal_m70)
 
-eventos_m70_recurrencia_decadal <- eventos_m70 %>%
-  filter(!is.na(dias_desde_evento_anterior))
-
-decadas_recurrencia_m70 <- sort(unique(eventos_m70_recurrencia_decadal$decada))
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 boxplot(
   dias_desde_evento_anterior ~ decada,
   data = eventos_m70_recurrencia_decadal,
-  main = "Dias entre eventos M >= 7.0 por decada",
-  xlab = "Decada",
-  ylab = "Dias desde el evento anterior",
+  main = "Días entre eventos M >= 7.0 por década",
+  xlab = "Década",
+  ylab = "Días desde el evento anterior",
   col = "gray80",
-  border = "gray30",
-  axes = FALSE
-)
-
-axis(
-  side = 1,
-  at = seq_along(decadas_recurrencia_m70),
-  labels = decadas_recurrencia_m70,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
+  border = "gray30"
 )
 
 box()
 
 
-#Analisis complementario por categoria de magnitud----
-# Despues de revisar los conteos por umbrales, se incorpora magnitud_cat.
-# Esta variable proviene de la revision bibliografica y agrupa eventos en
-# categorias excluyentes: Fuerte, Mayor y Grande o extremo.
-# A diferencia de los umbrales acumulativos, estas categorias permiten leer
-# la composicion temporal del catalogo sin contar el mismo evento en varios grupos.
-
-##Conteos por categoria de magnitud----
+#Composición temporal por magnitud_cat----
+##Conteo anual por magnitud_cat----
 
 conteo_anual_magnitud_cat <- sismos_temporal %>%
   group_by(año, magnitud_cat) %>%
@@ -1022,6 +514,9 @@ conteo_anual_magnitud_cat <- sismos_temporal %>%
 
 print(conteo_anual_magnitud_cat, n = Inf)
 
+
+##Conteo decadal por magnitud_cat----
+
 conteo_decadal_magnitud_cat <- sismos_temporal %>%
   group_by(decada, magnitud_cat) %>%
   summarise(
@@ -1031,9 +526,8 @@ conteo_decadal_magnitud_cat <- sismos_temporal %>%
 
 print(conteo_decadal_magnitud_cat, n = Inf)
 
-##Composicion anual por categoria de magnitud----
-# Estos graficos muestran como se distribuye el catalogo entre eventos
-# Fuertes, Mayores y Grandes o extremos en el tiempo.
+
+##Composición anual por magnitud_cat----
 
 tabla_anual_magnitud <- table(
   sismos_temporal$año,
@@ -1042,12 +536,14 @@ tabla_anual_magnitud <- table(
 
 matriz_anual_magnitud <- t(tabla_anual_magnitud)
 
+par(mfrow = c(1, 1), bg = "white", mar = c(6, 4, 4, 2) + 0.1)
+
 pos_barras_anual_magnitud <- barplot(
   matriz_anual_magnitud,
   beside = FALSE,
-  main = "Eventos anuales por categoria de magnitud",
-  ylab = "Numero de eventos",
-  xlab = "Años",
+  main = "Eventos anuales por magnitud_cat",
+  xlab = "Año",
+  ylab = "Número de eventos",
   col = c("gray85", "gray60", "gray30"),
   border = "gray30",
   las = 2,
@@ -1056,31 +552,7 @@ pos_barras_anual_magnitud <- barplot(
   axes = FALSE
 )
 
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-pos_texto_anual_magnitud <- apply(
-  matriz_anual_magnitud,
-  2,
-  cumsum
-) - matriz_anual_magnitud / 2
-
-x_texto_anual_magnitud <- matrix(
-  rep(pos_barras_anual_magnitud, each = nrow(matriz_anual_magnitud)),
-  nrow = nrow(matriz_anual_magnitud)
-)
-
-text(
-  x = as.vector(x_texto_anual_magnitud),
-  y = as.vector(pos_texto_anual_magnitud),
-  labels = ifelse(as.vector(matriz_anual_magnitud) > 0, as.vector(matriz_anual_magnitud), ""),
-  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_anual_magnitud)),
-  cex = 0.45
-)
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 legend(
   "topright",
@@ -1093,7 +565,8 @@ legend(
 
 box()
 
-##Composicion decadal por categoria de magnitud----
+
+##Composición decadal por magnitud_cat----
 
 tabla_decadal_magnitud <- table(
   sismos_temporal$decada,
@@ -1102,45 +575,21 @@ tabla_decadal_magnitud <- table(
 
 matriz_decadal_magnitud <- t(tabla_decadal_magnitud)
 
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
 pos_barras_decadal_magnitud <- barplot(
   matriz_decadal_magnitud,
   beside = FALSE,
-  main = "Eventos por decada segun categoria de magnitud",
-  ylab = "Numero de eventos",
-  xlab = "Decada",
+  main = "Eventos por década según magnitud_cat",
+  xlab = "Década",
+  ylab = "Número de eventos",
   col = c("gray85", "gray60", "gray30"),
   border = "gray30",
-  las = 1,
-  cex.names = 0.8,
   ylim = c(0, max(colSums(matriz_decadal_magnitud)) * 1.15),
   axes = FALSE
 )
 
-axis(
-  side = 2,
-  las = 1,
-  lwd = 0,
-  lwd.ticks = 1
-)
-
-pos_texto_decadal_magnitud <- apply(
-  matriz_decadal_magnitud,
-  2,
-  cumsum
-) - matriz_decadal_magnitud / 2
-
-x_texto_decadal_magnitud <- matrix(
-  rep(pos_barras_decadal_magnitud, each = nrow(matriz_decadal_magnitud)),
-  nrow = nrow(matriz_decadal_magnitud)
-)
-
-text(
-  x = as.vector(x_texto_decadal_magnitud),
-  y = as.vector(pos_texto_decadal_magnitud),
-  labels = ifelse(as.vector(matriz_decadal_magnitud) > 0, as.vector(matriz_decadal_magnitud), ""),
-  col = rep(c("gray20", "gray20", "white"), times = ncol(matriz_decadal_magnitud)),
-  cex = 0.8
-)
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 legend(
   "topright",
@@ -1152,3 +601,4 @@ legend(
 )
 
 box()
+
