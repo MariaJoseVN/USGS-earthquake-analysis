@@ -99,19 +99,11 @@ El análisis se concentra en eventos de magnitud $M \geq 6{,}5$. Este umbral per
 
 # Alcance del informe
 
-Este pre-informe corresponde a una primera etapa de análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. El estudio considera eventos registrados en el catálogo de la USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$.
+Este pre-informe corresponde a una primera etapa de análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000-2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
-La unidad de análisis corresponde a cada evento sísmico registrado en dicho catálogo, considerando principalmente las variables `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`. En consecuencia, las conclusiones presentadas se derivan exclusivamente de los datos descargados desde la USGS, por lo que deben interpretarse dentro de los límites, cobertura y características propias de esta fuente de información.
+El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Asimismo, no se establece distinción entre los tipos de magnitud (`magType`) reportados por la fuente: estos se tratan de manera homogénea pese a poder provenir de escalas o procedimientos de estimación diferentes, lo que constituye una limitación a considerar al comparar eventos.
 
-El pre-informe no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
-
-El desarrollo del pre-informe se realiza utilizando Positron como entorno de trabajo para R y QGIS para la manipulación y visualización de datos georreferenciados.
-
-Con respecto al uso de la IA, como grupo de trabajo, establecemos las siguientes normas; se puede utilizar NotebookLM únicamente como apoyo para la lectura en español de bibliografía que originalmente se encuentre en inglés, con el fin de facilitar su comprensión por parte del equipo de trabajo.
-
-Como apoyo complementario al proceso de programación, se incorpora el uso de una extensión de ChatGPT en Positron, principalmente para orientar la estructura del código, proponer formas más simples y ordenadas de ejecutar los procedimientos, y buscar soluciones ante errores puntuales de ejecución, priorizando funciones nativas de R y recurriendo a librerías externas solo cuando sea necesario.
-
-Ninguna herramienta de inteligencia artificial puede generar redacción, interpretación, análisis, conclusiones ni contenido final del informe. Su uso queda sujeto al acuerdo de todos los integrantes del equipo de trabajo.
+El desarrollo se realiza en Positron como entorno de trabajo para R y en QGIS para la manipulación y visualización de datos georreferenciados. Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookLM solo como apoyo para la lectura en español de bibliografía en inglés, y una extensión de ChatGPT en Positron únicamente como soporte de programación —estructura del código, simplificación de procedimientos y resolución de errores puntuales—, priorizando funciones nativas de R. Ninguna herramienta de inteligencia artificial puede generar redacción, interpretación, análisis, conclusiones ni contenido final del informe.
 
 # Descripción de datos y parámetros de descarga
 
