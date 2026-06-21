@@ -262,7 +262,7 @@ Se clasifica la profundidad de los eventos por zona, distinguiendo entre categor
 
 # Resultados y discusión
 
-Esta sección presenta los principales resultados del análisis y los discute en relación con los objetivos del pre-informe. La lectura se organiza según las etapas metodológicas desarrolladas previamente: depuración y control de calidad, caracterización descriptiva, caracterización temporal y caracterización espacial. Las tablas y figuras extensas se remiten al anexo para mantener una exposición sintética, mientras que el cuerpo del informe conserva los hallazgos principales, su interpretación estadística y las limitaciones relevantes para su lectura.
+Esta sección presenta los principales resultados del análisis y los discute en relación con los objetivos del pre-informe. La lectura se organiza según las etapas metodológicas desarrolladas previamente: depuración y control de calidad, caracterización descriptiva, caracterización temporal y caracterización espacial. Las tablas y figuras extensas se remiten al anexo, mientras que el cuerpo del informe conserva los hallazgos principales, su interpretación estadística y las limitaciones relevantes para su lectura.
 
 ## Depuración y control de calidad
 
