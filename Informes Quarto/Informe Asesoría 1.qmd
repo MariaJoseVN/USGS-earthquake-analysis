@@ -25,7 +25,19 @@ execute:
   echo: false
   warning: false
   message: false
+header-includes:
+  - \usepackage{caption}
+  - \usepackage{needspace}
+  - \KOMAoption{captions}{tablesignature}
+  - \captionsetup{font=it,labelfont=it}
+  - \captionsetup[table]{position=bottom}
+  - \captionsetup[longtable]{position=bottom}
+  - \captionsetup[figure]{position=bottom}
 ---
+
+```{=latex}
+\newcommand{\bottomtablecaption}[2]{\par\smallskip\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
+```
 
 \thispagestyle{empty}
 \AddToHookNext{shipout/background}{
@@ -93,9 +105,10 @@ La configuración utilizada se documenta en la siguiente bitácora de descarga.
 \footnotesize
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-parametros-descarga}
 \begin{longtable}{p{0.32\textwidth}p{0.58\textwidth}}
-\caption{Parámetros de descarga registrados para la base principal de análisis.}
-\label{tbl-parametros-descarga} \\
 \toprule
 Parámetro & Valor registrado \\
 \midrule
@@ -113,7 +126,7 @@ Encargo asociado & Análisis global de grandes terremotos \\
 Cobertura geográfica & \texttt{Mundial (World / Worldwide)} \\
 Inicio del período & \texttt{2000-01-01 00:00:00 UTC} \\
 Fin del período & \texttt{2025-12-31 23:59:59 UTC} \\
-Magnitud mínima & $M \geq 6{.}5$ \\
+Magnitud mínima & $M \geq 6{,}5$ \\
 Magnitud máxima & \texttt{Sin filtro} \\
 Profundidad mínima & \texttt{Sin filtro} \\
 Profundidad máxima & \texttt{Sin filtro} \\
@@ -122,6 +135,8 @@ Tipo de evento & \texttt{Sin filtro específico} \\
 Ordenamiento & \texttt{Time - Oldest First} \\
 \bottomrule
 \end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-parametros-descarga}{Parámetros de descarga registrados para la base principal de análisis.}
 \endgroup
 
 El formato `.CSV` se utiliza como base principal del procesamiento estadístico, aunque paralelamente se utiliza un formato `.GeoJson` con las mismas caracteristicas en el software `Qgis`.
@@ -148,33 +163,9 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-### Valores faltantes
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables centrales no presentan problemas que requieran imputación, interpolación, corrección temporal, corrección espacial o consolidación de duplicados. En cambio, algunas variables auxiliares asociadas a incertidumbre o procesamiento instrumental presentan valores faltantes, por lo que se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
 
-Se revisa la presencia de valores faltantes en las variables centrales del análisis: `id`, `time`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`. Estas variables no presentan valores faltantes, por lo que no se requiere aplicar imputación, interpolación ni exclusión de registros para el análisis principal.
-
-Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`, sí presentan valores faltantes. Dado que estas variables describen aspectos instrumentales, incertidumbre o métricas de procesamiento, no se utilizan como eje del presente análisis. Se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
-
-### Duplicados
-
-Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
-
-### Tipo de evento y estado de revisión
-
-Se verifican `type` y `status`. Todos los registros corresponden a `earthquake` y todos presentan estado `reviewed`. Por esta razón, no se requiere aplicar filtros adicionales por tipo de evento ni por estado de revisión.
-
-### Consistencia temporal
-
-La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
-
-### Consistencia espacial
-
-Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
-
-### Magnitud y unidades de medida
-
-Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
-
-A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
+Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
 ## Caracterización Descriptiva
 
@@ -208,7 +199,7 @@ Adicionalmente, se definen indicadores lógicos para identificar eventos sísmic
 
 ### Conteos y tasas temporales de ocurrencia
 
-Se caracteriza la frecuencia de eventos sísmicos mediante conteos mensuales, anuales y decadales, considerando el catálogo completo y los umbrales de magnitud M ≥ 7.0, M ≥ 7.5 y M ≥ 8.0. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual permite comparar la ocurrencia entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
+Se caracteriza la frecuencia de eventos sísmicos mediante conteos mensuales, anuales y decadales, considerando el catálogo completo y los umbrales de magnitud $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual permite comparar la ocurrencia entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
 
 Adicionalmente, se calculan tasas anuales promedio por década, ajustando los conteos según la cantidad efectiva de años observados en cada período. Esta corrección permite comparar décadas completas e incompletas de manera proporcional, evitando sesgos por distinta duración temporal.
 
@@ -220,7 +211,7 @@ Se construyen series temporales para el catálogo completo y para los eventos co
 
 Se calculan medidas descriptivas básicas para cada serie temporal mensual y anual mediante la función summary(). Estos resúmenes permiten identificar niveles mínimos, máximos, medias y distribución general de los conteos observados. Esta etapa entrega una primera referencia cuantitativa sobre la frecuencia típica de eventos sísmicos y permite distinguir períodos o registros que se alejan del comportamiento promedio del catálogo.
 
-### Recurrencia temporal de eventos M ≥ 7.0
+### Recurrencia temporal de eventos $M \geq 7{,}0$
 
 Se seleccionan los eventos con magnitud mayor o igual a 7.0, se ordenan cronológicamente y se calcula el número de días transcurridos entre eventos consecutivos. Luego, se resumen estos intervalos mediante media, mediana, mínimo, máximo y cuartiles por década.
 
@@ -258,9 +249,10 @@ Se clasifica la profundidad de los eventos por zona, distinguiendo entre categor
 \small
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{0.9}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-variables-consideradas}
 \begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
-\caption{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
-\label{tbl-variables-consideradas} \\
 \toprule
 Variable & Origen & Descripción breve & Análisis \\
 \midrule
@@ -296,13 +288,21 @@ Variable & Origen & Descripción breve & Análisis \\
 \texttt{evento\_m80} & Derivada & Indicador $M \geq 8{,}0$ & Eventos extremos \\
 \bottomrule
 \end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
 \endgroup
 
 \newpage
 
 ## Caracterización Descriptiva
 
-### 
+La caracterización descriptiva muestra que el catálogo contiene 1.186 eventos entre 2000 y 2025, equivalentes a 26 años o 312 meses de observación. \emph{(véase \hyperref[tbl-conteo-periodo]{tabla~\ref*{tbl-conteo-periodo}})}.
+
+La distribución de `mag` se concentra en valores cercanos al umbral de inclusión: la media es 6,90 y la mediana 6,80. El cuantil 75 alcanza 7,10, mientras que los cuantiles 90 y 95 alcanzan 7,50 y 7,70, respectivamente. Esto indica que la mayor parte de los eventos corresponde a magnitudes fuertes o mayores, mientras que los eventos extremos representan una fracción menor del catálogo. \emph{(véase \hyperref[tbl-resumen-mag]{tabla~\ref*{tbl-resumen-mag}})}.
+
+La clasificación por `magnitud_cat` confirma esta lectura: 67,37% de los eventos corresponde a la categoría Fuerte, 27,66% a Mayor y 4,97% a Grande o extremo. \emph{(véase \hyperref[tbl-categoria-magnitud]{tabla~\ref*{tbl-categoria-magnitud}})}.
+
+La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperref[tbl-magnitud-maxima-anual]{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
 
 ## Caracterización Temporal
 
@@ -328,15 +328,47 @@ Completar con las citas utilizadas en el texto. Las referencias se administran d
 
 # Anexos reproducibles
 
-## Caracterización descriptiva
+## Control de calidad de la base USGS {#sec-anexo-control-calidad}
 
-### 
+La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
+
+### Valores faltantes
+
+Se revisa la presencia de valores faltantes en las variables centrales del análisis: `id`, `time`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`. Estas variables no presentan valores faltantes, por lo que no se requiere aplicar imputación, interpolación ni exclusión de registros para el análisis principal.
+
+Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`, sí presentan valores faltantes. Dado que estas variables describen aspectos instrumentales, incertidumbre o métricas de procesamiento, no se utilizan como eje del presente análisis. Se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
+
+### Duplicados
+
+Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
+
+### Tipo de evento y estado de revisión
+
+Se verifican `type` y `status`. Todos los registros corresponden a `earthquake` y todos presentan estado `reviewed`. Por esta razón, no se requiere aplicar filtros adicionales por tipo de evento ni por estado de revisión.
+
+### Consistencia temporal
+
+La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
+
+### Consistencia espacial
+
+Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
+
+### Magnitud y unidades de medida
+
+Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
+
+A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
+
+## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
 \small
+\Needspace{10\baselineskip}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-conteo-periodo}
 \begin{longtable}{lr}
-\caption{Síntesis del período y tamaño del catálogo analizado.}
-\label{tbl-conteo-periodo} \\
 \toprule
 Indicador & Valor \\
 \midrule
@@ -347,6 +379,78 @@ Meses analizados & 312 \\
 Eventos con $M \geq 6{,}5$ & 1.186 \\
 \bottomrule
 \end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-conteo-periodo}{Síntesis del período y tamaño del catálogo analizado.}
+\endgroup
+
+\begingroup
+\small
+\Needspace{18\baselineskip}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-resumen-mag}
+\begin{longtable}{lr}
+\toprule
+Indicador & Valor \\
+\midrule
+Media & $6{,}90$ \\
+Mediana & $6{,}80$ \\
+Desviación estándar & $0{,}42$ \\
+Máximo & $9{,}10$ \\
+Cuantil 25 & $6{,}60$ \\
+Cuantil 50 & $6{,}80$ \\
+Cuantil 75 & $7{,}10$ \\
+Cuantil 90 & $7{,}50$ \\
+Cuantil 95 & $7{,}70$ \\
+\bottomrule
+\end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-resumen-mag}{Resumen descriptivo de la magnitud de los eventos.}
+\endgroup
+
+\begingroup
+\small
+\Needspace{10\baselineskip}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-categoria-magnitud}
+\begin{longtable}{lrr}
+\toprule
+\texttt{magnitud\_cat} & Eventos & Porcentaje \\
+\midrule
+Fuerte & 799 & $67{,}37\%$ \\
+Mayor & 328 & $27{,}66\%$ \\
+Grande o extremo & 59 & $4{,}97\%$ \\
+\bottomrule
+\end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-categoria-magnitud}{Número y proporción de eventos por categoría de magnitud.}
+\endgroup
+
+\begingroup
+\small
+\setlength{\tabcolsep}{6pt}
+\Needspace{16\baselineskip}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-magnitud-maxima-anual}
+\begin{longtable}{rr rr rr}
+\toprule
+Año & Máx. & Año & Máx. & Año & Máx. \\
+\midrule
+2000 & $8{,}00$ & 2009 & $8{,}10$ & 2018 & $8{,}20$ \\
+2001 & $8{,}40$ & 2010 & $8{,}80$ & 2019 & $8{,}00$ \\
+2002 & $7{,}90$ & 2011 & $9{,}10$ & 2020 & $7{,}80$ \\
+2003 & $8{,}16$ & 2012 & $8{,}60$ & 2021 & $8{,}20$ \\
+2004 & $9{,}10$ & 2013 & $8{,}30$ & 2022 & $7{,}60$ \\
+2005 & $8{,}60$ & 2014 & $8{,}20$ & 2023 & $7{,}80$ \\
+2006 & $8{,}30$ & 2015 & $8{,}30$ & 2024 & $7{,}50$ \\
+2007 & $8{,}40$ & 2016 & $7{,}90$ & 2025 & $8{,}80$ \\
+2008 & $7{,}90$ & 2017 & $8{,}20$ &      &        \\
+\bottomrule
+\end{longtable}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-magnitud-maxima-anual}{Magnitud máxima anual observada.}
 \endgroup
 
 # Bibliografía
@@ -356,11 +460,11 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 Plantillas para mantener numeración automática en Quarto:
 
 Figura desde archivo:
-![Título descriptivo de la figura.](ruta/a/la/imagen.png){#fig-nombre-corto}
+![Leyenda explicativa de la figura.](ruta/a/la/imagen.png){#fig-nombre-corto}
 En el texto puedes citarla como @fig-nombre-corto.
 
 Figura creada con R:
-Crear un chunk R con label: fig-nombre-corto y fig-cap: "Título descriptivo de la figura."
+Crear un chunk R con label: fig-nombre-corto y fig-cap: "Leyenda explicativa de la figura."
 El código del gráfico va dentro de ese chunk.
 En el texto puedes citarla como @fig-nombre-corto.
 
@@ -369,12 +473,12 @@ Tabla escrita en Markdown:
 |---|---|
 | completar | completar |
 
-: Título descriptivo de la tabla. {#tbl-nombre-corto}
+: Leyenda explicativa de la tabla. {#tbl-nombre-corto}
 
 En el texto puedes citarla como @tbl-nombre-corto.
 
 Tabla creada con R:
-Crear un chunk R con label: tbl-nombre-corto y tbl-cap: "Título descriptivo de la tabla."
+Crear un chunk R con label: tbl-nombre-corto y tbl-cap: "Leyenda explicativa de la tabla."
 El código que imprime la tabla va dentro de ese chunk.
 En el texto puedes citarla como @tbl-nombre-corto.
 -->

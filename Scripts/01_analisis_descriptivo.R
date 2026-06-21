@@ -294,12 +294,6 @@ View(estadisticos_zona)
 library(vioplot)
 
 #Distribución general de magnitud----
-densidad_magnitud <- density(
-  sismos$mag[!is.na(sismos$mag)],
-  from = min(sismos$mag, na.rm = TRUE),
-  to = max(sismos$mag, na.rm = TRUE)
-)
-
 histograma_magnitud <- hist(
   sismos$mag,
   breaks = "Sturges",
@@ -313,25 +307,16 @@ par(
 
 plot(
   histograma_magnitud,
-  freq = FALSE,
-  main = "Distribución general de magnitud",
+  freq = TRUE,
+  main = "Distribución de eventos según magnitud",
   xlab = "Magnitud",
-  ylab = "Densidad",
+  ylab = "Número de eventos",
   col = "gray80",
   border = "gray30",
   ylim = c(
     0,
-    max(
-      histograma_magnitud$density,
-      densidad_magnitud$y
-    ) * 1.10
+    max(histograma_magnitud$counts) * 1.10
   )
-)
-
-lines(
-  densidad_magnitud,
-  col = "darkblue",
-  lwd = 1
 )
 
 abline(
@@ -350,10 +335,10 @@ abline(
 
 legend(
   "topright",
-  legend = c("Densidad", "Media", "Mediana"),
-  col = c("darkblue", "black", "red"),
-  lty = c(1, 2, 3),
-  lwd = c(1, 1.5, 1.5),
+  legend = c("Media", "Mediana"),
+  col = c("black", "red"),
+  lty = c(2, 3),
+  lwd = c(1.5, 1.5),
   bty = "n",
   cex = 0.8
 )
@@ -361,12 +346,6 @@ legend(
 box()
 
 #Distribución general de profundidad----
-densidad_profundidad <- density(
-  sismos$depth[!is.na(sismos$depth)],
-  from = 0,
-  to = max(sismos$depth, na.rm = TRUE)
-)
-
 histograma_profundidad <- hist(
   sismos$depth,
   breaks = "Sturges",
@@ -375,25 +354,16 @@ histograma_profundidad <- hist(
 
 plot(
   histograma_profundidad,
-  freq = FALSE,
-  main = "Distribución general de profundidad",
+  freq = TRUE,
+  main = "Distribución de eventos según profundidad",
   xlab = "Profundidad (km)",
-  ylab = "Densidad",
+  ylab = "Número de eventos",
   col = "gray80",
   border = "gray30",
   ylim = c(
     0,
-    max(
-      histograma_profundidad$density,
-      densidad_profundidad$y
-    ) * 1.10
+    max(histograma_profundidad$counts) * 1.10
   )
-)
-
-lines(
-  densidad_profundidad,
-  col = "darkblue",
-  lwd = 1
 )
 
 abline(
@@ -412,10 +382,10 @@ abline(
 
 legend(
   "topright",
-  legend = c("Densidad", "Media", "Mediana"),
-  col = c("darkblue", "black", "red"),
-  lty = c(1, 2, 3),
-  lwd = c(1, 1.5, 1.5),
+  legend = c("Media", "Mediana"),
+  col = c("black", "red"),
+  lty = c(2, 3),
+  lwd = c(1.5, 1.5),
   bty = "n",
   cex = 0.8
 )
