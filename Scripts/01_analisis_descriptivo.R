@@ -284,3 +284,341 @@ View(estadisticos_zona)
 
 
 
+
+
+
+#Instalar solamente una vez si es necesario
+#install.packages("vioplot")
+
+library(vioplot)
+
+#Distribución general de magnitud----
+densidad_magnitud <- density(
+  sismos$mag[!is.na(sismos$mag)],
+  from = min(sismos$mag, na.rm = TRUE),
+  to = max(sismos$mag, na.rm = TRUE)
+)
+
+histograma_magnitud <- hist(
+  sismos$mag,
+  breaks = "Sturges",
+  plot = FALSE
+)
+
+par(
+  bg = "white",
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
+plot(
+  histograma_magnitud,
+  freq = FALSE,
+  main = "Distribución general de magnitud",
+  xlab = "Magnitud",
+  ylab = "Densidad",
+  col = "gray80",
+  border = "gray30",
+  ylim = c(
+    0,
+    max(
+      histograma_magnitud$density,
+      densidad_magnitud$y
+    ) * 1.10
+  )
+)
+
+lines(
+  densidad_magnitud,
+  col = "darkblue",
+  lwd = 1
+)
+
+abline(
+  v = mean(sismos$mag, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+abline(
+  v = median(sismos$mag, na.rm = TRUE),
+  col = "red",
+  lty = 3,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Densidad", "Media", "Mediana"),
+  col = c("darkblue", "black", "red"),
+  lty = c(1, 2, 3),
+  lwd = c(1, 1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+#Distribución general de profundidad----
+densidad_profundidad <- density(
+  sismos$depth[!is.na(sismos$depth)],
+  from = 0,
+  to = max(sismos$depth, na.rm = TRUE)
+)
+
+histograma_profundidad <- hist(
+  sismos$depth,
+  breaks = "Sturges",
+  plot = FALSE
+)
+
+plot(
+  histograma_profundidad,
+  freq = FALSE,
+  main = "Distribución general de profundidad",
+  xlab = "Profundidad (km)",
+  ylab = "Densidad",
+  col = "gray80",
+  border = "gray30",
+  ylim = c(
+    0,
+    max(
+      histograma_profundidad$density,
+      densidad_profundidad$y
+    ) * 1.10
+  )
+)
+
+lines(
+  densidad_profundidad,
+  col = "darkblue",
+  lwd = 1
+)
+
+abline(
+  v = mean(sismos$depth, na.rm = TRUE),
+  col = "black",
+  lty = 2,
+  lwd = 1.5
+)
+
+abline(
+  v = median(sismos$depth, na.rm = TRUE),
+  col = "red",
+  lty = 3,
+  lwd = 1.5
+)
+
+legend(
+  "topright",
+  legend = c("Densidad", "Media", "Mediana"),
+  col = c("darkblue", "black", "red"),
+  lty = c(1, 2, 3),
+  lwd = c(1, 1.5, 1.5),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+#Colores según el mapa----
+colores_zona <- c(
+  "Cinturon de Fuego" = "#E06B70",
+  "Dorsal Meso-Atlantica" = "#C7B17A",
+  "Cinturon Alpino-Himalayo" = "#5AC8AE",
+  "Resto del mundo" = "#BDBDBD"
+)
+
+#Preparar magnitud por zona----
+magnitud_por_zona <- split(
+  sismos$mag[!is.na(sismos$mag)],
+  sismos$zona[!is.na(sismos$mag)],
+  drop = TRUE
+)
+
+#Distribución de magnitud por zona----
+par(
+  bg = "white",
+  mar = c(9, 4, 4, 2) + 0.1
+)
+
+plot(
+  NA,
+  xlim = c(
+    0.5,
+    length(magnitud_por_zona) + 0.5
+  ),
+  ylim = extendrange(
+    sismos$mag,
+    f = 0.05
+  ),
+  main = "Distribución de magnitud por zona",
+  xlab = "",
+  ylab = "Magnitud",
+  axes = FALSE,
+  bty = "n"
+)
+
+do.call(
+  vioplot::vioplot,
+  c(
+    unname(magnitud_por_zona),
+    list(
+      at = seq_along(magnitud_por_zona),
+      add = TRUE,
+      drawRect = FALSE,
+      col = unname(
+        colores_zona[names(magnitud_por_zona)]
+      ),
+      border = "gray30",
+      lwd = 1,
+      wex = 0.9
+    )
+  )
+)
+
+boxplot(
+  magnitud_por_zona,
+  add = TRUE,
+  at = seq_along(magnitud_por_zona),
+  boxwex = 0.14,
+  col = "white",
+  border = "black",
+  outline = FALSE,
+  axes = FALSE
+)
+
+points(
+  seq_along(magnitud_por_zona),
+  sapply(
+    magnitud_por_zona,
+    mean,
+    na.rm = TRUE
+  ),
+  pch = 19,
+  col = "black"
+)
+
+axis(
+  side = 1,
+  at = seq_along(magnitud_por_zona),
+  labels = names(magnitud_por_zona),
+  las = 2,
+  cex.axis = 0.75
+)
+
+axis(
+  side = 2,
+  at = pretty(range(sismos$mag, na.rm = TRUE)),
+  las = 1
+)
+
+legend(
+  "topright",
+  legend = "Media",
+  pch = 19,
+  col = "black",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+#Preparar profundidad por zona----
+profundidad_por_zona <- split(
+  sismos$depth[!is.na(sismos$depth)],
+  sismos$zona[!is.na(sismos$depth)],
+  drop = TRUE
+)
+
+#Distribución de profundidad por zona----
+plot(
+  NA,
+  xlim = c(
+    0.5,
+    length(profundidad_por_zona) + 0.5
+  ),
+  ylim = c(
+    0,
+    max(sismos$depth, na.rm = TRUE) * 1.08
+  ),
+  main = "Distribución de profundidad por zona",
+  xlab = "",
+  ylab = "Profundidad (km)",
+  axes = FALSE,
+  bty = "n"
+)
+
+do.call(
+  vioplot::vioplot,
+  c(
+    unname(profundidad_por_zona),
+    list(
+      at = seq_along(profundidad_por_zona),
+      add = TRUE,
+      drawRect = FALSE,
+      col = unname(
+        colores_zona[names(profundidad_por_zona)]
+      ),
+      border = "gray30",
+      lwd = 1,
+      wex = 0.9
+    )
+  )
+)
+
+boxplot(
+  profundidad_por_zona,
+  add = TRUE,
+  at = seq_along(profundidad_por_zona),
+  boxwex = 0.14,
+  col = "white",
+  border = "black",
+  outline = FALSE,
+  axes = FALSE
+)
+
+points(
+  seq_along(profundidad_por_zona),
+  sapply(
+    profundidad_por_zona,
+    mean,
+    na.rm = TRUE
+  ),
+  pch = 19,
+  col = "black"
+)
+
+axis(
+  side = 1,
+  at = seq_along(profundidad_por_zona),
+  labels = names(profundidad_por_zona),
+  las = 2,
+  cex.axis = 0.75
+)
+
+axis(
+  side = 2,
+  at = pretty(c(
+    0,
+    max(sismos$depth, na.rm = TRUE)
+  )),
+  las = 1
+)
+
+legend(
+  "topright",
+  legend = "Media",
+  pch = 19,
+  col = "black",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+#Restablecer márgenes----
+par(
+  mar = c(5, 4, 4, 2) + 0.1
+)
+
