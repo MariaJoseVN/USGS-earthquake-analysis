@@ -43,48 +43,50 @@ execute:
 
 # Resumen ejecutivo
 
-
 # Antecedentes
+
 La actividad sísmica constituye un fenómeno geofísico que ocurre de manera transveral a lo largo del mundo. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos observados a escala global. Su relevancia radica en una posible caracterización territorial, gestión institucional y/o la comprensión de patrones espaciales y temporales asociadosa zonas tectónicamente activas.
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
-
 # Objetivo general
+
 El presente pre-informe se desarrolla en el marco de una asesoría estadística orientada a transformar los datos públicos de eventos sísmicos en información cuantitativa confiable, documentada e interpretable. La contraparte solicitante requiere una caracterización de grandes terremotos a nivel mundial, con especial interés en su distribución espacial, evolución temporal, comparación entre zonas geográficas de interés, recurrencia y presencia de eventos extremos, con resultados interpretables y facilmente replicables.
 
 El análisis se concentra en eventos de magnitud $M \geq 6{,}5$. Umbral que permite focalizar la revisión en terremotos relevantes según el interés de estudio solicitado.
 
-
 ## Objetivos específicos
+
 - Documentar la fuente de datos, fecha de descarga, parámetros de consulta y criterios de selección que se utilizan para construir la base de análisis.
 - Realizar un control de calidad de los datos, considerando duplicados, valores faltantes, consistencia temporal, consistencia espacial y tipo de evento.
 - Describir la distribución de los eventos según magnitud, profundidad, frecuencia anual, frecuencia decadal y ocurrencia de eventos extremos.
 - Comparar preliminarmente la actividad sísmica observada en el Cinturón de Fuego del Pacífico respecto del resto del mundo, utilizando una definición geográfica explícita y reproducible.
 - Identificar limitaciones metodológicas relevantes del análisis.
 
-
 # Alcance del informe
+
 - Este pre-informe corresponde a una primera etapa de análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. El estudio considera eventos registrados en el catálogo de la USGS durante el período 2000-2025, con magnitud $M \geq 6{,}5$.
 
-La unidad de análisis corresponde a cada evento sísmico registrado en dicho catálogo, considerando principalmente las variables `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`. En consecuencia, las conclusiones presentadas se derivan exclusivamente de los datos descargados desde la USGS, por lo que deben interpretarse dentro de los límites, cobertura y características propias de esta fuente de información.
+  La unidad de análisis corresponde a cada evento sísmico registrado en dicho catálogo, considerando principalmente las variables `time`, `latitude`, `longitude`, `mag`, `depth`, `magType`, `locationSource`, `magSource` y `status`. En consecuencia, las conclusiones presentadas se derivan exclusivamente de los datos descargados desde la USGS, por lo que deben interpretarse dentro de los límites, cobertura y características propias de esta fuente de información.
 
 - El pre-informe no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
 - El desarrollo del pre-informe se realizará utilizando Positron como entorno de trabajo para R y QGIS para la manipulación y visualización de datos georreferenciados.
 
-Asimismo, se podrá utilizar NotebookLM únicamente como apoyo para la lectura en español de bibliografía que originalmente se encuentre en inglés, con el fin de facilitar su comprensión por parte del equipo de trabajo.
+  Asimismo, se podrá utilizar NotebookLM únicamente como apoyo para la lectura en español de bibliografía que originalmente se encuentre en inglés, con el fin de facilitar su comprensión por parte del equipo de trabajo.
 
-Como apoyo complementario al proceso de programación, se incorporará el uso de una extensión de ChatGPT en Positron, principalmente para orientar la estructura del código, proponer formas más simples y ordenadas de ejecutar los procedimientos, y buscar soluciones ante errores puntuales de ejecución, priorizando funciones nativas de R y recurriendo a librerías externas solo cuando sea necesario.
+  Como apoyo complementario al proceso de programación, se incorporará el uso de una extensión de ChatGPT en Positron, principalmente para orientar la estructura del código, proponer formas más simples y ordenadas de ejecutar los procedimientos, y buscar soluciones ante errores puntuales de ejecución, priorizando funciones nativas de R y recurriendo a librerías externas solo cuando sea necesario.
 
-Ninguna herramienta de inteligencia artificial podrá generar redacción, interpretación, análisis, conclusiones ni contenido final del informe. Su uso quedará sujeto al acuerdo de todos los integrantes del equipo de trabajo.
+  Ninguna herramienta de inteligencia artificial podrá generar redacción, interpretación, análisis, conclusiones ni contenido final del informe. Su uso quedará sujeto al acuerdo de todos los integrantes del equipo de trabajo.
 
 # Descripción de datos y parámetros de descarga
 
 ## Fuente de datos
+
 La fuente principal de información corresponde al catálogo público de terremotos de la United States Geological Survey (USGS), específicamente el sitio [USGS Earthquake Catalog Search.](https://earthquake.usgs.gov/earthquakes/search/)
 
 ## Parámetros de descarga
+
 La configuración utilizada se documenta en la siguiente bitácora de descarga.
 
 \begingroup
@@ -125,6 +127,7 @@ Ordenamiento & \texttt{Time - Oldest First} \\
 El formato `.CSV` se utiliza como base principal del procesamiento estadístico, aunque paralelamente se utiliza un formato `.GeoJson` con las mismas caracteristicas en el software `Qgis`.
 
 ### Datos Originales
+
 Una vez que los datos se descargan desde USGS según los parámetros indicados en la Tabla \ref{tbl-parametros-descarga}, el archivo crudo `BBDD/query.csv` se importa en R y se almacena inicialmente como el objeto **`sismos_raw`**. Esta base conserva las variables originales entregadas por USGS, sin modificaciones previas, y constituye el punto de partida del proceso de depuración, selección y construcción de variables derivadas.
 
 Las variables originales del catálogo pueden organizarse en distintos grupos según su función:
@@ -139,40 +142,48 @@ Las variables originales del catálogo pueden organizarse en distintos grupos se
 
 Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad, pero no se seleccionan como variables centrales del presente análisis, ya que el objetivo del pre-informe se enfoca en caracterizar la frecuencia de eventos y el comportamiento de `mag`, `depth`, `time`, `latitude` y `longitude`.
 
-
 # Metodología y justificación estadística
 
 ## Depuración y control de calidad
+
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-### Valores faltantes 
+### Valores faltantes
+
 Se revisa la presencia de valores faltantes en las variables centrales del análisis: `id`, `time`, `latitude`, `longitude`, `depth`, `mag`, `magType`, `place`, `type`, `status`, `net`, `locationSource` y `magSource`. Estas variables no presentan valores faltantes, por lo que no se requiere aplicar imputación, interpolación ni exclusión de registros para el análisis principal.
 
 Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`, sí presentan valores faltantes. Dado que estas variables describen aspectos instrumentales, incertidumbre o métricas de procesamiento, no se utilizan como eje del presente análisis. Se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
 
 ### Duplicados
- Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
 
-### Tipo de evento y estado de revisión 
+Se evalúa la presencia de registros duplicados mediante dos criterios. Primero, se revisa `id`, sin detectar repeticiones. Segundo, se revisa la coincidencia conjunta de `fecha_hora_utc`, `latitude`, `longitude`, `depth` y `mag`, como criterio operativo para detectar eventos posiblemente repetidos. Tampoco se identifican duplicados bajo esta definición. En consecuencia, no se requiere aplicar consolidación de registros ni criterios de selección entre eventos equivalentes.
+
+### Tipo de evento y estado de revisión
+
 Se verifican `type` y `status`. Todos los registros corresponden a `earthquake` y todos presentan estado `reviewed`. Por esta razón, no se requiere aplicar filtros adicionales por tipo de evento ni por estado de revisión.
 
 ### Consistencia temporal
- La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
+
+La variable `time` se convierte a `fecha_hora_utc`. A partir de esta conversión se construyen `fecha`, `año`, `mes`, `fecha_mes` y `decada`. Se verifica que todas las observaciones tienen una fecha válida y que se encuentran dentro del período definido para la descarga, entre el 1 de enero de 2000 y el 31 de diciembre de 2025. No se detectan eventos fuera del período de análisis.
 
 ### Consistencia espacial
- Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
+
+Se revisan los rangos de `latitude` y `longitude`, verificando que se encuentran dentro de valores geográficamente posibles. `latitude` se encuentra entre -61,8098 y 80,324, mientras que `longitude` se encuentra entre -179,971 y 179,9981. Estos rangos son consistentes con una búsqueda mundial. También se revisa `depth`, observándose valores entre 2,7 km y 676,4 km, sin profundidades negativas ni valores incompatibles con el análisis.
 
 ### Magnitud y unidades de medida
- Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
+
+Se verifica que `mag` cumple el umbral de descarga definido. La magnitud mínima observada es $M = 6{,}5$, por lo que la base cumple el criterio de inclusión del estudio. `depth` se interpreta en kilómetros y `time` en UTC, manteniendo las unidades reportadas por USGS. `magType` muestra distintos tipos de magnitud, lo que se considera una limitación metodológica al comparar eventos, ya que no todos los registros provienen necesariamente de una misma escala o procedimiento de estimación.
 
 A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
 
-
 ## Caracterización Descriptiva
+
 ### Delimitación temporal y conteo de eventos
+
 Se definió el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación. En dicho intervalo, la base `sismos` contiene 1186 terremotos con magnitud mayor o igual a 6.5. Ésta etapa permite fijar el alcance temporal del estudio y establecer el total de eventos sobre el cual se calculan las tasas de ocurrencia.
 
 ### Caracterización descriptiva de la variable magnitud sísmica (mag)
+
 Se caracterizan las magnitudes de los terremotos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
 
 Además, se calcula la magnitud máxima por año para identificar la mayor intensidad registrada en cada período anual. Finalmente, se resume la distribución de eventos según categoría de magnitud, obteniendo el número, proporción y porcentaje de terremotos en cada grupo.
@@ -180,20 +191,23 @@ Además, se calcula la magnitud máxima por año para identificar la mayor inten
 Esta etapa permite describir la severidad de los eventos sísmicos, comparar su comportamiento anual y evaluar la concentración de terremotos según rangos de magnitud.
 
 ### Caracterización descriptiva de la profundidad sísmica
+
 Se caracterizan las profundidades de los eventos sísmicos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
 
 Además, se resume la distribución de eventos según categoría de profundidad, identificando la proporción de terremotos en cada rango definido.
 
 Esta etapa permite describir la profundidad típica de los eventos, evaluar su variabilidad y reconocer la concentración de terremotos según niveles de profundidad.
 
-
 ## Caracterización Temporal
+
 ### Preparación de variables temporales e indicadores de magnitud
+
 Se prepara la base sismos para el análisis temporal mediante la creación de variables auxiliares de agrupación mensual y decadal. La variable fecha_mes estandariza cada evento al primer día del mes correspondiente, mientras que década permite agrupar los registros en períodos de diez años.
 
 Adicionalmente, se definen indicadores lógicos para identificar eventos sísmicos con magnitud mayor o igual a 7.0, 7.5 y 8.0. Si bien las bases de la asesoría solicitan específicamente el análisis de eventos con magnitud mayor o igual a 7.0, se incorporan también los umbrales de 7.5 y 8.0 con el propósito de profundizar en el estudio de grandes terremotos y eventos extremos. Estos tres niveles de magnitud, establecidos en intervalos consecutivos de 0.5 unidades, permiten comparar la frecuencia de eventos según distintos grados de severidad, facilitando un análisis más detallado de la distribución de terremotos extremos dentro del catálogo.
 
 ### Conteos y tasas temporales de ocurrencia
+
 Se caracteriza la frecuencia de eventos sísmicos mediante conteos mensuales, anuales y decadales, considerando el catálogo completo y los umbrales de magnitud M ≥ 7.0, M ≥ 7.5 y M ≥ 8.0. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual permite comparar la ocurrencia entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
 
 Adicionalmente, se calculan tasas anuales promedio por década, ajustando los conteos según la cantidad efectiva de años observados en cada período. Esta corrección permite comparar décadas completas e incompletas de manera proporcional, evitando sesgos por distinta duración temporal.
@@ -201,38 +215,45 @@ Adicionalmente, se calculan tasas anuales promedio por década, ajustando los co
 Esta etapa permite describir la evolución de la ocurrencia sísmica en distintas escalas de tiempo y establecer una base cuantitativa para comparar la frecuencia de eventos generales y de mayor magnitud.
 
 ### Construcción de series temporales mensuales y anuales
+
 Se construyen series temporales para el catálogo completo y para los eventos con magnitud mayor o igual a 7.0, considerando dos escalas de agregación: mensual y anual. En el caso mensual, la serie se define con inicio en enero de 2000 y frecuencia igual a 12, mientras que en el caso anual se utiliza frecuencia igual a 1, representando observaciones por año calendario. Esta etapa permite estructurar los conteos como series temporales regulares, facilitando su resumen estadístico, visualización y análisis posterior. La escala mensual permite observar fluctuaciones de corto plazo, mientras que la escala anual entrega una lectura más estable de la evolución general de la sismicidad durante el período 2000-2025.
 
 Se calculan medidas descriptivas básicas para cada serie temporal mensual y anual mediante la función summary(). Estos resúmenes permiten identificar niveles mínimos, máximos, medias y distribución general de los conteos observados. Esta etapa entrega una primera referencia cuantitativa sobre la frecuencia típica de eventos sísmicos y permite distinguir períodos o registros que se alejan del comportamiento promedio del catálogo.
 
 ### Recurrencia temporal de eventos M ≥ 7.0
+
 Se seleccionan los eventos con magnitud mayor o igual a 7.0, se ordenan cronológicamente y se calcula el número de días transcurridos entre eventos consecutivos. Luego, se resumen estos intervalos mediante media, mediana, mínimo, máximo y cuartiles por década.
 
 Este análisis permite describir el tiempo típico entre terremotos relevantes y comparar su recurrencia temporal entre distintos períodos.
 
 ### Composición por categoría de magnitud
+
 Se calculan conteos anuales y decadales según la variable magnitud_cat, que clasifica los eventos en categorías excluyentes: “Fuerte”, “Mayor” y “Grande o extremo”. Estas categorías fueron construidas a partir de los nombres y criterios de clasificación de magnitud identificados en la bibliografía revisada.
 
 Esta etapa permite describir la composición temporal del catálogo y distinguir qué categorías explican principalmente la frecuencia observada en cada año o década.
 
-## Caracterización Espacial 
+## Caracterización Espacial
+
 ### Georreferenciación y asignación de zona
+
 Se incorporan polígonos geográficos de zonas sísmicas (Cinturón de fuego, Cinturon Alpino-Himalayo, Dorsal Meso-Atlantica y Resto del mundo) y se transforman los registros de terremotos en puntos espaciales a partir de sus coordenadas de longitud y latitud. Luego, cada evento se asigna a una zona mediante intersección espacial; los eventos sin coincidencia territorial se clasifican como “Resto del mundo”.
 
 ### Conteo de eventos por zona y año
+
 Se calcula el total de eventos por zona y su distribución anual entre 2000 y 2025. Para mantener consistencia temporal y territorial, se completan las combinaciones zona-año sin registros con valor cero.
 
 ### Estadísticos descriptivos por zona
+
 Se resumen los principales indicadores por zona, incluyendo número de eventos, proporción, porcentaje, tasa anual, tasa mensual, magnitud y profundidad. Esta etapa permite comparar la frecuencia, severidad y características de los eventos entre zonas sísmicas.
 
 ### Distribución de profundidad por zona
+
 Se clasifica la profundidad de los eventos por zona, distinguiendo entre categorías superficial, intermedia y profunda. Luego, se calcula el número, proporción y porcentaje de eventos en cada categoría, permitiendo caracterizar la estructura de profundidad de cada zona sísmica.
-
-
 
 # Resultados
 
 ## Depuración y control de calidad
+
 \begingroup
 \small
 \setlength{\tabcolsep}{4pt}
@@ -280,9 +301,8 @@ Variable & Origen & Descripción breve & Análisis \\
 \newpage
 
 ## Caracterización Descriptiva
+
 ### 
-
-
 
 ## Caracterización Temporal
 
@@ -290,7 +310,7 @@ Variable & Origen & Descripción breve & Análisis \\
 
 # Discusión de resultados
 
-# Conclusiones 
+# Conclusiones
 
 - Completar.
 - Completar.
@@ -308,9 +328,10 @@ Completar con las citas utilizadas en el texto. Las referencias se administran d
 
 # Anexos reproducibles
 
-## Caracterización descriptiva 
+## Caracterización descriptiva
 
 ### 
+
 \begingroup
 \small
 \begin{longtable}{lr}
