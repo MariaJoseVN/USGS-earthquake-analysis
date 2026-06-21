@@ -77,7 +77,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 
 La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
-## Categorización de los eventos según magnitud
+## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
 
 La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. @gutenberg_richter_1944 proporcionan una base clásica para distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$. @kagan_jackson_2016 refuerzan la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos. @ammon_etal_2010 destacan la relevancia instrumental y científica de los eventos $M \geq 8{,}0$ dentro del registro global. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
 
@@ -230,11 +230,15 @@ Los conteos mensuales y anuales se organizan como series temporales regulares pa
 
 ### Recurrencia temporal de eventos $M \geq 7{,}0$
 
-La recurrencia temporal se evalúa para los eventos $M \geq 7{,}0$, ordenándolos cronológicamente y calculando los días transcurridos entre eventos consecutivos. Estos intervalos se resumen mediante media, mediana, mínimo, máximo y cuartiles por década. Dado que el catálogo es global, esta medida se interpreta como recurrencia temporal dentro del conjunto de eventos analizado y no como recurrencia física de una falla, región o zona sismotectónica específica.
+La recurrencia temporal se evalúa para los eventos $M \geq 7{,}0$, ordenándolos cronológicamente y calculando los días transcurridos entre eventos consecutivos. Estos intervalos se resumen mediante media, mediana, mínimo, máximo y cuartiles por década. Dado que el catálogo es global, esta medida se interpreta como recurrencia temporal dentro del conjunto de eventos analizado y no como recurrencia física de una falla, región o zona específica.
 
 ### Composición por categoría de magnitud
 
-Finalmente, se revisa la composición anual y decadal según `magnitud_cat`, que clasifica los eventos en categorías excluyentes: “Fuerte”, “Mayor” y “Grande o extremo”. Esta lectura complementa los umbrales acumulativos y permite identificar qué niveles de severidad explican principalmente la frecuencia observada en cada período.
+La clasificación por `magnitud_cat` agrupa los eventos en tres categorías excluyentes, cuyos umbrales se sustentan en los antecedentes bibliográficos presentados previamente \emph{(véase \hyperref[sec-categorizacion-magnitud]{Sección~\ref*{sec-categorizacion-magnitud}})}: “Fuerte” para $6{,}5 \leq M < 7{,}0$, “Mayor” para $7{,}0 \leq M < 7{,}8$ y “Grande o extremo” para $M \geq 7{,}8$. Estos cortes recogen la distinción clásica entre terremotos mayores y grandes terremotos propuesta por @gutenberg_richter_1944, así como el realce de los eventos de mayor severidad ($M \geq 8{,}0$) dentro del registro global instrumental [@ammon_etal_2010].
+
+Sobre esta base, se revisa la composición anual y decadal según `magnitud_cat`. Esta lectura complementa los umbrales acumulativos ($M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$) y permite identificar qué niveles de severidad explican principalmente la frecuencia observada en cada período.
+
+Esta sección funciona como complemento y posible nueva ruta de estudio.
 
 ## Caracterización espacial
 
