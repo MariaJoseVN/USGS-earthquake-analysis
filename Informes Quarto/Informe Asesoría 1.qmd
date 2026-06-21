@@ -162,30 +162,9 @@ A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la
 
 ## Caracterización Descriptiva
 
+## Caracterización Temporal
 
-## Indicadores descriptivos
-
-Completar con los indicadores que serán utilizados para caracterizar la sismicidad.
-
-## Visualizaciones
-
-Completar con las figuras previstas y su propósito.
-
-| Figura    | Propósito | Estado    |
-|-----------|-----------|-----------|
-| completar | completar | pendiente |
-| completar | completar | pendiente |
-| completar | completar | pendiente |
-
-: Visualizaciones previstas para comunicar los resultados del informe.
-
-## Procedimientos estadísticos
-
-Completar con pruebas, comparaciones, modelos o criterios inferenciales si corresponde.
-
-## Supuestos y criterios metodológicos
-
-Completar con los supuestos principales y su justificación.
+## Caracterización Espacial
 
 # Resultados
 
@@ -241,6 +220,7 @@ Variable & Origen & Descripción breve & Análisis \\
 
 ## Caracterización Temporal
 
+## Caracterización Espacial
 
 # Discusión de resultados
 
