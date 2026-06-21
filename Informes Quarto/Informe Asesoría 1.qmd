@@ -136,51 +136,8 @@ Las variables originales del catálogo pueden organizarse en distintos grupos se
 
 Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad, pero no se seleccionan como variables centrales del presente análisis, ya que el objetivo del pre-informe se enfoca en caracterizar la frecuencia de eventos y el comportamiento de `mag`, `depth`, `time`, `latitude` y `longitude`.
 
-## Variables consideradas
 
-\begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{0.9}
-\begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
-\caption{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
-\label{tbl-variables-consideradas} \\
-\toprule
-Variable & Origen & Descripción breve & Análisis \\
-\midrule
-\endfirsthead
-\toprule
-Variable & Origen & Descripción breve & Análisis \\
-\midrule
-\endhead
-\texttt{id} & Original & Identificador único & Duplicados y trazabilidad \\
-\texttt{time} & Original & Fecha y hora original & Consistencia temporal \\
-\texttt{latitude} & Original & Latitud del epicentro & Consistencia espacial \\
-\texttt{longitude} & Original & Longitud del epicentro & Consistencia espacial \\
-\texttt{depth} & Original & Profundidad en km & Descriptiva \\
-\texttt{mag} & Original & Magnitud reportada & Umbral de magnitud \\
-\texttt{magType} & Original & Tipo de magnitud & Escala de medida \\
-\texttt{place} & Original & Localización textual & Interpretación espacial \\
-\texttt{type} & Original & Tipo de evento & Eventos no tectónicos \\
-\texttt{status} & Original & Estado de revisión & Control de calidad \\
-\texttt{net} & Original & Red de reporte & Trazabilidad de fuente \\
-\texttt{locationSource} & Original & Fuente de localización & Trazabilidad espacial \\
-\texttt{magSource} & Original & Fuente de magnitud & Trazabilidad de magnitud \\
-\texttt{fecha\_hora\_utc} & Derivada & Fecha-hora en UTC & Consistencia temporal \\
-\texttt{fecha} & Derivada & Fecha calendario & Agrupación temporal \\
-\texttt{año} & Derivada & Año del evento & Conteos anuales \\
-\texttt{mes} & Derivada & Mes del evento & Conteos mensuales \\
-\texttt{fecha\_mes} & Derivada & Mes calendario & Conteos mensuales \\
-\texttt{decada} & Derivada & Década del evento & Conteos decadales \\
-\texttt{profundidad\_cat} & Derivada & Categoría de profundidad & Clasificación por profundidad \\
-\texttt{magnitud\_cat} & Derivada & Categoría de magnitud & Clasificación por magnitud \\
-\texttt{zona} & Derivada & Zona de comparación & Comparación espacial \\
-\texttt{evento\_m70} & Derivada & Indicador $M \geq 7{,}0$ & Grandes terremotos \\
-\texttt{evento\_m75} & Derivada & Indicador $M \geq 7{,}5$ & Sensibilidad por magnitud \\
-\texttt{evento\_m80} & Derivada & Indicador $M \geq 8{,}0$ & Eventos extremos \\
-\bottomrule
-\end{longtable}
-\endgroup
+# Metodología y justificación estadística
 
 ## Depuración y control de calidad
 
@@ -202,7 +159,6 @@ Las variables auxiliares de `sismos_raw`, como `nst`, `gap`, `dmin`, `rms`, `hor
 
 A partir de estas revisiones, la base procesada conserva los 1.186 eventos de la descarga. No se aplican imputaciones, interpolaciones, correcciones espaciales, correcciones temporales ni consolidación de duplicados sobre las variables centrales, debido a que el diagnóstico no evidencia problemas que justifiquen estos tratamientos. Las decisiones del proceso permiten mantener la trazabilidad entre la base cruda y la base de análisis.
 
-# Metodología y justificación estadística
 
 ## Enfoque metodológico
 
@@ -249,6 +205,57 @@ Completar con pruebas, comparaciones, modelos o criterios inferenciales si corre
 Completar con los supuestos principales y su justificación.
 
 # Resultados
+
+## Depuración y control de calidad
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.9}
+\begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
+\caption{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
+\label{tbl-variables-consideradas} \\
+\toprule
+Variable & Origen & Descripción breve & Análisis \\
+\midrule
+\endfirsthead
+\toprule
+Variable & Origen & Descripción breve & Análisis \\
+\midrule
+\endhead
+\texttt{id} & Original & Identificador único & Duplicados y trazabilidad \\
+\texttt{time} & Original & Fecha y hora original & Consistencia temporal \\
+\texttt{latitude} & Original & Latitud del epicentro & Consistencia espacial \\
+\texttt{longitude} & Original & Longitud del epicentro & Consistencia espacial \\
+\texttt{depth} & Original & Profundidad en km & Descriptiva \\
+\texttt{mag} & Original & Magnitud reportada & Umbral de magnitud \\
+\texttt{magType} & Original & Tipo de magnitud & Escala de medida \\
+\texttt{place} & Original & Localización textual & Interpretación espacial \\
+\texttt{type} & Original & Tipo de evento & Eventos no tectónicos \\
+\texttt{status} & Original & Estado de revisión & Control de calidad \\
+\texttt{net} & Original & Red de reporte & Trazabilidad de fuente \\
+\texttt{locationSource} & Original & Fuente de localización & Trazabilidad espacial \\
+\texttt{magSource} & Original & Fuente de magnitud & Trazabilidad de magnitud \\
+\texttt{fecha\_hora\_utc} & Derivada & Fecha-hora en UTC & Consistencia temporal \\
+\texttt{fecha} & Derivada & Fecha calendario & Agrupación temporal \\
+\texttt{año} & Derivada & Año del evento & Conteos anuales \\
+\texttt{mes} & Derivada & Mes del evento & Conteos mensuales \\
+\texttt{fecha\_mes} & Derivada & Mes calendario & Conteos mensuales \\
+\texttt{decada} & Derivada & Década del evento & Conteos decadales \\
+\texttt{profundidad\_cat} & Derivada & Categoría de profundidad & Clasificación por profundidad \\
+\texttt{magnitud\_cat} & Derivada & Categoría de magnitud & Clasificación por magnitud \\
+\texttt{zona} & Derivada & Zona de comparación & Comparación espacial \\
+\texttt{evento\_m70} & Derivada & Indicador $M \geq 7{,}0$ & Grandes terremotos \\
+\texttt{evento\_m75} & Derivada & Indicador $M \geq 7{,}5$ & Sensibilidad por magnitud \\
+\texttt{evento\_m80} & Derivada & Indicador $M \geq 8{,}0$ & Eventos extremos \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+
+
+
 
 ## Caracterización general
 
