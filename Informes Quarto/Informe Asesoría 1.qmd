@@ -506,7 +506,7 @@ Variable & Origen & Descripción breve & Análisis \\
 \bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
 \endgroup
 
-
+\newpage
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
