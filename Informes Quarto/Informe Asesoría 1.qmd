@@ -132,7 +132,7 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 ## Fuente de datos y parámetros de descarga
 
-La fuente principal de información corresponde al catálogo público de terremotos de la United States Geological Survey (USGS), específicamente el sitio [USGS Earthquake Catalog Search](https://earthquake.usgs.gov/earthquakes/search/). La configuración utilizada se documenta en la siguiente bitácora de descarga.
+La fuente principal de información corresponde al catálogo público de terremotos de la USGS, específicamente el sitio [USGS Earthquake Catalog Search](https://earthquake.usgs.gov/earthquakes/search/). La configuración utilizada se documenta en la siguiente bitácora de descarga.
 
 \begingroup
 \footnotesize
@@ -488,7 +488,7 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
 
-Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la United States Geological Survey [@usgs_faq_terremotos].
+Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la USGS [@usgs_faq_terremotos].
 
 El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
 
