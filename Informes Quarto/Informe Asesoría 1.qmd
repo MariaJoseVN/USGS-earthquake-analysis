@@ -92,31 +92,17 @@ Caracterizar, de manera descriptiva, documentada y reproducible, la distribució
 
 ## Objetivos específicos
 
-Para alcanzar el objetivo general, se definen los siguientes pasos intermedios, alineados con el desarrollo metodológico del informe:
+Para alcanzar el objetivo general, se plantean los siguientes objetivos específicos:
 
-1. **OE1. Obtener y documentar la base de análisis.**
-   - Documentar la fuente, la fecha y los parámetros de descarga, y los criterios de selección del catálogo.
-   - Importar los datos crudos (`sismos_raw`) y seleccionar las variables relevantes para el estudio.
+1. **OE1. Documentar** la fuente de datos, los parámetros de descarga y los criterios de selección del catálogo.
 
-2. **OE2. Depurar y controlar la calidad de los datos.**
-   - Evaluar valores faltantes, duplicados, tipo de evento y estado de revisión.
-   - Verificar la consistencia temporal y espacial y el cumplimiento del umbral $M \geq 6{,}5$, consolidando la base depurada `sismos`.
+2. **OE2. Consolidar** la base `sismos` a partir de `sismos_raw`, incorporando depuración, control de calidad y variables derivadas para el análisis.
 
-3. **OE3. Definir las variables derivadas y las categorías de análisis.**
-   - Generar las variables temporales derivadas para los distintos niveles de agregación (mensual, anual y decadal).
-   - Establecer las categorías de magnitud y profundidad, con umbrales sustentados en la literatura especializada.
+3. **OE3. Describir** el comportamiento de `mag` y `depth` mediante estadísticos, distribuciones y categorías de análisis.
 
-4. **OE4. Caracterizar descriptivamente la magnitud y la profundidad.**
-   - Calcular estadísticos de tendencia central, dispersión y posición.
-   - Describir la distribución de los eventos por categoría de magnitud y de profundidad.
+4. **OE4. Analizar** la ocurrencia temporal mediante conteos, tasas, series y recurrencia para distintos umbrales de magnitud.
 
-5. **OE5. Analizar la dimensión temporal de la ocurrencia.**
-   - Estimar conteos y tasas mensuales, anuales y decadales para el catálogo completo y los umbrales $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$.
-   - Elaborar las series temporales y calcular la recurrencia entre eventos $M \geq 7{,}0$, evaluando la evolución de la ocurrencia en el tiempo.
-
-6. **OE6. Caracterizar y comparar la dimensión espacial.**
-   - Georreferenciar los eventos y asignarlos a zonas sísmicas mediante una delimitación geográfica explícita y reproducible (variable `zona`).
-   - Comparar la frecuencia, magnitud y profundidad entre el Cinturón de Fuego y las demás zonas, estableciendo un ranking regional.
+5. **OE5. Comparar** la distribución espacial de los eventos entre zonas sísmicas, considerando frecuencia, magnitud y profundidad.
 
 # Alcance del informe
 
@@ -332,8 +318,6 @@ Variable & Origen & Descripción breve & Análisis \\
 \bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
 \endgroup
 
-\newpage
-
 ## Caracterización descriptiva
 
 La caracterización descriptiva muestra que el catálogo contiene 1.186 eventos entre 2000 y 2025, equivalentes a 26 años o 312 meses de observación. \emph{(véase \hyperref[tbl-conteo-periodo]{tabla~\ref*{tbl-conteo-periodo}})}.
@@ -397,7 +381,7 @@ La asignación espacial mediante la variable `zona` muestra una concentración m
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{\detokenize{Imágenes y Recursos/eventos-por-zona.png}}
-\caption{Distribución de eventos según zona sísmica asignada.}
+\caption{Distribución de eventos según zona sísmica asignada. C. Fuego: Cinturón de Fuego; Resto: Resto del mundo; C. Alpino-H.: Cinturón Alpino-Himalayo; Dorsal M.-Atl.: Dorsal Meso-Atlántica.}
 \label{fig-eventos-por-zona}
 \end{figure}
 ```

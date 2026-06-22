@@ -313,14 +313,22 @@ colores_zona <- c(
   "Resto del mundo" = "#BDBDBD"
 )
 
-par(mfrow = c(1, 1), bg = "white", mar = c(10, 5, 4, 2) + 0.1)
+etiquetas_zona <- c(
+  "Cinturon de Fuego" = "C. Fuego",
+  "Resto del mundo" = "Resto",
+  "Cinturon Alpino-Himalayo" = "C. Alpino-H.",
+  "Dorsal Meso-Atlantica" = "Dorsal M.-Atl."
+)
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 5, 4, 2) + 0.1)
 
 barras_zona <- barplot(
   total_eventos_zona$total_eventos,
-  names.arg = total_eventos_zona$zona,
+  names.arg = etiquetas_zona[total_eventos_zona$zona],
   col = colores_zona[total_eventos_zona$zona],
   border = "gray30",
-  las = 2,
+  las = 1,
+  cex.names = 0.9,
   ylim = c(0, max(total_eventos_zona$total_eventos) * 1.18),
   ylab = "Numero de eventos",
   main = "Eventos por zona sismica"
@@ -494,4 +502,3 @@ box()
 #Restablecer parametros graficos----
 
 par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
-
