@@ -37,7 +37,7 @@ header-includes:
 ---
 
 ```{=latex}
-\newcommand{\bottomtablecaption}[2]{\par\smallskip\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
+\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
 ```
 
 \thispagestyle{empty}
@@ -75,6 +75,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-zonas-sismicas.png}}
+\vspace{-0.6em}
 \caption{División de las placas tectónicas a escala global. Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe.}
 \label{fig-zonas-sismicas}
 \end{figure}
@@ -185,81 +186,39 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Estas últimas, asociadas a la incertidumbre o al procesamiento instrumental, presentan la mayoría de los valores faltantes y no se consideran en los análisis posteriores. Por ello, se conservan en la base cruda y se reportan como una limitación para futuros análisis.
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables auxiliares, asociadas a incertidumbre o procesamiento instrumental, presentan la mayoría de los valores faltantes y no se incorporan en los análisis principales. Por ello, se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
 
-Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
+Las revisiones que se aplican y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
-Como resultado de esta etapa, el análisis se consolida en el objeto `sismos`, la base depurada que reemplaza a `sismos_raw` como insumo único de las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superaron el control de calidad y las variables derivadas que se construyen a medida que avanza la investigación, correspondientes a la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
+A partir de esta etapa, el análisis se consolida en el objeto `sismos`, que funciona como base depurada para las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superan el control de calidad e incorpora las variables derivadas necesarias para la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
 ## Caracterización descriptiva
 
-### Delimitación temporal y conteo de eventos
+Se define primero el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación, y establece el total de eventos sobre el cual se calculan las tasas de ocurrencia. Sobre la base `sismos`, se resumen `mag` y `depth` mediante estadísticos de tendencia central, dispersión y posición, junto con histogramas y categorías de análisis. Esta etapa permite describir la severidad y profundidad típica de los eventos, reconocer asimetrías y evaluar la concentración de terremotos según rangos de magnitud y profundidad.
 
-Se define el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación. En dicho intervalo, la base `sismos` contiene 1.186 terremotos con magnitud mayor o igual a $6{,}5$. Esta etapa permite fijar el alcance temporal del estudio y establecer el total de eventos sobre el cual se calculan las tasas de ocurrencia.
-
-### Caracterización descriptiva de la variable magnitud sísmica (`mag`)
-
-Se caracterizan las magnitudes de los terremotos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
-
-Además, se calcula la magnitud máxima por año para identificar la mayor magnitud registrada en cada período anual. Finalmente, se resume la distribución de eventos según categoría de magnitud, obteniendo el número, proporción y porcentaje de terremotos en cada grupo.
-
-Esta etapa permite describir la severidad de los eventos sísmicos, comparar su comportamiento anual y evaluar la concentración de terremotos según rangos de magnitud.
-
-### Caracterización descriptiva de la profundidad sísmica
-
-Se caracterizan las profundidades de los eventos sísmicos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
-
-Además, se resume la distribución de eventos según categoría de profundidad, identificando la proporción de terremotos en cada rango definido.
-
-Esta etapa permite describir la profundidad típica de los eventos, evaluar su variabilidad y reconocer la concentración de terremotos según niveles de profundidad.
+Para `mag`, se calcula además la magnitud máxima anual y la distribución por `magnitud_cat`; para `depth`, se estima la distribución por `profundidad_cat`. Ambas lecturas entregan una base descriptiva para interpretar la comparación temporal y espacial.
 
 ## Caracterización temporal
 
-### Preparación de variables temporales e indicadores de magnitud
+El análisis temporal organiza la ocurrencia sísmica en escalas mensual, anual y decadal mediante las variables `fecha_mes` y `decada`, e incorpora indicadores para eventos $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. La escala mensual permite observar fluctuaciones de corto plazo, la anual facilita la comparación entre años calendario y la decadal entrega una lectura agregada de largo plazo. Para evitar distorsiones en la década incompleta 2020--2025, los conteos decadales se expresan como tasas anuales promedio.
 
-El análisis temporal se desarrolla como una extensión de la caracterización descriptiva, incorporando una estructura de conteos que permite observar la ocurrencia sísmica en distintas escalas de agregación. Para ello, la base `sismos` se prepara mediante variables auxiliares de calendario: `fecha_mes`, que estandariza cada evento al primer día del mes correspondiente, y `decada`, que agrupa los registros en períodos de diez años.
-
-Además, se definen indicadores para identificar eventos con magnitud mayor o igual a $7{,}0$, $7{,}5$ y $8{,}0$. El umbral $M \geq 7{,}0$ responde directamente al foco solicitado por la asesoría, mientras que los niveles $7{,}5$ y $8{,}0$ permiten contrastar la frecuencia de eventos de mayor severidad dentro del mismo catálogo.
-
-### Conteos y tasas temporales de ocurrencia
-
-La frecuencia de eventos se caracteriza mediante conteos mensuales, anuales y decadales, tanto para el catálogo completo como para los umbrales de magnitud definidos. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual facilita la comparación entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
-
-Para la comparación decadal se calculan tasas anuales promedio, ajustando los conteos por la cantidad efectiva de años observados en cada período. Esta decisión es necesaria porque el tramo 2020--2025 corresponde a una década incompleta; por lo tanto, su lectura se realiza en eventos por año observado y no solo mediante frecuencias absolutas.
-
-### Construcción de series temporales mensuales y anuales
-
-Los conteos mensuales y anuales se organizan como series temporales regulares para el catálogo completo y para los eventos $M \geq 7{,}0$. En la serie mensual se completan explícitamente los meses sin eventos con valor cero, ya que representan ausencia de registros en el catálogo y no pérdida de información temporal. Luego se calculan resúmenes descriptivos básicos, con el fin de identificar niveles típicos, valores extremos y variación general de la ocurrencia observada.
-
-### Recurrencia temporal de eventos $M \geq 7{,}0$
-
-La recurrencia temporal se evalúa para los eventos $M \geq 7{,}0$, ordenándolos cronológicamente y calculando los días transcurridos entre eventos consecutivos. Estos intervalos se resumen mediante media, mediana, mínimo, máximo y cuartiles por década. Dado que el catálogo es global, esta medida se interpreta como recurrencia temporal dentro del conjunto de eventos analizado y no como recurrencia física de una falla, región o zona específica.
-
-### Composición por categoría de magnitud
-
-La clasificación por `magnitud_cat` agrupa los eventos en tres categorías excluyentes, cuyos umbrales se sustentan en los antecedentes bibliográficos presentados previamente \emph{(véase \hyperref[sec-categorizacion-magnitud]{Sección~\ref*{sec-categorizacion-magnitud}})}: “Fuerte” para $6{,}5 \leq M < 7{,}0$, “Mayor” para $7{,}0 \leq M < 7{,}8$ y “Grande o extremo” para $M \geq 7{,}8$. Estos cortes recogen la distinción clásica entre terremotos mayores y grandes terremotos propuesta por @gutenberg_richter_1944, así como el realce de los eventos de mayor severidad ($M \geq 8{,}0$) dentro del registro global instrumental [@ammon_etal_2010].
-
-Sobre esta base, se revisa la composición anual y decadal según `magnitud_cat`. Esta lectura complementa los umbrales acumulativos ($M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$) y permite identificar qué niveles de severidad explican principalmente la frecuencia observada en cada período.
+Los conteos se organizan como series temporales regulares y los meses sin eventos se completan con valor cero cuando forman parte del período observado. Además, se calcula la recurrencia global de eventos $M \geq 7{,}0$ mediante los días transcurridos entre eventos consecutivos. Dado que el catálogo es mundial, esta medida describe intervalos dentro del conjunto analizado y no la recurrencia física de una falla o región específica. La composición por `magnitud_cat` complementa esta lectura mediante categorías sustentadas en los antecedentes bibliográficos \emph{(véase \hyperref[sec-categorizacion-magnitud]{Sección~\ref*{sec-categorizacion-magnitud}})}.
 
 ## Caracterización espacial
 
-La caracterización espacial se incorpora porque el encargo requiere comparar la ocurrencia de grandes terremotos entre zonas geográficas de interés. Además, los antecedentes revisados muestran que la sismicidad de mayor magnitud no se distribuye de forma homogénea a escala global, sino que tiende a concentrarse en grandes cinturones tectónicos. Por esta razón, el análisis no se limita a describir las coordenadas `latitude` y `longitude` de manera individual, sino que las utiliza para construir una variable de comparación espacial (`zona`), permitiendo resumir y contrastar la frecuencia, magnitud y profundidad de los eventos entre áreas sísmicamente relevantes.
+La caracterización espacial responde al requerimiento de comparar grandes terremotos entre zonas geográficas de interés. Los antecedentes muestran que la sismicidad de mayor magnitud se concentra en grandes cinturones tectónicos; por ello, las coordenadas `latitude` y `longitude` no se analizan solo como ubicaciones puntuales, sino que se utilizan para construir la variable `zona`.
 
-### Georreferenciación y asignación de zona
+La delimitación considera el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica. Estas zonas se definen a partir de los antecedentes revisados y se verifican cartográficamente en QGIS mediante la importación de la base en formato `.GeoJSON` [@usgs_faq_terremotos]. Cada evento se transforma en punto espacial y se asigna a una zona por intersección con polígonos geográficos; los eventos sin coincidencia con los polígonos principales se clasifican como “Resto del mundo”. \emph{(véanse \hyperref[sec-distribucion-sismicidad]{antecedentes de distribución global}, \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas}, \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional} y \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
-La georreferenciación permite vincular cada evento del catálogo con una unidad espacial interpretable. Este paso es necesario porque las coordenadas por sí solas identifican la ubicación puntual del sismo, pero no permiten comparar directamente la ocurrencia entre cinturones sísmicos. Al asignar cada registro a una `zona`, se obtiene una clasificación territorial coherente con los antecedentes tectónicos y con el objetivo de comparar patrones espaciales dentro del catálogo.
+Sobre `zona` se estiman conteos, porcentajes, tasas anuales y estadísticos de `mag` y `depth`. También se resume la distribución de `profundidad_cat` por zona, lo que permite comparar no solo la frecuencia de eventos, sino también su estructura de magnitud y profundidad.
 
-La delimitación de las zonas se sustenta en los antecedentes revisados, que identifican al Cinturón de Fuego, al Cinturón Alpino-Himalayo y a la Dorsal Meso-Atlántica como referencias principales para describir la concentración global de la sismicidad [@usgs_faq_terremotos]. Esta decisión se verifica cartográficamente en QGIS mediante la importación de la base en formato `.GeoJSON`, lo que permite observar la correspondencia entre los registros puntuales y los cinturones sísmicos definidos. En términos operativos, se incorporan polígonos geográficos para estas zonas y se transforman los registros de terremotos en puntos espaciales a partir de sus coordenadas de longitud y latitud. Luego, cada evento se asigna a una zona mediante intersección espacial; los eventos sin coincidencia territorial con los polígonos principales se clasifican como “Resto del mundo”. \emph{(véanse \hyperref[sec-distribucion-sismicidad]{antecedentes de distribución global}, \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas}, \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional} y \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
+## Criterios de interpretación estadística
 
-### Conteos, tasas y estadísticos descriptivos por zona
+El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. Esta decisión es coherente con el alcance del pre-informe: ordenar la información disponible, verificar su calidad, describir patrones principales y dejar una base metodológica reproducible para una etapa inferencial posterior.
 
-Una vez construida la variable `zona`, se calcula el total de eventos asignados a cada categoría espacial y su distribución anual entre 2000 y 2025. Para mantener consistencia temporal y territorial, se completan las combinaciones zona-año sin registros con valor cero, ya que estos casos representan ausencia observada de eventos en una zona y año específicos, no datos faltantes.
+Las variables asociadas a incertidumbre, error instrumental o calidad del procesamiento se revisan durante la depuración, pero no se incorporan como variables centrales debido a su alta proporción de valores faltantes. En consecuencia, no se aplican imputaciones sobre `magError`, `depthError`, `horizontalError`, `gap`, `rms` o `nst`. Esta decisión evita introducir valores artificiales en variables cuyo patrón de ausencia puede depender de la red de monitoreo, el método de estimación o las condiciones instrumentales del registro.
 
-Sobre esta estructura se resumen indicadores de frecuencia y caracterización sísmica, incluyendo número de eventos, proporción, porcentaje, tasa anual, tasa mensual, `mag` y `depth`. Esta etapa permite comparar no solo cuántos eventos se registran en cada zona, sino también si existen diferencias descriptivas en la magnitud y profundidad de los terremotos asociados a cada cinturón sísmico.
-
-### Distribución de profundidad por zona
-
-Se clasifica la profundidad de los eventos por zona, distinguiendo entre categorías superficial, intermedia y profunda. Luego, se calcula el número, proporción y porcentaje de eventos en cada categoría, permitiendo caracterizar la estructura de profundidad de cada zona sísmica.
+Las comparaciones temporales y espaciales se interpretan bajo el mismo criterio descriptivo. Las tasas permiten comparar períodos o zonas dentro del catálogo, pero no sustituyen modelos de ocurrencia ni ajustes por exposición espacial. Del mismo modo, la asignación de `zona` transforma coordenadas puntuales en categorías comparables, aunque no representa toda la complejidad tectónica, instrumental o territorial de cada región.
 
 # Resultados y discusión
 
@@ -267,56 +226,7 @@ Esta sección presenta los principales resultados del análisis y los discute en
 
 ## Depuración y control de calidad
 
-\begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{0.9}
-\phantomsection
-\refstepcounter{table}
-
-\label{tbl-variables-consideradas}
-\hypertarget{dest-tbl-variables-consideradas}{}
-
-\begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
-\toprule
-Variable & Origen & Descripción breve & Análisis \\
-\midrule
-\endfirsthead
-\toprule
-Variable & Origen & Descripción breve & Análisis \\
-\midrule
-\endhead
-\texttt{id} & Original & Identificador único & Duplicados y trazabilidad \\
-\texttt{time} & Original & Fecha y hora original & Consistencia temporal \\
-\texttt{latitude} & Original & Latitud del epicentro & Consistencia espacial \\
-\texttt{longitude} & Original & Longitud del epicentro & Consistencia espacial \\
-\texttt{depth} & Original & Profundidad en km & Descriptiva \\
-\texttt{mag} & Original & Magnitud reportada & Umbral de magnitud \\
-\texttt{magType} & Original & Tipo de magnitud & Escala de medida \\
-\texttt{place} & Original & Localización textual & Interpretación espacial \\
-\texttt{type} & Original & Tipo de evento & Eventos no tectónicos \\
-\texttt{status} & Original & Estado de revisión & Control de calidad \\
-\texttt{net} & Original & Red de reporte & Trazabilidad de fuente \\
-\texttt{locationSource} & Original & Fuente de localización & Trazabilidad espacial \\
-\texttt{magSource} & Original & Fuente de magnitud & Trazabilidad de magnitud \\
-\texttt{fecha\_hora\_utc} & Derivada & Fecha-hora en UTC & Consistencia temporal \\
-\texttt{fecha} & Derivada & Fecha calendario & Agrupación temporal \\
-\texttt{año} & Derivada & Año del evento & Conteos anuales \\
-\texttt{mes} & Derivada & Mes del evento & Conteos mensuales \\
-\texttt{fecha\_mes} & Derivada & Mes calendario & Conteos mensuales \\
-\texttt{decada} & Derivada & Década del evento & Conteos decadales \\
-\texttt{profundidad\_cat} & Derivada & Categoría de profundidad & Clasificación por profundidad \\
-\texttt{magnitud\_cat} & Derivada & Categoría de magnitud & Clasificación por magnitud \\
-\texttt{zona} & Derivada & Zona de comparación & Comparación espacial \\
-\texttt{evento\_m70} & Derivada & Indicador $M \geq 7{,}0$ & Grandes terremotos \\
-\texttt{evento\_m75} & Derivada & Indicador $M \geq 7{,}5$ & Sensibilidad por magnitud \\
-\texttt{evento\_m80} & Derivada & Indicador $M \geq 8{,}0$ & Eventos extremos \\
-\bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
-\endgroup
+El control de calidad no identifica valores faltantes, duplicados, eventos no tectónicos ni registros fuera del período de estudio en las variables centrales del análisis. Por ello, la base depurada `sismos` conserva los 1.186 eventos descargados e incorpora variables derivadas para la caracterización temporal, descriptiva y espacial. Las variables auxiliares asociadas a incertidumbre o error instrumental se mantienen en `sismos_raw` por su alta proporción de valores faltantes y se reportan como limitación. \emph{(véanse \hyperref[sec-anexo-control-calidad]{anexo de control de calidad} y \hyperlink{dest-tbl-variables-consideradas}{tabla~\ref*{tbl-variables-consideradas}})}.
 
 ## Caracterización descriptiva
 
@@ -328,6 +238,7 @@ La distribución de la magnitud se concentra en valores cercanos al umbral de in
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/distribucion-eventos-magnitud.png}}
+\vspace{-0.6em}
 \caption{Distribución de eventos según magnitud para el catálogo analizado.}
 \label{fig-distribucion-magnitud}
 \end{figure}
@@ -349,6 +260,7 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.88\textwidth]{\detokenize{Imágenes y Recursos/eventos-anuales-catalogo.png}}
+\vspace{-0.6em}
 \caption{Eventos anuales del catálogo completo entre 2000 y 2025.}
 \label{fig-eventos-anuales-catalogo}
 \end{figure}
@@ -362,6 +274,7 @@ En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/tasa-decadal-m70.png}}
+\vspace{-0.6em}
 \caption{Tasa anual promedio por década para eventos con $M \geq 7{,}0$.}
 \label{fig-tasa-decadal-m70}
 \end{figure}
@@ -381,7 +294,8 @@ La asignación espacial mediante la variable `zona` muestra una concentración m
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{\detokenize{Imágenes y Recursos/eventos-por-zona.png}}
-\caption{Distribución de eventos según zona sísmica asignada. C. Fuego: Cinturón de Fuego; Resto: Resto del mundo; C. Alpino-H.: Cinturón Alpino-Himalayo; Dorsal M.-Atl.: Dorsal Meso-Atlántica.}
+\vspace{-0.6em}
+\caption{Distribución de eventos según zona sísmica asignada.}
 \label{fig-eventos-por-zona}
 \end{figure}
 ```
@@ -392,17 +306,16 @@ En términos de magnitud, las medias por zona son cercanas entre sí, con valore
 
 La interpretación espacial debe considerar que `Resto del mundo` no representa ausencia de actividad tectónica, sino eventos que no intersectan los polígonos definidos para las tres zonas principales. En consecuencia, los resultados dependen de la delimitación geográfica usada para construir `zona`, cuya verificación cartográfica se documenta en el anexo. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
-## Síntesis interpretativa y limitaciones
 
-En conjunto, los resultados muestran que el catálogo analizado permite una caracterización descriptiva y exploratoria consistente de los grandes terremotos registrados entre 2000 y 2025. La distribución de la magnitud se concentra cerca del umbral de inclusión, mientras que la profundidad presenta mayor asimetría por la presencia de eventos intermedios y profundos. En la dimensión temporal, las variaciones anuales y decadales describen cambios en la frecuencia observada, pero no constituyen evidencia de tendencia causal ni permiten realizar predicción sísmica.
+## Supuestos, limitaciones y sensibilidad
 
-La comparación espacial muestra que la mayor concentración de eventos se asocia al Cinturón de Fuego, resultado cualitativamente compatible con los antecedentes revisados. Sin embargo, esta lectura depende de la delimitación operativa de la variable `zona`, construida a partir de polígonos geográficos y verificada cartográficamente en QGIS. Por ello, la categoría "Resto del mundo" se interpreta como un grupo residual de eventos que no intersectan los polígonos principales, no como una zona tectónica homogénea. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
+La interpretación de la magnitud y la profundidad se realiza a partir de los valores reportados por USGS en `mag` y `depth`. Sin embargo, estos resultados deben leerse con cautela, ya que el análisis no incorpora explícitamente la incertidumbre instrumental, los errores de estimación ni una homogeneización por `magType`. Si bien `sismos_raw` contiene variables asociadas a error o calidad del procesamiento, como `magError`, `depthError`, `horizontalError`, `gap`, `rms` y `nst`, estas presentan una alta proporción de valores faltantes y no se utilizan como variables centrales. Por ello, los resultados sobre magnitud y profundidad corresponden a una caracterización descriptiva del catálogo depurado, no a una estimación corregida por incertidumbre instrumental. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
-Las principales limitaciones del análisis se relacionan con el carácter global y descriptivo del catálogo. La recurrencia temporal se calcula sobre el conjunto mundial de eventos y no representa recurrencia física de una falla o región específica. Además, la presencia de distintos valores en `magType` indica que las magnitudes pueden provenir de escalas o procedimientos instrumentales diferentes, lo que debe considerarse al comparar eventos de manera agregada.
-
-Las tasas anuales por zona corresponden al número de eventos asignados a cada categoría dividido por los 26 años de observación. Estas tasas no están normalizadas por la superficie, la longitud de los límites tectónicos ni otra medida de exposición espacial. Dado que las zonas presentan extensiones muy diferentes, esta condición constituye una limitación y exige cautela al comparar sus frecuencias de ocurrencia.
+Del mismo modo, las comparaciones entre zonas sísmicas se interpretan como comparaciones descriptivas condicionadas por la fuente de datos y por la delimitación espacial utilizada. El análisis no ajusta por diferencias entre redes de monitoreo, criterios de reporte, umbrales de detección ni tipo de magnitud reportada. Además, las tasas anuales por zona no se normalizan por superficie, longitud de límites tectónicos ni densidad de estaciones de monitoreo. En consecuencia, las diferencias observadas permiten describir la distribución de eventos dentro del catálogo analizado, pero no deben interpretarse como medidas directas de peligrosidad sísmica ni como comparaciones completamente equivalentes entre regiones.
 
 El 75,21 % observado para el Cinturón de Fuego es cualitativamente compatible con el valor cercano al 81 % señalado en los antecedentes. No obstante, esta proximidad no debe interpretarse como una confirmación directa, ya que ambos porcentajes corresponden a períodos, umbrales de magnitud y delimitaciones espaciales diferentes. Una comparación formal requeriría, además, evaluar los supuestos de independencia entre eventos, considerando su posible agrupación temporal y espacial.
+
+La sensibilidad de los resultados depende principalmente del umbral de inclusión ($M \geq 6{,}5$), de los cortes usados para eventos $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$, y de la delimitación cartográfica de la variable `zona`. Estas decisiones son coherentes con el alcance exploratorio del pre-informe; una etapa posterior podría incorporar análisis por `magType`, filtros según disponibilidad de errores instrumentales, normalización espacial de tasas y evaluación diferenciada por redes o fuentes de reporte.
 
 # Conclusiones y recomendaciones
 
@@ -456,6 +369,7 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-qgis-zonas.png}}
+\vspace{-0.6em}
 \caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
 \label{fig-implementacion-qgis-zonas}
 \end{figure}
@@ -465,6 +379,7 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-positron-entorno.png}}
+\vspace{-0.6em}
 \caption{Entorno de trabajo en Positron utilizado para ejecutar los scripts de R y revisar las salidas del análisis estadístico.}
 \label{fig-implementacion-positron-entorno}
 \end{figure}
@@ -486,6 +401,7 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
+\vspace{-0.6em}
 \caption{Visualización en QGIS de los eventos sísmicos y las zonas utilizadas para la comparación espacial: rojo para el Cinturón de Fuego, gris para la Dorsal Meso-Atlántica y cian/turquesa para el Cinturón Alpino-Himalayo.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
@@ -532,7 +448,58 @@ En consecuencia, la base depurada queda consolidada en el objeto `sismos`, que c
 
 De este modo, `sismos` reúne todas las variables solicitadas en el encargo que pasaron la depuración junto con las derivadas que se construyen conforme avanza la investigación. La composición completa, con el origen y el propósito analítico de cada variable, se detalla en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
-\newpage
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.9}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-variables-consideradas}
+\hypertarget{dest-tbl-variables-consideradas}{}
+
+\begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
+\toprule
+Variable & Origen & Descripción breve & Análisis \\
+\midrule
+\endfirsthead
+\toprule
+Variable & Origen & Descripción breve & Análisis \\
+\midrule
+\endhead
+\texttt{id} & Original & Identificador único & Duplicados y trazabilidad \\
+\texttt{time} & Original & Fecha y hora original & Consistencia temporal \\
+\texttt{latitude} & Original & Latitud del epicentro & Consistencia espacial \\
+\texttt{longitude} & Original & Longitud del epicentro & Consistencia espacial \\
+\texttt{depth} & Original & Profundidad en km & Descriptiva \\
+\texttt{mag} & Original & Magnitud reportada & Umbral de magnitud \\
+\texttt{magType} & Original & Tipo de magnitud & Escala de medida \\
+\texttt{place} & Original & Localización textual & Interpretación espacial \\
+\texttt{type} & Original & Tipo de evento & Eventos no tectónicos \\
+\texttt{status} & Original & Estado de revisión & Control de calidad \\
+\texttt{net} & Original & Red de reporte & Trazabilidad de fuente \\
+\texttt{locationSource} & Original & Fuente de localización & Trazabilidad espacial \\
+\texttt{magSource} & Original & Fuente de magnitud & Trazabilidad de magnitud \\
+\texttt{fecha\_hora\_utc} & Derivada & Fecha-hora en UTC & Consistencia temporal \\
+\texttt{fecha} & Derivada & Fecha calendario & Agrupación temporal \\
+\texttt{año} & Derivada & Año del evento & Conteos anuales \\
+\texttt{mes} & Derivada & Mes del evento & Conteos mensuales \\
+\texttt{fecha\_mes} & Derivada & Mes calendario & Conteos mensuales \\
+\texttt{decada} & Derivada & Década del evento & Conteos decadales \\
+\texttt{profundidad\_cat} & Derivada & Categoría de profundidad & Clasificación por profundidad \\
+\texttt{magnitud\_cat} & Derivada & Categoría de magnitud & Clasificación por magnitud \\
+\texttt{zona} & Derivada & Zona de comparación & Comparación espacial \\
+\texttt{evento\_m70} & Derivada & Indicador $M \geq 7{,}0$ & Grandes terremotos \\
+\texttt{evento\_m75} & Derivada & Indicador $M \geq 7{,}5$ & Sensibilidad por magnitud \\
+\texttt{evento\_m80} & Derivada & Indicador $M \geq 8{,}0$ & Eventos extremos \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
+\endgroup
+
+
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
@@ -671,9 +638,11 @@ Profundo & 123 & $10{,}37$ \\
 \endgroup
 
 ```{=latex}
+\vspace{-1.5em}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.72\textwidth]{\detokenize{Imágenes y Recursos/distribucion-eventos-profundidad.png}}
+\vspace{-0.6em}
 \caption{Distribución de eventos según profundidad para el catálogo analizado.}
 \label{fig-distribucion-profundidad}
 \end{figure}
@@ -784,6 +753,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/serie-mensual-catalogo.png}}
+\vspace{-0.6em}
 \caption{Serie mensual del catálogo completo entre 2000 y 2025.}
 \label{fig-serie-mensual-catalogo}
 \end{figure}
@@ -793,6 +763,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/serie-anual-m70.png}}
+\vspace{-0.6em}
 \caption{Serie anual de eventos con $M \geq 7{,}0$.}
 \label{fig-serie-anual-m70}
 \end{figure}
@@ -804,6 +775,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/recurrencia-decadal-m70.png}}
+\vspace{-0.6em}
 \caption{Distribución de días entre eventos consecutivos con $M \geq 7{,}0$ por década.}
 \label{fig-recurrencia-decadal-m70}
 \end{figure}
@@ -813,6 +785,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/composicion-decadal-magnitud-cat.png}}
+\vspace{-0.6em}
 \caption{Composición decadal de eventos según \texttt{magnitud\_cat}.}
 \label{fig-composicion-decadal-magnitud-cat}
 \end{figure}
