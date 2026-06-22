@@ -84,12 +84,11 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-zonas-sismicas.png}}
 \vspace{-0.6em}
-\caption{División de las placas tectónicas a escala global. Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe.}
+\caption{División de las placas tectónicas a escala global.}
 \label{fig-zonas-sismicas}
 \end{figure}
 ```
-
-La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
 
