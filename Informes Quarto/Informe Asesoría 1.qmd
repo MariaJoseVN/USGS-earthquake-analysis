@@ -402,7 +402,7 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
 \vspace{-0.6em}
-\caption{Visualización en QGIS de los eventos sísmicos y las zonas utilizadas para la comparación espacial: rojo para el Cinturón de Fuego, gris para la Dorsal Meso-Atlántica y cian/turquesa para el Cinturón Alpino-Himalayo.}
+\caption{Visualización QGIS: eventos sísmicos y las zonas utilizadas para la comparación espacial.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
 ```
