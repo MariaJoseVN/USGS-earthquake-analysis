@@ -124,7 +124,7 @@ Este pre-informe corresponde a una primera etapa del análisis estadístico desc
 
 El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Asimismo, no se establece distinción entre los tipos de magnitud (`magType`) reportados por la fuente; estos se tratan de manera homogénea pese a poder provenir de escalas o procedimientos de estimación diferentes, lo que constituye una limitación a considerar al comparar eventos.
 
-El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo computacional})}.
+El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
 Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookLM solo como apoyo para la lectura en español de bibliografía en inglés, y una extensión de ChatGPT en Positron únicamente como soporte de programación; estructura del código, simplificación de procedimientos y resolución de errores puntuales, priorizando funciones nativas de R. Ninguna herramienta de inteligencia artificial puede generar redacción, interpretación, análisis, conclusiones ni contenido final del informe.
 
@@ -265,7 +265,7 @@ La caracterización espacial se incorpora porque el encargo requiere comparar la
 
 La georreferenciación permite vincular cada evento del catálogo con una unidad espacial interpretable. Este paso es necesario porque las coordenadas por sí solas identifican la ubicación puntual del sismo, pero no permiten comparar directamente la ocurrencia entre cinturones sísmicos. Al asignar cada registro a una `zona`, se obtiene una clasificación territorial coherente con los antecedentes tectónicos y con el objetivo de comparar patrones espaciales dentro del catálogo.
 
-La delimitación de las zonas se sustenta en los antecedentes revisados, que identifican al Cinturón de Fuego, al Cinturón Alpino-Himalayo y a la Dorsal Meso-Atlántica como referencias principales para describir la concentración global de la sismicidad [@usgs_faq_terremotos]. Esta decisión se verifica cartográficamente en QGIS mediante la importación de la base en formato `.GeoJSON`, lo que permite observar la correspondencia entre los registros puntuales y los cinturones sísmicos definidos. En términos operativos, se incorporan polígonos geográficos para estas zonas y se transforman los registros de terremotos en puntos espaciales a partir de sus coordenadas de longitud y latitud. Luego, cada evento se asigna a una zona mediante intersección espacial; los eventos sin coincidencia territorial con los polígonos principales se clasifican como “Resto del mundo”. \emph{(véanse \hyperref[sec-distribucion-sismicidad]{antecedentes de distribución global}, \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas} y \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
+La delimitación de las zonas se sustenta en los antecedentes revisados, que identifican al Cinturón de Fuego, al Cinturón Alpino-Himalayo y a la Dorsal Meso-Atlántica como referencias principales para describir la concentración global de la sismicidad [@usgs_faq_terremotos]. Esta decisión se verifica cartográficamente en QGIS mediante la importación de la base en formato `.GeoJSON`, lo que permite observar la correspondencia entre los registros puntuales y los cinturones sísmicos definidos. En términos operativos, se incorporan polígonos geográficos para estas zonas y se transforman los registros de terremotos en puntos espaciales a partir de sus coordenadas de longitud y latitud. Luego, cada evento se asigna a una zona mediante intersección espacial; los eventos sin coincidencia territorial con los polígonos principales se clasifican como “Resto del mundo”. \emph{(véanse \hyperref[sec-distribucion-sismicidad]{antecedentes de distribución global}, \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas}, \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional} y \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
 ### Conteos, tasas y estadísticos descriptivos por zona
 
@@ -445,7 +445,7 @@ Las referencias se administran desde `referencias.bib` y se generan automáticam
 
 # Anexos reproducibles
 
-## Flujo de trabajo computacional {#sec-anexo-flujo-trabajo}
+## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
 El análisis se organiza en torno al script principal `Código.R`, que centraliza la carga de paquetes, la importación de la base cruda `sismos_raw`, la preparación de la base analítica `sismos` y la ejecución secuencial de los scripts complementarios.
 
@@ -460,6 +460,31 @@ La organización principal del flujo reproducible es la siguiente:
 | `04_analisis_temporal.R` | Desarrolla el análisis temporal del catálogo. |
 
 Los archivos `02_visualizaciones.R` y `03_tablas_informe.R` se reservan como espacios de prueba para código complementario, pero no constituyen módulos centrales del flujo reproducible presentado en este informe.
+
+\hypertarget{sec-anexo-implementacion}{}
+
+Este anexo documenta el entorno operativo utilizado para construir y verificar el análisis. En QGIS se trabaja con la base georreferenciada y las capas de referencia tectónica para delimitar visualmente los polígonos asociados al Cinturón de Fuego, la Dorsal Meso-Atlántica y el Cinturón Alpino-Himalayo. Esta implementación permite revisar la correspondencia espacial entre los eventos del catálogo, las coordenadas utilizadas y las zonas empleadas posteriormente en la variable `zona`.
+
+El procesamiento estadístico se desarrolla en Positron mediante scripts de R organizados dentro del proyecto `USGS-earthquake-analysis`. Este entorno permite ejecutar de forma secuencial la importación de datos, depuración, construcción de variables derivadas y análisis descriptivo, temporal y espacial, manteniendo visibles los objetos generados y las salidas de consola para su revisión.
+
+```{=latex}
+\Needspace{40\baselineskip}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-qgis-zonas.png}}
+\caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
+\label{fig-implementacion-qgis-zonas}
+\end{figure}
+```
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-positron-entorno.png}}
+\caption{Entorno de trabajo en Positron utilizado para ejecutar los scripts de R y revisar las salidas del análisis estadístico.}
+\label{fig-implementacion-positron-entorno}
+\end{figure}
+```
 
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
 
