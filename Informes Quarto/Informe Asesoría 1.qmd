@@ -237,9 +237,9 @@ El control de calidad no identifica valores faltantes, duplicados, eventos no te
 
 ## Caracterización descriptiva
 
-La caracterización descriptiva muestra que el catálogo contiene 1.186 eventos entre 2000 y 2025, equivalentes a 26 años o 312 meses de observación. \emph{(véase \hyperref[tbl-conteo-periodo]{tabla~\ref*{tbl-conteo-periodo}})}.
+La caracterización descriptiva muestra que el catálogo contiene 1.186 eventos entre 2000 y 2025, equivalentes a 26 años o 312 meses de observación. \emph{(véase \hyperlink{dest-tbl-conteo-periodo}{tabla~\ref*{tbl-conteo-periodo}})}.
 
-La distribución de la magnitud se concentra en valores cercanos al umbral de inclusión: la media es 6,90 y la mediana 6,80. El cuantil 75 alcanza 7,10, mientras que los cuantiles 90 y 95 alcanzan 7,50 y 7,70, respectivamente. Esto indica que la mayor parte de los eventos corresponde a magnitudes fuertes o mayores, mientras que los eventos extremos representan una fracción menor del catálogo. \emph{(véase \hyperref[tbl-resumen-mag]{tabla~\ref*{tbl-resumen-mag}})}.
+La distribución de la magnitud se concentra en valores cercanos al umbral de inclusión: la media es 6,90 y la mediana 6,80. El cuantil 75 alcanza 7,10, mientras que los cuantiles 90 y 95 alcanzan 7,50 y 7,70, respectivamente. Esto indica que la mayor parte de los eventos corresponde a magnitudes fuertes o mayores, mientras que los eventos extremos representan una fracción menor del catálogo. \emph{(véase \hyperlink{dest-tbl-resumen-mag}{tabla~\ref*{tbl-resumen-mag}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -253,15 +253,15 @@ La distribución de la magnitud se concentra en valores cercanos al umbral de in
 
 El histograma muestra una concentración marcada de eventos en los tramos inferiores del rango analizado, especialmente entre $M = 6{,}5$ y valores cercanos a $M = 7{,}0$. A medida que aumenta la magnitud, la frecuencia de eventos disminuye progresivamente, generando una distribución asimétrica hacia la derecha. Esta forma indica que los eventos de mayor magnitud existen dentro del catálogo, pero ocurren con menor frecuencia relativa.
 
-La clasificación por categorías de magnitud complementa esta interpretación: el 67,37 % de los eventos corresponde a la categoría "Fuerte"; el 27,66 %, a "Mayor"; y el 4,97 %, a "Grande o extremo". \emph{(véase \hyperref[tbl-categoria-magnitud]{tabla~\ref*{tbl-categoria-magnitud}})}.
+La clasificación por categorías de magnitud complementa esta interpretación: el 67,37 % de los eventos corresponde a la categoría "Fuerte"; el 27,66 %, a "Mayor"; y el 4,97 %, a "Grande o extremo". \emph{(véase \hyperlink{dest-tbl-categoria-magnitud}{tabla~\ref*{tbl-categoria-magnitud}})}.
 
-La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperref[tbl-magnitud-maxima-anual]{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
+La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperlink{dest-tbl-magnitud-maxima-anual}{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
 
-La profundidad presenta una distribución más asimétrica que la magnitud. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. Según las categorías de profundidad, predominan los eventos superficiales, con un 76,98 % del catálogo, seguidos por los eventos intermedios (12,65 %) y profundos (10,37 %). El histograma de profundidad refuerza esta lectura al mostrar una alta concentración de eventos a baja profundidad y una cola hacia valores mayores. Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe un conjunto de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}}, \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}} y \hyperref[fig-distribucion-profundidad]{figura~\ref*{fig-distribucion-profundidad}})}.
+La profundidad presenta una distribución más asimétrica que la magnitud. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. Según las categorías de profundidad, predominan los eventos superficiales, con un 76,98 % del catálogo, seguidos por los eventos intermedios (12,65 %) y profundos (10,37 %). El histograma de profundidad refuerza esta lectura al mostrar una alta concentración de eventos a baja profundidad y una cola hacia valores mayores. Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe un conjunto de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperlink{dest-tbl-resumen-depth}{tabla~\ref*{tbl-resumen-depth}}, \hyperlink{dest-tbl-categoria-profundidad}{tabla~\ref*{tbl-categoria-profundidad}} y \hyperref[fig-distribucion-profundidad]{figura~\ref*{fig-distribucion-profundidad}})}.
 
 ## Caracterización temporal
 
-Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media y no se observa un patrón claro y sostenido de aumento o disminución durante el período completo. \emph{(véase \hyperref[tbl-conteo-anual-temporal]{tabla~\ref*{tbl-conteo-anual-temporal}})}.
+Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media y no se observa un patrón claro y sostenido de aumento o disminución durante el período completo. \emph{(véase \hyperlink{dest-tbl-conteo-anual-temporal}{tabla~\ref*{tbl-conteo-anual-temporal}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -275,7 +275,7 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 
 La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
 
-En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020--2025 con 14,0. Como 2020--2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperref[tbl-conteo-decadal-temporal]{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
+En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020--2025 con 14,0. Como 2020--2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperlink{dest-tbl-conteo-decadal-temporal}{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -289,13 +289,13 @@ En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de
 
 La tasa decadal muestra que 2020--2025 queda en un nivel cercano a la década de 2000 y por debajo de la década de 2010. Por lo tanto, la diferencia descriptiva más clara se concentra en la década de 2010, que presenta la mayor ocurrencia relativa de eventos $M \geq 7{,}0$ dentro del período analizado.
 
-La recurrencia temporal global se resume a partir de los días transcurridos entre eventos consecutivos $M \geq 7{,}0$. La media del intervalo es 24,5 días y la mediana es 15,6 días, lo que indica una distribución asimétrica: la mayoría de los intervalos se ubica bajo el promedio, mientras que algunos períodos más extensos sin eventos elevan la media. El intervalo máximo alcanza 176,8 días y el mínimo es cercano a cero días, asociado a registros con muy poca separación temporal. \emph{(véase \hyperref[tbl-recurrencia-m70]{tabla~\ref*{tbl-recurrencia-m70}})}.
+La recurrencia temporal global se resume a partir de los días transcurridos entre eventos consecutivos $M \geq 7{,}0$. La media del intervalo es 24,5 días y la mediana es 15,6 días, lo que indica una distribución asimétrica: la mayoría de los intervalos se ubica bajo el promedio, mientras que algunos períodos más extensos sin eventos elevan la media. El intervalo máximo alcanza 176,8 días y el mínimo es cercano a cero días, asociado a registros con muy poca separación temporal. \emph{(véase \hyperlink{dest-tbl-recurrencia-m70}{tabla~\ref*{tbl-recurrencia-m70}})}.
 
 El anexo temporal conserva el respaldo detallado de las series mensuales y anuales, la recurrencia por década y la composición decadal por categoría de magnitud. \emph{(véanse \hyperref[fig-serie-mensual-catalogo]{figura~\ref*{fig-serie-mensual-catalogo}}, \hyperref[fig-serie-anual-m70]{figura~\ref*{fig-serie-anual-m70}}, \hyperref[fig-recurrencia-decadal-m70]{figura~\ref*{fig-recurrencia-decadal-m70}} y \hyperref[fig-composicion-decadal-magnitud-cat]{figura~\ref*{fig-composicion-decadal-magnitud-cat}})}.
 
 ## Caracterización espacial
 
-La asignación espacial mediante la variable `zona` muestra una concentración marcada de eventos en el Cinturón de Fuego, con 892 registros, equivalentes al 75,21 % del catálogo. En segundo lugar se ubica el resto del mundo, con 203 eventos (17,12 %), seguido por el Cinturón Alpino-Himalayo, con 63 eventos (5,31 %), y la Dorsal Meso-Atlántica, con 28 eventos (2,36 %). Esta distribución confirma que la mayor parte de los grandes terremotos del período se localiza en torno al principal cinturón sísmico del Pacífico. \emph{(véase \hyperref[tbl-eventos-zona]{tabla~\ref*{tbl-eventos-zona}})}.
+La asignación espacial mediante la variable `zona` muestra una concentración marcada de eventos en el Cinturón de Fuego, con 892 registros, equivalentes al 75,21 % del catálogo. En segundo lugar se ubica el resto del mundo, con 203 eventos (17,12 %), seguido por el Cinturón Alpino-Himalayo, con 63 eventos (5,31 %), y la Dorsal Meso-Atlántica, con 28 eventos (2,36 %). Esta distribución confirma que la mayor parte de los grandes terremotos del período se localiza en torno al principal cinturón sísmico del Pacífico. \emph{(véase \hyperlink{dest-tbl-eventos-zona}{tabla~\ref*{tbl-eventos-zona}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -309,7 +309,7 @@ La asignación espacial mediante la variable `zona` muestra una concentración m
 
 La comparación por tasas mantiene la misma estructura: el Cinturón de Fuego registra, en promedio, 34,3 eventos por año, mientras que el resto del mundo alcanza 7,8. Las demás zonas presentan frecuencias considerablemente menores, con 2,4 eventos anuales en el Cinturón Alpino-Himalayo y 1,1 en la Dorsal Meso-Atlántica. Por tanto, la diferencia espacial más relevante se observa en la frecuencia de ocurrencia, más que en la magnitud central de los eventos.
 
-En términos de magnitud, las medias por zona son cercanas entre sí: al restringir la comparación a las zonas de tipo cinturón, el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica presentan medias entre 6,69 y 6,92, lo que las hace comparables en esta variable. La profundidad, en cambio, introduce una diferenciación más clara entre cinturones: la Dorsal Meso-Atlántica registra eventos exclusivamente superficiales, el Cinturón Alpino-Himalayo no presenta eventos profundos y el Cinturón de Fuego concentra la mayor proporción de eventos profundos entre los cinturones. El resto del mundo, pese a reunir la mayor proporción relativa de eventos profundos del catálogo (19,7 %), corresponde a un conjunto heterogéneo y, por lo tanto, a un término de comparación menos estándar. La estructura espacial conjunta de magnitud y profundidad, y su correspondencia con los límites de placas, se aprecia en el mapa global de epicentros. \emph{(véase \hyperref[fig-mapa-mag-depth]{figura~\ref*{fig-mapa-mag-depth}})}. El detalle de los estadísticos por zona, la distribución anual y la clasificación por categoría de profundidad se mantiene en el anexo espacial. \emph{(véanse \hyperref[tbl-estadisticos-zona]{tabla~\ref*{tbl-estadisticos-zona}}, \hyperref[tbl-eventos-zona-anio]{tabla~\ref*{tbl-eventos-zona-anio}} y \hyperref[tbl-profundidad-zona]{tabla~\ref*{tbl-profundidad-zona}})}.
+En términos de magnitud, las medias por zona son cercanas entre sí: al restringir la comparación a las zonas de tipo cinturón, el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica presentan medias entre 6,69 y 6,92, lo que las hace comparables en esta variable. La profundidad, en cambio, introduce una diferenciación más clara entre cinturones: la Dorsal Meso-Atlántica registra eventos exclusivamente superficiales, el Cinturón Alpino-Himalayo no presenta eventos profundos y el Cinturón de Fuego concentra la mayor proporción de eventos profundos entre los cinturones. El resto del mundo, pese a reunir la mayor proporción relativa de eventos profundos del catálogo (19,7 %), corresponde a un conjunto heterogéneo y, por lo tanto, a un término de comparación menos estándar. La estructura espacial conjunta de magnitud y profundidad, y su correspondencia con los límites de placas, se aprecia en el mapa global de epicentros. \emph{(véase \hyperref[fig-mapa-mag-depth]{figura~\ref*{fig-mapa-mag-depth}})}. El detalle de los estadísticos por zona, la distribución anual y la clasificación por categoría de profundidad se mantiene en el anexo espacial. \emph{(véanse \hyperlink{dest-tbl-estadisticos-zona}{tabla~\ref*{tbl-estadisticos-zona}}, \hyperlink{dest-tbl-eventos-zona-anio}{tabla~\ref*{tbl-eventos-zona-anio}} y \hyperlink{dest-tbl-profundidad-zona}{tabla~\ref*{tbl-profundidad-zona}})}.
 
 La interpretación espacial debe considerar que `Resto del mundo` no representa ausencia de actividad tectónica, sino eventos que no intersectan los polígonos definidos para las tres zonas principales. En consecuencia, los resultados dependen de la delimitación geográfica usada para construir `zona`, cuya verificación cartográfica se documenta en el anexo. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
@@ -540,6 +540,7 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \refstepcounter{table}
 \phantomsection
 \label{tbl-resumen-mag}
+\hypertarget{dest-tbl-resumen-mag}{}
 \begin{tabular}{lr}
 \toprule
 Indicador & Valor \\
@@ -565,6 +566,7 @@ Cuantil 95 & $7{,}70$ \\
 \phantomsection
 \refstepcounter{table}
 \label{tbl-categoria-magnitud}
+\hypertarget{dest-tbl-categoria-magnitud}{}
 \begin{tabular}{lrr}
 \toprule
 \texttt{magnitud\_cat} & Eventos & \% \\
@@ -582,6 +584,7 @@ Grande o extremo & 59 & $4{,}97$ \\
 \phantomsection
 \refstepcounter{table}
 \label{tbl-magnitud-maxima-anual}
+\hypertarget{dest-tbl-magnitud-maxima-anual}{}
 {\setlength{\tabcolsep}{2.2pt}
 \begin{tabular}{rr@{\hspace{0.35em}}rr@{\hspace{0.35em}}rr}
 \toprule
@@ -608,6 +611,7 @@ Año & Máx. & Año & Máx. & Año & Máx. \\
 \phantomsection
 \refstepcounter{table}
 \label{tbl-resumen-depth}
+\hypertarget{dest-tbl-resumen-depth}{}
 \begin{tabular}{lr}
 \toprule
 Indicador & Valor \\
@@ -631,6 +635,7 @@ Cuantil 95 & $576{,}60$ km \\
 \phantomsection
 \refstepcounter{table}
 \label{tbl-categoria-profundidad}
+\hypertarget{dest-tbl-categoria-profundidad}{}
 \begin{tabular}{lrr}
 \toprule
 \texttt{profundidad\_cat} & Eventos & \% \\
@@ -665,6 +670,7 @@ Profundo & 123 & $10{,}37$ \\
 \refstepcounter{table}
 
 \label{tbl-conteo-anual-temporal}
+\hypertarget{dest-tbl-conteo-anual-temporal}{}
 
 \begin{longtable}{rrrrr}
 \toprule
@@ -860,6 +866,7 @@ Zona & Eventos & \% & Media mag & Mediana mag & Máx. mag & Mediana depth & Máx
 \refstepcounter{table}
 
 \label{tbl-eventos-zona-anio}
+\hypertarget{dest-tbl-eventos-zona-anio}{}
 
 \begin{longtable}{rrrrr}
 \toprule
@@ -934,32 +941,3 @@ Zona & Superficial & Intermedio & Profundo \\
 \end{figure}
 ```
 El tamaño del punto representa la magnitud y el color, la profundidad (km); las líneas corresponden a los límites de placas tectónicas.
-
-```{=html}
-<!--
-Plantillas para mantener numeración automática en Quarto:
-
-Figura desde archivo:
-![Leyenda explicativa de la figura.](ruta/a/la/imagen.png){#fig-nombre-corto}
-En el texto puedes citarla como @fig-nombre-corto.
-
-Figura creada con R:
-Crear un chunk R con label: fig-nombre-corto y fig-cap: "Leyenda explicativa de la figura."
-El código del gráfico va dentro de ese chunk.
-En el texto puedes citarla como @fig-nombre-corto.
-
-Tabla escrita en Markdown:
-| Columna 1 | Columna 2 |
-|---|---|
-| completar | completar |
-
-: Leyenda explicativa de la tabla. {#tbl-nombre-corto}
-
-En el texto puedes citarla como @tbl-nombre-corto.
-
-Tabla creada con R:
-Crear un chunk R con label: tbl-nombre-corto y tbl-cap: "Leyenda explicativa de la tabla."
-El código que imprime la tabla va dentro de ese chunk.
-En el texto puedes citarla como @tbl-nombre-corto.
--->
-```
