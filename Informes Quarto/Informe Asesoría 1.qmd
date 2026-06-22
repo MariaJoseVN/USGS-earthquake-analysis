@@ -57,19 +57,19 @@ header-includes:
 # Resumen ejecutivo
 
 El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. 
-Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21% de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. 
+Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. 
 En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. 
 El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
 # Antecedentes
 
-La actividad sísmica constituye un fenómeno geofísico que ocurre de manera transversal a lo largo del mundo. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos observados a escala global. Su relevancia radica en una posible caracterización territorial, gestión institucional y/o la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
+La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
 ## Distribución global de la sismicidad {#sec-distribucion-sismicidad}
 
-La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas [@usgs_faq_terremotos]. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81% de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17%; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas [@usgs_faq_terremotos].
+La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas [@usgs_faq_terremotos]. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81 % de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17 %; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas [@usgs_faq_terremotos].
 
 ```{=latex}
 \begin{figure}[H]
@@ -88,7 +88,7 @@ La bibliografía revisada entrega distintos aportes para interpretar la magnitud
 
 # Objetivo general
 
-Caracterizar, de manera descriptiva, documentada y reproducible, la distribución espacial y temporal de los grandes terremotos ($M \geq 6{,}5$) registrados a nivel mundial en el catálogo de la USGS durante el período 2000-2025, comparando zonas sísmicas definidas de forma explícita, con el fin de entregar resultados interpretables sobre dónde, cuándo y con qué frecuencia ocurren estos eventos, y de establecer una base metodológica sólida para una eventual etapa de análisis inferencial. El umbral $M \geq 6{,}5$ delimita el foco en terremotos de relevancia según el interés del encargo.
+Caracterizar, de manera descriptiva, documentada y reproducible, la distribución espacial y temporal de los grandes terremotos ($M \geq 6{,}5$) registrados a nivel mundial en el catálogo de la USGS durante el período 2000–2025, comparando zonas sísmicas definidas de forma explícita, con el fin de entregar resultados interpretables sobre dónde, cuándo y con qué frecuencia ocurren estos eventos, y de establecer una base metodológica sólida para una eventual etapa de análisis inferencial. El umbral $M \geq 6{,}5$ delimita el foco en terremotos de relevancia según el interés del encargo.
 
 ## Objetivos específicos
 
@@ -120,7 +120,7 @@ Para alcanzar el objetivo general, se definen los siguientes pasos intermedios, 
 
 # Alcance del informe
 
-Este pre-informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis, es cada evento registrado en el catálogo de la USGS durante el período 2000-2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
+Este pre-informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000–2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
 El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Asimismo, no se establece distinción entre los tipos de magnitud (`magType`) reportados por la fuente; estos se tratan de manera homogénea pese a poder provenir de escalas o procedimientos de estimación diferentes, lo que constituye una limitación a considerar al comparar eventos.
 
@@ -199,7 +199,7 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Estas ultimas asociadas a incertidumbre o procesamiento instrumental presentan la mayoría de  valores faltantes y no se consideran para el resto de análisis, por lo que se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Estas últimas, asociadas a la incertidumbre o al procesamiento instrumental, presentan la mayoría de los valores faltantes y no se consideran en los análisis posteriores. Por ello, se conservan en la base cruda y se reportan como una limitación para futuros análisis.
 
 Las revisiones aplicadas y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
@@ -211,7 +211,7 @@ Como resultado de esta etapa, el análisis se consolida en el objeto `sismos`, l
 
 Se define el período de análisis entre 2000 y 2025, equivalente a 26 años o 312 meses de observación. En dicho intervalo, la base `sismos` contiene 1.186 terremotos con magnitud mayor o igual a $6{,}5$. Esta etapa permite fijar el alcance temporal del estudio y establecer el total de eventos sobre el cual se calculan las tasas de ocurrencia.
 
-### Caracterización descriptiva de la variable magnitud sísmica (mag)
+### Caracterización descriptiva de la variable magnitud sísmica (`mag`)
 
 Se caracterizan las magnitudes de los terremotos mediante estadísticos descriptivos de tendencia central, dispersión y posición, incluyendo media, mediana, desviación estándar, máximo y cuantiles relevantes.
 
@@ -239,7 +239,7 @@ Además, se definen indicadores para identificar eventos con magnitud mayor o ig
 
 La frecuencia de eventos se caracteriza mediante conteos mensuales, anuales y decadales, tanto para el catálogo completo como para los umbrales de magnitud definidos. La escala mensual permite revisar fluctuaciones de corto plazo, la escala anual facilita la comparación entre años calendario y la escala decadal entrega una lectura agregada de largo plazo.
 
-Para la comparación decadal se calculan tasas anuales promedio, ajustando los conteos por la cantidad efectiva de años observados en cada período. Esta decisión es necesaria porque el tramo 2020-2025 corresponde a una década incompleta; por lo tanto, su lectura se realiza en eventos por año observado y no solo mediante frecuencias absolutas.
+Para la comparación decadal se calculan tasas anuales promedio, ajustando los conteos por la cantidad efectiva de años observados en cada período. Esta decisión es necesaria porque el tramo 2020–2025 corresponde a una década incompleta; por lo tanto, su lectura se realiza en eventos por año observado y no solo mediante frecuencias absolutas.
 
 ### Construcción de series temporales mensuales y anuales
 
@@ -254,8 +254,6 @@ La recurrencia temporal se evalúa para los eventos $M \geq 7{,}0$, ordenándolo
 La clasificación por `magnitud_cat` agrupa los eventos en tres categorías excluyentes, cuyos umbrales se sustentan en los antecedentes bibliográficos presentados previamente \emph{(véase \hyperref[sec-categorizacion-magnitud]{Sección~\ref*{sec-categorizacion-magnitud}})}: “Fuerte” para $6{,}5 \leq M < 7{,}0$, “Mayor” para $7{,}0 \leq M < 7{,}8$ y “Grande o extremo” para $M \geq 7{,}8$. Estos cortes recogen la distinción clásica entre terremotos mayores y grandes terremotos propuesta por @gutenberg_richter_1944, así como el realce de los eventos de mayor severidad ($M \geq 8{,}0$) dentro del registro global instrumental [@ammon_etal_2010].
 
 Sobre esta base, se revisa la composición anual y decadal según `magnitud_cat`. Esta lectura complementa los umbrales acumulativos ($M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$) y permite identificar qué niveles de severidad explican principalmente la frecuencia observada en cada período.
-
-Esta sección funciona como complemento y posible nueva ruta de estudio.
 
 ## Caracterización espacial
 
@@ -336,11 +334,11 @@ Variable & Origen & Descripción breve & Análisis \\
 
 \newpage
 
-## Caracterización Descriptiva
+## Caracterización descriptiva
 
 La caracterización descriptiva muestra que el catálogo contiene 1.186 eventos entre 2000 y 2025, equivalentes a 26 años o 312 meses de observación. \emph{(véase \hyperref[tbl-conteo-periodo]{tabla~\ref*{tbl-conteo-periodo}})}.
 
-La distribución de `mag` se concentra en valores cercanos al umbral de inclusión: la media es 6,90 y la mediana 6,80. El cuantil 75 alcanza 7,10, mientras que los cuantiles 90 y 95 alcanzan 7,50 y 7,70, respectivamente. Esto indica que la mayor parte de los eventos corresponde a magnitudes fuertes o mayores, mientras que los eventos extremos representan una fracción menor del catálogo. \emph{(véase \hyperref[tbl-resumen-mag]{tabla~\ref*{tbl-resumen-mag}})}.
+La distribución de la magnitud se concentra en valores cercanos al umbral de inclusión: la media es 6,90 y la mediana 6,80. El cuantil 75 alcanza 7,10, mientras que los cuantiles 90 y 95 alcanzan 7,50 y 7,70, respectivamente. Esto indica que la mayor parte de los eventos corresponde a magnitudes fuertes o mayores, mientras que los eventos extremos representan una fracción menor del catálogo. \emph{(véase \hyperref[tbl-resumen-mag]{tabla~\ref*{tbl-resumen-mag}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -351,13 +349,13 @@ La distribución de `mag` se concentra en valores cercanos al umbral de inclusi�
 \end{figure}
 ```
 
-El histograma muestra una concentración marcada de eventos en los tramos inferiores del rango analizado, especialmente entre $M = 6{,}5$ y valores cercanos a $M = 7{,}0$. A medida que aumenta `mag`, la frecuencia de eventos disminuye progresivamente, generando una distribución asimétrica hacia la derecha. Esta forma indica que los eventos de mayor magnitud existen dentro del catálogo, pero ocurren con menor frecuencia relativa.
+El histograma muestra una concentración marcada de eventos en los tramos inferiores del rango analizado, especialmente entre $M = 6{,}5$ y valores cercanos a $M = 7{,}0$. A medida que aumenta la magnitud, la frecuencia de eventos disminuye progresivamente, generando una distribución asimétrica hacia la derecha. Esta forma indica que los eventos de mayor magnitud existen dentro del catálogo, pero ocurren con menor frecuencia relativa.
 
-La clasificación por `magnitud_cat` complementa esta interpretación: 67,37% de los eventos corresponde a la categoría Fuerte, 27,66% a Mayor y 4,97% a Grande o extremo. \emph{(véase \hyperref[tbl-categoria-magnitud]{tabla~\ref*{tbl-categoria-magnitud}})}.
+La clasificación por categorías de magnitud complementa esta interpretación: el 67,37 % de los eventos corresponde a la categoría "Fuerte"; el 27,66 %, a "Mayor"; y el 4,97 %, a "Grande o extremo". \emph{(véase \hyperref[tbl-categoria-magnitud]{tabla~\ref*{tbl-categoria-magnitud}})}.
 
 La magnitud máxima anual muestra que todos los años del período presentan al menos un evento de alta magnitud, con máximos destacados de 9,10 en 2004 y 2011, y 8,80 en 2010 y 2025. \emph{(véase \hyperref[tbl-magnitud-maxima-anual]{tabla~\ref*{tbl-magnitud-maxima-anual}})}.
 
-La variable `depth` presenta una distribución más asimétrica que `mag`. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. En términos de `profundidad_cat`, predominan los eventos superficiales con 76,98% del catálogo, seguidos por eventos intermedios (12,65%) y profundos (10,37%). El histograma de `depth` refuerza esta lectura, al mostrar una alta concentración de eventos a baja profundidad y una cola hacia valores mayores. Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe un conjunto de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}}, \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}} y \hyperref[fig-distribucion-profundidad]{figura~\ref*{fig-distribucion-profundidad}})}.
+La profundidad presenta una distribución más asimétrica que la magnitud. La mediana es 26,0 km, mientras que la media alcanza 93,1 km, diferencia que se explica por la presencia de eventos intermedios y profundos. Según las categorías de profundidad, predominan los eventos superficiales, con un 76,98 % del catálogo, seguidos por los eventos intermedios (12,65 %) y profundos (10,37 %). El histograma de profundidad refuerza esta lectura al mostrar una alta concentración de eventos a baja profundidad y una cola hacia valores mayores. Esta estructura indica que la profundidad típica del catálogo es baja, aunque existe un conjunto de eventos de gran profundidad que eleva el promedio. \emph{(véanse \hyperref[tbl-resumen-depth]{tabla~\ref*{tbl-resumen-depth}}, \hyperref[tbl-categoria-profundidad]{tabla~\ref*{tbl-categoria-profundidad}} y \hyperref[fig-distribucion-profundidad]{figura~\ref*{fig-distribucion-profundidad}})}.
 
 ## Caracterización temporal
 
@@ -374,7 +372,7 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 
 La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
 
-En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020-2025 con 14,0. Como 2020-2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperref[tbl-conteo-decadal-temporal]{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
+En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020–2025 con 14,0. Como 2020–2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperref[tbl-conteo-decadal-temporal]{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -385,15 +383,15 @@ En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de
 \end{figure}
 ```
 
-La tasa decadal muestra que 2020-2025 queda en un nivel cercano a la década de 2000 y por debajo de la década de 2010. Por lo tanto, la diferencia descriptiva más clara se concentra en la década de 2010, que presenta la mayor ocurrencia relativa de eventos $M \geq 7{,}0$ dentro del período analizado.
+La tasa decadal muestra que 2020–2025 queda en un nivel cercano a la década de 2000 y por debajo de la década de 2010. Por lo tanto, la diferencia descriptiva más clara se concentra en la década de 2010, que presenta la mayor ocurrencia relativa de eventos $M \geq 7{,}0$ dentro del período analizado.
 
 La recurrencia temporal global se resume a partir de los días transcurridos entre eventos consecutivos $M \geq 7{,}0$. La media del intervalo es 24,5 días y la mediana es 15,6 días, lo que indica una distribución asimétrica: la mayoría de los intervalos se ubica bajo el promedio, mientras que algunos períodos más extensos sin eventos elevan la media. El intervalo máximo alcanza 176,8 días y el mínimo es cercano a cero días, asociado a registros con muy poca separación temporal. \emph{(véase \hyperref[tbl-recurrencia-m70]{tabla~\ref*{tbl-recurrencia-m70}})}.
 
-El anexo temporal conserva el respaldo detallado de las series mensuales y anuales, la recurrencia por década y la composición decadal por `magnitud_cat`. \emph{(véanse \hyperref[fig-serie-mensual-catalogo]{figura~\ref*{fig-serie-mensual-catalogo}}, \hyperref[fig-serie-anual-m70]{figura~\ref*{fig-serie-anual-m70}}, \hyperref[fig-recurrencia-decadal-m70]{figura~\ref*{fig-recurrencia-decadal-m70}} y \hyperref[fig-composicion-decadal-magnitud-cat]{figura~\ref*{fig-composicion-decadal-magnitud-cat}})}.
+El anexo temporal conserva el respaldo detallado de las series mensuales y anuales, la recurrencia por década y la composición decadal por categoría de magnitud. \emph{(véanse \hyperref[fig-serie-mensual-catalogo]{figura~\ref*{fig-serie-mensual-catalogo}}, \hyperref[fig-serie-anual-m70]{figura~\ref*{fig-serie-anual-m70}}, \hyperref[fig-recurrencia-decadal-m70]{figura~\ref*{fig-recurrencia-decadal-m70}} y \hyperref[fig-composicion-decadal-magnitud-cat]{figura~\ref*{fig-composicion-decadal-magnitud-cat}})}.
 
-## Caracterización Espacial
+## Caracterización espacial
 
-La asignación espacial mediante la variable `zona` muestra una concentración marcada de eventos en `Cinturon de Fuego`, con 892 registros, equivalentes al 75,21% del catálogo. En segundo lugar se ubica `Resto del mundo`, con 203 eventos (17,12%), seguido por `Cinturon Alpino-Himalayo` con 63 eventos (5,31%) y `Dorsal Meso-Atlantica` con 28 eventos (2,36%). Esta distribución confirma que la mayor parte de los grandes terremotos del período se localiza en torno al principal cinturón sísmico del Pacífico. \emph{(véase \hyperref[tbl-eventos-zona]{tabla~\ref*{tbl-eventos-zona}})}.
+La asignación espacial mediante la variable `zona` muestra una concentración marcada de eventos en el Cinturón de Fuego, con 892 registros, equivalentes al 75,21 % del catálogo. En segundo lugar se ubica el resto del mundo, con 203 eventos (17,12 %), seguido por el Cinturón Alpino-Himalayo, con 63 eventos (5,31 %), y la Dorsal Meso-Atlántica, con 28 eventos (2,36 %). Esta distribución confirma que la mayor parte de los grandes terremotos del período se localiza en torno al principal cinturón sísmico del Pacífico. \emph{(véase \hyperref[tbl-eventos-zona]{tabla~\ref*{tbl-eventos-zona}})}.
 
 ```{=latex}
 \begin{figure}[H]
@@ -404,41 +402,39 @@ La asignación espacial mediante la variable `zona` muestra una concentración m
 \end{figure}
 ```
 
-La comparación por tasas mantiene la misma estructura: `Cinturon de Fuego` registra en promedio 34,3 eventos por año, mientras que `Resto del mundo` alcanza 7,8. Las demás zonas presentan frecuencias considerablemente menores, con 2,4 eventos anuales en `Cinturon Alpino-Himalayo` y 1,1 en `Dorsal Meso-Atlantica`. Por tanto, la diferencia espacial más relevante se observa en la frecuencia de ocurrencia, más que en la magnitud central de los eventos.
+La comparación por tasas mantiene la misma estructura: el Cinturón de Fuego registra, en promedio, 34,3 eventos por año, mientras que el resto del mundo alcanza 7,8. Las demás zonas presentan frecuencias considerablemente menores, con 2,4 eventos anuales en el Cinturón Alpino-Himalayo y 1,1 en la Dorsal Meso-Atlántica. Por tanto, la diferencia espacial más relevante se observa en la frecuencia de ocurrencia, más que en la magnitud central de los eventos.
 
-En términos de `mag`, las medias por zona son cercanas entre sí, con valores alrededor de 6,9 en `Cinturon de Fuego`, `Resto del mundo` y `Cinturon Alpino-Himalayo`. En cambio, `depth` muestra una diferenciación más clara: `Dorsal Meso-Atlantica` presenta eventos exclusivamente superficiales, mientras que `Resto del mundo` concentra la mayor proporción relativa de eventos profundos. El detalle de estadísticos por zona, la distribución anual y la clasificación por `profundidad_cat` se mantiene en el anexo espacial. \emph{(véanse \hyperref[tbl-estadisticos-zona]{tabla~\ref*{tbl-estadisticos-zona}}, \hyperref[tbl-eventos-zona-anio]{tabla~\ref*{tbl-eventos-zona-anio}} y \hyperref[tbl-profundidad-zona]{tabla~\ref*{tbl-profundidad-zona}})}.
+En términos de magnitud, las medias por zona son cercanas entre sí, con valores alrededor de 6,9 en el Cinturón de Fuego, el resto del mundo y el Cinturón Alpino-Himalayo. En cambio, la profundidad muestra una diferenciación más clara: la Dorsal Meso-Atlántica presenta eventos exclusivamente superficiales, mientras que el resto del mundo concentra la mayor proporción relativa de eventos profundos. El detalle de los estadísticos por zona, la distribución anual y la clasificación por categoría de profundidad se mantiene en el anexo espacial. \emph{(véanse \hyperref[tbl-estadisticos-zona]{tabla~\ref*{tbl-estadisticos-zona}}, \hyperref[tbl-eventos-zona-anio]{tabla~\ref*{tbl-eventos-zona-anio}} y \hyperref[tbl-profundidad-zona]{tabla~\ref*{tbl-profundidad-zona}})}.
 
 La interpretación espacial debe considerar que `Resto del mundo` no representa ausencia de actividad tectónica, sino eventos que no intersectan los polígonos definidos para las tres zonas principales. En consecuencia, los resultados dependen de la delimitación geográfica usada para construir `zona`, cuya verificación cartográfica se documenta en el anexo. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
 ## Síntesis interpretativa y limitaciones
 
-En conjunto, los resultados muestran que el catálogo analizado permite una caracterización descriptiva y exploratoria consistente de los grandes terremotos registrados entre 2000 y 2025. La distribución de `mag` se concentra cerca del umbral de inclusión, mientras que `depth` presenta mayor asimetría por la presencia de eventos intermedios y profundos. En la dimensión temporal, las variaciones anuales y decadales describen cambios en la frecuencia observada, pero no constituyen evidencia de tendencia causal ni permiten realizar predicción sísmica.
+En conjunto, los resultados muestran que el catálogo analizado permite una caracterización descriptiva y exploratoria consistente de los grandes terremotos registrados entre 2000 y 2025. La distribución de la magnitud se concentra cerca del umbral de inclusión, mientras que la profundidad presenta mayor asimetría por la presencia de eventos intermedios y profundos. En la dimensión temporal, las variaciones anuales y decadales describen cambios en la frecuencia observada, pero no constituyen evidencia de tendencia causal ni permiten realizar predicción sísmica.
 
-La comparación espacial muestra que la mayor concentración de eventos se asocia al `Cinturon de Fuego`, resultado cualitativamente compatible con los antecedentes revisados. Sin embargo, esta lectura depende de la delimitación operativa de `zona`, construida a partir de polígonos geográficos y verificada cartográficamente en QGIS. Por ello, la categoría `Resto del mundo` se interpreta como un grupo residual de eventos que no intersectan los polígonos principales, no como una zona tectónica homogénea. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
+La comparación espacial muestra que la mayor concentración de eventos se asocia al Cinturón de Fuego, resultado cualitativamente compatible con los antecedentes revisados. Sin embargo, esta lectura depende de la delimitación operativa de la variable `zona`, construida a partir de polígonos geográficos y verificada cartográficamente en QGIS. Por ello, la categoría "Resto del mundo" se interpreta como un grupo residual de eventos que no intersectan los polígonos principales, no como una zona tectónica homogénea. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
 Las principales limitaciones del análisis se relacionan con el carácter global y descriptivo del catálogo. La recurrencia temporal se calcula sobre el conjunto mundial de eventos y no representa recurrencia física de una falla o región específica. Además, la presencia de distintos valores en `magType` indica que las magnitudes pueden provenir de escalas o procedimientos instrumentales diferentes, lo que debe considerarse al comparar eventos de manera agregada.
 
 Las tasas anuales por zona corresponden al número de eventos asignados a cada categoría dividido por los 26 años de observación. Estas tasas no están normalizadas por la superficie, la longitud de los límites tectónicos ni otra medida de exposición espacial. Dado que las zonas presentan extensiones muy diferentes, esta condición constituye una limitación y exige cautela al comparar sus frecuencias de ocurrencia.
 
-El 75,21% observado para el Cinturón de Fuego es cualitativamente compatible con el valor cercano al 81% señalado en los antecedentes. No obstante, esta proximidad no debe interpretarse como una confirmación directa, ya que ambos porcentajes corresponden a períodos, umbrales de magnitud y delimitaciones espaciales diferentes. Una comparación formal requeriría, además, evaluar los supuestos de independencia entre eventos, considerando su posible agrupación temporal y espacial.
+El 75,21 % observado para el Cinturón de Fuego es cualitativamente compatible con el valor cercano al 81 % señalado en los antecedentes. No obstante, esta proximidad no debe interpretarse como una confirmación directa, ya que ambos porcentajes corresponden a períodos, umbrales de magnitud y delimitaciones espaciales diferentes. Una comparación formal requeriría, además, evaluar los supuestos de independencia entre eventos, considerando su posible agrupación temporal y espacial.
 
-# Conclusiones y Recomendaciones
+# Conclusiones y recomendaciones
 
 El presente estudio caracterizó los grandes terremotos ocurridos en el mundo entre los años 2000 y 2025, a partir del catálogo público de la USGS, considerando 1.186 eventos de magnitud igual o superior a 6,5 \emph{(véase \hyperlink{dest-tbl-conteo-periodo}{tabla~\ref*{tbl-conteo-periodo}})}. El análisis confirma que estos terremotos no se distribuyen de manera uniforme sobre el planeta, sino que se concentran de forma muy marcada en determinadas regiones, siguiendo el patrón geográfico descrito en los antecedentes del informe \emph{(véase \hyperref[sec-distribucion-sismicidad]{sección~\ref*{sec-distribucion-sismicidad}})}.
 
-En términos de distribución espacial, el Cinturón de Fuego del Pacífico aparece como la región que concentra, por amplio margen, la mayor frecuencia de grandes terremotos: en él se registraron 892 eventos, equivalentes al 75,21% del total mundial del período, con un promedio de 34,3 eventos por año. Las demás zonas analizadas presentan una actividad considerablemente menor: el resto del mundo reúne el 17,12% de los eventos (203), el Cinturón Alpino-Himalayo el 5,31% (63) y la Dorsal Meso-Atlántica solo el 2,36% (28) \emph{(véanse \hyperlink{dest-tbl-eventos-zona}{tabla~\ref*{tbl-eventos-zona}} y \hyperref[fig-eventos-por-zona]{figura~\ref*{fig-eventos-por-zona}})}. Este resultado es cualitativamente compatible con lo reportado por la literatura especializada [@usgs_faq_terremotos], pero no constituye una confirmación directa debido a las diferencias de período, umbral de magnitud y delimitación espacial.
+En términos de distribución espacial, el Cinturón de Fuego del Pacífico aparece como la región que concentra, por amplio margen, la mayor frecuencia de grandes terremotos: en él se registraron 892 eventos, equivalentes al 75,21 % del total mundial del período, con un promedio de 34,3 eventos por año. Las demás zonas analizadas presentan una actividad considerablemente menor: el resto del mundo reúne el 17,12 % de los eventos (203), el Cinturón Alpino-Himalayo el 5,31 % (63) y la Dorsal Meso-Atlántica solo el 2,36 % (28) \emph{(véanse \hyperlink{dest-tbl-eventos-zona}{tabla~\ref*{tbl-eventos-zona}} y \hyperref[fig-eventos-por-zona]{figura~\ref*{fig-eventos-por-zona}})}. Este resultado es cualitativamente compatible con lo reportado por la literatura especializada [@usgs_faq_terremotos], pero no constituye una confirmación directa debido a las diferencias de período, umbral de magnitud y delimitación espacial.
 
-Respecto de la evolución en el tiempo, la ocurrencia de grandes terremotos muestra variaciones de un año a otro y, en el marco de este análisis descriptivo, no se observa un patrón claro y sostenido de aumento o disminución \emph{(véase \hyperref[fig-eventos-anuales-catalogo]{figura~\ref*{fig-eventos-anuales-catalogo}})}. Al observar los eventos de magnitud igual o superior a 7,0 (387 en total, con un promedio de 14,9 por año) se aprecia que la década de 2010 fue la de mayor actividad relativa (16,0 eventos por año), por encima de la década de 2000 (14,3) y del período 2020-2025 (14,0) \emph{(véanse \hyperlink{dest-tbl-conteo-decadal-temporal}{tabla~\ref*{tbl-conteo-decadal-temporal}} y \hyperref[fig-tasa-decadal-m70]{figura~\ref*{fig-tasa-decadal-m70}})}. Habitualmente transcurrieron cerca de dos semanas entre un gran terremoto y el siguiente a nivel global (mediana de 15,6 días), aunque con tramos de calma de hasta 176,8 días \emph{(véase \hyperlink{dest-tbl-recurrencia-m70}{tabla~\ref*{tbl-recurrencia-m70}})}. En conjunto, estos resultados describen fluctuaciones temporales, pero no permiten establecer por sí solos la existencia o ausencia de una tendencia estadística.
+Respecto de la evolución en el tiempo, la ocurrencia de grandes terremotos muestra variaciones de un año a otro y, en el marco de este análisis descriptivo, no se observa un patrón claro y sostenido de aumento o disminución \emph{(véase \hyperref[fig-eventos-anuales-catalogo]{figura~\ref*{fig-eventos-anuales-catalogo}})}. Al observar los eventos de magnitud igual o superior a 7,0 (387 en total, con un promedio de 14,9 por año) se aprecia que la década de 2010 fue la de mayor actividad relativa (16,0 eventos por año), por encima de la década de 2000 (14,3) y del período 2020–2025 (14,0) \emph{(véanse \hyperlink{dest-tbl-conteo-decadal-temporal}{tabla~\ref*{tbl-conteo-decadal-temporal}} y \hyperref[fig-tasa-decadal-m70]{figura~\ref*{fig-tasa-decadal-m70}})}. Habitualmente transcurrieron cerca de dos semanas entre un gran terremoto y el siguiente a nivel global (mediana de 15,6 días), aunque con tramos de calma de hasta 176,8 días \emph{(véase \hyperlink{dest-tbl-recurrencia-m70}{tabla~\ref*{tbl-recurrencia-m70}})}. En conjunto, estos resultados describen fluctuaciones temporales, pero no permiten establecer por sí solos la existencia o ausencia de una tendencia estadística.
 
-Al comparar el Cinturón de Fuego con el resto del mundo, la diferencia descriptiva principal se observa en la frecuencia de los terremotos. Las medias de magnitud observadas son similares entre las zonas, con valores entre 6,69 y 6,92, mientras que los conteos de eventos difieren ampliamente. La distinción más relevante, además de la frecuencia, se observa en la profundidad de los eventos: la Dorsal Meso-Atlántica presenta exclusivamente sismos superficiales (100%), mientras que en el resto del mundo se concentra la mayor proporción de terremotos profundos (19,7%). El Cinturón de Fuego, por su parte, combina ambos comportamientos, predominando los eventos superficiales (77,1%) \emph{(véanse \hyperlink{dest-tbl-estadisticos-zona}{tabla~\ref*{tbl-estadisticos-zona}} y \hyperlink{dest-tbl-profundidad-zona}{tabla~\ref*{tbl-profundidad-zona}})}.
+Al comparar el Cinturón de Fuego con el resto del mundo, la diferencia descriptiva principal se observa en la frecuencia de los terremotos. Las medias de magnitud observadas son similares entre las zonas, con valores entre 6,69 y 6,92, mientras que los conteos de eventos difieren ampliamente. La distinción más relevante, además de la frecuencia, se observa en la profundidad de los eventos: la Dorsal Meso-Atlántica presenta exclusivamente sismos superficiales (100 %), mientras que en el resto del mundo se concentra la mayor proporción de terremotos profundos (19,7 %). El Cinturón de Fuego, por su parte, combina ambos comportamientos, predominando los eventos superficiales (77,1 %) \emph{(véanse \hyperlink{dest-tbl-estadisticos-zona}{tabla~\ref*{tbl-estadisticos-zona}} y \hyperlink{dest-tbl-profundidad-zona}{tabla~\ref*{tbl-profundidad-zona}})}.
 
 Es importante señalar que estas conclusiones deben interpretarse dentro de los límites propios de la fuente de datos. El catálogo combina distintos métodos de medición de la magnitud (`magType`), lo que introduce cierta incertidumbre al comparar eventos; la categoría "resto del mundo" agrupa terremotos que quedan fuera de las tres zonas definidas y, por lo tanto, depende de la cartografía utilizada; y los intervalos de tiempo entre eventos describen el conjunto global analizado, no la recurrencia de una falla o región en particular \emph{(véanse \hyperref[sec-anexo-control-calidad]{anexo de control de calidad} y \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}. Asimismo, el período 2020–2025 corresponde a una etapa aún incompleta, por lo que se comparó en términos de eventos por año observado y no de totales.
 
-Finalmente, de cara a una eventual etapa posterior, se recomienda profundizar el análisis incorporando las variables del catálogo original asociadas a la medición instrumental, la incertidumbre y el error, que en este pre-informe se dejan fuera por presentar datos faltantes \emph{(véase \hyperref[sec-datos-originales]{sección~\ref*{sec-datos-originales}})}; homogenizar las escalas de magnitud hacia un criterio común [@cabello_etal_2025]; complementar las comparaciones con mapas globales de densidad sísmica; y aplicar modelos que permitan contrastar formalmente las diferencias de frecuencia entre zonas y la regularidad temporal de la ocurrencia [@ogata_1988; @siegel_etal_2024]. En conjunto, estas líneas corresponden al análisis inferencial, que debiera abordarse en la siguiente etapa del estudio (Informe 1) y no en este pre-informe.
+Finalmente, de cara a una eventual etapa posterior, se recomienda profundizar el análisis incorporando las variables del catálogo original asociadas a la medición instrumental, la incertidumbre y el error, que en este pre-informe se dejan fuera por presentar datos faltantes \emph{(véase \hyperref[sec-datos-originales]{sección~\ref*{sec-datos-originales}})}; homogeneizar las escalas de magnitud hacia un criterio común [@cabello_etal_2025]; complementar las comparaciones con mapas globales de densidad sísmica; y aplicar modelos que permitan contrastar formalmente las diferencias de frecuencia entre zonas y la regularidad temporal de la ocurrencia [@ogata_1988; @siegel_etal_2024]. En conjunto, estas líneas corresponden al análisis inferencial, que debiera abordarse en la siguiente etapa del estudio (Informe 1) y no en este pre-informe.
 
 # Referencias
-
-Las referencias se administran desde `referencias.bib` y se generan automáticamente a partir de las citas utilizadas en el texto.
 
 ::: {#refs}
 :::
@@ -494,9 +490,9 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 
 Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la United States Geological Survey [@usgs_faq_terremotos].
 
-El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81% de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
+El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
 
-El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17% de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes [@usgs_faq_terremotos].
+El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17 % de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes [@usgs_faq_terremotos].
 
 El tercer cinturón sigue el trazado sumergido de la **Dorsal Meso-Atlántica**, donde dos placas tectónicas se separan, configurando un límite divergente. Gran parte de esta dorsal se encuentra a gran profundidad bajo el océano y alejada de los centros poblados; no obstante, Islandia, situada directamente sobre ella, ha registrado sismos de hasta $M\,6{,}9$ [@usgs_faq_terremotos].
 
@@ -619,7 +615,7 @@ Mayor & 328 & $27{,}66$ \\
 Grande o extremo & 59 & $4{,}97$ \\
 \bottomrule
 \end{tabular}
-\bottomtablecaption{tbl-categoria-magnitud}{Número y proporción de eventos por categoría de magnitud.}
+\bottomtablecaption{tbl-categoria-magnitud}{Número y porcentaje de eventos por categoría de magnitud.}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.47\textwidth}
@@ -685,7 +681,7 @@ Intermedio & 150 & $12{,}65$ \\
 Profundo & 123 & $10{,}37$ \\
 \bottomrule
 \end{tabular}
-\bottomtablecaption{tbl-categoria-profundidad}{Número y proporción de eventos por categoría de profundidad.}
+\bottomtablecaption{tbl-categoria-profundidad}{Número y porcentaje de eventos por categoría de profundidad.}
 \end{minipage}
 \endgroup
 
@@ -858,10 +854,10 @@ Máximo (días) & $176{,}8$ \\
 \toprule
 Zona & Eventos & Porcentaje & Tasa anual \\
 \midrule
-\texttt{Cinturon de Fuego} & 892 & $75{,}21\%$ & $34{,}3$ \\
-\texttt{Resto del mundo} & 203 & $17{,}12\%$ & $7{,}8$ \\
-\texttt{Cinturon Alpino-Himalayo} & 63 & $5{,}31\%$ & $2{,}4$ \\
-\texttt{Dorsal Meso-Atlantica} & 28 & $2{,}36\%$ & $1{,}1$ \\
+\texttt{Cinturon de Fuego} & 892 & 75,21~\% & $34{,}3$ \\
+\texttt{Resto del mundo} & 203 & 17,12~\% & $7{,}8$ \\
+\texttt{Cinturon Alpino-Himalayo} & 63 & 5,31~\% & $2{,}4$ \\
+\texttt{Dorsal Meso-Atlantica} & 28 & 2,36~\% & $1{,}1$ \\
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
@@ -956,10 +952,10 @@ Año & C. Fuego & Resto & C. Alpino-Himalayo & Dorsal Meso-Atlántica \\
 \toprule
 Zona & Superficial & Intermedio & Profundo \\
 \midrule
-\texttt{Cinturon de Fuego} & 688 ($77{,}1\%$) & 121 ($13{,}6\%$) & 83 ($9{,}3\%$) \\
-\texttt{Resto del mundo} & 145 ($71{,}4\%$) & 18 ($8{,}9\%$) & 40 ($19{,}7\%$) \\
-\texttt{Cinturon Alpino-Himalayo} & 52 ($82{,}5\%$) & 11 ($17{,}5\%$) & 0 ($0{,}0\%$) \\
-\texttt{Dorsal Meso-Atlantica} & 28 ($100{,}0\%$) & 0 ($0{,}0\%$) & 0 ($0{,}0\%$) \\
+\texttt{Cinturon de Fuego} & 688 (77,1~\%) & 121 (13,6~\%) & 83 (9,3~\%) \\
+\texttt{Resto del mundo} & 145 (71,4~\%) & 18 (8,9~\%) & 40 (19,7~\%) \\
+\texttt{Cinturon Alpino-Himalayo} & 52 (82,5~\%) & 11 (17,5~\%) & 0 (0,0~\%) \\
+\texttt{Dorsal Meso-Atlantica} & 28 (100,0~\%) & 0 (0,0~\%) & 0 (0,0~\%) \\
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
