@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Pre informe Asesoría 1 · Grandes terremotos USGS 2000-2025</title>
+<style>
+  :root{
+    --bg:#0f1720;
+    --panel:#ffffff;
+    --panel-2:#f5f7fa;
+    --ink:#1b2530;
+    --ink-soft:#5b6876;
+    --line:#e3e8ee;
+    --accent:#1f3a5f;
+    --fuego:#E06B70;
+    --dorsal:#C7B17A;
+    --alpino:#5AC8AE;
+    --resto:#BDBDBD;
+    --grid:#eef2f6;
+    --shadow:0 1px 3px rgba(16,30,48,.08),0 8px 24px rgba(16,30,48,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,#0f1720 0,#16212e 280px,#eef1f5 280px,#eef1f5 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 64px}
+
+  /* Header */
+  header.top{padding:34px 0 22px;color:#eaf0f7}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8fa6c0;margin:0 0 8px}
+  header.top h1{font-size:27px;line-height:1.2;margin:0 0 8px;font-weight:650;color:#fff;letter-spacing:-.01em}
+  header.top p.sub{margin:0;color:#aebccd;font-size:14.5px;max-width:760px}
+  .meta-chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:12px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+        color:#d6e1ee;padding:5px 11px;border-radius:999px}
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:6px}
+  .kpi{background:var(--panel);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow);
+       border-top:3px solid var(--accent)}
+  .kpi .v{font-size:30px;font-weight:680;letter-spacing:-.02em;color:var(--ink)}
+  .kpi .v small{font-size:15px;font-weight:600;color:var(--ink-soft)}
+  .kpi .l{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+  .kpi.fuego{border-top-color:var(--fuego)}
+
+  /* Sections */
+  section{margin-top:30px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+  .sec-head h2{font-size:18.5px;margin:0;font-weight:650;color:var(--accent);letter-spacing:-.01em}
+  .sec-head .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#90a0b2}
+  .sec-head::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1.2fr 1fr 1fr}
+  .card{background:var(--panel);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .card h3{margin:0 0 2px;font-size:14.5px;font-weight:640;color:var(--ink)}
+  .card .hint{margin:0 0 14px;font-size:12px;color:var(--ink-soft)}
+
+  /* Callout pregunta */
+  .pregunta{background:linear-gradient(100deg,#1f3a5f,#2b517f);color:#eef4fb;border-radius:14px;
+            padding:20px 22px;box-shadow:var(--shadow)}
+  .pregunta .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a9c2e0;margin:0 0 6px}
+  .pregunta p{margin:0;font-size:16px;font-weight:550;line-height:1.45}
+
+  /* stat list */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat{background:var(--panel-2);border-radius:10px;padding:11px 12px}
+  .stat .sv{font-size:19px;font-weight:660;color:var(--ink)}
+  .stat .sv small{font-size:12px;font-weight:600;color:var(--ink-soft)}
+  .stat .sl{font-size:11.5px;color:var(--ink-soft);margin-top:1px}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft)}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .note{font-size:12px;color:var(--ink-soft);margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  text{font-family:inherit}
+  .axis{fill:var(--ink-soft);font-size:10.5px}
+  .axis-strong{fill:var(--ink);font-size:11px;font-weight:600}
+  .gridline{stroke:var(--grid);stroke-width:1}
+
+  footer{margin-top:34px;font-size:11.5px;color:#7c8a99;text-align:center;line-height:1.7}
+  footer b{color:var(--ink-soft)}
+  @media(max-width:880px){
+    .kpis{grid-template-columns:1fr 1fr}.g2,.g3{grid-template-columns:1fr}
+    body{background:linear-gradient(180deg,#0f1720 0,#16212e 360px,#eef1f5 360px,#eef1f5 100%)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Pre informe · Asesoría 1 · Taller I</p>
+    <h1>Grandes terremotos a nivel global: distribución espacial y temporal</h1>
+    <p class="sub">Caracterización estadística descriptiva y exploratoria del catálogo público de la United States Geological Survey (USGS). Eventos de magnitud M&nbsp;&ge;&nbsp;6,5 registrados en el mundo entre 2000 y 2025.</p>
+    <div class="meta-chips">
+      <span class="chip">Fuente: USGS Earthquake Catalog</span>
+      <span class="chip">Período 2000-2025</span>
+      <span class="chip">Umbral M &ge; 6,5</span>
+      <span class="chip">Cobertura mundial</span>
+      <span class="chip">Análisis descriptivo y exploratorio</span>
+    </div>
+  </header>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi"><div class="v">1.186</div><div class="l">Eventos con M &ge; 6,5 en el período</div></div>
+    <div class="kpi"><div class="v">26 <small>años</small></div><div class="l">2000-2025, equivalentes a 312 meses</div></div>
+    <div class="kpi"><div class="v">45,6 <small>/año</small></div><div class="l">Promedio anual de eventos del catálogo</div></div>
+    <div class="kpi fuego"><div class="v">75,21<small>%</small></div><div class="l">Eventos en el Cinturón de Fuego</div></div>
+  </div>
+
+  <!-- Pregunta -->
+  <section>
+    <div class="pregunta">
+      <p class="k">Pregunta estadística</p>
+      <p>¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?</p>
+    </div>
+  </section>
+
+  <!-- Descriptivo -->
+  <section>
+    <div class="sec-head"><h2>Caracterización descriptiva</h2><span class="tag">Magnitud y profundidad</span></div>
+    <div class="grid g2">
+
+      <div class="card">
+        <h3>Distribución de la magnitud</h3>
+        <p class="hint">Estadísticos de tendencia central, dispersión y posición sobre la variable <code>mag</code>.</p>
+        <div class="stats">
+          <div class="stat"><div class="sv">6,90</div><div class="sl">Media</div></div>
+          <div class="stat"><div class="sv">6,80</div><div class="sl">Mediana</div></div>
+          <div class="stat"><div class="sv">9,10</div><div class="sl">Máxima (2004, 2011)</div></div>
+          <div class="stat"><div class="sv">7,10</div><div class="sl">Cuantil 75</div></div>
+          <div class="stat"><div class="sv">7,50</div><div class="sl">Cuantil 90</div></div>
+          <div class="stat"><div class="sv">7,70</div><div class="sl">Cuantil 95</div></div>
+        </div>
+        <h3 style="margin-top:16px">Eventos según categoría de magnitud</h3>
+        <svg id="cat-mag" viewBox="0 0 480 150" width="100%" role="img" aria-label="Categorías de magnitud"></svg>
+      </div>
+
+      <div class="card">
+        <h3>Distribución de la profundidad</h3>
+        <p class="hint">Estadísticos sobre la variable <code>depth</code>, expresada en kilómetros.</p>
+        <div class="stats">
+          <div class="stat"><div class="sv">26,0 <small>km</small></div><div class="sl">Mediana</div></div>
+          <div class="stat"><div class="sv">93,1 <small>km</small></div><div class="sl">Media</div></div>
+          <div class="stat"><div class="sv">2,7 <small>km</small></div><div class="sl">Mínima</div></div>
+          <div class="stat"><div class="sv">676,4 <small>km</small></div><div class="sl">Máxima</div></div>
+          <div class="stat"><div class="sv">76,98<small>%</small></div><div class="sl">Superficial</div></div>
+          <div class="stat"><div class="sv">10,37<small>%</small></div><div class="sl">Profundo</div></div>
+        </div>
+        <h3 style="margin-top:16px">Eventos según categoría de profundidad</h3>
+        <svg id="cat-depth" viewBox="0 0 480 150" width="100%" role="img" aria-label="Categorías de profundidad"></svg>
+      </div>
+    </div>
+    <p class="note" style="margin-top:16px">La magnitud se concentra cerca del umbral de inclusión y presenta asimetría hacia la derecha. La profundidad muestra mayor asimetría: la mediana (26,0 km) es muy inferior a la media (93,1 km) por la presencia de eventos intermedios y profundos.</p>
+  </section>
+
+  <!-- Temporal -->
+  <section>
+    <div class="sec-head"><h2>Caracterización temporal</h2><span class="tag">Ocurrencia anual y decadal</span></div>
+
+    <div class="card">
+      <h3>Eventos anuales del catálogo completo (M &ge; 6,5)</h3>
+      <p class="hint">Conteo anual de eventos. La línea segmentada indica el promedio del período (45,6 eventos por año).</p>
+      <svg id="serie-anual" viewBox="0 0 1100 320" width="100%" role="img" aria-label="Serie anual de eventos"></svg>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>Conteo anual</span>
+        <span><i style="background:var(--fuego)"></i>Máximo: 61 eventos (2010)</span>
+        <span><i style="background:var(--ink-soft)"></i>Mínimo: 28 eventos (2024)</span>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Eventos M &ge; 7,0: tasa anual promedio por década</h3>
+        <p class="hint">387 eventos M &ge; 7,0 en total, con una tasa media de 14,9 por año. La década 2020 considera 6 años observados, por lo que se compara mediante tasa anual.</p>
+        <svg id="decadal" viewBox="0 0 480 220" width="100%" role="img" aria-label="Tasa decadal M mayor o igual a 7"></svg>
+      </div>
+      <div class="card">
+        <h3>Recurrencia global de eventos M &ge; 7,0</h3>
+        <p class="hint">Días transcurridos entre eventos consecutivos M &ge; 7,0 dentro del catálogo mundial. No corresponde a la recurrencia física de una falla específica.</p>
+        <div class="stats" style="grid-template-columns:repeat(2,1fr);margin-top:6px">
+          <div class="stat"><div class="sv">24,5 <small>días</small></div><div class="sl">Intervalo medio</div></div>
+          <div class="stat"><div class="sv">15,6 <small>días</small></div><div class="sl">Intervalo mediano</div></div>
+          <div class="stat"><div class="sv">176,8 <small>días</small></div><div class="sl">Intervalo máximo</div></div>
+          <div class="stat"><div class="sv">387</div><div class="sl">Eventos M &ge; 7,0</div></div>
+        </div>
+        <p class="note">La distribución de intervalos es asimétrica: la mayoría se ubica bajo el promedio y algunos períodos extensos sin eventos elevan la media. Habitualmente transcurren cerca de dos semanas entre un gran terremoto y el siguiente a nivel global.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Espacial -->
+  <section>
+    <div class="sec-head"><h2>Caracterización espacial</h2><span class="tag">Comparación entre zonas sísmicas</span></div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Eventos por zona sísmica</h3>
+        <p class="hint">Asignación de cada evento a una zona por intersección espacial con polígonos definidos en QGIS.</p>
+        <svg id="zonas" viewBox="0 0 520 250" width="100%" role="img" aria-label="Eventos por zona sísmica"></svg>
+      </div>
+      <div class="card">
+        <h3>Tasa anual promedio por zona</h3>
+        <p class="hint">Eventos por año dentro de cada zona. La diferencia espacial más relevante se observa en la frecuencia de ocurrencia.</p>
+        <svg id="tasa-zona" viewBox="0 0 520 250" width="100%" role="img" aria-label="Tasa anual por zona"></svg>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Comparación entre cinturones: magnitud similar, profundidad diferenciadora</h3>
+      <p class="hint">Respuesta a la pregunta estadística. Al restringir la comparación a zonas de tipo cinturón, la magnitud media resulta cercana entre ellas, mientras que la profundidad introduce diferencias marcadas.</p>
+      <div class="grid g3" style="gap:12px;margin-top:4px">
+        <div class="stat" style="border-left:4px solid var(--fuego)">
+          <div class="sv">6,69 &ndash; 6,92</div><div class="sl">Magnitud media entre cinturones (rango)</div>
+        </div>
+        <div class="stat" style="border-left:4px solid var(--dorsal)">
+          <div class="sv">100<small>%</small> superficial</div><div class="sl">Dorsal Meso-Atlántica: sin eventos profundos</div>
+        </div>
+        <div class="stat" style="border-left:4px solid var(--alpino)">
+          <div class="sv">Sin profundos</div><div class="sl">Cinturón Alpino-Himalayo</div>
+        </div>
+      </div>
+      <p class="note">El Cinturón de Fuego combina ambos comportamientos, con predominio superficial (77,1 %) y la mayor proporción de eventos profundos entre los cinturones. El principal eje de diferenciación entre cinturones es la profundidad, más que la magnitud. La categoría "Resto del mundo" reúne eventos de orígenes tectónicos diversos y constituye un término de comparación menos estándar.</p>
+    </div>
+  </section>
+
+  <!-- Limitaciones -->
+  <section>
+    <div class="sec-head"><h2>Alcance y limitaciones</h2><span class="tag">Lectura de los resultados</span></div>
+    <div class="card">
+      <ul style="margin:4px 0 0;padding-left:20px;font-size:13px;color:var(--ink-soft);line-height:1.65">
+        <li>El estudio es descriptivo y exploratorio: los resultados resumen el catálogo analizado y no constituyen estimaciones causales, predictivas ni probabilísticas de amenaza sísmica.</li>
+        <li>El catálogo combina distintos tipos de magnitud (<code>magType</code>) tratados de forma homogénea, lo que introduce incertidumbre al comparar eventos.</li>
+        <li>Las variables de incertidumbre o error instrumental (<code>magError</code>, <code>depthError</code>, <code>gap</code>, <code>rms</code>, <code>nst</code>) presentan alta proporción de valores faltantes y no se incorporan como variables centrales.</li>
+        <li>Las tasas por zona no se normalizan por superficie ni por densidad de estaciones; las diferencias describen el catálogo, no la peligrosidad sísmica.</li>
+        <li>El 75,21 % del Cinturón de Fuego es cualitativamente compatible con el valor cercano al 81 % de la literatura, sin constituir una confirmación directa por diferencias de período, umbral y delimitación.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <b>Pre informe Asesoría 1</b> &middot; Análisis descriptivo del catálogo USGS de grandes terremotos 2000-2025 &middot; 1.186 eventos M &ge; 6,5<br>
+    Cifras coincidentes con el informe Quarto. Documento de apoyo para presentación. Próxima etapa: análisis inferencial (Informe 1).
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const fmt=n=>n.toLocaleString("es-CL");
+  const C={accent:"#1f3a5f",fuego:"#E06B70",dorsal:"#C7B17A",alpino:"#5AC8AE",resto:"#BDBDBD",
+           ink:"#1b2530",soft:"#5b6876",grid:"#eef2f6"};
+  function el(tag,attrs,txt){const e=document.createElementNS(NS,tag);
+    for(const k in attrs)e.setAttribute(k,attrs[k]); if(txt!=null)e.textContent=txt; return e;}
+
+  /* ---- Horizontal category bars (percentage) ---- */
+  function hbars(id,rows,suffix){
+    const svg=document.getElementById(id); const W=480,rowH=34,pad=8,labelW=130,valW=58;
+    const x0=labelW, x1=W-valW, maxv=Math.max(...rows.map(r=>r.v));
+    rows.forEach((r,i)=>{
+      const y=pad+i*rowH;
+      svg.appendChild(el("text",{x:0,y:y+rowH/2+4,class:"axis-strong"},r.label));
+      svg.appendChild(el("rect",{x:x0,y:y+6,width:x1-x0,height:rowH-16,rx:5,fill:C.grid}));
+      const w=(x1-x0)*(r.v/maxv);
+      svg.appendChild(el("rect",{x:x0,y:y+6,width:w,height:rowH-16,rx:5,fill:r.color}));
+      svg.appendChild(el("text",{x:x1+6,y:y+rowH/2+4,class:"axis-strong"},
+        r.v.toLocaleString("es-CL")+suffix));
+    });
+    svg.setAttribute("viewBox","0 0 "+W+" "+(pad*2+rows.length*rowH));
+  }
+
+  hbars("cat-mag",[
+    {label:"Fuerte",color:C.accent,v:67.37},
+    {label:"Mayor",color:"#3f6190",v:27.66},
+    {label:"Grande o extremo",color:C.fuego,v:4.97}
+  ],"%");
+  hbars("cat-depth",[
+    {label:"Superficial",color:C.accent,v:76.98},
+    {label:"Intermedio",color:"#3f6190",v:12.65},
+    {label:"Profundo",color:C.fuego,v:10.37}
+  ],"%");
+
+  /* ---- Annual series (combo bar) ---- */
+  (function(){
+    const data=[[2000,48],[2001,42],[2002,36],[2003,51],[2004,44],[2005,45],[2006,40],
+      [2007,58],[2008,46],[2009,45],[2010,61],[2011,58],[2012,41],[2013,55],[2014,54],
+      [2015,58],[2016,46],[2017,39],[2018,44],[2019,33],[2020,29],[2021,45],[2022,42],
+      [2023,53],[2024,28],[2025,45]];
+    const svg=document.getElementById("serie-anual");
+    const W=1100,H=320,mL=42,mR=16,mT=18,mB=46;
+    const iW=W-mL-mR,iH=H-mT-mB, maxv=70, mean=45.6;
+    const n=data.length, bw=iW/n*0.62, gap=iW/n;
+    const y=v=>mT+iH-(v/maxv)*iH;
+    [0,10,20,30,40,50,60,70].forEach(t=>{
+      svg.appendChild(el("line",{x1:mL,x2:W-mR,y1:y(t),y2:y(t),class:"gridline"}));
+      svg.appendChild(el("text",{x:mL-7,y:y(t)+3.5,"text-anchor":"end",class:"axis"},t));
+    });
+    data.forEach((d,i)=>{
+      const cx=mL+gap*i+gap/2;
+      const isMax=d[1]===61, isMin=d[1]===28;
+      const col=isMax?C.fuego:(isMin?C.soft:C.accent);
+      svg.appendChild(el("rect",{x:cx-bw/2,y:y(d[1]),width:bw,height:mT+iH-y(d[1]),rx:2.5,
+        fill:col,opacity:isMax||isMin?1:.88}));
+      svg.appendChild(el("text",{x:cx,y:y(d[1])-5,"text-anchor":"middle",class:"axis"},d[1]));
+      svg.appendChild(el("text",{x:cx,y:H-mB+16,"text-anchor":"middle",class:"axis",
+        transform:"rotate(45 "+cx+" "+(H-mB+16)+")"},d[0]));
+    });
+    svg.appendChild(el("line",{x1:mL,x2:W-mR,y1:y(mean),y2:y(mean),
+      stroke:C.fuego,"stroke-width":1.6,"stroke-dasharray":"7 5"}));
+    svg.appendChild(el("text",{x:W-mR,y:y(mean)-6,"text-anchor":"end",class:"axis-strong",
+      fill:C.fuego},"Media 45,6"));
+  })();
+
+  /* ---- Decadal rate M>=7.0 ---- */
+  (function(){
+    const data=[["2000",14.3],["2010",16.0],["2020-2025",14.0]];
+    const svg=document.getElementById("decadal");
+    const W=480,H=220,mL=40,mR=18,mT=20,mB=40, iW=W-mL-mR,iH=H-mT-mB,maxv=18;
+    const y=v=>mT+iH-(v/maxv)*iH, n=data.length, gap=iW/n, bw=gap*0.5;
+    [0,4,8,12,16].forEach(t=>{
+      svg.appendChild(el("line",{x1:mL,x2:W-mR,y1:y(t),y2:y(t),class:"gridline"}));
+      svg.appendChild(el("text",{x:mL-7,y:y(t)+3.5,"text-anchor":"end",class:"axis"},t));
+    });
+    const mean=(14.3+16.0+14.0)/3;
+    data.forEach((d,i)=>{
+      const cx=mL+gap*i+gap/2;
+      svg.appendChild(el("rect",{x:cx-bw/2,y:y(d[1]),width:bw,height:mT+iH-y(d[1]),rx:4,
+        fill:i===1?C.fuego:C.accent}));
+      svg.appendChild(el("text",{x:cx,y:y(d[1])-7,"text-anchor":"middle",class:"axis-strong"},
+        d[1].toLocaleString("es-CL",{minimumFractionDigits:1})));
+      svg.appendChild(el("text",{x:cx,y:H-mB+18,"text-anchor":"middle",class:"axis-strong"},d[0]));
+    });
+    svg.appendChild(el("text",{x:mL,y:14,class:"axis"},"Eventos M ≥ 7,0 por año"));
+  })();
+
+  /* ---- Zone counts ---- */
+  (function(){
+    const data=[
+      {label:"Cinturón de Fuego",v:892,p:"75,21 %",color:C.fuego},
+      {label:"Resto del mundo",v:203,p:"17,12 %",color:C.resto},
+      {label:"Cinturón Alpino-Himalayo",v:63,p:"5,31 %",color:C.alpino},
+      {label:"Dorsal Meso-Atlántica",v:28,p:"2,36 %",color:C.dorsal}
+    ];
+    const svg=document.getElementById("zonas");
+    const W=520,rowH=54,pad=6,labelX=4,x0=4,barTop=22,valX=W;
+    const maxv=892, barAreaW=W-150;
+    data.forEach((d,i)=>{
+      const y=pad+i*rowH;
+      svg.appendChild(el("text",{x:labelX,y:y+14,class:"axis-strong"},d.label));
+      svg.appendChild(el("rect",{x:x0,y:y+barTop,width:barAreaW,height:16,rx:5,fill:C.grid}));
+      svg.appendChild(el("rect",{x:x0,y:y+barTop,width:barAreaW*(d.v/maxv),height:16,rx:5,fill:d.color}));
+      svg.appendChild(el("text",{x:valX,y:y+14,"text-anchor":"end",class:"axis-strong"},
+        fmt(d.v)+"  ("+d.p+")"));
+    });
+    svg.setAttribute("viewBox","0 0 "+W+" "+(pad*2+data.length*rowH));
+  })();
+
+  /* ---- Zone annual rate ---- */
+  (function(){
+    const data=[
+      {label:"Cinturón de Fuego",v:34.3,color:C.fuego},
+      {label:"Resto del mundo",v:7.8,color:C.resto},
+      {label:"Cinturón Alpino-Himalayo",v:2.4,color:C.alpino},
+      {label:"Dorsal Meso-Atlántica",v:1.1,color:C.dorsal}
+    ];
+    const svg=document.getElementById("tasa-zona");
+    const W=520,rowH=54,pad=6,labelX=4,x0=4,barTop=22,valX=W;
+    const maxv=34.3, barAreaW=W-120;
+    data.forEach((d,i)=>{
+      const y=pad+i*rowH;
+      svg.appendChild(el("text",{x:labelX,y:y+14,class:"axis-strong"},d.label));
+      svg.appendChild(el("rect",{x:x0,y:y+barTop,width:barAreaW,height:16,rx:5,fill:C.grid}));
+      svg.appendChild(el("rect",{x:x0,y:y+barTop,width:barAreaW*(d.v/maxv),height:16,rx:5,fill:d.color}));
+      svg.appendChild(el("text",{x:valX,y:y+14,"text-anchor":"end",class:"axis-strong"},
+        d.v.toLocaleString("es-CL",{minimumFractionDigits:1})+" /año"));
+    });
+    svg.setAttribute("viewBox","0 0 "+W+" "+(pad*2+data.length*rowH));
+  })();
+})();
+</script>
+</body>
+</html>
