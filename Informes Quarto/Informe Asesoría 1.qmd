@@ -37,7 +37,7 @@ header-includes:
 ---
 
 ```{=latex}
-\newcommand{\bottomtablecaption}[2]{\par\smallskip\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
+\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
 ```
 
 \thispagestyle{empty}
@@ -75,6 +75,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-zonas-sismicas.png}}
+\vspace{-0.6em}
 \caption{División de las placas tectónicas a escala global. Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe.}
 \label{fig-zonas-sismicas}
 \end{figure}
@@ -344,6 +345,7 @@ La distribución de la magnitud se concentra en valores cercanos al umbral de in
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/distribucion-eventos-magnitud.png}}
+\vspace{-0.6em}
 \caption{Distribución de eventos según magnitud para el catálogo analizado.}
 \label{fig-distribucion-magnitud}
 \end{figure}
@@ -365,6 +367,7 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.88\textwidth]{\detokenize{Imágenes y Recursos/eventos-anuales-catalogo.png}}
+\vspace{-0.6em}
 \caption{Eventos anuales del catálogo completo entre 2000 y 2025.}
 \label{fig-eventos-anuales-catalogo}
 \end{figure}
@@ -378,6 +381,7 @@ En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/tasa-decadal-m70.png}}
+\vspace{-0.6em}
 \caption{Tasa anual promedio por década para eventos con $M \geq 7{,}0$.}
 \label{fig-tasa-decadal-m70}
 \end{figure}
@@ -397,6 +401,7 @@ La asignación espacial mediante la variable `zona` muestra una concentración m
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{\detokenize{Imágenes y Recursos/eventos-por-zona.png}}
+\vspace{-0.6em}
 \caption{Distribución de eventos según zona sísmica asignada.}
 \label{fig-eventos-por-zona}
 \end{figure}
@@ -472,6 +477,7 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-qgis-zonas.png}}
+\vspace{-0.6em}
 \caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
 \label{fig-implementacion-qgis-zonas}
 \end{figure}
@@ -481,6 +487,7 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{Imágenes y Recursos/implementacion-positron-entorno.png}}
+\vspace{-0.6em}
 \caption{Entorno de trabajo en Positron utilizado para ejecutar los scripts de R y revisar las salidas del análisis estadístico.}
 \label{fig-implementacion-positron-entorno}
 \end{figure}
@@ -502,6 +509,7 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
+\vspace{-0.6em}
 \caption{Visualización en QGIS de los eventos sísmicos y las zonas utilizadas para la comparación espacial: rojo para el Cinturón de Fuego, gris para la Dorsal Meso-Atlántica y cian/turquesa para el Cinturón Alpino-Himalayo.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
@@ -548,7 +556,7 @@ En consecuencia, la base depurada queda consolidada en el objeto `sismos`, que c
 
 De este modo, `sismos` reúne todas las variables solicitadas en el encargo que pasaron la depuración junto con las derivadas que se construyen conforme avanza la investigación. La composición completa, con el origen y el propósito analítico de cada variable, se detalla en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
-\newpage
+
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
@@ -687,9 +695,11 @@ Profundo & 123 & $10{,}37$ \\
 \endgroup
 
 ```{=latex}
+\vspace{-1.5em}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.72\textwidth]{\detokenize{Imágenes y Recursos/distribucion-eventos-profundidad.png}}
+\vspace{-0.6em}
 \caption{Distribución de eventos según profundidad para el catálogo analizado.}
 \label{fig-distribucion-profundidad}
 \end{figure}
@@ -800,6 +810,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/serie-mensual-catalogo.png}}
+\vspace{-0.6em}
 \caption{Serie mensual del catálogo completo entre 2000 y 2025.}
 \label{fig-serie-mensual-catalogo}
 \end{figure}
@@ -809,6 +820,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.86\textwidth]{\detokenize{Imágenes y Recursos/serie-anual-m70.png}}
+\vspace{-0.6em}
 \caption{Serie anual de eventos con $M \geq 7{,}0$.}
 \label{fig-serie-anual-m70}
 \end{figure}
@@ -820,6 +832,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/recurrencia-decadal-m70.png}}
+\vspace{-0.6em}
 \caption{Distribución de días entre eventos consecutivos con $M \geq 7{,}0$ por década.}
 \label{fig-recurrencia-decadal-m70}
 \end{figure}
@@ -829,6 +842,7 @@ Máximo (días) & $176{,}8$ \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth]{\detokenize{Imágenes y Recursos/composicion-decadal-magnitud-cat.png}}
+\vspace{-0.6em}
 \caption{Composición decadal de eventos según \texttt{magnitud\_cat}.}
 \label{fig-composicion-decadal-magnitud-cat}
 \end{figure}
