@@ -61,6 +61,14 @@ Los resultados evidencian una marcada concentración espacial; el Cinturón de F
 En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. 
 El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
+# Formulación pregunta estadística
+
+El estudio se articula en torno a la siguiente pregunta estadística:
+
+> ¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?
+
+Esta pregunta surge de la pregunta orientadora del encargo, que solicita comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. No obstante, el "resto del mundo" constituye un conjunto heterogéneo que agrupa eventos de orígenes tectónicos diversos, por lo que su uso directo como término de comparación limita la interpretabilidad de las diferencias observadas. Por esta razón, la pregunta se orienta a identificar otras zonas sísmicas de tipo cinturón, con características comparables a las del Cinturón de Fuego, que permitan una comparación más estándar y equilibrada de la magnitud y la profundidad entre regiones sísmicamente análogas.
+
 # Antecedentes
 
 La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
