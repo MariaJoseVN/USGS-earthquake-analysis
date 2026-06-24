@@ -182,9 +182,6 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 # Metodología
 
-<!-- Separar método de resultados. Esta sección debería explicar qué se hizo, no discutir hallazgos. -->
-
-## Depuración y control de calidad
 
 ## Caracterización descriptiva
 
@@ -193,6 +190,8 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 ## Caracterización espacial
 
 ## Criterios de interpretación estadística
+
+
 
 # Resultados y discusión
 
@@ -287,6 +286,19 @@ Las variables originales del catálogo pueden organizarse en distintos grupos se
 - Variables correspondientes a características sísmicas del evento, como `mag`, `magType`, `depth` y `type`.
 
 Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad, pero no se seleccionan como variables centrales del presente análisis, ya que el objetivo del pre-informe se enfoca en caracterizar la frecuencia de eventos y el comportamiento de `mag`, `depth`, `time`, `latitude` y `longitude`.
+
+## Depuración y control de calidad
+
+La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
+
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables auxiliares, asociadas a incertidumbre o procesamiento instrumental, presentan la mayoría de los valores faltantes y no se incorporan en los análisis principales. Por ello, se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
+
+Las revisiones que se aplican y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
+
+A partir de esta etapa, el análisis se consolida en el objeto `sismos`, que funciona como base depurada para las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superan el control de calidad e incorpora las variables derivadas necesarias para la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
+
+
+
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
