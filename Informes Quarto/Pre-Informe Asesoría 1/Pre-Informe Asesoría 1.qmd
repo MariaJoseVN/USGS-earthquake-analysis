@@ -220,7 +220,7 @@ Sobre `zona` se estiman conteos, porcentajes, tasas anuales y estadísticos de `
 
 ## Criterios de interpretación estadística
 
-El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. Esta decisión es coherente con el alcance del pre-informe: ordenar la información disponible, verificar su calidad, describir patrones principales y dejar una base metodológica reproducible para una etapa inferencial posterior.
+El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. 
 
 Las variables asociadas a incertidumbre, error instrumental o calidad del procesamiento se revisan durante la depuración, pero no se incorporan como variables centrales debido a su alta proporción de valores faltantes. En consecuencia, no se aplican imputaciones sobre `magError`, `depthError`, `horizontalError`, `gap`, `rms` o `nst`. Esta decisión evita introducir valores artificiales en variables cuyo patrón de ausencia puede depender de la red de monitoreo, el método de estimación o las condiciones instrumentales del registro.
 

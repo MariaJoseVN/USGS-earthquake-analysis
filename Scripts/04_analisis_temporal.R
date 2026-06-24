@@ -20,7 +20,14 @@ sismos_temporal <- sismos %>%
     decada = floor(año / 10) * 10,
     evento_m70 = mag >= 7.0,
     evento_m75 = mag >= 7.5,
-    evento_m80 = mag >= 8.0
+    evento_m80 = mag >= 8.0,
+    magType_grupo = factor(
+      case_when(
+        magType %in% c("mww", "mwc", "mwb") ~ magType,
+        TRUE ~ "otros"
+      ),
+      levels = c("mww", "mwc", "mwb", "otros")
+    )
   )
 
 print(sismos_temporal)
@@ -598,6 +605,170 @@ legend(
   border = "gray30",
   bty = "n",
   cex = 0.8
+)
+
+box()
+
+
+#Composición temporal por magType----
+##Conteo general por magType agrupado----
+#magType identifica el método o algoritmo usado para calcular la magnitud
+#preferida del evento. Para facilitar la lectura gráfica, se mantienen las tres
+#categorías más frecuentes y el resto se reúne en "otros".
+
+conteo_magtype_grupo <- sismos_temporal %>%
+  count(magType_grupo, name = "n_eventos", .drop = FALSE) %>%
+  mutate(
+    porcentaje = n_eventos / sum(n_eventos) * 100
+  ) %>%
+  arrange(desc(n_eventos))
+
+print(conteo_magtype_grupo, n = Inf)
+
+
+##Conteo anual por magType agrupado----
+
+conteo_anual_magtype_grupo <- sismos_temporal %>%
+  group_by(año, magType_grupo) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    año = año_inicio:año_fin,
+    magType_grupo,
+    fill = list(n_eventos = 0)
+  )
+
+print(conteo_anual_magtype_grupo, n = Inf)
+
+
+##Porcentaje anual por magType agrupado----
+
+porcentaje_anual_magtype_grupo <- conteo_anual_magtype_grupo %>%
+  group_by(año) %>%
+  mutate(
+    porcentaje = n_eventos / sum(n_eventos) * 100
+  ) %>%
+  ungroup()
+
+print(porcentaje_anual_magtype_grupo, n = Inf)
+
+
+##Conteo decadal por magType agrupado----
+
+conteo_decadal_magtype_grupo <- sismos_temporal %>%
+  group_by(decada, magType_grupo) %>%
+  summarise(
+    n_eventos = n(),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    decada,
+    magType_grupo,
+    fill = list(n_eventos = 0)
+  )
+
+print(conteo_decadal_magtype_grupo, n = Inf)
+
+
+##Porcentaje decadal por magType agrupado----
+
+porcentaje_decadal_magtype_grupo <- conteo_decadal_magtype_grupo %>%
+  group_by(decada) %>%
+  mutate(
+    porcentaje = n_eventos / sum(n_eventos) * 100
+  ) %>%
+  ungroup()
+
+print(porcentaje_decadal_magtype_grupo, n = Inf)
+
+
+##Composición anual por magType agrupado----
+
+tabla_anual_magtype <- table(
+  sismos_temporal$año,
+  sismos_temporal$magType_grupo
+)
+
+matriz_anual_magtype <- t(tabla_anual_magtype)
+
+colores_magtype <- grDevices::hcl.colors(
+  n = nrow(matriz_anual_magtype),
+  palette = "Dark 3"
+)
+
+par(mfrow = c(1, 1), bg = "white", mar = c(6, 4, 4, 8) + 0.1)
+
+pos_barras_anual_magtype <- barplot(
+  matriz_anual_magtype,
+  beside = FALSE,
+  main = "Eventos anuales por magType agrupado",
+  xlab = "Año",
+  ylab = "Número de eventos",
+  col = colores_magtype,
+  border = "gray30",
+  las = 2,
+  cex.names = 0.7,
+  ylim = c(0, max(colSums(matriz_anual_magtype)) * 1.15),
+  axes = FALSE
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+
+legend(
+  "topright",
+  inset = c(-0.22, 0),
+  legend = rownames(matriz_anual_magtype),
+  fill = colores_magtype,
+  border = "gray30",
+  bty = "n",
+  cex = 0.8,
+  xpd = TRUE
+)
+
+box()
+
+
+##Composición porcentual por década según magType agrupado----
+
+tabla_decadal_magtype <- table(
+  sismos_temporal$decada,
+  sismos_temporal$magType_grupo
+)
+
+matriz_decadal_magtype <- t(tabla_decadal_magtype)
+
+matriz_decadal_magtype_porcentaje <- prop.table(
+  matriz_decadal_magtype,
+  margin = 2
+) * 100
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 8) + 0.1)
+
+pos_barras_decadal_magtype <- barplot(
+  matriz_decadal_magtype_porcentaje,
+  beside = FALSE,
+  main = "Composición porcentual por década según magType agrupado",
+  xlab = "Década",
+  ylab = "Porcentaje de eventos",
+  col = colores_magtype,
+  border = "gray30",
+  ylim = c(0, 100),
+  axes = FALSE
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+
+legend(
+  "topright",
+  inset = c(-0.22, 0),
+  legend = rownames(matriz_decadal_magtype_porcentaje),
+  fill = colores_magtype,
+  border = "gray30",
+  bty = "n",
+  cex = 0.8,
+  xpd = TRUE
 )
 
 box()
