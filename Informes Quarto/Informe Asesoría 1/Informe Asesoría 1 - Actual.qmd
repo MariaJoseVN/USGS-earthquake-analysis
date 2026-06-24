@@ -294,6 +294,8 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 
 ## Control de calidad de la base USGS {#sec-anexo-control-calidad}
 
+a
+
 ### Valores faltantes
 
 ### Duplicados
