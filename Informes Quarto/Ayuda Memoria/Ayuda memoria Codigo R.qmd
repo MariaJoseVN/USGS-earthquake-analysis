@@ -1,0 +1,152 @@
+---
+title: "Ayuda memoria: Codigo.R"
+lang: es
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Proposito del documento
+
+Este documento resume las decisiones metodologicas incorporadas en `Codigo.R`, que funciona como script principal de preparacion, validacion inicial y construccion de la base de trabajo `sismos`.
+
+No corresponde a la redaccion final del informe, sino a una ayuda memoria para recordar por que se crearon ciertas variables, que filtros o categorias se aplicaron y como se justifican ante una contraparte.
+
+# Rol de Codigo.R dentro del proyecto
+
+`Codigo.R` cumple cuatro funciones principales:
+
+1. Cargar librerias y la base cruda `query.csv`.
+2. Revisar estructura, datos faltantes, duplicados y consistencia general.
+3. Construir variables preparadas para los analisis posteriores.
+4. Ejecutar los scripts secundarios de analisis descriptivo, visualizacion, tablas y analisis temporal.
+
+La base cruda se conserva como `sismos_raw`, mientras que la base preparada para analisis se llama `sismos`.
+
+# Variables temporales base
+
+En `Codigo.R` se crean las variables temporales basicas:
+
+- `fecha_hora_utc`
+- `fecha`
+- `año`
+- `mes`
+
+Estas variables se crean una sola vez en el script principal para evitar duplicacion de transformaciones en los scripts posteriores.
+
+La decision es metodologicamente importante porque permite que todos los analisis usen una misma definicion de fecha, hora, año y mes.
+
+# Categoria de profundidad
+
+La variable `profundidad_cat` clasifica los eventos segun profundidad:
+
+| Categoria | Criterio |
+|---|---:|
+| Superficial | `0 <= depth <= 70` |
+| Intermedio | `70 < depth <= 300` |
+| Profundo | `depth > 300` |
+
+Esta categorizacion permite analizar diferencias en la distribucion de eventos segun profundidad sin trabajar solamente con el valor numerico continuo.
+
+# Categoria de magnitud
+
+Se incorporo la variable `magnitud_cat` para clasificar los eventos del catalogo en tres grupos:
+
+| Categoria | Rango |
+|---|---:|
+| Fuerte | `6.5 <= M < 7.0` |
+| Mayor | `7.0 <= M < 7.8` |
+| Grande o extremo | `M >= 7.8` |
+
+El codigo implementado fue:
+
+```r
+sismos <- sismos %>%
+  mutate(
+    magnitud_cat = factor(
+      case_when(
+        mag >= 6.5 & mag < 7.0 ~ "Fuerte",
+        mag >= 7.0 & mag < 7.8 ~ "Mayor",
+        mag >= 7.8 ~ "Grande o extremo",
+        TRUE ~ NA_character_
+      ),
+      levels = c("Fuerte", "Mayor", "Grande o extremo")
+    )
+  )
+```
+
+Luego `magnitud_cat` se agrega al objeto `sismos` dentro del `select()`, inmediatamente despues de `mag`, para que quede disponible en los scripts posteriores.
+
+Se definio como factor ordenado para que tablas y graficos respeten el orden conceptual de severidad: primero `Fuerte`, luego `Mayor` y finalmente `Grande o extremo`.
+
+# Justificacion de la categorizacion de magnitud
+
+La categorizacion no se basa en una unica fuente. Combina el alcance operativo de la asesoria con literatura clasica y reciente sobre grandes terremotos.
+
+## Eventos fuertes: 6.5 <= M < 7.0
+
+El instructivo de asesoria sugiere trabajar con umbrales como `M >= 6.5` o `M >= 7.0` para evitar una base excesivamente amplia y focalizar el analisis en eventos de mayor magnitud.
+
+Por eso, como la base descargada comienza en `M >= 6.5`, los eventos entre `6.5` y `6.9` se consideran el tramo inferior del catalogo de grandes eventos analizados. Se denominan "Fuerte" para distinguirlos de los eventos `M >= 7.0`, sin excluirlos de la base.
+
+## Terremotos mayores: 7.0 <= M < 7.8
+
+Gutenberg y Richter clasifican como *major earthquakes* los eventos en torno a `7.0-7.7`. Esta es la fuente mas directa para nombrar la categoria "Mayor".
+
+Ademas, Kagan aporta respaldo metodologico al uso de umbrales altos en analisis globales, al trabajar con catalogos de grandes terremotos y discutir el comportamiento estadistico de eventos por encima de magnitudes altas.
+
+## Grandes o extremos: M >= 7.8
+
+Gutenberg y Richter ubican los *great earthquakes* desde aproximadamente `7 3/4`. Como la base trabaja con magnitudes expresadas usualmente a una decimal, se operacionaliza ese corte como `M >= 7.8`.
+
+Dentro de esta categoria quedan incluidos los eventos `M >= 8.0`. Estos no se separan como cuarta categoria porque se decidio trabajar solo con tres grupos, pero pueden mencionarse como subgrupo especialmente relevante. Fuentes como Cabello et al., Kagan y Ammon et al. ayudan a contextualizar la importancia de los eventos `M >= 8.0` por su relevancia energetica, tectonica y global.
+
+# Por que no crear cuatro categorias
+
+Se podria separar `M >= 8.0` como categoria propia, por ejemplo "masivo" o "gigante". Sin embargo, para este proyecto se prefirio trabajar con tres categorias por tres razones:
+
+1. Mantiene una clasificacion simple para el preinforme descriptivo.
+2. Evita crear una categoria con muy pocos casos.
+3. Permite incluir `M >= 8.0` dentro de "Grande o extremo", mencionandolo como subgrupo cuando sea necesario.
+
+Esta decision es consistente con el enfoque de consultoria estadistica: la clasificacion debe ser interpretable para la contraparte, defendible metodologicamente y util para organizar la evidencia.
+
+# Como redactarlo en el informe
+
+Una redaccion posible seria:
+
+> Dado que el catalogo fue descargado para eventos de magnitud `M >= 6.5`, se definio una clasificacion en tres niveles para distinguir grados de severidad dentro del universo de grandes terremotos analizados. Los eventos `6.5 <= M < 7.0` se clasificaron como fuertes; los eventos `7.0 <= M < 7.8` como terremotos mayores, siguiendo la clasificacion clasica de Gutenberg y Richter; y los eventos `M >= 7.8` como grandes o extremos, umbral que aproxima la categoria de *great earthquakes*. Los eventos `M >= 8.0` se interpretan como un subconjunto especialmente relevante dentro de esta ultima categoria.
+
+# Revision de calidad de datos
+
+`Codigo.R` tambien contiene revisiones preliminares:
+
+- datos faltantes mediante `miss_var_summary()` y `skim()`;
+- duplicados por `id`;
+- duplicados por combinacion de fecha, coordenadas, profundidad y magnitud;
+- eventos no tectonicos;
+- consistencia temporal respecto del periodo 2000-2025;
+- consistencia espacial basica de latitud, longitud y profundidad.
+
+Estas revisiones son importantes porque el informe debe actuar como una consultoria estadistica: no basta con analizar resultados, tambien se debe justificar que la base fue inspeccionada y que los criterios de inclusion son razonables.
+
+# Variables finales seleccionadas
+
+El objeto `sismos` conserva variables necesarias para el analisis posterior:
+
+- identificador del evento;
+- fecha y hora;
+- variables temporales;
+- coordenadas;
+- profundidad y categoria de profundidad;
+- magnitud y categoria de magnitud;
+- tipo y fuente de magnitud;
+- lugar, tipo de evento, estado y fuentes.
+
+Esta seleccion mantiene la base suficientemente rica para analisis descriptivos, espaciales y temporales, sin arrastrar todas las columnas originales del archivo crudo.

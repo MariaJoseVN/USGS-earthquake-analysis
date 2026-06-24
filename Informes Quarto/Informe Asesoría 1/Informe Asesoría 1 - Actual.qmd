@@ -1,0 +1,157 @@
+---
+lang: es
+bibliography: ../referencias.bib
+output-file: "Informe Asesoría 1 - Actual.pdf"
+crossref:
+  fig-title: "Figura"
+  tbl-title: "Tabla"
+  title-delim: "."
+  fig-prefix: "Figura"
+  tbl-prefix: "Tabla"
+format:
+  pdf:
+    pdf-engine: lualatex
+    toc: false
+    toc-title: "Índice"
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: black
+    urlcolor: black
+    citecolor: black
+    papersize: letter
+    geometry:
+      - margin=0cm
+execute:
+  echo: false
+  warning: false
+  message: false
+header-includes:
+  - \usepackage{caption}
+  - \usepackage{needspace}
+  - \usepackage{float}
+  - \input{../layout-control.tex}
+  - \KOMAoption{captions}{tablesignature}
+  - \captionsetup{font=it,labelfont=it}
+  - \captionsetup[table]{position=bottom}
+  - \captionsetup[longtable]{position=bottom}
+  - \captionsetup[figure]{position=bottom}
+---
+
+```{=latex}
+\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
+```
+
+\thispagestyle{empty}
+\AddToHookNext{shipout/background}{
+  \put(-4pt,-\dimexpr\paperheight+4pt\relax){
+    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{../Imágenes y Recursos/portada-informe.png}}
+  }
+}
+\null
+\newpage
+
+\newgeometry{margin=2.5cm}
+
+\tableofcontents
+\newpage
+
+# Resumen ejecutivo
+
+<!-- Mover aquí la versión final del resumen. Conviene actualizar el tono de "pre-informe" a "informe" y dejar solo resultados consolidados. -->
+
+# Formulación del problema y pregunta estadística
+
+<!-- Reubicar aquí la pregunta estadística, su justificación y el vínculo con el encargo. -->
+
+# Antecedentes
+
+<!-- Mantener la base teórica necesaria para interpretar zonas sísmicas, magnitud y profundidad. -->
+
+## Distribución global de la sismicidad {#sec-distribucion-sismicidad}
+
+## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
+
+# Objetivos
+
+<!-- Puedes conservar objetivo general y específicos, pero ajustados a informe final. -->
+
+## Objetivo general
+
+## Objetivos específicos
+
+# Alcance del informe
+
+<!-- Mantener límites del estudio, fuente de datos, período, umbral de magnitud y restricciones interpretativas. -->
+
+# Datos y parámetros de descarga
+
+<!-- Traer aquí la descripción de USGS, la bitácora de descarga y la explicación de la base original. -->
+
+## Fuente de datos y parámetros de descarga
+
+## Datos originales {#sec-datos-originales}
+
+# Metodología
+
+<!-- Separar método de resultados. Esta sección debería explicar qué se hizo, no discutir hallazgos. -->
+
+## Depuración y control de calidad
+
+## Caracterización descriptiva
+
+## Caracterización temporal
+
+## Caracterización espacial
+
+## Criterios de interpretación estadística
+
+# Resultados y discusión
+
+<!-- Esta es la sección principal del informe. Mover aquí los resultados ya seleccionados, con tablas y figuras clave. -->
+
+## Depuración y control de calidad
+
+## Caracterización descriptiva
+
+## Caracterización temporal
+
+## Caracterización espacial
+
+## Supuestos, limitaciones y sensibilidad
+
+# Conclusiones y recomendaciones
+
+<!-- Ajustar las conclusiones para que respondan explícitamente la pregunta estadística y los objetivos. -->
+
+# Referencias
+
+\newpage
+
+# Anexos reproducibles
+
+<!-- Mantener aquí el material que respalda el análisis, pero que no necesita estar en el cuerpo principal. -->
+
+## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
+
+## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
+
+## Control de calidad de la base USGS {#sec-anexo-control-calidad}
+
+### Valores faltantes
+
+### Duplicados
+
+### Tipo de evento y estado de revisión
+
+### Consistencia temporal
+
+### Consistencia espacial
+
+### Magnitud y unidades de medida
+
+## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
+
+## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
+
+## Caracterización espacial {#sec-anexo-caracterizacion-espacial}

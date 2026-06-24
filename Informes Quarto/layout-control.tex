@@ -1,0 +1,66 @@
+% Herramientas de layout para el informe Quarto -> PDF.
+% La idea es concentrar aqui los ajustes finos y evitar repetirlos en el .qmd.
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{threeparttable}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage{microtype}
+
+\raggedbottom
+\setlength{\emergencystretch}{3em}
+\setlength{\columnsep}{0.72cm}
+\setlist{nosep,leftmargin=*}
+
+% Espaciado vertical puntual.
+\newcommand{\compactspace}{\vspace{-0.6em}}
+\newcommand{\verycompactspace}{\vspace{-1.0em}}
+\newcommand{\openspace}{\vspace{0.6em}}
+\newcommand{\keepnext}[1][6]{\Needspace{#1\baselineskip}}
+\newcommand{\stopfloats}{\FloatBarrier}
+
+% Bloque de texto mas compacto, util para paginas densas o anexos.
+\newenvironment{compacttext}
+  {\begingroup\small\setlength{\parskip}{0.25em}\setlength{\parindent}{0pt}}
+  {\par\endgroup}
+
+% Doble columna local. A diferencia de \twocolumn, no cambia todo el documento.
+\newenvironment{twocolblock}
+  {\begin{multicols}{2}\raggedcolumns}
+  {\end{multicols}}
+
+% Pagina horizontal para tablas o figuras anchas.
+\newenvironment{landscapeblock}
+  {\begin{landscape}\begingroup}
+  {\par\endgroup\end{landscape}}
+
+% Ajustes consistentes para tablas densas.
+\newenvironment{compacttable}[1][\small]
+  {\begingroup#1\setlength{\tabcolsep}{3.5pt}\renewcommand{\arraystretch}{0.86}}
+  {\par\endgroup}
+
+% Caja para escalar tablas tabular/tabularx al ancho disponible.
+% No usar con longtable, porque longtable necesita partir entre paginas.
+\newenvironment{fittable}[1][\textwidth]
+  {\begin{adjustbox}{max width=#1}}
+  {\end{adjustbox}}
+
+% Columnas practicas para tablas manuales.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Atajos para captions mas pegados cuando una figura/tabla queda muy separada.
+\newcommand{\tightcaptiongap}{\vspace{-0.55em}}
+\newcommand{\widefig}[2]{%
+  \begin{figure}[H]
+  \centering
+  \includegraphics[width=#1\textwidth]{#2}
+  \end{figure}
+}

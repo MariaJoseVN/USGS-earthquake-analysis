@@ -1,0 +1,397 @@
+---
+title: "Ayuda memoria: analisis temporal de la sismicidad"
+lang: es
+format:
+  typst:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Proposito del documento
+
+Este documento no corresponde a la redaccion final del informe de asesoria. Su funcion es dejar registro de las decisiones tomadas durante la construccion del script `04_analisis_temporal.R`: el orden narrativo, las transformaciones temporales, el tratamiento de meses sin eventos, la interpretacion de los graficos y las precauciones metodologicas.
+
+La idea es que sirva como ayuda memoria para no perder el razonamiento que motivo cada paso del analisis temporal.
+
+# Enfoque de consultoria estadistica
+
+El informe final debe escribirse desde el rol de una consultora estadistica. Por lo tanto, no debe limitarse a presentar resultados computacionales, tablas o graficos. Cada resultado debe ir acompanado de una explicacion sobre por que se calculo, que decision metodologica representa, que supuesto o limitacion lo acompana y que conclusion util puede extraer una contraparte no necesariamente experta en estadistica.
+
+Al redactar el informe final, cada seccion deberia responder cuatro preguntas:
+
+1. Que se hizo.
+2. Por que se hizo de esa forma.
+3. Que supuesto o limitacion acompana esa decision.
+4. Que conclusion util puede extraer la contraparte.
+
+En particular, el analisis temporal debe justificar:
+
+- por que se trabaja con conteos mensuales, anuales y decadales;
+- por que se separa el catalogo completo de los eventos `M >= 7.0`;
+- por que los meses sin eventos se rellenan con cero;
+- por que la decada 2020 se compara mediante tasa anual promedio;
+- por que la recurrencia se mide como dias entre eventos consecutivos;
+- por que estos resultados no deben interpretarse como prediccion sismica.
+
+La narrativa recomendada es presentar la evidencia cuantitativa como apoyo para comprender el fenomeno observado y orientar la toma de decisiones, no como una salida automatica del software.
+
+# Punto de partida
+
+El analisis temporal se construyo a partir del objeto `sismos`, preparado previamente en `Codigo.R`.
+
+En el script principal ya existian variables temporales basicas:
+
+- `fecha_hora_utc`
+- `fecha`
+- `año`
+- `mes`
+
+Por eso, en `04_analisis_temporal.R` no se volvieron a crear esas variables. La preparacion temporal se limito a crear variables auxiliares utiles para agrupar, filtrar y construir series de conteos.
+
+# Orden narrativo elegido
+
+El orden de trabajo se definio desde lo descriptivo hacia lo interpretativo:
+
+1. Preparacion temporal.
+2. Conteos mensuales, anuales y decadales.
+3. Series temporales de conteos.
+4. Visualizacion inicial de series temporales.
+5. Caracterizacion descriptiva anual y decadal.
+6. Pregunta orientadora sobre eventos `M >= 7.0`.
+7. Recurrencia temporal: dias entre eventos relevantes.
+
+Este orden permite partir desde objetos simples y defendibles, antes de pasar a preguntas mas interpretativas. La logica fue: primero contar, luego graficar, luego comparar y finalmente interpretar recurrencia.
+
+# Preparacion temporal
+
+Se creo el objeto `sismos_temporal` para no modificar directamente la base principal `sismos`.
+
+Las variables auxiliares agregadas fueron:
+
+- `fecha_mes`: primer dia del mes de ocurrencia, util para construir una serie mensual regular.
+- `decada`: decada calendario, util para comparar periodos largos.
+- `evento_m70`: indicador logico para eventos `M >= 7.0`.
+- `evento_m75`: indicador logico para eventos `M >= 7.5`.
+- `evento_m80`: indicador logico para eventos `M >= 8.0`.
+
+El proposito de los umbrales de magnitud fue separar el catalogo completo de eventos mas relevantes. Como el catalogo ya venia filtrado por magnitud minima, no se creo una variable tipo `evento_m65`; en su lugar, el total disponible se trato como `catalogo completo`.
+
+```r
+sismos_temporal <- sismos %>%
+  mutate(
+    fecha_mes = floor_date(fecha, unit = "month"),
+    decada = floor(año / 10) * 10,
+    evento_m70 = mag >= 7.0,
+    evento_m75 = mag >= 7.5,
+    evento_m80 = mag >= 8.0
+  )
+```
+
+# Conteos y frecuencias
+
+Se construyeron tres tablas principales:
+
+- `conteo_mensual`
+- `conteo_anual`
+- `conteo_decadal`
+
+Cada tabla resume:
+
+- `n_catalogo_completo`
+- `n_eventos_m70_o_mayor`
+- `n_eventos_m75_o_mayor`
+- `n_eventos_m80_o_mayor`
+
+Esta estructura permite comparar el comportamiento del catalogo completo con eventos de mayor magnitud sin duplicar bases ni perder trazabilidad. En esta primera etapa se priorizaron los umbrales acumulativos (`M >= 7.0`, `M >= 7.5`, `M >= 8.0`), porque permiten responder preguntas directas sobre eventos relevantes y mantener comparabilidad con la recomendacion inicial de trabajar con sismos grandes.
+
+La variable `magnitud_cat` se reserva para una etapa complementaria posterior. Esa decision ordena mejor la narrativa: primero se describe la evidencia temporal mediante umbrales simples y acumulativos; luego, con apoyo de la revision bibliografica, se observa la composicion del catalogo usando categorias excluyentes de severidad.
+
+## Tratamiento de meses sin eventos
+
+Al agrupar por `fecha_mes`, originalmente se obtuvieron 301 meses. Sin embargo, el periodo 2000-2025 contiene 312 meses:
+
+```r
+26 * 12
+```
+
+La diferencia se debe a que `group_by(fecha_mes)` solo devuelve meses que tienen al menos un evento registrado. Si un mes no tuvo eventos, no aparece como fila.
+
+Se identificaron 11 meses sin eventos:
+
+- 2000-09
+- 2002-05
+- 2004-03
+- 2009-12
+- 2012-06
+- 2013-12
+- 2016-02
+- 2018-06
+- 2018-07
+- 2020-11
+- 2024-02
+
+Para construir una serie mensual regular, esos meses no debian quedar ausentes. Se agregaron explicitamente con conteos iguales a cero mediante `tidyr::complete()`.
+
+```r
+conteo_mensual <- sismos_temporal %>%
+  group_by(fecha_mes) %>%
+  summarise(
+    n_catalogo_completo = n(),
+    n_eventos_m70_o_mayor = sum(evento_m70, na.rm = TRUE),
+    n_eventos_m75_o_mayor = sum(evento_m75, na.rm = TRUE),
+    n_eventos_m80_o_mayor = sum(evento_m80, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(
+    fecha_mes = seq.Date(
+      from = as.Date("2000-01-01"),
+      to = as.Date("2025-12-01"),
+      by = "month"
+    ),
+    fill = list(
+      n_catalogo_completo = 0,
+      n_eventos_m70_o_mayor = 0,
+      n_eventos_m75_o_mayor = 0,
+      n_eventos_m80_o_mayor = 0
+    )
+  )
+```
+
+La decision de rellenar con cero fue importante: un mes sin registros no significa dato faltante del calendario, sino ausencia de eventos en el catalogo para ese mes. Para una serie de conteos, el valor correcto es cero.
+
+# Series temporales de conteos
+
+Una vez completada la tabla mensual, se construyeron objetos `ts`:
+
+- `serie_mensual_catalogo_completo`
+- `serie_mensual_m70`
+- `serie_anual_catalogo_completo`
+- `serie_anual_m70`
+
+Los objetos mensuales se definieron con `frequency = 12`; los anuales con `frequency = 1`.
+
+Las series `M >= 7.5` y `M >= 8.0` se mantuvieron en tablas, pero no se priorizaron como series principales porque tienen menos eventos. Para la narrativa general, `M >= 7.0` es un buen equilibrio entre relevancia sismologica y cantidad de observaciones.
+
+Tampoco se construyeron series `ts` separadas para cada categoria de `magnitud_cat`. La decision fue mantener las series temporales principales para el catalogo completo y para `M >= 7.0`, reservando `magnitud_cat` para graficos de composicion anual y decadal. Esto evita multiplicar objetos y graficos sin una ganancia interpretativa proporcional para el preinforme descriptivo.
+
+# Visualizacion inicial de series temporales
+
+La primera visualizacion se penso como lectura exploratoria:
+
+- serie mensual del catalogo completo;
+- serie mensual `M >= 7.0`;
+- serie anual del catalogo completo;
+- serie anual `M >= 7.0`.
+
+Se agrego una linea punteada correspondiente a la media de cada serie usando `summary(...)[\"Mean\"]`. Esto evita escribir manualmente valores que podrian cambiar si se modifica la base o algun filtro.
+
+Tambien se agregaron leyendas para distinguir:
+
+- conteo observado;
+- media.
+
+## Ejes temporales
+
+Se decidio que el eje de cada grafico representara explicitamente la naturaleza del objeto temporal:
+
+- En graficos mensuales, el eje X usa indice de mes observado.
+- Las marcas del eje mensual son `12, 24, 36, ..., 312`.
+- En graficos anuales, el eje X muestra cada año calendario.
+
+La decision de usar `12, 24, 36, ...` en los graficos mensuales responde a que cada punto representa un mes consecutivo. En el caption del informe final se puede aclarar que cada 12 meses corresponde a un año calendario desde enero de 2000.
+
+# Caracterizacion descriptiva temporal
+
+Despues de las lineas temporales, se agregaron graficos de barras para facilitar la comparacion de conteos anuales y decadales.
+
+Se opto por `barplot()` en base R, con un estilo sobrio:
+
+- barras grises;
+- borde oscuro;
+- conteo escrito arriba de cada barra;
+- eje Y manual;
+- marco completo con `box()`;
+- linea punteada de media;
+- leyenda.
+
+La decision de usar `axes = FALSE` y luego `axis(side = 2, ...)` tuvo un motivo grafico: evitar que el eje Y automatico de `barplot()` se superpusiera con el marco generado por `box()`.
+
+El patron usado fue:
+
+```r
+pos_barras <- barplot(
+  height = conteos,
+  names.arg = etiquetas,
+  axes = FALSE
+)
+
+text(
+  x = pos_barras,
+  y = conteos,
+  labels = conteos,
+  pos = 3
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+box()
+```
+
+Este formato fue aplicado a:
+
+- eventos anuales del catalogo completo;
+- eventos anuales `M >= 7.0`;
+- eventos por decada del catalogo completo;
+- eventos por decada `M >= 7.0`.
+
+# Pregunta orientadora: variacion anual o decadal de eventos M >= 7.0
+
+La pregunta guia fue:
+
+> Como ha variado la ocurrencia anual o decadal de eventos `M >= 7.0`?
+
+Para la lectura anual, el conteo anual ya es comparable directamente porque cada observacion representa un año calendario.
+
+Para la lectura decadal, en cambio, no basta con comparar conteos brutos. El periodo 2020 incluye solo 2020-2025, mientras que las decadas 2000 y 2010 tienen 10 años completos.
+
+Por eso se propuso calcular una tasa anual promedio por decada:
+
+```r
+tasa_anual_m70_o_mayor = n_eventos_m70_o_mayor / años_observados
+```
+
+Esto cambia la unidad de comparacion desde:
+
+> eventos acumulados por decada
+
+hacia:
+
+> eventos promedio por año dentro de cada decada observada
+
+Con los datos actuales:
+
+| Decada | Eventos M >= 7.0 | Años observados | Tasa anual promedio |
+|---:|---:|---:|---:|
+| 2000 | 143 | 10 | 14.3 |
+| 2010 | 160 | 10 | 16.0 |
+| 2020 | 84 | 6 | 14.0 |
+
+Esta transformacion evita concluir erroneamente que la decada 2020 tiene mucha menor ocurrencia solo porque esta incompleta. Vista como tasa, 2020-2025 se parece mas a 2000 que lo que sugiere el conteo bruto.
+
+Nota metodologica: la tasa decadal promedio mejora la comparacion, pero no convierte el periodo 2020-2025 en una decada completa. En el informe debe quedar claro que se trata de una tasa calculada sobre años observados.
+
+# Recurrencia temporal de eventos relevantes
+
+Luego de contar eventos, se paso a medir el tiempo entre eventos `M >= 7.0`.
+
+Se creo `eventos_m70`, filtrando eventos relevantes y ordenandolos temporalmente. Luego se calculo:
+
+```r
+dias_desde_evento_anterior = as.numeric(
+  difftime(fecha_hora_utc, lag(fecha_hora_utc), units = "days")
+)
+```
+
+Esta variable mide el numero de dias entre un evento `M >= 7.0` y el evento `M >= 7.0` inmediatamente anterior en el catalogo global.
+
+Con los datos actuales:
+
+- eventos `M >= 7.0`: 387;
+- intervalos entre eventos: 386;
+- tiempo medio entre eventos: 24.52 dias;
+- tiempo mediano entre eventos: 15.60 dias;
+- intervalo minimo observado: 0 dias;
+- intervalo maximo observado: 176.79 dias.
+
+La diferencia entre media y mediana es importante. La media es mayor porque algunos intervalos largos empujan el promedio hacia arriba.
+
+# Interpretacion del histograma de recurrencia
+
+El histograma generado para `dias_desde_evento_anterior` muestra una distribucion marcadamente asimetrica hacia la derecha.
+
+Interpretacion sugerida:
+
+> La distribucion de dias entre eventos consecutivos `M >= 7.0` presenta una marcada asimetria positiva. La mediana es menor que la media, lo que sugiere que la mayoria de los eventos relevantes ocurre con intervalos relativamente cortos, mientras que pocos periodos extensos sin eventos elevan el promedio. Este comportamiento es coherente con una recurrencia temporal irregular y con posible agrupamiento temporal de eventos.
+
+Lectura visual del grafico:
+
+- La mayor parte de los intervalos esta concentrada en los primeros dias o semanas.
+- Hay una cola derecha con intervalos mas largos.
+- La linea roja de la mediana queda a la izquierda de la linea negra de la media.
+- Esto indica que el promedio no representa tan bien el comportamiento tipico como la mediana.
+
+Archivo de referencia del grafico revisado: `C:/Users/Tamar/Desktop/histogram 1.png`.
+
+# Cuidado interpretativo
+
+El catalogo analizado es global. Por lo tanto, los intervalos entre eventos `M >= 7.0` no deben interpretarse como recurrencia fisica de una misma falla, zona de subduccion o region sismotectonica.
+
+La interpretacion correcta es:
+
+> recurrencia temporal global de eventos grandes dentro del catalogo analizado.
+
+Esto debe separarse de afirmaciones sobre peligro sismico local o prediccion. El analisis describe ocurrencia observada; no predice terremotos.
+
+# Analisis complementario por categoria de magnitud
+
+Despues de completar el analisis temporal por umbrales, se incorporo una segunda lectura usando `magnitud_cat`. Esta variable proviene de la discusion bibliografica realizada en `Codigo.R` y clasifica los eventos en tres grupos excluyentes:
+
+- `Fuerte`
+- `Mayor`
+- `Grande o extremo`
+
+La razon para dejar este bloque al final del script es metodologica. Los umbrales acumulativos son mas directos para responder preguntas como "cuantos eventos hubo sobre cierta magnitud", mientras que las categorias permiten observar la composicion interna del catalogo. Dicho de otro modo: `M >= 7.0`, `M >= 7.5` y `M >= 8.0` comparan niveles de exigencia; `magnitud_cat` compara grupos de severidad que no se superponen entre si.
+
+Se agregaron dos conteos:
+
+- `conteo_anual_magnitud_cat`
+- `conteo_decadal_magnitud_cat`
+
+No se incorporo un conteo mensual por categoria en esta etapa, porque habria exigido completar todas las combinaciones mes-categoria con ceros y podria sobrecargar el preinforme descriptivo. Para la primera lectura por categorias, se priorizo la composicion anual y decadal.
+
+Luego se agregaron dos graficos de composicion por categoria de magnitud:
+
+- eventos anuales por categoria de magnitud;
+- eventos decadales por categoria de magnitud.
+
+Estos graficos usan barras apiladas para mostrar como se reparte el total de eventos entre `Fuerte`, `Mayor` y `Grande o extremo`. Como `magnitud_cat` fue definida como factor ordenado en `Codigo.R`, los graficos respetan el orden conceptual de severidad.
+
+La razon metodologica para usar barras apiladas es que el objetivo no es comparar una serie independiente por cada categoria, sino observar la composicion interna del catalogo a lo largo del tiempo. Asi, el grafico conserva el total anual o decadal y al mismo tiempo muestra que parte corresponde a cada nivel de magnitud.
+
+Posteriormente se agregaron etiquetas con las frecuencias absolutas dentro de cada segmento de las barras apiladas. Esta decision busca que el grafico sea autoexplicativo: la contraparte puede identificar no solo la composicion visual, sino tambien el numero de eventos que aporta cada categoria en cada año o decada. En el grafico anual se usan etiquetas mas pequeñas para evitar saturacion visual; en el grafico decadal las etiquetas pueden ser mas grandes porque hay menos barras.
+
+# Limitaciones a recordar
+
+- El catalogo cubre 2000-2025, con eventos entre 2000-01-08 y 2025-12-27.
+- El periodo mensual completo tiene 312 meses.
+- Solo 301 meses tenian eventos registrados; 11 meses fueron agregados con conteo cero.
+- La decada 2020 esta incompleta, pues solo cubre 2020-2025.
+- Los conteos globales pueden estar afectados por replicas o agrupamientos temporales.
+- Los eventos `M >= 7.5` y `M >= 8.0` tienen menor frecuencia, por lo que deben tratarse con mayor cautela estadistica.
+- El uso de series temporales regulares sobre sismos debe interpretarse como analisis de conteos, no como una serie economica o estacional convencional.
+
+# Pendientes posibles
+
+Los siguientes pasos naturales serian:
+
+1. Evaluar dependencia temporal con ACF/PACF sobre conteos mensuales.
+2. Aplicar pruebas de autocorrelacion, por ejemplo Ljung-Box, con cautela.
+3. Analizar posibles replicas mediante una regla temporal-espacial simple.
+4. Comparar recurrencia antes y despues de remover posibles replicas.
+5. Decidir si vale la pena formular una pregunta inferencial sobre diferencias anuales o decadales.
+
+Tambien queda revisar un detalle grafico: si en el grafico de tasa anual promedio por decada se mantiene una leyenda con "Media de tasas", debe agregarse la linea punteada correspondiente con `abline()`.
+
+# Frases utiles para el informe final
+
+El analisis temporal se estructuro primero a partir de conteos mensuales, anuales y decadales, con el fin de caracterizar la ocurrencia observada antes de introducir comparaciones o medidas de recurrencia.
+
+Los meses sin eventos fueron incorporados explicitamente con valor cero para preservar la regularidad de la serie mensual. Esta decision es necesaria porque la ausencia de una fila mensual en el agrupamiento no representa un dato temporal inexistente, sino un mes calendario sin eventos registrados.
+
+Para comparar decadas se utilizo una tasa anual promedio, ya que el periodo 2020-2025 no corresponde a una decada completa. Esta normalizacion permite comparar los periodos en una unidad comun: eventos por año observado.
+
+La recurrencia de eventos `M >= 7.0` se evaluo mediante los dias transcurridos entre eventos consecutivos. La distribucion resultante es asimetrica positiva, con mediana menor que la media, lo que sugiere concentracion de intervalos cortos y presencia de algunos periodos largos sin eventos.
