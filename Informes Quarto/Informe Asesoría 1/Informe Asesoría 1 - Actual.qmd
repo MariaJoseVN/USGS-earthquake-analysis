@@ -17,9 +17,9 @@ format:
     toc-depth: 3
     number-sections: true
     colorlinks: true
-    linkcolor: black
-    urlcolor: black
-    citecolor: black
+    linkcolor: asesoriaTextColor
+    urlcolor: asesoriaTextColor
+    citecolor: asesoriaTextColor
     papersize: letter
     geometry:
       - margin=0cm
@@ -31,21 +31,10 @@ header-includes:
   - \usepackage{caption}
   - \usepackage{needspace}
   - \usepackage{float}
-  - \usepackage{atbegshi}
   - \input{../layout-control.tex}
   - \usepackage{etoolbox}
   - |
     \definecolor{asesoriaSectionBarColor}{HTML}{00D1C3}
-    \newif\ifasesoriaDiscardBlankPage
-    \AtBeginShipout{%
-      \ifasesoriaDiscardBlankPage
-        \ifnum\value{page}=3
-          \global\asesoriaDiscardBlankPagefalse
-          \addtocounter{page}{-1}%
-          \AtBeginShipoutDiscard
-        \fi
-      \fi
-    }
     \makeatletter
     \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
     \@secpenalty=0\relax
@@ -69,9 +58,15 @@ header-includes:
         \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
       }%
     }
+    \AtBeginDocument{%
+      \color{asesoriaTextColor}%
+      \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaTextColor}%
+      \addtokomafont{subsection}{\color{asesoriaTextColor}}%
+      \addtokomafont{subsubsection}{\color{asesoriaTextColor}}%
+    }
     \makeatother
   - \KOMAoption{captions}{tablesignature}
-  - \captionsetup{font=it,labelfont=it}
+  - \captionsetup{font={it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
   - \captionsetup[table]{position=bottom}
   - \captionsetup[longtable]{position=bottom}
   - \captionsetup[figure]{position=bottom}
@@ -100,25 +95,48 @@ header-includes:
 \endgroup
 ```{=latex}
 \makeatletter\@nobreakfalse\makeatother
-\global\asesoriaDiscardBlankPagetrue
 \newpage
 ```
 
 # Resumen ejecutivo
 
-<!-- Mover aquí la versión final del resumen. Conviene actualizar el tono de "pre-informe" a "informe" y dejar solo resultados consolidados. -->
+El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. 
+Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. 
+En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. 
+El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
 # Formulación del problema y pregunta estadística
 
-<!-- Reubicar aquí la pregunta estadística, su justificación y el vínculo con el encargo. -->
+El estudio se articula en torno a la siguiente pregunta estadística:
+
+> ¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?
+
+Esta pregunta surge de la pregunta orientadora del encargo, que solicita comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. No obstante, el "resto del mundo" constituye un conjunto heterogéneo que agrupa eventos de orígenes tectónicos diversos, por lo que su uso directo como término de comparación limita la interpretabilidad de las diferencias observadas. Por esta razón, la pregunta se orienta a identificar otras zonas sísmicas de tipo cinturón, con características comparables a las del Cinturón de Fuego, que permitan una comparación más estándar y equilibrada de la magnitud y la profundidad entre regiones sísmicamente análogas.
 
 # Antecedentes
 
-<!-- Mantener la base teórica necesaria para interpretar zonas sísmicas, magnitud y profundidad. -->
+La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
+
+La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
 ## Distribución global de la sismicidad {#sec-distribucion-sismicidad}
 
+La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas [@usgs_faq_terremotos]. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81 % de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17 %; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas [@usgs_faq_terremotos].
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
+\vspace{-0.6em}
+\caption{Eventos sísmicos y las zonas utilizadas para la comparación espacial.}
+\label{fig-mapa-qgis-zonas-sismicas}
+\end{figure}
+```
+Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
+
+La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. @gutenberg_richter_1944 proporcionan una base clásica para distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$. @kagan_jackson_2016 refuerzan la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos. @ammon_etal_2010 destacan la relevancia instrumental y científica de los eventos $M \geq 8{,}0$ dentro del registro global. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
 
 # Objetivos
 
@@ -126,19 +144,38 @@ header-includes:
 
 ## Objetivo general
 
+Caracterizar, de manera descriptiva, documentada y reproducible, la distribución espacial y temporal de los grandes terremotos ($M \geq 6{,}5$) registrados a nivel mundial en el catálogo de la USGS durante el período 2000--2025, comparando zonas sísmicas definidas de forma explícita, con el fin de entregar resultados interpretables sobre dónde, cuándo y con qué frecuencia ocurren estos eventos, y de establecer una base metodológica sólida para una eventual etapa de análisis inferencial. El umbral $M \geq 6{,}5$ delimita el foco en terremotos de relevancia según el interés del encargo.
+
 ## Objetivos específicos
+
+Para alcanzar el objetivo general, se plantean los siguientes objetivos específicos:
+
+```{=latex}
+\begin{enumerate}
+\setlength{\itemsep}{0.9em}
+
+\item \textbf{OE1. Documentar} la fuente de datos, los parámetros de descarga y los criterios de selección del catálogo.
+
+\item \textbf{OE2. Consolidar} la base \texttt{sismos} a partir de \texttt{sismos\_raw}, incorporando depuración, control de calidad y variables derivadas para el análisis.
+
+\item \textbf{OE3. Describir} el comportamiento de \texttt{mag} y \texttt{depth} mediante estadísticos, distribuciones y categorías de análisis.
+
+\item \textbf{OE4. Analizar} la ocurrencia temporal mediante conteos, tasas, series y recurrencia para distintos umbrales de magnitud.
+
+\item \textbf{OE5. Comparar} la distribución espacial de los eventos entre zonas sísmicas, considerando frecuencia, magnitud y profundidad.
+
+\end{enumerate}
+```
 
 # Alcance del informe
 
-<!-- Mantener límites del estudio, fuente de datos, período, umbral de magnitud y restricciones interpretativas. -->
+Este pre-informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
-# Datos y parámetros de descarga
+El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Asimismo, no se establece distinción entre los tipos de magnitud (`magType`) reportados por la fuente; estos se tratan de manera homogénea pese a poder provenir de escalas o procedimientos de estimación diferentes, lo que constituye una limitación a considerar al comparar eventos.
 
-<!-- Traer aquí la descripción de USGS, la bitácora de descarga y la explicación de la base original. -->
+El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
-## Fuente de datos y parámetros de descarga
-
-## Datos originales {#sec-datos-originales}
+Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookLM solo como apoyo para la lectura en español de bibliografía en inglés, y una extensión de ChatGPT en Positron únicamente como soporte de programación; estructura del código, simplificación de procedimientos y resolución de errores puntuales, priorizando funciones nativas de R. Ninguna herramienta de inteligencia artificial puede generar redacción, interpretación, análisis, conclusiones ni contenido final del informe.
 
 # Metodología
 
@@ -174,7 +211,12 @@ header-includes:
 
 # Referencias
 
-\newpage
+::: {#refs}
+:::
+
+```{=latex}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+```
 
 # Anexos reproducibles
 
@@ -184,7 +226,68 @@ header-includes:
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
+El análisis se organiza en torno al script principal `Código.R`, que centraliza la carga de paquetes, la importación de la base cruda `sismos_raw`, la preparación de la base analítica `sismos` y la ejecución secuencial de los scripts complementarios.
+
+La separación del código responde a una decisión operativa del equipo: cada script aborda una etapa específica del análisis, lo que permite revisar, depurar y modificar componentes particulares sin alterar todo el flujo de trabajo. Esta estructura también facilita el trabajo colaborativo, ya que distintos integrantes pueden avanzar sobre módulos distintos manteniendo un punto común de ejecución.
+
+La organización principal del flujo reproducible es la siguiente:
+
+| Script | Propósito principal |
+|---|---|
+| `Código.R` | Ejecuta el flujo principal del análisis. |
+| `01_analisis_descriptivo.R` | Desarrolla la caracterización descriptiva y espacial inicial. |
+| `04_analisis_temporal.R` | Desarrolla el análisis temporal del catálogo. |
+
+Los archivos `02_visualizaciones.R` y `03_tablas_informe.R` se reservan como espacios de prueba para código complementario, pero no constituyen módulos centrales del flujo reproducible presentado en este informe.
+
+\hypertarget{sec-anexo-implementacion}{}
+
+Este anexo documenta el entorno operativo utilizado para construir y verificar el análisis. En QGIS se trabaja con la base georreferenciada y las capas de referencia tectónica para delimitar visualmente los polígonos asociados al Cinturón de Fuego, la Dorsal Meso-Atlántica y el Cinturón Alpino-Himalayo. Esta implementación permite revisar la correspondencia espacial entre los eventos del catálogo, las coordenadas utilizadas y las zonas empleadas posteriormente en la variable `zona`.
+
+El procesamiento estadístico se desarrolla en Positron mediante scripts de R organizados dentro del proyecto `USGS-earthquake-analysis`. Este entorno permite ejecutar de forma secuencial la importación de datos, depuración, construcción de variables derivadas y análisis descriptivo, temporal y espacial, manteniendo visibles los objetos generados y las salidas de consola para su revisión.
+
+```{=latex}
+\Needspace{40\baselineskip}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{../Imágenes y Recursos/implementacion-qgis-zonas.png}}
+\vspace{-0.6em}
+\caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
+\label{fig-implementacion-qgis-zonas}
+\end{figure}
+```
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{../Imágenes y Recursos/implementacion-positron-entorno.png}}
+\vspace{-0.6em}
+\caption{Entorno de trabajo en Positron utilizado para ejecutar los scripts de R y revisar las salidas del análisis estadístico.}
+\label{fig-implementacion-positron-entorno}
+\end{figure}
+```
+
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
+
+Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la USGS [@usgs_faq_terremotos].
+
+El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
+
+El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17 % de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes [@usgs_faq_terremotos].
+
+El tercer cinturón sigue el trazado sumergido de la **Dorsal Meso-Atlántica**, donde dos placas tectónicas se separan, configurando un límite divergente. Gran parte de esta dorsal se encuentra a gran profundidad bajo el océano y alejada de los centros poblados; no obstante, Islandia, situada directamente sobre ella, ha registrado sismos de hasta $M\,6{,}9$ [@usgs_faq_terremotos].
+
+El resto de los eventos se distribuye de manera dispersa en distintas regiones del planeta. Aunque la sismicidad relevante se concentra en los cinturones descritos, también pueden ocurrir terremotos dañinos fuera de ellos, habitualmente separados por largos períodos de tiempo [@usgs_faq_terremotos]. Esta condición justifica la categoría residual "Resto del mundo" empleada en la comparación espacial.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
+\vspace{-0.6em}
+\caption{Visualización QGIS: eventos sísmicos y las zonas utilizadas para la comparación espacial.}
+\label{fig-mapa-qgis-zonas-sismicas}
+\end{figure}
+```
 
 ## Control de calidad de la base USGS {#sec-anexo-control-calidad}
 
