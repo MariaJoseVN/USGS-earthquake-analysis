@@ -90,7 +90,7 @@ header-includes:
 \null
 \newpage
 
-\newgeometry{margin=2.5cm}
+\newgeometry{top=1.55cm,bottom=1.45cm,left=2.25cm,right=2.25cm}
 
 \begingroup
 \color{asesoriaTextColor}
@@ -105,16 +105,13 @@ header-includes:
 
 # Resumen ejecutivo
 
-El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. 
-Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. 
-En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. 
-El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
+El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
 # Formulación del problema y pregunta estadística
 
 El estudio se articula en torno a la siguiente pregunta estadística:
 
-> ¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?
+> **¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?**
 
 Esta pregunta surge de la pregunta orientadora del encargo, que solicita comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. No obstante, el "resto del mundo" constituye un conjunto heterogéneo que agrupa eventos de orígenes tectónicos diversos, por lo que su uso directo como término de comparación limita la interpretabilidad de las diferencias observadas. Por esta razón, la pregunta se orienta a identificar otras zonas sísmicas de tipo cinturón, con características comparables a las del Cinturón de Fuego, que permitan una comparación más estándar y equilibrada de la magnitud y la profundidad entre regiones sísmicamente análogas.
 
@@ -137,6 +134,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
 ```
+
 Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
@@ -238,7 +236,7 @@ La separación del código responde a una decisión operativa del equipo: cada s
 La organización principal del flujo reproducible es la siguiente:
 
 | Script | Propósito principal |
-|---|---|
+|------------------------------------|------------------------------------|
 | `Código.R` | Ejecuta el flujo principal del análisis. |
 | `01_analisis_descriptivo.R` | Desarrolla la caracterización descriptiva y espacial inicial. |
 | `04_analisis_temporal.R` | Desarrolla el análisis temporal del catálogo. |
