@@ -1,7 +1,6 @@
 #Analisis de la variable magType----
-#Este script utiliza la base preparada en Codigo.R.
 #magType indica el metodo/escala con que se estimo la magnitud y depende del magSource.
-#No guarda graficos; las salidas se revisan directamente en consola y panel grafico.
+
 
 
 #Reiniciar dispositivo grafico----
