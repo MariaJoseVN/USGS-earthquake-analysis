@@ -130,6 +130,8 @@ header-includes:
 
 # Anexos reproducibles
 
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+
 <!-- Mantener aquí el material que respalda el análisis, pero que no necesita estar en el cuerpo principal. -->
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
