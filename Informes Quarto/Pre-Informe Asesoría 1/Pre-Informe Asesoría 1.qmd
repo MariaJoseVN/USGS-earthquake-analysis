@@ -57,10 +57,7 @@ header-includes:
 
 # Resumen ejecutivo
 
-El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. 
-Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. 
-En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. 
-El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
+El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
 # Formulación pregunta estadística
 
@@ -89,6 +86,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \label{fig-zonas-sismicas}
 \end{figure}
 ```
+
 Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
@@ -103,15 +101,15 @@ Caracterizar, de manera descriptiva, documentada y reproducible, la distribució
 
 Para alcanzar el objetivo general, se plantean los siguientes objetivos específicos:
 
-1. **OE1. Documentar** la fuente de datos, los parámetros de descarga y los criterios de selección del catálogo.
+1.  **OE1. Documentar** la fuente de datos, los parámetros de descarga y los criterios de selección del catálogo.
 
-2. **OE2. Consolidar** la base `sismos` a partir de `sismos_raw`, incorporando depuración, control de calidad y variables derivadas para el análisis.
+2.  **OE2. Consolidar** la base `sismos` a partir de `sismos_raw`, incorporando depuración, control de calidad y variables derivadas para el análisis.
 
-3. **OE3. Describir** el comportamiento de `mag` y `depth` mediante estadísticos, distribuciones y categorías de análisis.
+3.  **OE3. Describir** el comportamiento de `mag` y `depth` mediante estadísticos, distribuciones y categorías de análisis.
 
-4. **OE4. Analizar** la ocurrencia temporal mediante conteos, tasas, series y recurrencia para distintos umbrales de magnitud.
+4.  **OE4. Analizar** la ocurrencia temporal mediante conteos, tasas, series y recurrencia para distintos umbrales de magnitud.
 
-5. **OE5. Comparar** la distribución espacial de los eventos entre zonas sísmicas, considerando frecuencia, magnitud y profundidad.
+5.  **OE5. Comparar** la distribución espacial de los eventos entre zonas sísmicas, considerando frecuencia, magnitud y profundidad.
 
 # Alcance del informe
 
@@ -314,7 +312,6 @@ En términos de magnitud, las medias por zona son cercanas entre sí: al restrin
 
 La interpretación espacial debe considerar que `Resto del mundo` no representa ausencia de actividad tectónica, sino eventos que no intersectan los polígonos definidos para las tres zonas principales. En consecuencia, los resultados dependen de la delimitación geográfica usada para construir `zona`, cuya verificación cartográfica se documenta en el anexo. \emph{(véase \hyperref[fig-mapa-qgis-zonas-sismicas]{figura~\ref*{fig-mapa-qgis-zonas-sismicas}})}.
 
-
 ## Supuestos, limitaciones y sensibilidad
 
 La interpretación de la magnitud y la profundidad se realiza a partir de los valores reportados por USGS en `mag` y `depth`. Sin embargo, estos resultados deben leerse con cautela, ya que el análisis no incorpora explícitamente la incertidumbre instrumental, los errores de estimación ni una homogeneización por `magType`. Si bien `sismos_raw` contiene variables asociadas a error o calidad del procesamiento, como `magError`, `depthError`, `horizontalError`, `gap`, `rms` y `nst`, estas presentan una alta proporción de valores faltantes y no se utilizan como variables centrales. Por ello, los resultados sobre magnitud y profundidad corresponden a una caracterización descriptiva del catálogo depurado, no a una estimación corregida por incertidumbre instrumental. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
@@ -359,7 +356,7 @@ La separación del código responde a una decisión operativa del equipo: cada s
 La organización principal del flujo reproducible es la siguiente:
 
 | Script | Propósito principal |
-|---|---|
+|------------------------------------|------------------------------------|
 | `Código.R` | Ejecuta el flujo principal del análisis. |
 | `01_analisis_descriptivo.R` | Desarrolla la caracterización descriptiva y espacial inicial. |
 | `04_analisis_temporal.R` | Desarrolla el análisis temporal del catálogo. |
@@ -463,8 +460,7 @@ De este modo, `sismos` reúne todas las variables solicitadas en el encargo que 
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-variables-consideradas}
-\hypertarget{dest-tbl-variables-consideradas}{}
+\label{tbl-variables-consideradas} \hypertarget{dest-tbl-variables-consideradas}{}
 
 \begin{longtable}{p{0.22\textwidth}p{0.13\textwidth}p{0.26\textwidth}p{0.29\textwidth}}
 \toprule
@@ -508,6 +504,7 @@ Variable & Origen & Descripción breve & Análisis \\
 \endgroup
 
 \newpage
+
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
 \begingroup
@@ -515,7 +512,9 @@ Variable & Origen & Descripción breve & Análisis \\
 \renewcommand{\arraystretch}{0.86}
 \setlength{\tabcolsep}{3pt}
 \Needspace{44\baselineskip}
+
 \noindent
+
 \begin{minipage}[t]{0.47\textwidth}
 \centering
 \phantomsection
@@ -561,7 +560,9 @@ Cuantil 95 & $7{,}70$ \\
 \end{minipage}
 \par
 \vspace{0.35em}
+
 \noindent
+
 \begin{minipage}[t]{0.47\textwidth}
 \centering
 \phantomsection
@@ -606,7 +607,9 @@ Año & Máx. & Año & Máx. & Año & Máx. \\
 \end{minipage}
 \par
 \vspace{0.35em}
+
 \noindent
+
 \begin{minipage}[t]{0.47\textwidth}
 \centering
 \phantomsection
@@ -649,7 +652,6 @@ Profundo & 123 & $10{,}37$ \\
 \bottomtablecaption{tbl-categoria-profundidad}{Número y porcentaje de eventos por categoría de profundidad.}
 \end{minipage}
 \endgroup
-
 ```{=latex}
 \vspace{-1.5em}
 \begin{figure}[H]
@@ -670,8 +672,7 @@ Profundo & 123 & $10{,}37$ \\
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-conteo-anual-temporal}
-\hypertarget{dest-tbl-conteo-anual-temporal}{}
+\label{tbl-conteo-anual-temporal} \hypertarget{dest-tbl-conteo-anual-temporal}{}
 
 \begin{longtable}{rrrrr}
 \toprule
@@ -716,8 +717,7 @@ Año & Catálogo & $M \geq 7{,}0$ & $M \geq 7{,}5$ & $M \geq 8{,}0$ \\
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-conteo-decadal-temporal}
-\hypertarget{dest-tbl-conteo-decadal-temporal}{}
+\label{tbl-conteo-decadal-temporal} \hypertarget{dest-tbl-conteo-decadal-temporal}{}
 
 \begin{longtable}{rrrrrr}
 \toprule
@@ -732,15 +732,13 @@ Década & Años obs. & Catálogo & $M \geq 7{,}0$ & Tasa catálogo & Tasa $M \ge
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-conteo-decadal-temporal}{Conteo y tasa anual promedio por década para el catálogo completo y eventos con $M \geq 7{,}0$.}
 \endgroup
-
 \begingroup
 \small
 \Needspace{10\baselineskip}
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-recurrencia-m70}
-\hypertarget{dest-tbl-recurrencia-m70}{}
+\label{tbl-recurrencia-m70} \hypertarget{dest-tbl-recurrencia-m70}{}
 
 \begin{longtable}{lr}
 \toprule
@@ -815,8 +813,7 @@ Máximo (días) & $176{,}8$ \\
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-eventos-zona}
-\hypertarget{dest-tbl-eventos-zona}{}
+\label{tbl-eventos-zona} \hypertarget{dest-tbl-eventos-zona}{}
 
 \begin{longtable}{lrrr}
 \toprule
@@ -832,7 +829,6 @@ Zona & Eventos & Porcentaje & Tasa anual \\
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-eventos-zona}{Número, porcentaje y tasa anual promedio de eventos por zona.}
 \endgroup
-
 \begingroup
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -840,8 +836,7 @@ Zona & Eventos & Porcentaje & Tasa anual \\
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-estadisticos-zona}
-\hypertarget{dest-tbl-estadisticos-zona}{}
+\label{tbl-estadisticos-zona} \hypertarget{dest-tbl-estadisticos-zona}{}
 
 \begin{longtable}{lrrrrrrr}
 \toprule
@@ -857,7 +852,6 @@ Zona & Eventos & \% & Media mag & Mediana mag & Máx. mag & Mediana depth & Máx
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-estadisticos-zona}{Estadísticos principales de magnitud y profundidad por zona.}
 \endgroup
-
 \begingroup
 \scriptsize
 \renewcommand{\arraystretch}{0.88}
@@ -866,8 +860,7 @@ Zona & Eventos & \% & Media mag & Mediana mag & Máx. mag & Mediana depth & Máx
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-eventos-zona-anio}
-\hypertarget{dest-tbl-eventos-zona-anio}{}
+\label{tbl-eventos-zona-anio} \hypertarget{dest-tbl-eventos-zona-anio}{}
 
 \begin{longtable}{rrrrr}
 \toprule
@@ -905,7 +898,6 @@ Año & C. Fuego & Resto & C. Alpino-Himalayo & Dorsal Meso-Atlántica \\
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-eventos-zona-anio}{Conteo anual de eventos por zona asignada.}
 \endgroup
-
 \begingroup
 \scriptsize
 \renewcommand{\arraystretch}{0.88}
@@ -914,8 +906,7 @@ Año & C. Fuego & Resto & C. Alpino-Himalayo & Dorsal Meso-Atlántica \\
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-profundidad-zona}
-\hypertarget{dest-tbl-profundidad-zona}{}
+\label{tbl-profundidad-zona} \hypertarget{dest-tbl-profundidad-zona}{}
 
 \begin{longtable}{lrrr}
 \toprule
@@ -931,7 +922,6 @@ Zona & Superficial & Intermedio & Profundo \\
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-profundidad-zona}{Distribución de eventos por categoría de profundidad y zona.}
 \endgroup
-
 ```{=latex}
 \begin{figure}[H]
 \centering
@@ -941,4 +931,5 @@ Zona & Superficial & Intermedio & Profundo \\
 \label{fig-mapa-mag-depth}
 \end{figure}
 ```
+
 El tamaño del punto representa la magnitud y el color, la profundidad (km); las líneas corresponden a los límites de placas tectónicas.
