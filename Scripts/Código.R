@@ -75,7 +75,10 @@ sismos <- sismos %>%
     status,
     net, #En su mayoría son "USA" ¿Por que?
     locationSource,
-    magSource #Revisar la relación entre MagType y MagSource !!!!
+    magSource, #Revisar la relación entre MagType y MagSource !!!!
+    nst,
+    rms
+
   )
 View(sismos)
 skim(sismos)

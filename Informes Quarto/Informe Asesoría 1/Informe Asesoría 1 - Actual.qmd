@@ -223,9 +223,70 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 # Anexos reproducibles
 
-\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+## Descripción de datos y parámetros de descarga
 
-<!-- Mantener aquí el material que respalda el análisis, pero que no necesita estar en el cuerpo principal. -->
+### Fuente de datos y parámetros de descarga
+
+La fuente principal de información corresponde al catálogo público de terremotos de la USGS, específicamente el sitio [USGS Earthquake Catalog Search](https://earthquake.usgs.gov/earthquakes/search/). La configuración utilizada se documenta en la siguiente bitácora de descarga.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-parametros-descarga}
+
+\begin{longtable}{p{0.32\textwidth}p{0.58\textwidth}}
+\toprule
+Parámetro & Valor registrado \\
+\midrule
+\endfirsthead
+\toprule
+Parámetro & Valor registrado \\
+\midrule
+\endhead
+Fuente & \href{https://earthquake.usgs.gov/earthquakes/search/}{USGS Earthquake Catalog Search} \\
+Formato de descarga & \texttt{CSV} \\
+Archivo crudo conservado & \texttt{BBDD/query.csv} \\
+Fecha de descarga & 15/06/2026 \\
+Hora de descarga & 22:05 \\
+Encargo asociado & Análisis global de grandes terremotos \\
+Cobertura geográfica & \texttt{Mundial (World / Worldwide)} \\
+Inicio del período & \texttt{2000-01-01 00:00:00 UTC} \\
+Fin del período & \texttt{2025-12-31 23:59:59 UTC} \\
+Magnitud mínima & $M \geq 6{,}5$ \\
+Magnitud máxima & \texttt{Sin filtro} \\
+Profundidad mínima & \texttt{Sin filtro} \\
+Profundidad máxima & \texttt{Sin filtro} \\
+Estado de revisión & \texttt{Any} \\
+Tipo de evento & \texttt{Sin filtro específico} \\
+Ordenamiento & \texttt{Time - Oldest First} \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-parametros-descarga}{Parámetros de descarga registrados para la base principal de análisis.}
+\endgroup
+
+El formato `.CSV` se utiliza como base principal del procesamiento estadístico, aunque paralelamente se utiliza un formato `.GeoJSON` con las mismas características en el software `QGIS`.
+
+### Datos originales {#sec-datos-originales}
+
+Una vez que los datos se descargan desde USGS según los parámetros indicados en la Tabla \ref{tbl-parametros-descarga}, el archivo crudo `BBDD/query.csv` se importa en R y se almacena inicialmente como el objeto **`sismos_raw`**. Esta base conserva las variables originales entregadas por USGS, sin modificaciones previas, y constituye el punto de partida del proceso de depuración, selección y construcción de variables derivadas.
+
+Las variables originales del catálogo pueden organizarse en distintos grupos según su función:
+
+- Variables de identificación y trazabilidad del evento, como `id`, `net`, `status`, `locationSource` y `magSource`.
+
+- Variables temporales, principalmente `time`, a partir de la cual se construyen fechas, años, meses y décadas.
+
+- Variables espaciales, como `latitude`, `longitude` y `place`, que se utilizan para ubicar los eventos y construir comparaciones geográficas.
+
+- Variables correspondientes a características sísmicas del evento, como `mag`, `magType`, `depth` y `type`.
+
+Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad, pero no se seleccionan como variables centrales del presente análisis, ya que el objetivo del pre-informe se enfoca en caracterizar la frecuencia de eventos y el comportamiento de `mag`, `depth`, `time`, `latitude` y `longitude`.
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
