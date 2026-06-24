@@ -34,7 +34,7 @@ header-includes:
   - \input{../layout-control.tex}
   - \usepackage{etoolbox}
   - |
-    \definecolor{asesoriaSectionBarColor}{HTML}{00D1C3}
+    \definecolor{asesoriaSectionBarColor}{HTML}{001632}
     \makeatletter
     \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
     \@secpenalty=0\relax
@@ -151,7 +151,7 @@ Caracterizar, de manera descriptiva, documentada y reproducible, la distribució
 Para alcanzar el objetivo general, se plantean los siguientes objetivos específicos:
 
 ```{=latex}
-\begin{enumerate}
+\begin{itemize}
 \setlength{\itemsep}{0.9em}
 
 \item \textbf{OE1. Documentar} la fuente de datos, los parámetros de descarga y los criterios de selección del catálogo.
@@ -164,7 +164,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 \item \textbf{OE5. Comparar} la distribución espacial de los eventos entre zonas sísmicas, considerando frecuencia, magnitud y profundidad.
 
-\end{enumerate}
+\end{itemize}
 ```
 
 # Alcance del informe
