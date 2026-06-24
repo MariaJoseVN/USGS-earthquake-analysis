@@ -45,7 +45,7 @@ header-includes:
 \thispagestyle{empty}
 \AddToHookNext{shipout/background}{
   \put(-4pt,-\dimexpr\paperheight+4pt\relax){
-    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{../Imágenes y Recursos/portada-informe.png}}
+    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{../Imágenes y Recursos/1portada-informe.png}}
   }
 }
 \null
