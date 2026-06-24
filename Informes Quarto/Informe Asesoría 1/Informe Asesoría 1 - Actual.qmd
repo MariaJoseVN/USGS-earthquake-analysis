@@ -11,6 +11,7 @@ crossref:
 format:
   pdf:
     pdf-engine: lualatex
+    block-headings: false
     toc: false
     toc-title: "Índice"
     toc-depth: 3
@@ -30,7 +31,45 @@ header-includes:
   - \usepackage{caption}
   - \usepackage{needspace}
   - \usepackage{float}
+  - \usepackage{atbegshi}
   - \input{../layout-control.tex}
+  - \usepackage{etoolbox}
+  - |
+    \definecolor{asesoriaSectionBarColor}{HTML}{00D1C3}
+    \newif\ifasesoriaDiscardBlankPage
+    \AtBeginShipout{%
+      \ifasesoriaDiscardBlankPage
+        \ifnum\value{page}=3
+          \global\asesoriaDiscardBlankPagefalse
+          \addtocounter{page}{-1}%
+          \AtBeginShipoutDiscard
+        \fi
+      \fi
+    }
+    \makeatletter
+    \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
+    \@secpenalty=0\relax
+    \renewcommand*{\sectionlinesformat}[4]{%
+      \ifstrequal{#1}{section}{%
+        \ifblank{#3}{%
+          \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
+        }{%
+          \begingroup
+          \setlength{\fboxsep}{3pt}%
+          \makebox[\linewidth][l]{%
+            \colorbox{asesoriaSectionBarColor}{%
+              \parbox[t]{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \raggedright\color{white}\usekomafont{section}#3#4%
+              }%
+            }%
+          }%
+          \endgroup
+        }%
+      }{%
+        \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
+      }%
+    }
+    \makeatother
   - \KOMAoption{captions}{tablesignature}
   - \captionsetup{font=it,labelfont=it}
   - \captionsetup[table]{position=bottom}
@@ -53,8 +92,17 @@ header-includes:
 
 \newgeometry{margin=2.5cm}
 
+\begingroup
+\color{asesoriaTextColor}
+\hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaTextColor}
+\let\sectionlinesformat\asesoriaOriginalSectionLinesFormat
 \tableofcontents
+\endgroup
+```{=latex}
+\makeatletter\@nobreakfalse\makeatother
+\global\asesoriaDiscardBlankPagetrue
 \newpage
+```
 
 # Resumen ejecutivo
 
