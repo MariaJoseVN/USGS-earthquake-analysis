@@ -12,11 +12,23 @@
 \usepackage{enumitem}
 \usepackage{placeins}
 \usepackage{microtype}
+\usepackage{xcolor}
+
+\definecolor{asesoriaTextColor}{HTML}{001632}
 
 \raggedbottom
 \setlength{\emergencystretch}{3em}
 \setlength{\columnsep}{0.72cm}
 \setlist{nosep,leftmargin=*}
+
+\AtBeginDocument{%
+  \color{asesoriaTextColor}%
+  \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaTextColor}%
+  \addtokomafont{disposition}{\color{asesoriaTextColor}}%
+  \addtokomafont{pageheadfoot}{\color{asesoriaTextColor}}%
+  \addtokomafont{pagenumber}{\color{asesoriaTextColor}}%
+  \captionsetup{font={it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}%
+}
 
 % Espaciado vertical puntual.
 \newcommand{\compactspace}{\vspace{-0.6em}}
