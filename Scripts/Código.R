@@ -7,8 +7,10 @@ library(skimr) #Analizar datos faltantes y resumen de estadisticas básicas
 library(janitor) #Analizar datos duplicados
 #Rutas y Carga de datos----
 ruta_base <- "BBDD/query.csv"
+ruta_sig <- "BBDD/sig.csv"
 
 sismos_raw <- read_csv(ruta_base, show_col_types = FALSE) #Datos crudos
+sig_raw <- read_csv(ruta_sig, show_col_types = FALSE) #Variable de significancia USGS
 
 #Analisis Preliminar de la estructura de los datos----
 
@@ -24,6 +26,7 @@ skim(sismos_raw) # Resumen de Datos faltantes, estadisticas básicas y distribut
 
 #Preparar variables básicas para análisis temporal----
 sismos <- sismos_raw %>%
+  left_join(sig_raw, by = "id") %>%
   mutate(
     fecha_hora_utc = ymd_hms(time, tz = "UTC"),
     fecha = as.Date(fecha_hora_utc),
@@ -70,6 +73,7 @@ sismos <- sismos %>%
     depth,
     profundidad_cat,
     mag,
+    sig,
     magnitud_cat,
     magType, #Varía según quien midio. Puede que sea con parámetros diferentes
     place, 
