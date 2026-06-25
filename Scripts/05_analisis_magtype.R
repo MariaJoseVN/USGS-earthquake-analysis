@@ -25,7 +25,7 @@ eventos_magtype <- sismos %>%
       1,
       sum(numero_eventos)
     ),
-    porcentaje = proporcion * 100,
+    porcentaje = proporcion * 100
   )
 
 print(eventos_magtype, n = Inf)
@@ -46,7 +46,7 @@ eventos_magsource <- sismos %>%
       1,
       sum(numero_eventos)
     ),
-    porcentaje = proporcion * 100,
+    porcentaje = proporcion * 100
   )
 
 print(eventos_magsource, n = Inf)
@@ -164,6 +164,102 @@ asociacion_magtype_magsource <- tibble::tibble(
 )
 
 print(asociacion_magtype_magsource)
+
+
+#Asociacion entre magType y magnitud_cat----
+#Estudia si el tipo de magnitud usado depende del rango de magnitud del evento.
+#Se usa magType_grupo (mww, mwc, mwb, otros) para evitar celdas con frecuencia esperada muy baja.
+
+##Tabla de contingencia con proporciones por fila----
+
+magtype_magnitud_cat <- sismos %>%
+  count(magType_grupo, magnitud_cat, name = "numero_eventos") %>%
+  group_by(magType_grupo) %>%
+  mutate(
+    proporcion_fila = numero_eventos / sum(numero_eventos),
+    porcentaje_fila = proporcion_fila * 100
+  ) %>%
+  ungroup() %>%
+  arrange(magType_grupo, magnitud_cat)
+
+print(magtype_magnitud_cat, n = Inf)
+
+##Chi-cuadrado, V de Cramer y test exacto de Fisher----
+#Chi-cuadrado y V de Cramer en R base, mas Fisher con p-valor simulado como respaldo
+#ante celdas con frecuencia esperada baja. Se suprime la advertencia de aproximacion.
+
+tabla_magtype_magnitud <- table(sismos$magType_grupo, sismos$magnitud_cat)
+
+prueba_chi_magnitud <- suppressWarnings(chisq.test(tabla_magtype_magnitud))
+
+prueba_fisher_magnitud <- fisher.test(
+  tabla_magtype_magnitud,
+  simulate.p.value = TRUE,
+  B = 10000
+)
+
+v_cramer_magnitud <- sqrt(
+  as.numeric(prueba_chi_magnitud$statistic) /
+    (sum(tabla_magtype_magnitud) * (min(dim(tabla_magtype_magnitud)) - 1))
+)
+
+asociacion_magtype_magnitud <- tibble::tibble(
+  estadistico_chi = as.numeric(prueba_chi_magnitud$statistic),
+  grados_libertad = as.numeric(prueba_chi_magnitud$parameter),
+  valor_p_chi = prueba_chi_magnitud$p.value,
+  valor_p_fisher = prueba_fisher_magnitud$p.value,
+  v_cramer = v_cramer_magnitud
+)
+
+print(asociacion_magtype_magnitud)
+
+
+#Asociacion entre magType y profundidad_cat----
+#Estudia si el tipo de magnitud usado se relaciona con la profundidad del evento.
+#Se usa magType_grupo (mww, mwc, mwb, otros) para evitar celdas con frecuencia esperada muy baja.
+
+##Tabla de contingencia con proporciones por fila----
+
+magtype_profundidad_cat <- sismos %>%
+  count(magType_grupo, profundidad_cat, name = "numero_eventos") %>%
+  group_by(magType_grupo) %>%
+  mutate(
+    proporcion_fila = numero_eventos / sum(numero_eventos),
+    porcentaje_fila = proporcion_fila * 100
+  ) %>%
+  ungroup() %>%
+  arrange(magType_grupo, profundidad_cat)
+
+print(magtype_profundidad_cat, n = Inf)
+
+##Chi-cuadrado, V de Cramer y test exacto de Fisher----
+#Chi-cuadrado y V de Cramer en R base, mas Fisher con p-valor simulado como respaldo
+#ante celdas con frecuencia esperada baja. Se suprime la advertencia de aproximacion.
+
+tabla_magtype_profundidad <- table(sismos$magType_grupo, sismos$profundidad_cat)
+
+prueba_chi_profundidad <- suppressWarnings(chisq.test(tabla_magtype_profundidad))
+
+prueba_fisher_profundidad <- fisher.test(
+  tabla_magtype_profundidad,
+  simulate.p.value = TRUE,
+  B = 10000
+)
+
+v_cramer_profundidad <- sqrt(
+  as.numeric(prueba_chi_profundidad$statistic) /
+    (sum(tabla_magtype_profundidad) * (min(dim(tabla_magtype_profundidad)) - 1))
+)
+
+asociacion_magtype_profundidad <- tibble::tibble(
+  estadistico_chi = as.numeric(prueba_chi_profundidad$statistic),
+  grados_libertad = as.numeric(prueba_chi_profundidad$parameter),
+  valor_p_chi = prueba_chi_profundidad$p.value,
+  valor_p_fisher = prueba_fisher_profundidad$p.value,
+  v_cramer = v_cramer_profundidad
+)
+
+print(asociacion_magtype_profundidad)
 
 
 #Evolucion temporal de magType----
