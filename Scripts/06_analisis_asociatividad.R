@@ -1,3 +1,4 @@
+#VARIABLES NUMÉRICAS
 # Matriz de correlacion numerica
 matriz_correlacion_numericas <- sismos %>%
   select(where(is.numeric), -any_of(c("nst", "rms"))) %>%
@@ -162,3 +163,50 @@ pairwise.wilcox.test(
 #entre todas las categorías de magnitud. La significancia USGS aumenta progresivamente 
 # desde los eventos Fuerte hacia los eventos Mayor y Grande o extremo, 
 # lo que confirma que las categorías de magnitud separan grupos con niveles de significancia distintos.
+
+
+#Relación temporal de nst_imp y rms_imp, porque ahí la matriz mostró asociaciones moderadas negativas con año/decada
+#Asociacion temporal de variables instrumentales:
+#tabla resume la asociación entre el tiempo (año) y las variables instrumentales imputadas nst_imp y rms_imp, usando correlación de Spearman.
+asociacion_tiempo_instrumental <- tibble::tibble(
+  variable = c("nst_imp", "rms_imp"),
+  rho_spearman = c(
+    suppressWarnings(cor.test(sismos$año, sismos$nst_imp, method = "spearman")$estimate),
+    suppressWarnings(cor.test(sismos$año, sismos$rms_imp, method = "spearman")$estimate)
+  ),
+  valor_p = c(
+    suppressWarnings(cor.test(sismos$año, sismos$nst_imp, method = "spearman")$p.value),
+    suppressWarnings(cor.test(sismos$año, sismos$rms_imp, method = "spearman")$p.value)
+  )
+)
+asociacion_tiempo_instrumental
+#nst presenta una correlación negativa moderada con el año, lo que indica que en los años más recientes los eventos tienden a estar asociados a un menor número de estaciones reportadas.
+#rms presenta una correlación negativa moderada con el año, lo que indica que en los años más recientes los eventos tienden a presentar menores residuos RMS, es decir, un mejor ajuste del modelo de localización del evento.
+
+#GRÁFICO / Variables instrumentales imputadas por decada
+sismos %>%
+  select(decada, nst_imp, rms_imp) %>%
+  tidyr::pivot_longer(
+    cols = c(nst_imp, rms_imp),
+    names_to = "variable",
+    values_to = "valor"
+  ) %>%
+  ggplot(aes(x = factor(decada), y = valor, fill = factor(decada))) +
+  geom_boxplot(alpha = 0.75) +
+  facet_wrap(~ variable, scales = "free_y") +
+  labs(
+    title = "Variables instrumentales imputadas por decada",
+    x = "Decada",
+    y = "Valor"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+# En el periodo observado, nst_imp y rms_imp presentan valores centrales menores
+# en la decada de 2020 respecto de 2000 y 2010. Esta diferencia sugiere cambios
+# temporales en las variables instrumentales del catalogo. Sin embargo, la
+# decada de 2020 esta incompleta, por lo que la comparacion debe interpretarse
+# como una tendencia del tramo disponible y no como una conclusion definitiva
+# para toda la decada.
+
+
+#VARIABLES CATEGÓRICAS
