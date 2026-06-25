@@ -401,3 +401,9 @@ print(significancia_maxima_anual, n = Inf)
 #Restablecer parametros graficos----
 par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
 
+# La variable sig corresponde al puntaje de significancia asignado por USGS 
+# a cada evento sísmico. Este indicador no representa una propiedad física única, 
+# sino una medida compuesta de relevancia del evento, asociada a factores como magnitud, 
+# intensidad, reportes de percepción e impacto estimado. En la base analizada, sig varía 
+# entre 650 y 2910, por lo que todos los eventos corresponden a terremotos de alta significancia 
+# dentro del catálogo USGS. Valores mayores indican eventos más relevantes o con mayor impacto relativo.
