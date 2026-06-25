@@ -210,3 +210,116 @@ sismos %>%
 
 
 #VARIABLES CATEGÓRICAS
+#Chi-cuadrado: sirve para probar si existe asociación, pero depende mucho del tamaño de la muestra y no mide tan claramente la fuerza.
+#V de Cramer: mide fuerza de asociación entre variables categóricas nominales, incluso con más de dos categorías.
+#Coeficiente Phi: parecido a V de Cramer, pero solo ideal para tablas 2x2.
+#Coeficiente de contingencia: también mide asociación, pero su máximo no siempre llega a 1, por eso es menos intuitivo.
+#Lambda de Goodman-Kruskal: mide cuánto mejora la predicción de una variable categórica usando otra.
+#Theil’s U: mide asociación direccional, útil si quieres saber cuánto una variable ayuda a predecir otra.
+#Tau-b o Tau-c de Kendall: sirven más para variables categóricas ordinales, no tanto nominales.
+
+# Variables categoricas de interes
+variables_categoricas <- c(
+  "locationSource",
+  "magSource",
+  "net",
+  "magType_grupo",
+  "zona",
+  "profundidad_cat",
+  "magnitud_cat"
+)
+
+# Funcion para calcular asociacion entre dos variables categoricas
+calcular_asociacion <- function(variable_1, variable_2) {
+  tabla <- table(sismos[[variable_1]], sismos[[variable_2]])        # Tabla de frecuencias cruzadas entre ambas variables
+  prueba <- suppressWarnings(chisq.test(tabla))                     # Prueba chi-cuadrado para evaluar asociacion
+
+  tibble::tibble(                                     # Se guarda el resultado principal de la asociacion
+    variable_1 = variable_1,
+    variable_2 = variable_2,
+    valor_p = prueba$p.value,
+    v_cramer = sqrt(
+      as.numeric(prueba$statistic) /
+        (sum(tabla) * (min(dim(tabla)) - 1))
+    )
+  )
+}
+
+# Asociacion entre variables categoricas # Se generan todos los pares posibles de variables categoricas
+asociacion_categoricas <- combn(
+  variables_categoricas,
+  2,
+  simplify = FALSE
+) %>%
+  purrr::map_dfr(~ calcular_asociacion(.x[1], .x[2])) %>%    # Se calcula la asociacion para cada par de variables
+  arrange(desc(v_cramer))                                    # Se ordenan los resultados desde la asociacion mas alta
+
+# Ver todas las asociaciones
+asociacion_categoricas %>%
+  as.data.frame()
+# Las asociaciones mas fuertes aparecen entre variables de fuente del catalogo:
+# magSource, net y locationSource. Esto indica que la red de reporte y las
+# fuentes de localizacion y magnitud estan estrechamente relacionadas.
+# Tambien se observa una asociacion moderada-alta entre magSource y
+# magType_grupo, lo que sugiere que el tipo de magnitud utilizado depende en
+# parte de la fuente que reporta la magnitud. En cambio, zona, profundidad_cat
+# y magnitud_cat presentan asociaciones debiles con el resto de variables.
+
+#Las asociaciones más fuertes se observan entre variables de fuente o reporte del catálogo: magSource con net, locationSource con net y locationSource con magSource. Esto indica que la red que reporta el evento y las fuentes de localización/magnitud están muy relacionadas entre sí.
+#Las variables geofísicas o analíticas, como zona, profundidad_cat y magnitud_cat, presentan asociaciones débiles con las variables de fuente. Esto sugiere que las categorías de magnitud, profundidad y zona no dependen fuertemente de la fuente de reporte.
+
+# Matriz de asociacion categorica
+matriz_asociacion_categoricas <- asociacion_categoricas %>%
+  select(variable_1, variable_2, v_cramer) %>%
+  tidyr::pivot_wider(
+    names_from = variable_2,
+    values_from = v_cramer
+  )
+
+# Matriz vacia con el mismo orden en filas y columnas
+matriz_cramer <- matrix(
+  NA,
+  nrow = length(variables_categoricas),
+  ncol = length(variables_categoricas),
+  dimnames = list(variables_categoricas, variables_categoricas)
+)
+
+# Se completan los valores de V de Cramer
+for (i in 1:nrow(asociacion_categoricas)) {
+  matriz_cramer[
+    asociacion_categoricas$variable_1[i],
+    asociacion_categoricas$variable_2[i]
+  ] <- asociacion_categoricas$v_cramer[i]
+
+  matriz_cramer[
+    asociacion_categoricas$variable_2[i],
+    asociacion_categoricas$variable_1[i]
+  ] <- asociacion_categoricas$v_cramer[i]
+}
+
+diag(matriz_cramer) <- 1
+
+# Grafico de asociacion categorica
+corrplot::corrplot(
+  matriz_cramer,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  number.cex = 1,
+  tl.col = "black",
+  tl.cex = 0.9,
+  col = grDevices::colorRampPalette(c("#2166AC", "white", "#B2182B"))(200),
+  diag = TRUE,
+  title = "Matriz de asociacion categorica (V de Cramer)",
+  mar = c(0, 0, 2, 0)
+)
+
+
+
+
+
+
+
+
+
+
