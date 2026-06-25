@@ -28,7 +28,8 @@ sismos <- sismos_raw %>%
     fecha_hora_utc = ymd_hms(time, tz = "UTC"),
     fecha = as.Date(fecha_hora_utc),
     año = year(fecha_hora_utc),
-    mes = month(fecha_hora_utc)
+    mes = month(fecha_hora_utc),
+    decada = floor(año / 10) * 10
   )
 
 #Preparar variables para análisis categórico de profundidad----
@@ -63,6 +64,7 @@ sismos <- sismos %>%
     fecha,
     año,
     mes,
+    decada,
     latitude,
     longitude,
     depth,
@@ -125,7 +127,7 @@ rango_espacial
 
 #Ejecutar scripts posteriores----
 source("Scripts/01_analisis_descriptivo.R")
-source("Scripts/02_visualizaciones.R")
+source("Scripts/02_tratamiento_NAs.R")
 source("Scripts/03_tablas_informe.R")
 source("Scripts/04_analisis_temporal.R")
-source("Scripts/05_analisis_descripitvo.R")
+source("Scripts/05_analisis_descriptivo.R")

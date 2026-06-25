@@ -11,13 +11,12 @@ graphics.off()
 
 
 #Preparación temporal----
-#La base sismos ya contiene fecha_hora_utc, fecha, año, mes y magnitud_cat.
-#Aquí se agregan variables auxiliares para agregación mensual, decadal y umbrales.
+#La base sismos ya contiene fecha_hora_utc, fecha, año, mes, decada y magnitud_cat.
+#Aquí se agregan variables auxiliares para agregación mensual y umbrales.
 
 sismos_temporal <- sismos %>%
   mutate(
     fecha_mes = floor_date(fecha, unit = "month"),
-    decada = floor(año / 10) * 10,
     evento_m70 = mag >= 7.0,
     evento_m75 = mag >= 7.5,
     evento_m80 = mag >= 8.0,

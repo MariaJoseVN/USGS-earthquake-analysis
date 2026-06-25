@@ -174,7 +174,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 Este pre-informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
-El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Asimismo, no se establece distinción entre los tipos de magnitud (`magType`) reportados por la fuente; estos se tratan de manera homogénea pese a poder provenir de escalas o procedimientos de estimación diferentes, lo que constituye una limitación a considerar al comparar eventos.
+El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
 El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
@@ -182,8 +182,19 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 # Metodología
 
-
 ## Caracterización descriptiva
+
+La caracterización descriptiva se realiza sobre la base `sismos`, construida a partir de `sismos_raw` luego de la selección de variables, la revisión de consistencia y la creación de variables derivadas. Esta etapa tiene como propósito resumir la estructura general del catálogo antes de desarrollar las comparaciones temporales y espaciales.
+
+Primero, se delimita el período de análisis entre 2000 y 2025. A partir de este rango se calcula la cantidad de años, meses y eventos observados. Estos valores se utilizan como referencia para interpretar conteos, proporciones y tasas de ocurrencia en las etapas siguientes.
+Luego se describen las variables sísmicas principales. Para mag y depth se calculan medidas de tendencia central, dispersión y posición: media, mediana, desviación estándar, máximo y cuantiles. Estos estadísticos permiten conocer el nivel típico de magnitud y profundidad, evaluar la variabilidad de los eventos y ubicar los valores extremos dentro del catálogo.
+
+Después se construyen categorías de análisis. La variable magnitud_cat agrupa los eventos en “Fuerte”, “Mayor” y “Grande o extremo”. La decisión de usar estos grupos se basa en criterios bibliográficos sobre la interpretación de terremotos de gran magnitud: eventos desde $M \geq 6{,}5$ se consideran relevantes para el encargo; el umbral $M \geq 7{,}0$ permite distinguir terremotos mayores, asociado a la tradición de clasificación de grandes eventos; y el umbral cercano a $M \geq 7{,}8$ permite separar eventos grandes o extremos, coherente con la literatura que trabaja con catálogos globales de terremotos de alta magnitud. En el código, estos criterios se operacionalizan como “Fuerte” para $6{,}5 \leq M < 7{,}0$, “Mayor” para $7{,}0 \leq M < 7{,}8$ y “Grande o extremo” para $M \geq 7{,}8$.
+La variable profundidad_cat clasifica los eventos en “Superficial”, “Intermedio” y “Profundo”. Esta agrupación responde al criterio sismológico solicitado en el instructivo del encargo. En el análisis, esta clasificación permite comparar la distribución de eventos según profundidad focal y evaluar si las zonas o períodos concentran eventos en rangos distintos de profundidad.
+
+También se revisa magType, ya que la magnitud reportada puede provenir de distintos métodos o escalas de estimación. Para esta variable se calcula la distribución de eventos por tipo de magnitud, el resumen de mag dentro de cada magType, su evolución anual y su relación con magSource. Esta revisión permite identificar la composición metodológica del catálogo y precisar que las comparaciones de magnitud se realizan sobre los valores reportados por USGS, sin homogeneizar escalas.
+
+Falta analizar lo de las variables de incertidumbre que agregamos ejejejej
 
 ## Caracterización temporal
 
@@ -191,7 +202,7 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 ## Criterios de interpretación estadística
 
-
+El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. 
 
 # Resultados y discusión
 
