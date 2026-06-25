@@ -105,7 +105,7 @@ header-includes:
 
 # Resumen ejecutivo
 
-El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. En la dimensión temporal, para los eventos $M \geq 7{,}0$ (387 en total) no se observa un patrón claro y sostenido de aumento o disminución en el análisis descriptivo; la década de 2010 registra la mayor actividad relativa, con 16,0 eventos por año. El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
+El presente pre-informe aborda el encargo *Análisis global de grandes terremotos: distribución espacial y temporal de eventos extremos*, desarrollando una caracterización estadística descriptiva y exploratoria a partir del catálogo público de la United States Geological Survey (USGS). El estudio considera 1.186 eventos de magnitud $M \geq 6{,}5$ registrados a nivel mundial entre 2000 y 2025, sobre los cuales se aplicó un control de calidad de la base, la construcción de variables derivadas y la definición de categorías de magnitud y profundidad sustentadas en la literatura especializada, junto con una comparación entre zonas sísmicas delimitadas de forma explícita y reproducible. Los resultados evidencian una marcada concentración espacial; el Cinturón de Fuego del Pacífico agrupa el 75,21 % de los eventos del período, con una tasa de 34,3 eventos por año, muy por sobre las demás zonas evaluadas. La comparación indica que la diferencia principal entre zonas radica en la frecuencia de ocurrencia, mientras que las medias de magnitud observadas son similares y se sitúan en torno a 6,9. En la dimensión temporal, la composición por `magnitud_cat` muestra que la categoría "Fuerte" concentra la mayor parte del catálogo, mientras que el grupo "Mayor o Grande o extremo" reúne 387 eventos y presenta una mediana de 15,6 días entre eventos consecutivos. El informe documenta, además, las limitaciones del análisis, principalmente la heterogeneidad de las escalas de magnitud y el carácter global del catálogo, que impiden atribuir los hallazgos a una falla o región específica y, sobre esta base descriptiva, deja planteada la continuidad hacia una etapa de análisis inferencial que permita contrastar formalmente las diferencias observadas.
 
 # Formulación del problema y pregunta estadística
 
@@ -198,13 +198,13 @@ La caracterización temporal se realiza sobre `sismos_temporal`, objeto derivado
 
 Primero, se define la composición de análisis. Para magnitud se utiliza `magnitud_cat`, que clasifica los eventos en "Fuerte", "Mayor" y "Grande o extremo" según criterios bibliográficos. Para el tipo de magnitud, se revisa la frecuencia de `magType` y se construye `magType_grupo`, conservando `mww`, `mwc` y `mwb`, y agrupando el resto como "otros". Esto permite comparar la estructura de magnitud y la composición de métodos reportados sin fragmentar el análisis en categorías poco frecuentes.
 
-Luego se crea `fecha_mes` y se calculan conteos mensuales, anuales y decadales. En cada escala se resume el catálogo completo, la composición por `magnitud_cat`, la composición por `magType_grupo` y los eventos que superan los umbrales auxiliares $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. Estos umbrales se usan solo como variables operativas para conteos, tasas y recurrencia; no reemplazan la clasificación principal por `magnitud_cat`.
+Luego se crea `fecha_mes` y se calculan conteos mensuales, anuales y decadales. En cada escala se resume el catálogo completo y la composición por `magnitud_cat`; además, se conserva la revisión de `magType_grupo` como apoyo para interpretar la composición de métodos de magnitud reportados. La comparación decadal se expresa mediante tasas anuales promedio para evitar que el período incompleto 2020--2025 se interprete solo por conteos absolutos.
 
 Los conteos mensuales se completan con cero cuando no existen eventos en un mes observado. Los conteos decadales se expresan como tasas anuales promedio para comparar décadas completas con el período 2020--2025, que contiene seis años.
 
-También se calcula la recurrencia temporal global para eventos con $M \geq 7{,}0$, ordenando los registros por `fecha_hora_utc` y estimando los días desde el evento anterior. Esta medida describe intervalos dentro del catálogo mundial y no la recurrencia física de una falla o zona específica.
+También se calcula la recurrencia temporal global desde el enfoque categórico. Para ello se ordenan los registros por `fecha_hora_utc` y se estiman los días desde el evento anterior, tanto para el grupo agregado "Mayor o Grande o extremo" como para cada categoría de `magnitud_cat`. Esta medida describe intervalos dentro del catálogo mundial y no la recurrencia física de una falla o zona específica.
 
-Finalmente, los conteos mensuales y anuales se transforman en objetos de serie temporal (`ts`) para el catálogo completo y para eventos con $M \geq 7{,}0$. La serie mensual usa frecuencia 12 y la anual frecuencia 1. Estos objetos dejan los datos preparados para revisar tendencia, estacionalidad, rezagos u otros patrones temporales. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
+Finalmente, los conteos mensuales y anuales se transforman en objetos de serie temporal (`ts`) para el catálogo completo. La serie mensual usa frecuencia 12 y la anual frecuencia 1. Estos objetos dejan los datos preparados para revisar tendencia, estacionalidad, rezagos u otros patrones temporales desde una perspectiva descriptiva. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
 
 ## Caracterización espacial
 
@@ -244,16 +244,19 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
 
 ```{=latex}
+\Needspace{16\baselineskip}
+\noindent
+\begin{minipage}[t]{0.46\textwidth}
+\vspace{0pt}
 \begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\Needspace{10\baselineskip}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
 \phantomsection
 \refstepcounter{table}
-
 \label{tbl-conteo-decadal-magnitud-cat} \hypertarget{dest-tbl-conteo-decadal-magnitud-cat}{}
 
-\begin{longtable}{rlrr}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{rlrr}
 \toprule
 Década & Categoría de magnitud & Eventos & Tasa anual \\
 \midrule
@@ -267,14 +270,57 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 2020 & Mayor & 77 & $12{,}8$ \\
 2020 & Grande o extremo & 7 & $1{,}17$ \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
+\end{tabular}
+}
+\vspace{-0.6em}
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-conteo-decadal-magnitud-cat}{Conteo y tasa anual promedio por década según categoría de magnitud.}
 \endgroup
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.50\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth, trim=0 6 8 4, clip]{\detokenize{images/Analisis temporal 2.png}}
+\vspace{-2.6em}
+\phantomsection
+\refstepcounter{figure}
+\label{fig-analisis-temporal-2}
+\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-2}. Composición decadal de eventos según categoría de magnitud.\end{center}
+\end{minipage}
 ```
 
 Dado que el período 2020--2025 contiene solo seis años observados, la comparación decadal debe interpretarse mediante tasas anuales promedio y no a partir de conteos absolutos. Bajo este criterio, la década de 2010 presenta la mayor actividad relativa en las categorías "Fuerte" y "Mayor", con tasas de 32,9 y 13,4 eventos por año, respectivamente. El período 2020--2025 mantiene una tasa de eventos "Mayor" cercana a la observada en 2010, pero muestra una menor tasa anual de eventos "Fuerte" y "Grande o extremo". En conjunto, la comparación decadal evidencia fluctuaciones en la frecuencia de ocurrencia, sin mostrar un aumento o disminución uniforme en todas las categorías de magnitud.
+
+Para complementar esta lectura de frecuencia, se analiza la recurrencia temporal global, entendida como el número de días transcurridos entre eventos consecutivos dentro del catálogo. Este análisis permite pasar de los conteos por período a una medida descriptiva del espaciamiento temporal entre eventos. Dado el enfoque categórico adoptado, se calcula la recurrencia tanto para el grupo agregado "Mayor o Grande o extremo", comparable con los eventos de magnitud igual o superior a 7,0, como para cada categoría de `magnitud_cat` por separado.
+
+```{=latex}
+\begingroup
+\small
+\setlength{\tabcolsep}{3.5pt}
+\Needspace{12\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-recurrencia-magnitud-cat} \hypertarget{dest-tbl-recurrencia-magnitud-cat}{}
+
+\begin{longtable}{lrrrrrrrr}
+\toprule
+Grupo de análisis & Eventos & Intervalos & Media & Mediana & Q1 & Q3 & Mín. & Máx. \\
+\midrule
+Mayor o Grande o extremo & 387 & 386 & $24{,}5$ & $15{,}6$ & $5{,}2$ & $32{,}8$ & $0{,}0$ & $177{,}0$ \\
+Fuerte & 799 & 798 & $11{,}9$ & $7{,}3$ & $2{,}6$ & $16{,}6$ & $0{,}0$ & $100{,}0$ \\
+Mayor & 328 & 327 & $28{,}9$ & $19{,}6$ & $7{,}2$ & $40{,}0$ & $0{,}0$ & $189{,}0$ \\
+Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,}0$ & $905{,}0$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-recurrencia-magnitud-cat}{Resumen de recurrencia temporal entre eventos consecutivos según grupo de magnitud.}
+\endgroup
+```
+
+Desde una perspectiva descriptiva, la recurrencia temporal muestra que los eventos de mayor magnitud presentan intervalos más amplios entre ocurrencias consecutivas dentro del catálogo global. El grupo agregado "Mayor o Grande o extremo", comparable con los eventos desde magnitud 7,0, registra 387 eventos y una mediana de 15,6 días entre eventos consecutivos. Al separar por categorías, los eventos "Mayor" presentan una mediana de 19,6 días, mientras que los eventos "Grande o extremo" muestran una mediana considerablemente mayor, de 123,0 días. Esta diferencia es coherente con la menor frecuencia de los eventos de magnitud más alta dentro del período analizado. Además, la distancia entre media y mediana, especialmente en "Grande o extremo", sugiere una distribución asimétrica, con algunos períodos prolongados sin eventos de esa categoría. En conjunto, estos resultados describen el espaciamiento temporal de los grandes terremotos en el catálogo global, sin implicar regularidad física ni recurrencia de una falla o zona específica.
 
 ## Caracterización espacial
 
@@ -465,17 +511,17 @@ La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedi
 
 ## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
 
-La caracterización temporal se inicia con la construcción de `sismos_temporal`, objeto derivado de `sismos`. En este objeto se organizan las variables necesarias para analizar la ocurrencia por mes, año y década, la composición por categoría de magnitud, la composición por tipo de magnitud, los umbrales auxiliares y la recurrencia global.
+La caracterización temporal se inicia con la construcción de `sismos_temporal`, objeto derivado de `sismos`. En este objeto se organizan las variables necesarias para analizar la ocurrencia por mes, año y década, la composición por categoría de magnitud, la composición por tipo de magnitud y la recurrencia global.
 
 La variable `magnitud_cat` se utiliza como clasificación principal de magnitud. A partir de ella se calculan conteos anuales y decadales, y se construyen salidas de composición temporal. Esta lectura permite evaluar si la proporción de eventos "Fuerte", "Mayor" y "Grande o extremo" cambia durante el período analizado. Los criterios de construcción de `magnitud_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
 
 Para el tipo de magnitud, primero se revisa la frecuencia de `magType` en el catálogo. Esta revisión permite identificar los tipos con mayor presencia y separar categorías con baja frecuencia. A partir de ello se construye `magType_grupo`, que conserva `mww`, `mwc` y `mwb`, y agrupa el resto como "otros". Esta decisión permite comparar la composición temporal de `magType` sin generar categorías poco informativas por baja cantidad de observaciones.
 
-Luego se crea `fecha_mes`, que asigna cada evento al mes correspondiente. Esta variable permite construir conteos mensuales regulares. También se definen `evento_m70`, `evento_m75` y `evento_m80`, que identifican eventos con $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. Estos indicadores se usan como variables operativas para conteos, tasas y recurrencia, pero no reemplazan la clasificación conceptual de `magnitud_cat`.
+Luego se crea `fecha_mes`, que asigna cada evento al mes correspondiente. Esta variable permite construir conteos mensuales regulares. Los conteos anuales y decadales se calculan directamente sobre el catálogo completo y sobre `magnitud_cat`, evitando duplicar la clasificación de magnitud mediante indicadores auxiliares.
 
-Después se calculan tres niveles de conteo: mensual, anual y decadal. En cada nivel se registra el número total de eventos del catálogo completo y el número de eventos que cumple los umbrales auxiliares. Los conteos mensuales se completan con cero porque los meses sin eventos forman parte del período observado. Los conteos decadales se complementan con tasas anuales promedio, ya que 2020--2025 contiene seis años observados y no una década completa.
+Después se calculan tres niveles de conteo: mensual, anual y decadal. En cada nivel se registra el número total de eventos del catálogo completo y, cuando corresponde, la composición por categoría de magnitud. Los conteos mensuales se completan con cero porque los meses sin eventos forman parte del período observado. Los conteos decadales se complementan con tasas anuales promedio, ya que 2020--2025 contiene seis años observados y no una década completa.
 
-La recurrencia temporal se calcula sobre los eventos con $M \geq 7{,}0$. Los eventos se ordenan según `fecha_hora_utc` y se calcula `dias_desde_evento_anterior`. Luego se resumen los intervalos mediante media, mediana, cuartiles, mínimo y máximo, y se compara su distribución por década. Esta recurrencia describe el catálogo global y no una fuente sísmica específica.
+La recurrencia temporal se calcula desde la variable `magnitud_cat`. Los eventos se ordenan según `fecha_hora_utc` y se calcula `dias_desde_evento_anterior`. Luego se resumen los intervalos mediante media, mediana, cuartiles, mínimo y máximo para el grupo agregado "Mayor o Grande o extremo" y para cada categoría por separado. Esta recurrencia describe el catálogo global y no una fuente sísmica específica.
 
 Finalmente, con los conteos mensuales se definen `serie_mensual_catalogo_completo` y `serie_mensual_m70`, ambas con inicio en enero de 2000 y frecuencia 12. Con los conteos anuales se definen `serie_anual_catalogo_completo` y `serie_anual_m70`, con inicio en 2000 y frecuencia 1. Estos objetos `ts` permiten tratar los conteos como series temporales regulares y dejan preparada la base para revisar tendencia, estacionalidad, rezagos u otros patrones temporales.
 

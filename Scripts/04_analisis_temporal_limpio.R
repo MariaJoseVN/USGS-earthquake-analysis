@@ -142,6 +142,14 @@ conteo_decadal_cat <- sismos_temporal %>%
 print(conteo_decadal_cat, n = Inf)
 
 
+tabla_decadal_magnitud <- table(
+  sismos_temporal$decada,
+  sismos_temporal$magnitud_cat
+)
+
+matriz_decadal_magnitud <- t(tabla_decadal_magnitud)
+
+
 # Recurrencia temporal por categorias----
 ## Eventos Mayor o Grande o extremo ordenados temporalmente----
 # Esta seleccion es la version categorica del subconjunto de eventos desde
@@ -174,6 +182,27 @@ resumen_recurrencia_mayor_o_extremo <- eventos_mayor_o_extremo %>%
   )
 
 print(resumen_recurrencia_mayor_o_extremo)
+
+
+## Resumen de recurrencia decadal para eventos Mayor o Grande o extremo----
+# Esta salida sirve como respaldo exploratorio para contrastar el espaciamiento
+# temporal entre decadas usando el grupo agregado de grandes terremotos.
+
+resumen_recurrencia_decadal_mayor_o_extremo <- eventos_mayor_o_extremo %>%
+  filter(!is.na(dias_desde_evento_anterior)) %>%
+  group_by(decada) %>%
+  summarise(
+    n_intervalos = n(),
+    tiempo_medio_dias = mean(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_mediano_dias = median(dias_desde_evento_anterior, na.rm = TRUE),
+    q1_dias = quantile(dias_desde_evento_anterior, 0.25, na.rm = TRUE),
+    q3_dias = quantile(dias_desde_evento_anterior, 0.75, na.rm = TRUE),
+    tiempo_minimo_dias = min(dias_desde_evento_anterior, na.rm = TRUE),
+    tiempo_maximo_dias = max(dias_desde_evento_anterior, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+print(resumen_recurrencia_decadal_mayor_o_extremo, n = Inf)
 
 
 ## Resumen de recurrencia por magnitud_cat----
@@ -307,3 +336,58 @@ legend(
 box()
 
 par(mfrow = c(1, 1))
+
+
+### Composicion decadal por magnitud_cat----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+pos_barras_decadal_magnitud <- barplot(
+  matriz_decadal_magnitud,
+  beside = FALSE,
+  main = "Eventos por década según magnitud_cat",
+  xlab = "Década",
+  ylab = "Número de eventos",
+  col = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  ylim = c(0, max(colSums(matriz_decadal_magnitud)) * 1.15),
+  axes = FALSE
+)
+
+fila_fuerte_decadal <- which(rownames(matriz_decadal_magnitud) == "Fuerte")
+
+totales_acumulados_decadal <- apply(matriz_decadal_magnitud, 2, cumsum)
+posiciones_texto_decadal <- totales_acumulados_decadal - matriz_decadal_magnitud / 2
+
+colores_texto_decadal <- matrix(
+  "white",
+  nrow = nrow(matriz_decadal_magnitud),
+  ncol = ncol(matriz_decadal_magnitud)
+)
+
+colores_texto_decadal[fila_fuerte_decadal, ] <- "black"
+
+text(
+  x = rep(pos_barras_decadal_magnitud, each = nrow(matriz_decadal_magnitud)),
+  y = as.vector(posiciones_texto_decadal),
+  labels = ifelse(
+    as.vector(matriz_decadal_magnitud) > 0,
+    as.vector(matriz_decadal_magnitud),
+    ""
+  ),
+  cex = 0.8,
+  col = as.vector(colores_texto_decadal)
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+
+legend(
+  "topright",
+  legend = rownames(matriz_decadal_magnitud),
+  fill = c("gray85", "gray60", "gray30"),
+  border = "gray30",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
