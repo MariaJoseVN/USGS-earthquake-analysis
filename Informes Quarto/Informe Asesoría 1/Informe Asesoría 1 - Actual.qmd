@@ -430,6 +430,62 @@ Las revisiones que se aplican y sus resultados se documentan en el anexo reprodu
 
 A partir de esta etapa, el análisis se consolida en el objeto `sismos`, que funciona como base depurada para las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superan el control de calidad e incorpora las variables derivadas necesarias para la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
+```{=latex}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.9}
+\Needspace{28\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-variables-consideradas} \hypertarget{dest-tbl-variables-consideradas}{}
+
+\begin{longtable}{p{0.18\textwidth}p{0.16\textwidth}p{0.31\textwidth}p{0.25\textwidth}}
+\toprule
+Variable & Origen & Descripción breve & Uso en el análisis \\
+\midrule
+\endfirsthead
+\toprule
+Variable & Origen & Descripción breve & Uso en el análisis \\
+\midrule
+\endhead
+\texttt{id} & Original & Identificador único del evento & Control de duplicados y trazabilidad \\
+\texttt{time} & Original & Fecha y hora original reportada por USGS & Base para construir variables temporales \\
+\texttt{fecha\_hora\_utc} & Derivada & Fecha y hora en formato UTC & Orden temporal y recurrencia \\
+\texttt{fecha} & Derivada & Fecha calendario del evento & Agrupación temporal \\
+\texttt{año} & Derivada & Año del evento & Conteos anuales \\
+\texttt{mes} & Derivada & Mes del evento & Conteos mensuales \\
+\texttt{decada} & Derivada & Década calendario & Comparación decadal \\
+\texttt{fecha\_mes} & Derivada temporal & Mes calendario del evento & Serie mensual regular \\
+\texttt{latitude} & Original & Latitud del epicentro & Zonificación espacial \\
+\texttt{longitude} & Original & Longitud del epicentro & Zonificación espacial \\
+\texttt{depth} & Original & Profundidad del evento en kilómetros & Caracterización descriptiva y espacial \\
+\texttt{profundidad\_cat} & Derivada & Categoría de profundidad & Comparación por profundidad \\
+\texttt{mag} & Original & Magnitud reportada por USGS & Variable sísmica principal \\
+\texttt{magnitud\_cat} & Derivada & Categoría de magnitud: Fuerte, Mayor, Grande o extremo & Composición temporal, recurrencia y resultados \\
+\texttt{magType} & Original & Tipo o método de magnitud reportado & Revisión metodológica de magnitud \\
+\texttt{magType\_grupo} & Derivada & Agrupación de \texttt{magType}: \texttt{mww}, \texttt{mwc}, \texttt{mwb} y otros & Evolución temporal y comparabilidad \\
+\texttt{magSource} & Original & Fuente que reporta la magnitud & Comparabilidad de la medición \\
+\texttt{sig} & Original & Indicador de significancia de USGS & Caracterización complementaria \\
+\texttt{place} & Original & Descripción geográfica del evento & Contexto espacial \\
+\texttt{type} & Original & Tipo de evento & Control de eventos no tectónicos \\
+\texttt{status} & Original & Estado de revisión del registro & Control de calidad \\
+\texttt{net} & Original & Red que reporta el evento & Trazabilidad de fuente \\
+\texttt{locationSource} & Original & Fuente de localización & Trazabilidad espacial \\
+\texttt{nst} & Original & Número de estaciones reportadas & Indicador instrumental \\
+\texttt{rms} & Original & Residuo RMS del ajuste & Indicador de calidad del ajuste \\
+\texttt{nst\_imp} & Derivada & \texttt{nst} imputada por mediana decadal & Comparabilidad instrumental \\
+\texttt{rms\_imp} & Derivada & \texttt{rms} imputada por mediana decadal & Comparabilidad del ajuste \\
+\texttt{zona} & Derivada espacial & Zona sísmica asignada por intersección espacial & Comparación espacial \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-variables-consideradas}{Variables consideradas en la depuración, control de calidad y análisis estadístico.}
+\endgroup
+```
+
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
 El análisis se organiza en torno al script principal `Código.R`, que centraliza la carga de paquetes, la importación de la base cruda `sismos_raw`, la preparación de la base analítica `sismos` y la ejecución secuencial de los scripts complementarios.
