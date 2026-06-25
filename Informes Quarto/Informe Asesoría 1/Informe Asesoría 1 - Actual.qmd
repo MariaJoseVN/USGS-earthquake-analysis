@@ -208,6 +208,14 @@ Finalmente, los conteos mensuales y anuales se transforman en objetos de serie t
 
 ## Caracterización espacial
 
+La caracterización espacial se realiza sobre `sismos`, usando `longitude` y `latitude`. Su propósito es transformar la ubicación puntual de cada evento en una variable categórica que permita comparar zonas sísmicas.
+
+La variable `zona` se construye por intersección espacial entre los eventos y los polígonos de `area_regiones.geojson`. Esta capa delimita el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica. Los eventos que no intersectan estos polígonos se clasifican como "Resto del mundo". Esta clasificación permite comparar las zonas principales con el conjunto restante del catálogo. \emph{(véase en más detalle el \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+
+A partir de `zona` se calculan conteos, porcentajes y tasas anuales. Luego se resumen `mag` y `depth` por zona mediante media, mediana, desviación estándar, máximo y cuantiles. También se cruza `zona` con `profundidad_cat` para comparar la composición de eventos superficiales, intermedios y profundos.
+
+Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `nst_imp`, `rms_imp`, `magType_grupo` y `magSource`. Estos indicadores no corrigen los resultados, pero permiten declarar si las comparaciones pueden estar condicionadas por cobertura instrumental, ajuste del evento, tipo de magnitud o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
+
 ## Criterios de interpretación estadística
 
 El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. 
@@ -429,3 +437,15 @@ La recurrencia temporal se calcula sobre los eventos con $M \geq 7{,}0$. Los eve
 Finalmente, con los conteos mensuales se definen `serie_mensual_catalogo_completo` y `serie_mensual_m70`, ambas con inicio en enero de 2000 y frecuencia 12. Con los conteos anuales se definen `serie_anual_catalogo_completo` y `serie_anual_m70`, con inicio en 2000 y frecuencia 1. Estos objetos `ts` permiten tratar los conteos como series temporales regulares y dejan preparada la base para revisar tendencia, estacionalidad, rezagos u otros patrones temporales.
 
 ## Caracterización espacial {#sec-anexo-caracterizacion-espacial}
+
+Este anexo documenta las decisiones metodológicas que sustentan la comparación espacial.
+
+La primera decisión corresponde a la definición de `zona`. Los eventos se transforman en puntos espaciales con `st_as_sf`, usando `longitude`, `latitude` y EPSG:4326. Luego se ajustan al sistema de referencia de `area_regiones.geojson` con `st_transform`. La asignación se realiza con `st_join` y `st_intersects`: si el punto intersecta un polígono, recibe su región; si no intersecta ninguno, se clasifica como "Resto del mundo".
+
+La segunda decisión corresponde a mantener "Resto del mundo" como categoría explícita. Esta categoría no representa una zona tectónica homogénea. Se conserva para cerrar el total del catálogo y separar los eventos fuera de los tres polígonos principales.
+
+La tercera decisión corresponde a completar con cero las combinaciones sin eventos. Esto mantiene comparables los resúmenes por zona, especialmente los conteos anuales y los cruces con `profundidad_cat`.
+
+La cuarta decisión corresponde a incorporar indicadores de comparabilidad del registro. Para ello se resumen `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` por zona. `nst_imp` y `rms_imp` provienen del tratamiento de valores faltantes mediante imputación por mediana decadal. Se usan para revisar cobertura instrumental y ajuste del evento sin excluir registros. `magType_grupo` y `magSource` permiten revisar tipo de magnitud y fuente dominante por zona.
+
+Estos indicadores son apoyo interpretativo. No modifican conteos, tasas, magnitudes ni profundidades por zona; solo documentan condiciones que pueden afectar la comparación espacial.
