@@ -194,6 +194,18 @@ Después se construyen categorías de análisis para magnitud y profundidad. La 
 
 ## Caracterización temporal
 
+La caracterización temporal se realiza sobre `sismos_temporal`, objeto derivado de `sismos`. Su propósito es organizar los eventos por mes, año y década, y construir variables que permitan comparar su ocurrencia en el tiempo.
+
+Primero, se define la composición de análisis. Para magnitud se utiliza `magnitud_cat`, que clasifica los eventos en "Fuerte", "Mayor" y "Grande o extremo" según criterios bibliográficos. Para el tipo de magnitud, se revisa la frecuencia de `magType` y se construye `magType_grupo`, conservando `mww`, `mwc` y `mwb`, y agrupando el resto como "otros". Esto permite comparar la estructura de magnitud y la composición de métodos reportados sin fragmentar el análisis en categorías poco frecuentes.
+
+Luego se crea `fecha_mes` y se calculan conteos mensuales, anuales y decadales. En cada escala se resume el catálogo completo, la composición por `magnitud_cat`, la composición por `magType_grupo` y los eventos que superan los umbrales auxiliares $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. Estos umbrales se usan solo como variables operativas para conteos, tasas y recurrencia; no reemplazan la clasificación principal por `magnitud_cat`.
+
+Los conteos mensuales se completan con cero cuando no existen eventos en un mes observado. Los conteos decadales se expresan como tasas anuales promedio para comparar décadas completas con el período 2020--2025, que contiene seis años.
+
+También se calcula la recurrencia temporal global para eventos con $M \geq 7{,}0$, ordenando los registros por `fecha_hora_utc` y estimando los días desde el evento anterior. Esta medida describe intervalos dentro del catálogo mundial y no la recurrencia física de una falla o zona específica.
+
+Finalmente, los conteos mensuales y anuales se transforman en objetos de serie temporal (`ts`) para el catálogo completo y para eventos con $M \geq 7{,}0$. La serie mensual usa frecuencia 12 y la anual frecuencia 1. Estos objetos dejan los datos preparados para revisar tendencia, estacionalidad, rezagos u otros patrones temporales. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
+
 ## Caracterización espacial
 
 ## Criterios de interpretación estadística
@@ -401,5 +413,19 @@ La variable `magnitud_cat` agrupa los eventos en "Fuerte", "Mayor" y "Grande o e
 La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedio" y "Profundo". Esta agrupación responde al criterio sismológico solicitado en el instructivo del encargo. En el código, los eventos se clasifican como "Superficial" entre 0 y 70 km, "Intermedio" entre más de 70 y 300 km, y "Profundo" sobre 300 km. Esta clasificación permite comparar la distribución de eventos según profundidad focal y evaluar si las zonas o períodos concentran eventos en rangos distintos de profundidad.
 
 ## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
+
+La caracterización temporal se inicia con la construcción de `sismos_temporal`, objeto derivado de `sismos`. En este objeto se organizan las variables necesarias para analizar la ocurrencia por mes, año y década, la composición por categoría de magnitud, la composición por tipo de magnitud, los umbrales auxiliares y la recurrencia global.
+
+La variable `magnitud_cat` se utiliza como clasificación principal de magnitud. A partir de ella se calculan conteos anuales y decadales, y se construyen salidas de composición temporal. Esta lectura permite evaluar si la proporción de eventos "Fuerte", "Mayor" y "Grande o extremo" cambia durante el período analizado. Los criterios de construcción de `magnitud_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+
+Para el tipo de magnitud, primero se revisa la frecuencia de `magType` en el catálogo. Esta revisión permite identificar los tipos con mayor presencia y separar categorías con baja frecuencia. A partir de ello se construye `magType_grupo`, que conserva `mww`, `mwc` y `mwb`, y agrupa el resto como "otros". Esta decisión permite comparar la composición temporal de `magType` sin generar categorías poco informativas por baja cantidad de observaciones.
+
+Luego se crea `fecha_mes`, que asigna cada evento al mes correspondiente. Esta variable permite construir conteos mensuales regulares. También se definen `evento_m70`, `evento_m75` y `evento_m80`, que identifican eventos con $M \geq 7{,}0$, $M \geq 7{,}5$ y $M \geq 8{,}0$. Estos indicadores se usan como variables operativas para conteos, tasas y recurrencia, pero no reemplazan la clasificación conceptual de `magnitud_cat`.
+
+Después se calculan tres niveles de conteo: mensual, anual y decadal. En cada nivel se registra el número total de eventos del catálogo completo y el número de eventos que cumple los umbrales auxiliares. Los conteos mensuales se completan con cero porque los meses sin eventos forman parte del período observado. Los conteos decadales se complementan con tasas anuales promedio, ya que 2020--2025 contiene seis años observados y no una década completa.
+
+La recurrencia temporal se calcula sobre los eventos con $M \geq 7{,}0$. Los eventos se ordenan según `fecha_hora_utc` y se calcula `dias_desde_evento_anterior`. Luego se resumen los intervalos mediante media, mediana, cuartiles, mínimo y máximo, y se compara su distribución por década. Esta recurrencia describe el catálogo global y no una fuente sísmica específica.
+
+Finalmente, con los conteos mensuales se definen `serie_mensual_catalogo_completo` y `serie_mensual_m70`, ambas con inicio en enero de 2000 y frecuencia 12. Con los conteos anuales se definen `serie_anual_catalogo_completo` y `serie_anual_m70`, con inicio en 2000 y frecuencia 1. Estos objetos `ts` permiten tratar los conteos como series temporales regulares y dejan preparada la base para revisar tendencia, estacionalidad, rezagos u otros patrones temporales.
 
 ## Caracterización espacial {#sec-anexo-caracterizacion-espacial}
