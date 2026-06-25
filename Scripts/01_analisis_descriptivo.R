@@ -429,9 +429,167 @@ profundidad_zona <- sismos %>%
 print(profundidad_zona, n = Inf)
 
 
+#Comparabilidad del registro por zona----
+##Indicadores de monitoreo, ajuste y tipo de magnitud----
+#Estos indicadores permiten interpretar las comparaciones espaciales considerando
+#diferencias en cobertura instrumental, criterios de reporte y tipo de magnitud.
+
+moda_texto <- function(x) {
+  tabla <- table(x, useNA = "no")
+
+  if (length(tabla) == 0) {
+    return(NA_character_)
+  }
+
+  names(tabla)[which.max(tabla)]
+}
+
+porcentaje_moda <- function(x) {
+  tabla <- table(x, useNA = "no")
+
+  if (length(tabla) == 0 || sum(tabla) == 0) {
+    return(NA_real_)
+  }
+
+  max(tabla) / sum(tabla) * 100
+}
+
+comparabilidad_zona <- sismos %>%
+  group_by(zona) %>%
+  summarise(
+    numero_eventos = n(),
+    nst_mediana = median(nst_imp, na.rm = TRUE),
+    nst_media = mean(nst_imp, na.rm = TRUE),
+    rms_mediana = median(rms_imp, na.rm = TRUE),
+    rms_media = mean(rms_imp, na.rm = TRUE),
+    magType_dominante = moda_texto(magType_grupo),
+    porcentaje_magType_dominante = porcentaje_moda(magType_grupo),
+    magSource_dominante = moda_texto(magSource),
+    porcentaje_magSource_dominante = porcentaje_moda(magSource),
+    .groups = "drop"
+  ) %>%
+  tidyr::complete(zona = zonas_estudio) %>%
+  mutate(
+    across(
+      where(is.numeric),
+      ~ replace(.x, is.na(.x) | is.infinite(.x), 0)
+    )
+  ) %>%
+  arrange(desc(numero_eventos))
+
+print(comparabilidad_zona, n = Inf)
+
+
+##Distribucion de nst_imp por zona----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+boxplot(
+  nst_imp ~ zona,
+  data = sismos,
+  main = "Numero de estaciones por zona",
+  xlab = "",
+  ylab = "nst imputado",
+  col = unname(colores_zona[sort(unique(sismos$zona))]),
+  border = "gray30",
+  names = etiquetas_zona[sort(unique(sismos$zona))],
+  las = 1,
+  outline = TRUE
+)
+
+legend(
+  "topright",
+  legend = etiquetas_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
+  fill = colores_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
+  border = "gray30",
+  bty = "n",
+  cex = 0.75
+)
+
+box()
+
+
+##Distribucion de rms_imp por zona----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+boxplot(
+  rms_imp ~ zona,
+  data = sismos,
+  main = "Ajuste RMS por zona",
+  xlab = "",
+  ylab = "rms imputado",
+  col = unname(colores_zona[sort(unique(sismos$zona))]),
+  border = "gray30",
+  names = etiquetas_zona[sort(unique(sismos$zona))],
+  las = 1,
+  outline = TRUE
+)
+
+legend(
+  "topright",
+  legend = etiquetas_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
+  fill = colores_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
+  border = "gray30",
+  bty = "n",
+  cex = 0.75
+)
+
+box()
+
+
+##Composicion de magType_grupo por zona----
+
+tabla_zona_magtype <- table(
+  sismos$zona,
+  sismos$magType_grupo
+)
+
+matriz_zona_magtype_porcentaje <- prop.table(
+  t(tabla_zona_magtype),
+  margin = 2
+) * 100
+
+colores_magtype <- grDevices::hcl.colors(
+  n = nrow(matriz_zona_magtype_porcentaje),
+  palette = "Dark 3"
+)
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 8) + 0.1)
+
+barplot(
+  matriz_zona_magtype_porcentaje,
+  beside = FALSE,
+  main = "Composicion de magType por zona",
+  names.arg = etiquetas_zona[colnames(matriz_zona_magtype_porcentaje)],
+  xlab = "",
+  ylab = "Porcentaje de eventos",
+  col = colores_magtype,
+  border = "gray30",
+  las = 1,
+  ylim = c(0, 100),
+  axes = FALSE
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+
+legend(
+  "topright",
+  inset = c(-0.22, 0),
+  legend = rownames(matriz_zona_magtype_porcentaje),
+  fill = colores_magtype,
+  border = "gray30",
+  bty = "n",
+  cex = 0.8,
+  xpd = TRUE
+)
+
+box()
+
+
 ##Boxplot de mag por zona----
 
-par(mfrow = c(1, 1), bg = "white", mar = c(10, 4, 4, 2) + 0.1)
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 boxplot(
   mag ~ zona,
@@ -441,7 +599,8 @@ boxplot(
   ylab = "Magnitud",
   col = unname(colores_zona[sort(unique(sismos$zona))]),
   border = "gray30",
-  las = 2,
+  names = etiquetas_zona[sort(unique(sismos$zona))],
+  las = 1,
   outline = TRUE
 )
 
@@ -466,7 +625,7 @@ box()
 
 ##Boxplot de depth por zona----
 
-par(mfrow = c(1, 1), bg = "white", mar = c(10, 4, 4, 2) + 0.1)
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 boxplot(
   depth ~ zona,
@@ -476,7 +635,8 @@ boxplot(
   ylab = "Profundidad (km)",
   col = unname(colores_zona[sort(unique(sismos$zona))]),
   border = "gray30",
-  las = 2,
+  names = etiquetas_zona[sort(unique(sismos$zona))],
+  las = 1,
   outline = TRUE
 )
 
@@ -502,3 +662,4 @@ box()
 #Restablecer parametros graficos----
 
 par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
+

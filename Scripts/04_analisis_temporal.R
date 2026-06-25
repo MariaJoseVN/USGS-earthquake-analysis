@@ -11,7 +11,8 @@ graphics.off()
 
 
 #Preparación temporal----
-#La base sismos ya contiene fecha_hora_utc, fecha, año, mes, decada y magnitud_cat.
+#La base sismos ya contiene fecha_hora_utc, fecha, año, mes, decada,
+#magnitud_cat y magType_grupo.
 #Aquí se agregan variables auxiliares para agregación mensual y umbrales.
 
 sismos_temporal <- sismos %>%
@@ -19,14 +20,7 @@ sismos_temporal <- sismos %>%
     fecha_mes = floor_date(fecha, unit = "month"),
     evento_m70 = mag >= 7.0,
     evento_m75 = mag >= 7.5,
-    evento_m80 = mag >= 8.0,
-    magType_grupo = factor(
-      case_when(
-        magType %in% c("mww", "mwc", "mwb") ~ magType,
-        TRUE ~ "otros"
-      ),
-      levels = c("mww", "mwc", "mwb", "otros")
-    )
+    evento_m80 = mag >= 8.0
   )
 
 print(sismos_temporal)

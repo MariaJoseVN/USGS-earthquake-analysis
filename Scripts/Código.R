@@ -56,6 +56,13 @@ sismos <- sismos %>%
         TRUE ~ NA_character_
       ),
       levels = c("Fuerte", "Mayor", "Grande o extremo")
+    ),
+    magType_grupo = factor(
+      case_when(
+        magType %in% c("mww", "mwc", "mwb") ~ magType,
+        TRUE ~ "otros"
+      ),
+      levels = c("mww", "mwc", "mwb", "otros")
     )
   )
 
@@ -76,6 +83,7 @@ sismos <- sismos %>%
     sig,
     magnitud_cat,
     magType, #Varía según quien midio. Puede que sea con parámetros diferentes
+    magType_grupo,
     place, 
     type, #Todos son Terremotos, nosé que otra categoría podría haber
     status,
@@ -130,8 +138,8 @@ rango_espacial
 #Profundidad válida: >= 0
 
 #Ejecutar scripts posteriores----
-source("Scripts/01_analisis_descriptivo.R")
 source("Scripts/02_tratamiento_NAs.R")
+source("Scripts/01_analisis_descriptivo.R")
 source("Scripts/03_tablas_informe.R")
 source("Scripts/04_analisis_temporal.R")
 source("Scripts/05_analisis_descriptivo.R")
