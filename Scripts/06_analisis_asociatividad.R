@@ -314,12 +314,100 @@ corrplot::corrplot(
   mar = c(0, 0, 2, 0)
 )
 
+#Primero estudiaría las asociaciones fuertes que sí tienen sentido analítico:
+#magSource con magType_grupo: importante, porque muestra si la fuente de magnitud se relaciona con el tipo de magnitud usado.
+#locationSource, magSource y net: las reportaría como asociación administrativa del catálogo, pero no las profundizaría mucho.
+#zona con profundidad_cat: aunque es débil, tiene más sentido geofísico que algunas asociaciones de fuente.
+
+# Asociacion entre fuente de magnitud y tipo de magnitud
+magSource_magType <- sismos %>%
+  count(magSource, magType_grupo, name = "n") %>%
+  group_by(magSource) %>%
+  mutate(
+    porcentaje = n / sum(n) * 100
+  ) %>%
+  ungroup() %>%
+  arrange(magSource, desc(porcentaje))
+
+magSource_magType
+
+# Distribucion de magType_grupo segun magSource
+magSource_magType %>%
+  ggplot(aes(x = magSource, y = porcentaje, fill = magType_grupo)) +
+  geom_col(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "mww" = "#D7F1EE",
+      "mwc" = "#8FD8D0",
+      "mwb" = "#3FAFA7",
+      "otros" = "#2F6F73"
+    )
+  ) +
+  labs(
+    title = "Tipo de magnitud segun fuente de magnitud",
+    x = "Fuente de magnitud",
+    y = "Porcentaje",
+    fill = "Tipo de magnitud"
+  ) +
+  theme_minimal()
 
 
+# Asociacion entre zona y categoria de profundidad
+zona_profundidad <- sismos %>%
+  count(zona, profundidad_cat, name = "n") %>%
+  group_by(zona) %>%
+  mutate(
+    porcentaje = n / sum(n) * 100
+  ) %>%
+  ungroup() %>%
+  arrange(zona, desc(porcentaje))
+
+zona_profundidad
+
+# Distribucion de profundidad segun zona
+zona_profundidad %>%
+  ggplot(aes(x = zona, y = porcentaje, fill = profundidad_cat)) +
+  geom_col(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "Superficial" = "#D7F1EE",
+      "Intermedio" = "#3FAFA7",
+      "Profundo" = "#2F6F73"
+    )
+  ) +
+  labs(
+    title = "Categoria de profundidad segun zona",
+    x = "Zona",
+    y = "Porcentaje",
+    fill = "Profundidad"
+  ) +
+  theme_minimal()
 
 
+# Asociacion especifica entre zona y profundidad
+asociacion_categoricas %>%
+  filter(
+    variable_1 == "zona" & variable_2 == "profundidad_cat" |
+      variable_1 == "profundidad_cat" & variable_2 == "zona"
+  )
+
+# Porcentaje de profundidad por zona
+zona_profundidad <- sismos %>%
+  count(zona, profundidad_cat, name = "n") %>%
+  group_by(zona) %>%
+  mutate(
+    porcentaje = n / sum(n) * 100
+  ) %>%
+  ungroup() %>%
+  arrange(zona, desc(porcentaje))
+
+zona_profundidad
 
 
-
-
-
+# En las variables categoricas, las asociaciones mas fuertes se concentran en
+# variables administrativas o de fuente del catalogo, como magSource, net y
+# locationSource. La asociacion entre magSource y magType_grupo muestra que el
+# tipo de magnitud usado depende en parte de la fuente que reporta la magnitud.
+# En cambio, las variables geofisicas como zona, profundidad_cat y magnitud_cat
+# presentan asociaciones mas debiles, por lo que sus relaciones se interpretan
+# principalmente de forma descriptiva.
