@@ -112,7 +112,6 @@ serie_mensual_catalogo_completo <- ts(
 print(serie_mensual_catalogo_completo)
 summary(serie_mensual_catalogo_completo)
 
-
 ##Serie mensual de eventos M >= 7.0----
 
 serie_mensual_m70 <- ts(
@@ -550,6 +549,30 @@ pos_barras_anual_magnitud <- barplot(
   cex.names = 0.7,
   ylim = c(0, max(colSums(matriz_anual_magnitud)) * 1.15),
   axes = FALSE
+)
+fila_fuerte <- which(rownames(matriz_anual_magnitud) == "Fuerte")
+
+totales_acumulados <- apply(matriz_anual_magnitud, 2, cumsum)
+posiciones_texto <- totales_acumulados - matriz_anual_magnitud / 2
+
+colores_texto <- matrix(
+  "white",
+  nrow = nrow(matriz_anual_magnitud),
+  ncol = ncol(matriz_anual_magnitud)
+)
+
+colores_texto[fila_fuerte, ] <- "black"
+
+text(
+  x = rep(pos_barras_anual_magnitud, each = nrow(matriz_anual_magnitud)),
+  y = as.vector(posiciones_texto),
+  labels = ifelse(
+    as.vector(matriz_anual_magnitud) > 0,
+    as.vector(matriz_anual_magnitud),
+    ""
+  ),
+  cex = 0.55,
+  col = as.vector(colores_texto)
 )
 
 axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)

@@ -272,7 +272,7 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 \end{figure}
 ```
 
-La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
+La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel promedio del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
 
 En el subconjunto $M \geq 7{,}0$ se registran 387 eventos, con una tasa media de 14,9 eventos por año. Al comparar por décadas, el mayor nivel se observa en la década de 2010, con 16,0 eventos por año, seguida por la década de 2000 con 14,3 y por el período 2020--2025 con 14,0. Como 2020--2025 corresponde a una década incompleta, la comparación se realiza mediante tasas anuales promedio y no solo con conteos absolutos. \emph{(véase \hyperlink{dest-tbl-conteo-decadal-temporal}{tabla~\ref*{tbl-conteo-decadal-temporal}})}.
 

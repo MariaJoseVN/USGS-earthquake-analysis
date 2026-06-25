@@ -218,17 +218,63 @@ Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `
 
 ## Criterios de interpretación estadística
 
-El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica. 
+El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica.
 
 # Resultados y discusión
 
 <!-- Esta es la sección principal del informe. Mover aquí los resultados ya seleccionados, con tablas y figuras clave. -->
 
-## Depuración y control de calidad
 
 ## Caracterización descriptiva
 
 ## Caracterización temporal
+
+Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media y se obseva tanto una tendencia creciente al inicio como una descendente desde la mitad del tiempo de observación.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{images/Analisis temporal 1.png}}
+\vspace{-1.7em}
+\caption{Comportamiento temporal del catálogo completo y composición anual por categoría de magnitud.}
+\label{fig-analisis-temporal-1}
+\end{figure}
+```
+
+La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
+
+```{=latex}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\Needspace{10\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-conteo-decadal-magnitud-cat} \hypertarget{dest-tbl-conteo-decadal-magnitud-cat}{}
+
+\begin{longtable}{rlrr}
+\toprule
+Década & Categoría de magnitud & Eventos & Tasa anual \\
+\midrule
+2000 & Fuerte & 312 & $31{,}2$ \\
+2000 & Mayor & 117 & $11{,}7$ \\
+2000 & Grande o extremo & 26 & $2{,}6$ \\
+2010 & Fuerte & 329 & $32{,}9$ \\
+2010 & Mayor & 134 & $13{,}4$ \\
+2010 & Grande o extremo & 26 & $2{,}6$ \\
+2020 & Fuerte & 158 & $26{,}3$ \\
+2020 & Mayor & 77 & $12{,}8$ \\
+2020 & Grande o extremo & 7 & $1{,}17$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-conteo-decadal-magnitud-cat}{Conteo y tasa anual promedio por década según categoría de magnitud.}
+\endgroup
+```
+
+Dado que el período 2020--2025 contiene solo seis años observados, la comparación decadal debe interpretarse mediante tasas anuales promedio y no a partir de conteos absolutos. Bajo este criterio, la década de 2010 presenta la mayor actividad relativa en las categorías "Fuerte" y "Mayor", con tasas de 32,9 y 13,4 eventos por año, respectivamente. El período 2020--2025 mantiene una tasa de eventos "Mayor" cercana a la observada en 2010, pero muestra una menor tasa anual de eventos "Fuerte" y "Grande o extremo". En conjunto, la comparación decadal evidencia fluctuaciones en la frecuencia de ocurrencia, sin mostrar un aumento o disminución uniforme en todas las categorías de magnitud.
 
 ## Caracterización espacial
 
@@ -323,9 +369,6 @@ El diagnóstico distingue entre variables centrales del análisis y variables au
 Las revisiones que se aplican y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
 
 A partir de esta etapa, el análisis se consolida en el objeto `sismos`, que funciona como base depurada para las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superan el control de calidad e incorpora las variables derivadas necesarias para la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
-
-
-
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
