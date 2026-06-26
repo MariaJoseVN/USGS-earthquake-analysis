@@ -218,9 +218,7 @@ Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `
 
 ## Análisis de asociatividad e independencia
 
-## Análisis de asociatividad e independencia
-
-El análisis de asociatividad e independencia se realiza sobre la base `sismos`. Su propósito es examinar, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué intensidad, distinguiendo el tratamiento según la naturaleza numérica o categórica de cada variable.
+El análisis de asociatividad e independencia se realiza sobre la base `sismos`. Su propósito es examinar, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación, distinguiendo el tratamiento según la naturaleza numérica o categórica de cada variable.
 
 Para las variables numéricas se calcula una matriz de correlación de Spearman, método basado en rangos que no requiere el supuesto de normalidad y que capta relaciones monótonas entre variables. El cálculo se realiza sobre observaciones completas por pares y excluye las versiones originales de `nst` y `rms`, conservando en su lugar las variables imputadas `nst_imp` y `rms_imp`.
 
@@ -676,7 +674,7 @@ La evolución de `magType_grupo` muestra una transición marcada en la composici
 
 ## Análisis de asociatividad e independencia
 
-El análisis de asociatividad evalúa, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué intensidad. Las relaciones se examinan por separado según la naturaleza de las variables: para las variables numéricas se utiliza la correlación de Spearman, junto con pruebas de comparación entre grupos, y para las variables categóricas se emplea la prueba chi-cuadrado complementada con la V de Cramer como medida de fuerza de asociación. Los resultados se interpretan como descripciones del catálogo analizado y no como relaciones causales.
+El análisis de asociatividad evalúa, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación. Las relaciones se examinan por separado según la naturaleza de las variables: para las variables numéricas se utiliza la correlación de Spearman, junto con pruebas de comparación entre grupos, y para las variables categóricas se emplea la prueba chi-cuadrado complementada con la V de Cramer como medida de fuerza de asociación. Los resultados se interpretan como descripciones del catálogo analizado y no como relaciones causales.
 
 ### Asociación entre variables numéricas
 
