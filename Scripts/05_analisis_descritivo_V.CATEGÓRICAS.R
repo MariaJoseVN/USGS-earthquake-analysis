@@ -8,9 +8,6 @@
 
 graphics.off()
 
-if (!exists("año_inicio")) año_inicio <- min(sismos$año, na.rm = TRUE)
-if (!exists("año_fin")) año_fin <- max(sismos$año, na.rm = TRUE)
-
 niveles_magnitud <- c("Fuerte", "Mayor", "Grande o extremo")
 niveles_profundidad <- c("Superficial", "Intermedio", "Profundo")
 niveles_magtype_grupo <- c("mww", "mwc", "mwb", "otros")
@@ -147,6 +144,24 @@ magnitud_por_magtype <- sismos_categoricas %>%
 print(magnitud_por_magtype, n = Inf)
 
 
+##Resumen de magnitud por magType_grupo----
+
+magnitud_por_magtype_grupo <- sismos_categoricas %>%
+  group_by(magType_grupo) %>%
+  summarise(
+    numero_eventos = n(),
+    magnitud_media = mean(mag, na.rm = TRUE),
+    magnitud_mediana = median(mag, na.rm = TRUE),
+    magnitud_desviacion = sd(mag, na.rm = TRUE),
+    magnitud_minima = min(mag, na.rm = TRUE),
+    magnitud_maxima = max(mag, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(numero_eventos))
+
+print(magnitud_por_magtype_grupo, n = Inf)
+
+
 ##Boxplot de magnitud por magType----
 
 sismos_boxplot_magtype <- sismos_categoricas %>%
@@ -198,6 +213,51 @@ legend(
 box()
 
 
+##Boxplot de magnitud por magType_grupo----
+
+sismos_boxplot_magtype_grupo <- sismos_categoricas %>%
+  filter(!is.na(magType_grupo), !is.na(mag))
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+boxplot(
+  mag ~ magType_grupo,
+  data = sismos_boxplot_magtype_grupo,
+  main = "Distribucion de magnitud por grupo de magType",
+  xlab = "Grupo de magType",
+  ylab = "Magnitud",
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  outline = TRUE
+)
+
+medias_magtype_grupo <- tapply(
+  sismos_boxplot_magtype_grupo$mag,
+  sismos_boxplot_magtype_grupo$magType_grupo,
+  mean,
+  na.rm = TRUE
+)
+
+points(
+  x = seq_along(medias_magtype_grupo),
+  y = medias_magtype_grupo,
+  pch = 19,
+  col = "black"
+)
+
+legend(
+  "topright",
+  legend = "Media",
+  pch = 19,
+  col = "black",
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+
 #Relacion entre variables de fuente----
 ##magType y magSource----
 #Revisa que agencia reporta cada tipo de magnitud. Las proporciones se calculan por fila.
@@ -223,7 +283,6 @@ print(magtype_magsource, n = Inf)
 
 ##Chi-cuadrado y V de Cramer para magType y magSource----
 #La V de Cramer va de 0 a 1 y resume la fuerza de asociacion.
-
 tabla_contingencia <- sismos_categoricas %>%
   filter(!is.na(magType), !is.na(magSource)) %>%
   with(table(magType, magSource))
@@ -237,8 +296,62 @@ asociacion_magtype_magsource <- tibble::tibble(
   valor_p = prueba_chi$p.value,
   v_cramer = v_cramer
 )
-
 print(asociacion_magtype_magsource)
+#El valor_p = 0 no significa literalmente cero, sino que es tan pequeño que R lo muestra como 0. En términos prácticos: hay evidencia estadística muy fuerte para rechazar la hipótesis de independencia. Es decir, magType y magSource no parecen ser variables independientes.
+#La V de Cramer = 0.681 indica una asociación fuerte. Como V de Cramer va entre 0 y 1, un valor cercano a 0.68 sugiere que el tipo de magnitud usado está bastante relacionado con la fuente que reporta la magnitud.
+
+
+##magType_grupo y magSource----
+#Aquí se compara magType_grupo contra magSource. Es decir, ya no se usa cada tipo de magnitud por separado, sino la versión agrupada
+#Este cruce resume la relacion de fuente usando la variable agrupada que se usara
+#en la interpretacion final.
+magtype_grupo_magsource <- sismos_categoricas %>%
+  count(magType_grupo, magSource, name = "numero_eventos") %>%
+  group_by(magType_grupo) %>%
+  mutate(
+    total_fila = sum(numero_eventos),
+    proporcion_fila = if_else(
+      total_fila == 0,
+      0,
+      numero_eventos / total_fila
+    ),
+    porcentaje_fila = proporcion_fila * 100
+  ) %>%
+  ungroup() %>%
+  select(-total_fila) %>%
+  arrange(magType_grupo, desc(numero_eventos))
+
+print(magtype_grupo_magsource, n = Inf)
+
+
+##Chi-cuadrado y V de Cramer para magType_grupo y magSource----
+#La V de Cramer va de 0 a 1 y resume la fuerza de asociacion.
+
+tabla_magtype_grupo_magsource <- sismos_categoricas %>%
+  filter(!is.na(magType_grupo), !is.na(magSource)) %>%
+  mutate(magType_grupo = droplevels(magType_grupo)) %>%
+  with(table(magType_grupo, magSource))
+
+prueba_chi_magtype_grupo_magsource <- suppressWarnings(
+  chisq.test(tabla_magtype_grupo_magsource)
+)
+
+v_cramer_magtype_grupo_magsource <- calcular_v_cramer(
+  prueba_chi_magtype_grupo_magsource,
+  tabla_magtype_grupo_magsource
+)
+
+asociacion_magtype_grupo_magsource <- tibble::tibble(
+  estadistico_chi = as.numeric(prueba_chi_magtype_grupo_magsource$statistic),
+  grados_libertad = as.numeric(prueba_chi_magtype_grupo_magsource$parameter),
+  valor_p = prueba_chi_magtype_grupo_magsource$p.value,
+  v_cramer = v_cramer_magtype_grupo_magsource
+)
+print(asociacion_magtype_grupo_magsource)
+#El valor_p = 1.60e-296 también es extremadamente pequeño. Nuevamente, indica asociación estadísticamente significativa entre el grupo de tipo de magnitud y la fuente.
+#La V de Cramer = 0.651 también indica una asociación fuerte. Es un poco menor que 0.681, pero sigue siendo alta.
+
+#Existe una asociación fuerte y estadísticamente significativa entre el tipo de magnitud reportado y la fuente de magnitud. Esto sugiere que el método o escala de magnitud utilizado en el catálogo depende en gran medida de la agencia o fuente que reporta el evento. Esta relación se mantiene incluso al agrupar los tipos de magnitud en categorías más generales.
 
 
 #Relacion entre magType_grupo y categorias analiticas----
@@ -387,6 +500,27 @@ magtype_zona <- sismos_categoricas %>%
 print(magtype_zona, n = Inf)
 
 
+##Relacion entre magType_grupo y zona----
+
+magtype_grupo_zona <- sismos_categoricas %>%
+  count(zona, magType_grupo, name = "numero_eventos") %>%
+  group_by(zona) %>%
+  mutate(
+    total_fila = sum(numero_eventos),
+    proporcion = if_else(
+      total_fila == 0,
+      0,
+      numero_eventos / total_fila
+    ),
+    porcentaje = proporcion * 100
+  ) %>%
+  ungroup() %>%
+  select(-total_fila) %>%
+  arrange(zona, desc(numero_eventos))
+
+print(magtype_grupo_zona, n = Inf)
+
+
 ##Relacion entre magType y status----
 
 magtype_status <- sismos_categoricas %>%
@@ -408,6 +542,27 @@ magtype_status <- sismos_categoricas %>%
 print(magtype_status, n = Inf)
 
 
+##Relacion entre magType_grupo y status----
+
+magtype_grupo_status <- sismos_categoricas %>%
+  count(status, magType_grupo, name = "numero_eventos") %>%
+  group_by(status) %>%
+  mutate(
+    total_fila = sum(numero_eventos),
+    proporcion = if_else(
+      total_fila == 0,
+      0,
+      numero_eventos / total_fila
+    ),
+    porcentaje = proporcion * 100
+  ) %>%
+  ungroup() %>%
+  select(-total_fila) %>%
+  arrange(status, desc(numero_eventos))
+
+print(magtype_grupo_status, n = Inf)
+
+
 #Evolucion temporal----
 ##Eventos por año y magType----
 
@@ -423,7 +578,24 @@ magtype_anio <- sismos_categoricas %>%
 print(magtype_anio, n = Inf)
 
 
-##Vigencia de cada magType y magSource----
+##Eventos por año y magType_grupo----
+
+magtype_grupo_anio <- sismos_categoricas %>%
+  count(año, magType_grupo, name = "numero_eventos", .drop = FALSE) %>%
+  tidyr::complete(
+    año = año_inicio:año_fin,
+    magType_grupo = niveles_magtype_grupo,
+    fill = list(numero_eventos = 0)
+  ) %>%
+  mutate(
+    magType_grupo = factor(magType_grupo, levels = niveles_magtype_grupo)
+  ) %>%
+  arrange(año, magType_grupo)
+
+print(magtype_grupo_anio, n = Inf)
+
+
+##Vigencia de cada magType, magType_grupo y magSource----
 #Muestra el primer y ultimo año observado para cada categoria.
 
 vigencia_magtype <- sismos_categoricas %>%
@@ -437,6 +609,18 @@ vigencia_magtype <- sismos_categoricas %>%
   arrange(primer_año, magType)
 
 print(vigencia_magtype, n = Inf)
+
+vigencia_magtype_grupo <- sismos_categoricas %>%
+  group_by(magType_grupo) %>%
+  summarise(
+    numero_eventos = n(),
+    primer_año = min(año, na.rm = TRUE),
+    ultimo_año = max(año, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(primer_año, magType_grupo)
+
+print(vigencia_magtype_grupo, n = Inf)
 
 vigencia_magsource <- sismos_categoricas %>%
   group_by(magSource) %>%
@@ -458,7 +642,7 @@ participacion_mww_anual <- sismos_categoricas %>%
   group_by(año) %>%
   summarise(
     eventos_total = n(),
-    eventos_mww = sum(magType == "mww", na.rm = TRUE),
+    eventos_mww = sum(magType_grupo == "mww", na.rm = TRUE),
     .groups = "drop"
   ) %>%
   tidyr::complete(
@@ -514,6 +698,42 @@ text(
 box()
 
 
+##Eventos por magType_grupo----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 5, 4, 2) + 0.1)
+
+barras_magtype_grupo <- barplot(
+  eventos_magtype_grupo$numero_eventos,
+  names.arg = if_else(
+    is.na(eventos_magtype_grupo$magType_grupo),
+    "Sin dato",
+    as.character(eventos_magtype_grupo$magType_grupo)
+  ),
+  col = "gray80",
+  border = "gray30",
+  las = 1,
+  cex.names = 0.9,
+  ylim = c(0, max(eventos_magtype_grupo$numero_eventos) * 1.18),
+  ylab = "Numero de eventos",
+  main = "Eventos segun grupo de magType"
+)
+
+text(
+  x = barras_magtype_grupo,
+  y = eventos_magtype_grupo$numero_eventos,
+  labels = paste0(
+    eventos_magtype_grupo$numero_eventos,
+    " (",
+    format(eventos_magtype_grupo$porcentaje, decimal.mark = ",", nsmall = 1),
+    "%)"
+  ),
+  pos = 3,
+  cex = 0.8
+)
+
+box()
+
+
 ##Eventos por magSource----
 
 par(mfrow = c(1, 1), bg = "white", mar = c(5, 5, 4, 2) + 0.1)
@@ -541,6 +761,7 @@ text(
   pos = 3,
   cex = 0.75
 )
+
 
 box()
 
