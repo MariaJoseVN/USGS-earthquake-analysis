@@ -556,7 +556,7 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 \endgroup
 ```
 
-El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. La lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. Además la lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
 
 
 
