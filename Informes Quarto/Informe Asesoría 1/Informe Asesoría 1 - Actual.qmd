@@ -584,13 +584,15 @@ El análisis de asociatividad evalúa, de forma exploratoria, si las variables d
 
 ### Asociación entre variables numéricas
 
-La matriz de correlación de Spearman evidencia que la mayoría de las variables numéricas presentan asociaciones débiles entre sí. La relación de mayor intensidad se observa entre la magnitud y la significancia (`sig`), con un coeficiente de 0,82, coherente con la forma en que la USGS define este indicador compuesto [@usgs_significance]. La asociación elevada entre año y década (0,93) responde a que la década deriva directamente del año, por lo que no aporta información sustantiva. Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociaciones negativas moderadas con el tiempo, del orden de $-0{,}37$ y $-0{,}43$ respecto del año, resultado que debe interpretarse con cautela debido al procedimiento de imputación por mediana decadal.
+La matriz de correlación de Spearman evidencia que la mayoría de las variables numéricas presentan asociaciones débiles entre sí. La relación de mayor intensidad se observa entre la magnitud y la significancia (`sig`), con un coeficiente de 0,82, coherente con la forma en que la USGS define este indicador compuesto [@usgs_significance]. 
+La asociación elevada entre año y década (0,93) responde a que la década deriva directamente del año, por lo que no aporta información sustantiva. 
+Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociaciones negativas moderadas con el tiempo, del orden de $-0{,}37$ y $-0{,}43$ respecto del año (resultado que debe interpretarse con cautela debido al procedimiento de imputación por mediana decadal).
 
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
-\vspace{-0.6em}
+\includegraphics[width=0.79\textwidth]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
+\vspace{-1.7em}
 \caption{Matriz de correlación de Spearman entre las variables numéricas del catálogo.}
 \label{fig-matriz-correlacion-numericas}
 \end{figure}
@@ -634,8 +636,8 @@ Entre las variables categóricas, las asociaciones de mayor intensidad se concen
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
-\vspace{-0.6em}
+\includegraphics[width=0.7\textwidth]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
+\vspace{-1.7em}
 \caption{Matriz de asociación entre variables categóricas medida con la V de Cramer.}
 \label{fig-matriz-asociacion-categorica}
 \end{figure}
@@ -644,6 +646,7 @@ Entre las variables categóricas, las asociaciones de mayor intensidad se concen
 En contraste, las variables geofísicas de comparación, `zona` y `profundidad_cat`, presentan asociaciones débiles con las variables de fuente (V de Cramer inferior a 0,13) y, en la mayoría de los pares, no significativas. Este resultado respalda su uso como variables de comparación espacial, pues indica que la zonificación y la categoría de profundidad no dependen de forma marcada de la fuente de reporte. La asociación entre `zona` y `profundidad_cat`, aunque débil (V de Cramer = 0,13), resulta estadísticamente significativa ($p < 0{,}001$) y conserva sentido geofísico, ya que el Cinturón de Fuego es la única zona que concentra una proporción apreciable de eventos profundos, según el cruce documentado en la \hyperref[sec-anexo-caracterizacion-espacial]{caracterización espacial}. La categoría de magnitud, por su parte, muestra una asociación débil a moderada con `magSource` (0,27) y `net` (0,26), consistente con que los eventos de mayor tamaño tienden a recibir la magnitud autoritativa `mww` de la red `us`.
 
 En síntesis, las asociaciones más fuertes del catálogo corresponden a su estructura de reporte y no a las variables de interés sísmico, mientras que las variables geofísicas de comparación se relacionan débilmente con la fuente. Estos hallazgos se interpretan de forma descriptiva y sustentan que las comparaciones de magnitud y profundidad entre zonas no están determinadas por las condiciones de reporte del catálogo.
+
 
 ## Supuestos, limitaciones y sensibilidad
 
