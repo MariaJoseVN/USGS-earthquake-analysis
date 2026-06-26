@@ -598,7 +598,7 @@ Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociac
 \end{figure}
 ```
 
-La relación entre magnitud y significancia se confirma mediante la correlación de Spearman, que resulta alta y positiva ($\rho = 0{,}816$; $p < 0{,}001$): los eventos de mayor magnitud tienden a presentar mayor significancia USGS. La advertencia por empates en los rangos, esperable en una variable como la magnitud, lleva a interpretar el valor $p$ como aproximado.
+La relación entre magnitud y significancia se confirma mediante la correlación de Spearman, que resulta alta y positiva ($\rho = 0{,}816$; $p < 0{,}001$): los eventos de mayor magnitud tienden a presentar mayor significancia USGS.
 
 Al examinar la significancia según la categoría de magnitud, los valores aumentan de forma progresiva desde los eventos "Fuerte" hacia los "Mayor" y los "Grande o extremo", como se resume en la \hyperlink{dest-tbl-significancia-magnitud-cat}{Tabla~\ref*{tbl-significancia-magnitud-cat}}. La prueba de Kruskal-Wallis indica diferencias estadísticamente significativas entre categorías ($\chi^2 = 546{,}98$; $\mathrm{gl} = 2$; $p < 0{,}001$), y las comparaciones por pares de Wilcoxon con ajuste de Bonferroni confirman que las tres categorías difieren entre sí ($p < 0{,}001$ en todos los pares). No obstante, las tres categorías presentan valores atípicos altos, lo que indica que la significancia no depende únicamente de la magnitud, sino también de otros elementos que la USGS incorpora en el indicador [@usgs_significance].
 
@@ -627,7 +627,7 @@ Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $
 \endgroup
 ```
 
-Por último, las variables instrumentales imputadas presentan una asociación negativa moderada con el año (`nst_imp`: $\rho = -0{,}374$; $p < 0{,}001$; `rms_imp`: $\rho = -0{,}429$; $p < 0{,}001$). Esto sugiere que en los años más recientes los eventos tienden a asociarse a un menor número de estaciones reportadas y a menores residuos RMS, es decir, a un mejor ajuste de la localización. Esta lectura se acota al tramo disponible, dado que el período 2020-2025 se encuentra incompleto y que ambas variables provienen de imputación.
+Por último, las variables instrumentales imputadas presentan una asociación negativa moderada con el año (`nst_imp`: $\rho = -0{,}374$; $p < 0{,}001$; `rms_imp`: $\rho = -0{,}429$; $p < 0{,}001$). Esto sugiere que en los años más recientes los eventos tienden a asociarse a un menor número de estaciones reportadas y a menores residuos RMS, es decir, a un mejor ajuste de la localización.
 
 ### Asociación entre variables categóricas
 
@@ -643,7 +643,7 @@ Entre las variables categóricas, las asociaciones de mayor intensidad se concen
 \end{figure}
 ```
 
-En contraste, las variables geofísicas de comparación, `zona` y `profundidad_cat`, presentan asociaciones débiles con las variables de fuente (V de Cramer inferior a 0,13) y, en la mayoría de los pares, no significativas. Este resultado respalda su uso como variables de comparación espacial, pues indica que la zonificación y la categoría de profundidad no dependen de forma marcada de la fuente de reporte. La asociación entre `zona` y `profundidad_cat`, aunque débil (V de Cramer = 0,13), resulta estadísticamente significativa ($p < 0{,}001$) y conserva sentido geofísico, ya que el Cinturón de Fuego es la única zona que concentra una proporción apreciable de eventos profundos, según el cruce documentado en la \hyperref[sec-anexo-caracterizacion-espacial]{caracterización espacial}. La categoría de magnitud, por su parte, muestra una asociación débil a moderada con `magSource` (0,27) y `net` (0,26), consistente con que los eventos de mayor tamaño tienden a recibir la magnitud autoritativa `mww` de la red `us`.
+En contraste, las variables geofísicas de comparación, `zona` y `profundidad_cat`, presentan asociaciones débiles con las variables de fuente (V de Cramer inferior a 0,13) y, en la mayoría de los pares, no significativas. Este resultado respalda su uso como variables de comparación espacial, pues indica que la zonificación y la categoría de profundidad no dependen de forma marcada de la fuente de reporte. La asociación entre `zona` y `profundidad_cat`, aunque débil (V de Cramer = 0,13), resulta estadísticamente significativa ($p < 0{,}001$) y conserva sentido geofísico, ya que el Cinturón de Fuego es la única zona que concentra una proporción apreciable de eventos profundos, según el cruce documentado en la \hyperref[sec-anexo-caracterizacion-espacial]{caracterización espacial}.
 
 En síntesis, las asociaciones más fuertes del catálogo corresponden a su estructura de reporte y no a las variables de interés sísmico, mientras que las variables geofísicas de comparación se relacionan débilmente con la fuente. Estos hallazgos se interpretan de forma descriptiva y sustentan que las comparaciones de magnitud y profundidad entre zonas no están determinadas por las condiciones de reporte del catálogo.
 
