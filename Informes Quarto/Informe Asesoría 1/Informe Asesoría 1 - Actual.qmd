@@ -229,6 +229,8 @@ El análisis se plantea como descriptivo y exploratorio. Por ello, los resultado
 
 ## Caracterización descriptiva
 
+### Magnitud
+
 ```{=latex}
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
@@ -269,6 +271,7 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
+
 La magnitud de los eventos presenta una media de 6,90 y una mediana de 6,80, lo que indica que el catálogo se concentra cerca del umbral mínimo de selección definido para el estudio. El 75 % de los eventos alcanza magnitudes de hasta 7,10, mientras que el 90 % no supera 7,50 y el 95 % se mantiene bajo 7,70.
 
 A partir de esta descripción continua, el análisis siguiente identifica los años con mayores máximos anuales y luego resume la composición del catálogo mediante categorías de magnitud.
@@ -377,7 +380,9 @@ Grande o extremo & 59 & 5,0 \% \\
 
 La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000--2025.
 
-En cuanto a la profundidad focal, el catálogo presenta una mediana de 26,0 km y una media de 93,1 km. La diferencia entre ambas medidas, junto con una desviación estándar de 164,1 km, muestra una distribución asimétrica: la mayoría de los eventos se concentra en profundidades bajas, pero existen registros de profundidad considerablemente mayor, con un máximo observado de 676,4 km.
+### Profundidad
+
+En cuanto a la profundidad, el catálogo presenta una mediana de 26,0 km y una media de 93,1 km. La diferencia entre ambas medidas, junto con una desviación estándar de 164,1 km, muestra una distribución asimétrica. La mayoría de los eventos se concentra en profundidades bajas, pero existen registros de profundidad considerablemente mayor, con un máximo observado de 676,4 km.
 
 ```{=latex}
 \begingroup
