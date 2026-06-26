@@ -525,7 +525,6 @@ Script & Propósito principal \\
 \texttt{Código.R} & Ejecuta el flujo principal, importa las bases, une \texttt{sig\_raw} con \texttt{sismos\_raw} y prepara \texttt{sismos}. \\
 \texttt{02\_tratamiento\_NAs.R} & Imputa \texttt{nst} y \texttt{rms} por mediana decadal para construir \texttt{nst\_imp} y \texttt{rms\_imp}. \\
 \texttt{01\_analisis\_descriptivo.R} & Desarrolla la caracterización descriptiva y espacial inicial. \\
-\texttt{03\_tablas\_informe.R} & Reúne salidas tabulares de apoyo para el informe. \\
 \texttt{04\_analisis\_temporal\_limpio.R} & Desarrolla el análisis temporal con catálogo completo, \texttt{magnitud\_cat} y \texttt{magType\_grupo}. \\
 \texttt{05\_analisis\_descriptivo.R} & Profundiza análisis descriptivos complementarios, incluyendo \texttt{sig}. \\
 \texttt{05\_analisis\_magtype.R} & Revisa \texttt{magType}, \texttt{magSource} y sus asociaciones con categorías analíticas. \\
@@ -571,7 +570,7 @@ Este flujo conecta la revisión cartográfica de QGIS con el análisis estadíst
 
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
 
-Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la USGS [@usgs_faq_terremotos].
+Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la página [Where do earthquakes occur?](https://www.usgs.gov/faqs/where-do-earthquakes-occur) de USGS [@usgs_faq_terremotos].
 
 El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
 

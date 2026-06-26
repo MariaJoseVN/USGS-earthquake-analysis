@@ -140,7 +140,6 @@ rango_espacial
 #Ejecutar scripts posteriores----
 source("Scripts/02_tratamiento_NAs.R")
 source("Scripts/01_analisis_descriptivo.R")
-source("Scripts/03_tablas_informe.R")
 source("Scripts/04_analisis_temporal_limpio.R")
 source("Scripts/05_analisis_descriptivo.R")
 source("Scripts/05_analisis_descritivo_V.CATEGÓRICAS.R")
