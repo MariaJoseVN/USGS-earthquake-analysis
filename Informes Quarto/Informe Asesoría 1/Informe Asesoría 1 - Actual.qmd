@@ -229,6 +229,216 @@ El análisis se plantea como descriptivo y exploratorio. Por ello, los resultado
 
 ## Caracterización descriptiva
 
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+El catálogo analizado considera eventos sísmicos registrados entre los años 2000 y 2025, lo que corresponde a un período de 26 años y 312 meses de observación. Bajo el criterio de selección definido para el estudio, se identifican 1.186 eventos con magnitud igual o superior a $M \geq 6{,}5$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.95}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-alcance-catalogo}
+\hypertarget{dest-tbl-alcance-catalogo}{}
+
+\begin{tabular}{lr}
+\toprule
+Indicador & Valor \\
+\midrule
+Año de inicio & 2000 \\
+Año de término & 2025 \\
+Años analizados & 26 \\
+Meses analizados & 312 \\
+Eventos con $M \geq 6{,}5$ & 1.186 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-alcance-catalogo}. Alcance temporal y tamaño del catálogo analizado.}
+\end{minipage}
+\vspace{0.8em}
+```
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+La magnitud de los eventos presenta una media de 6,90 y una mediana de 6,80, lo que indica que el catálogo se concentra cerca del umbral mínimo de selección definido para el estudio. El 75 % de los eventos alcanza magnitudes de hasta 7,10, mientras que el 90 % no supera 7,50 y el 95 % se mantiene bajo 7,70.
+
+A partir de esta descripción continua, el análisis siguiente identifica los años con mayores máximos anuales y luego resume la composición del catálogo mediante categorías de magnitud.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.02}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-resumen-magnitud}
+\hypertarget{dest-tbl-resumen-magnitud}{}
+
+\begin{tabular}{lrlr}
+\toprule
+Estadístico & Valor & Estadístico & Valor \\
+\midrule
+Media & 6,90 & Q25 & 6,60 \\
+Mediana & 6,80 & Q50 & 6,80 \\
+Desv. est. & 0,417 & Q75 & 7,10 \\
+Máx. & 9,10 & Q90 & 7,50 \\
+ &  & Q95 & 7,70 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-resumen-magnitud}. Resumen descriptivo de la magnitud de los eventos analizados.}
+\endgroup
+
+\end{minipage}
+```
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\vspace{-0.7em}
+\caption{Distribución de eventos según magnitud, con media y mediana del catálogo.}
+\label{fig-analisis-descriptivo-1}
+\end{figure}
+```
+
+La distribución observada confirma la lectura anterior, ya que se concentra en los valores más cercanos al umbral de inclusión y presenta una cola hacia magnitudes más altas.
+
+Para revisar con mayor detalle los valores superiores de la distribución, se construye un ranking de los años con mayores magnitudes máximas registradas en el catálogo.
+
+```{=latex}
+\begingroup
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.9}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-ranking-magnitud-maxima-anual}
+\hypertarget{dest-tbl-ranking-magnitud-maxima-anual}{}
+
+\begin{tabular}{lccccc}
+\toprule
+Puesto & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+Año(s) & 2004, 2011 & 2010, 2025 & 2005, 2012 & 2001, 2007 & 2006, 2013, 2015 \\
+Magnitud máxima & 9,10 & 8,80 & 8,60 & 8,40 & 8,30 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-ranking-magnitud-maxima-anual}. Ranking de mayores magnitudes máximas anuales del catálogo.}
+\endgroup
+```
+
+El ranking de máximos anuales muestra que los valores más altos se concentran en pocos años del período. Los máximos de 2004 y 2011 alcanzan magnitud 9,1, mientras que 2010 y 2025 registran 8,8. Esta lectura complementa el resumen global: aunque la mayor parte de los eventos se concentra bajo magnitud 7,7, existen años con eventos de magnitud excepcionalmente alta que influyen en la caracterización general del catálogo.
+
+Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`, cuyos criterios de construcción se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+
+\begingroup
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{0.95}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-eventos-magnitud-cat}
+\hypertarget{dest-tbl-eventos-magnitud-cat}{}
+
+\begin{tabular}{lrr}
+\toprule
+Categoría de magnitud & Eventos & Porcentaje \\
+\midrule
+Fuerte & 799 & 67,4 \% \\
+Mayor & 328 & 27,7 \% \\
+Grande o extremo & 59 & 5,0 \% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-eventos-magnitud-cat}. Distribución de eventos según categoría de magnitud.}
+\endgroup
+
+La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000--2025.
+
+En cuanto a la profundidad focal, el catálogo presenta una mediana de 26,0 km y una media de 93,1 km. La diferencia entre ambas medidas, junto con una desviación estándar de 164,1 km, muestra una distribución asimétrica: la mayoría de los eventos se concentra en profundidades bajas, pero existen registros de profundidad considerablemente mayor, con un máximo observado de 676,4 km.
+
+```{=latex}
+\begingroup
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.02}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-resumen-profundidad}
+\hypertarget{dest-tbl-resumen-profundidad}{}
+
+\begin{tabular}{lrlr}
+\toprule
+Estadístico & Valor & Estadístico & Valor \\
+\midrule
+Media & 93,1 & Q25 & 13,0 \\
+Mediana & 26,0 & Q50 & 26,0 \\
+Desv. est. & 164,1 & Q75 & 58,0 \\
+Máx. & 676,4 & Q90 & 354,8 \\
+ &  & Q95 & 576,6 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-resumen-profundidad}. Resumen descriptivo de la profundidad focal de los eventos analizados.}
+\endgroup
+```
+
+Para complementar el resumen numérico, la variable `depth` se categorizó en `profundidad_cat`, cuyos criterios de construcción también se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+
+```{=latex}
+\begingroup
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{0.95}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-eventos-profundidad-cat}
+\hypertarget{dest-tbl-eventos-profundidad-cat}{}
+
+\begin{tabular}{lrr}
+\toprule
+Categoría de profundidad & Eventos & Porcentaje \\
+\midrule
+Superficial & 913 & 77,0 \% \\
+Intermedio & 150 & 12,6 \% \\
+Profundo & 123 & 10,4 \% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-eventos-profundidad-cat}. Distribución de eventos según categoría de profundidad.}
+\endgroup
+```
+
+La composición por categoría confirma la concentración observada en el resumen numérico: 913 eventos, equivalentes al 77,0 % del catálogo, se clasifican como superficiales. Los eventos intermedios representan el 12,6 %, mientras que los profundos alcanzan el 10,4 %. En conjunto, la profundidad muestra una estructura dominada por eventos superficiales, aunque con una fracción menor de eventos intermedios y profundos que explica la cola superior de la distribución.
+
 ## Caracterización temporal
 
 Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media, con un aumento relativo durante la primera parte del período y una disminución posterior desde la mitad del tiempo de observación, sin que ello implique una tendencia sostenida para todo el intervalo.

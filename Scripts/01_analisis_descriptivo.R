@@ -55,7 +55,7 @@ resumen_magnitud <- sismos %>%
     cuantil_95 = quantile(mag, 0.95, na.rm = TRUE)
   )
 
-print(resumen_magnitud)
+print(data.frame(resumen_magnitud))
 
 
 ##Magnitud maxima anual----
@@ -159,7 +159,7 @@ resumen_profundidad <- sismos %>%
     cuantil_95 = quantile(depth, 0.95, na.rm = TRUE)
   )
 
-print(resumen_profundidad)
+print(data.frame(resumen_profundidad))
 
 
 ##Eventos segun profundidad_cat----
