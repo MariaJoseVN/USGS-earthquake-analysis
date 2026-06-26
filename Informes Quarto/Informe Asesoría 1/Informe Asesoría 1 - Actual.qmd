@@ -406,7 +406,7 @@ El formato `.CSV` se utiliza como base principal del procesamiento estadístico,
 
 ### Datos originales {#sec-datos-originales}
 
-Una vez que los datos se descargan desde USGS según los parámetros indicados en la Tabla \ref{tbl-parametros-descarga}, el archivo crudo `BBDD/query.csv` se importa en R y se almacena inicialmente como el objeto **`sismos_raw`**. Esta base conserva las variables originales entregadas por USGS, sin modificaciones previas, y constituye el punto de partida del proceso de depuración, selección y construcción de variables derivadas.
+Una vez que los datos se descargan desde USGS según los parámetros indicados en la Tabla \ref{tbl-parametros-descarga}, el archivo crudo `BBDD/query.csv` se importa en R y se almacena inicialmente como el objeto **`sismos_raw`**. Esta base conserva las variables originales entregadas por USGS, sin modificaciones previas, y constituye el punto de partida del proceso de depuración, selección y construcción de variables derivadas. De forma complementaria, se importa `BBDD/sig.csv` como **`sig_raw`**, desde donde se incorpora la variable `sig` al objeto `sismos` mediante el identificador `id`.
 
 Las variables originales del catálogo pueden organizarse en distintos grupos según su función:
 
@@ -418,15 +418,19 @@ Las variables originales del catálogo pueden organizarse en distintos grupos se
 
 - Variables correspondientes a características sísmicas del evento, como `mag`, `magType`, `depth` y `type`.
 
-Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad, pero no se seleccionan como variables centrales del presente análisis, ya que el objetivo del pre-informe se enfoca en caracterizar la frecuencia de eventos y el comportamiento de `mag`, `depth`, `time`, `latitude` y `longitude`.
+Además, la base original contiene variables asociadas a la medición instrumental, incertidumbre o calidad del procesamiento, tales como `nst`, `gap`, `dmin`, `rms`, `horizontalError`, `depthError`, `magError` y `magNst`. Estas variables se revisan durante el control de calidad. En el flujo actual se conservan `nst` y `rms` porque aportan información útil sobre cobertura instrumental y ajuste del evento, mientras que el resto de variables auxiliares se mantiene fuera de los análisis principales por su mayor proporción de valores faltantes o por no ser necesarias para responder los objetivos descriptivos del informe.
 
 ## Depuración y control de calidad
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables auxiliares, asociadas a incertidumbre o procesamiento instrumental, presentan la mayoría de los valores faltantes y no se incorporan en los análisis principales. Por ello, se conservan en la base cruda y se reportan como una limitación para análisis posteriores.
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables centrales no presentan problemas que obliguen a excluir registros: no se detectan duplicados por `id`, los eventos corresponden al tipo `earthquake`, las fechas se mantienen dentro del período 2000--2025 y las magnitudes cumplen el umbral de descarga definido.
 
-Las revisiones que se aplican y sus resultados se documentan en el anexo reproducible. \emph{(véase \hyperref[sec-anexo-control-calidad]{anexo de control de calidad})}.
+Dentro de las variables auxiliares, `nst` y `rms` se incorporan al flujo actual porque entregan información complementaria sobre cobertura instrumental y calidad del ajuste del evento. `nst` registra el número de estaciones utilizadas o reportadas para localizar el sismo, mientras que `rms` resume el residuo del ajuste de localización. En la base descargada, `nst` presenta 402 valores faltantes de 1.186 registros y `rms` presenta 9 valores faltantes. Por esta razón, ambas variables se conservan en su versión original y, además, se crean `nst_imp` y `rms_imp` mediante imputación por mediana decadal. Esta decisión permite usarlas como indicadores de comparabilidad sin eliminar eventos del catálogo.
+
+El resto de variables auxiliares asociadas a error, incertidumbre o procesamiento instrumental se conserva en la base cruda y no se incorpora a los análisis principales. Esta decisión evita sobrecargar el informe con variables que no son necesarias para los objetivos descriptivos actuales y que presentan patrones de ausencia más complejos.
+
+Estas decisiones delimitan qué variables se conservan en la base analítica `sismos`, cuáles se transforman para el análisis y cuáles permanecen solo como antecedentes de la base cruda.
 
 A partir de esta etapa, el análisis se consolida en el objeto `sismos`, que funciona como base depurada para las etapas posteriores. Este objeto reúne las variables solicitadas en el encargo que superan el control de calidad e incorpora las variables derivadas necesarias para la preparación temporal, la categorización de magnitud y profundidad, y la zonificación espacial. El detalle de su composición, origen y propósito analítico se presenta en la \hyperlink{dest-tbl-variables-consideradas}{Tabla~\ref*{tbl-variables-consideradas}}.
 
@@ -467,7 +471,7 @@ Variable & Origen & Descripción breve & Uso en el análisis \\
 \texttt{magType} & Original & Tipo o método de magnitud reportado & Revisión metodológica de magnitud \\
 \texttt{magType\_grupo} & Derivada & Agrupación de \texttt{magType}: \texttt{mww}, \texttt{mwc}, \texttt{mwb} y otros & Evolución temporal y comparabilidad \\
 \texttt{magSource} & Original & Fuente que reporta la magnitud & Comparabilidad de la medición \\
-\texttt{sig} & Original & Indicador de significancia de USGS & Caracterización complementaria \\
+\texttt{sig} & Original complementaria & Indicador de significancia de USGS incorporado desde \texttt{sig\_raw} & Caracterización complementaria \\
 \texttt{place} & Original & Descripción geográfica del evento & Contexto espacial \\
 \texttt{type} & Original & Tipo de evento & Control de eventos no tectónicos \\
 \texttt{status} & Original & Estado de revisión del registro & Control de calidad \\
@@ -488,36 +492,26 @@ Variable & Origen & Descripción breve & Uso en el análisis \\
 
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
-El análisis se organiza en torno al script principal `Código.R`, que centraliza la carga de paquetes, la importación de la base cruda `sismos_raw`, la preparación de la base analítica `sismos` y la ejecución secuencial de los scripts complementarios.
+### Positron y `Código.R` {#sec-anexo-positron-codigo}
 
-La separación del código responde a una decisión operativa del equipo: cada script aborda una etapa específica del análisis, lo que permite revisar, depurar y modificar componentes particulares sin alterar todo el flujo de trabajo. Esta estructura también facilita el trabajo colaborativo, ya que distintos integrantes pueden avanzar sobre módulos distintos manteniendo un punto común de ejecución.
+El procesamiento estadístico se desarrolla en Positron mediante scripts de R organizados dentro del proyecto `USGS-earthquake-analysis`. Este entorno permite ejecutar de forma secuencial la importación de datos, depuración, construcción de variables derivadas y análisis descriptivo, temporal y espacial, manteniendo visibles los objetos generados y las salidas de consola para su revisión.
+
+El análisis se organiza en torno al script principal `Código.R`, que centraliza la carga de paquetes, la importación de `sismos_raw` desde `BBDD/query.csv`, la importación de `sig_raw` desde `BBDD/sig.csv`, la unión de ambas fuentes mediante `id` y la preparación de la base analítica `sismos`. En esta etapa se construyen las variables temporales (`fecha_hora_utc`, `fecha`, `año`, `mes` y `decada`), las categorías `profundidad_cat` y `magnitud_cat`, y la agrupación `magType_grupo`.
+
+La separación del código responde a una decisión operativa del equipo: cada script aborda una etapa específica del análisis, lo que permite revisar, depurar y modificar componentes particulares sin alterar todo el flujo de trabajo. Esta estructura también facilita el trabajo colaborativo, ya que permite avanzar sobre módulos distintos manteniendo un punto común de ejecución.
 
 La organización principal del flujo reproducible es la siguiente:
 
 | Script | Propósito principal |
 |------------------------------------|------------------------------------|
-| `Código.R` | Ejecuta el flujo principal del análisis. |
+| `Código.R` | Ejecuta el flujo principal, importa las bases, une `sig_raw` con `sismos_raw` y prepara `sismos`. |
+| `02_tratamiento_NAs.R` | Imputa `nst` y `rms` por mediana decadal para construir `nst_imp` y `rms_imp`. |
 | `01_analisis_descriptivo.R` | Desarrolla la caracterización descriptiva y espacial inicial. |
-| `04_analisis_temporal.R` | Desarrolla el análisis temporal del catálogo. |
-
-Los archivos `02_visualizaciones.R` y `03_tablas_informe.R` se reservan como espacios de prueba para código complementario, pero no constituyen módulos centrales del flujo reproducible presentado en este informe.
-
-\hypertarget{sec-anexo-implementacion}{}
-
-Este anexo documenta el entorno operativo utilizado para construir y verificar el análisis. En QGIS se trabaja con la base georreferenciada y las capas de referencia tectónica para delimitar visualmente los polígonos asociados al Cinturón de Fuego, la Dorsal Meso-Atlántica y el Cinturón Alpino-Himalayo. Esta implementación permite revisar la correspondencia espacial entre los eventos del catálogo, las coordenadas utilizadas y las zonas empleadas posteriormente en la variable `zona`.
-
-El procesamiento estadístico se desarrolla en Positron mediante scripts de R organizados dentro del proyecto `USGS-earthquake-analysis`. Este entorno permite ejecutar de forma secuencial la importación de datos, depuración, construcción de variables derivadas y análisis descriptivo, temporal y espacial, manteniendo visibles los objetos generados y las salidas de consola para su revisión.
-
-```{=latex}
-\Needspace{40\baselineskip}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{../Imágenes y Recursos/implementacion-qgis-zonas.png}}
-\vspace{-0.6em}
-\caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
-\label{fig-implementacion-qgis-zonas}
-\end{figure}
-```
+| `03_tablas_informe.R` | Reúne salidas tabulares de apoyo para el informe. |
+| `04_analisis_temporal_limpio.R` | Desarrolla el análisis temporal con catálogo completo, `magnitud_cat` y `magType_grupo`. |
+| `05_analisis_descriptivo.R` | Profundiza análisis descriptivos complementarios, incluyendo `sig`. |
+| `05_analisis_magtype.R` | Revisa `magType`, `magSource` y sus asociaciones con categorías analíticas. |
+| `06_analisis_asociatividad.R` | Explora asociaciones entre variables numéricas y categóricas. |
 
 ```{=latex}
 \begin{figure}[H]
@@ -526,6 +520,27 @@ El procesamiento estadístico se desarrolla en Positron mediante scripts de R or
 \vspace{-0.6em}
 \caption{Entorno de trabajo en Positron utilizado para ejecutar los scripts de R y revisar las salidas del análisis estadístico.}
 \label{fig-implementacion-positron-entorno}
+\end{figure}
+```
+
+\hypertarget{sec-anexo-implementacion}{}
+
+### QGIS y capas geográficas {#sec-anexo-qgis}
+
+En QGIS se trabaja con la base georreferenciada y las capas de referencia tectónica para delimitar visualmente los polígonos asociados al Cinturón de Fuego, la Dorsal Meso-Atlántica y el Cinturón Alpino-Himalayo. Esta implementación permite revisar la correspondencia espacial entre los eventos del catálogo, las coordenadas utilizadas y las zonas empleadas posteriormente en la variable `zona`.
+
+La capa de zonas se guarda en `SIG/area_regiones.geojson` y luego se utiliza en R mediante `st_read()`. En el script descriptivo, los eventos se transforman a puntos espaciales con `st_as_sf()`, se ajustan al sistema de referencia de la capa y se asignan a una zona mediante `st_join()` con `st_intersects()`. Cuando un evento no intersecta los polígonos definidos, se clasifica como "Resto del mundo".
+
+Este flujo conecta la revisión cartográfica de QGIS con el análisis estadístico en R: QGIS permite construir y verificar la delimitación espacial, mientras que R aplica esa delimitación a cada evento del catálogo para generar la variable `zona`. La variable `sig`, en cambio, se incorpora al objeto `sismos` desde `BBDD/sig.csv` durante la preparación en `Código.R`; por ello se documenta como una fuente complementaria de USGS unida por `id`, no como una variable producida por la intersección espacial.
+
+```{=latex}
+\Needspace{22\baselineskip}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{../Imágenes y Recursos/implementacion-qgis-zonas.png}}
+\vspace{-0.6em}
+\caption{Implementación en QGIS utilizada para delimitar y verificar las zonas sísmicas globales a partir de capas geográficas, límites de placas y eventos del catálogo.}
+\label{fig-implementacion-qgis-zonas}
 \end{figure}
 ```
 
@@ -550,22 +565,6 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
 ```
-
-## Control de calidad de la base USGS {#sec-anexo-control-calidad}
-
-a
-
-### Valores faltantes
-
-### Duplicados
-
-### Tipo de evento y estado de revisión
-
-### Consistencia temporal
-
-### Consistencia espacial
-
-### Magnitud y unidades de medida
 
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
