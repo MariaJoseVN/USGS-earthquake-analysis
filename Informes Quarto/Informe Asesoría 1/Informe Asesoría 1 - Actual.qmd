@@ -216,6 +216,8 @@ A partir de `zona` se calculan conteos, porcentajes y tasas anuales. Luego se re
 
 Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `nst_imp`, `rms_imp`, `magType_grupo` y `magSource`. Estos indicadores no corrigen los resultados, pero permiten declarar si las comparaciones pueden estar condicionadas por cobertura instrumental, ajuste del evento, tipo de magnitud o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
 
+## Análisis de asociatividad e independencia
+
 ## Criterios de interpretación estadística
 
 El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica.
@@ -337,6 +339,8 @@ Además, se revisa la evolución temporal de `magType`, ya que la magnitud repor
 La evolución de `magType_grupo` muestra una transición marcada en la composición metodológica del catálogo. Durante la década de 2000 predominan tipos como `mwc` y `mwb`, mientras que desde 2011 aumenta fuertemente la participación de `mww`, que pasa a concentrar la mayor parte de los registros en los años posteriores. Dado que `mww` corresponde a la magnitud autoritativa de USGS cuando está disponible, este cambio sugiere una mayor presencia de un método de estimación más consistente en la segunda parte del período [@usgs_magnitude_types]. Por ello, las comparaciones temporales de magnitud deben interpretarse considerando que el tipo de magnitud reportado no es homogéneo a lo largo de todo el catálogo.
 
 ## Caracterización espacial
+
+## Análisis de asociatividad e independencia
 
 ## Supuestos, limitaciones y sensibilidad
 
