@@ -522,13 +522,13 @@ Máx. & 2910,0 & Q95 & 1445,8 \\
 \end{minipage}
 ```
 
-Una revisión se realiza mediante el ranking de eventos con mayor significancia USGS. Este ranking permite identificar qué registros explican los valores máximos observados.
+Una revisión se realiza mediante el ranking de eventos con mayor significancia USGS. Este ranking permite identificar qué registros explican los valores máximos observados. La columna `zona` se incluye como referencia descriptiva; su construcción y justificación se abordan en la metodología y en la caracterización espacial posterior.
 
 ```{=latex}
 \begingroup
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3pt}
+\setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{0.98}
 \phantomsection
 \refstepcounter{table}
@@ -536,7 +536,7 @@ Una revisión se realiza mediante el ranking de eventos con mayor significancia 
 \label{tbl-eventos-mas-significativos}
 \hypertarget{dest-tbl-eventos-mas-significativos}{}
 
-\begin{tabular}{crp{0.30\textwidth}p{0.18\textwidth}rrr}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}crp{0.39\textwidth}p{0.22\textwidth}rrr@{}}
 \toprule
 Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 \midrule
@@ -551,14 +551,15 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 9 & 2023 & Al Haouz, Marruecos & Cinturón Alpino-Himalayo & 6,8 & 19,0 & 2690 \\
 10 & 2023 & Elbistan, secuencia Kahramanmaras & Cinturón Alpino-Himalayo & 7,5 & 7,4 & 2614 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 
 \vspace{0.25em}
 {\itshape Tabla~\ref*{tbl-eventos-mas-significativos}. Diez eventos con mayor significancia USGS dentro del catálogo analizado.}
 \endgroup
 ```
 
-El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, la lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. La lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+
 
 
 
