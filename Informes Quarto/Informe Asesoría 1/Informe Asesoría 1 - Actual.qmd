@@ -467,6 +467,89 @@ Profundo & 123 & 10,4 \% \\
 
 La composición por categoría confirma la concentración observada en el resumen numérico: 913 eventos, equivalentes al 77,0 % del catálogo, se clasifican como superficiales. Los eventos intermedios representan el 12,6 %, mientras que los profundos alcanzan el 10,4 %. En conjunto, la profundidad muestra una estructura dominada por eventos superficiales, aunque con una fracción menor de eventos intermedios y profundos que explica la cola superior de la distribución.
 
+### Significancia USGS
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+La variable \texttt{sig} resume la significancia asignada por USGS a cada evento. En términos descriptivos, la significancia media alcanza 839,7 puntos, mientras que la mediana corresponde a 732,0 puntos.
+\par\vspace{1.0em}
+La mayor parte de los eventos se concentra en valores relativamente cercanos a la mediana. El 75 \% del catálogo presenta una significancia igual o inferior a 852,3, mientras que el máximo observado alcanza 2910,0 puntos.
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.22}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-resumen-significancia}
+\hypertarget{dest-tbl-resumen-significancia}{}
+
+\begin{tabular}{lrlr}
+\toprule
+Estadístico & Valor & Estadístico & Valor \\
+\midrule
+Media & 839,7 & Q25 & 672,0 \\
+Mediana & 732,0 & Q50 & 732,0 \\
+Desv. est. & 317,3 & Q75 & 852,3 \\
+Mín. & 650,0 & Q90 & 1114,0 \\
+Máx. & 2910,0 & Q95 & 1445,8 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-resumen-significancia}. Resumen descriptivo de la significancia USGS de los eventos analizados.}
+\endgroup
+\end{minipage}
+```
+
+Una revisión se realiza mediante el ranking de eventos con mayor significancia USGS. Este ranking permite identificar qué registros explican los valores máximos observados.
+
+```{=latex}
+\begingroup
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.98}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-eventos-mas-significativos}
+\hypertarget{dest-tbl-eventos-mas-significativos}{}
+
+\begin{tabular}{crp{0.30\textwidth}p{0.18\textwidth}rrr}
+\toprule
+Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
+\midrule
+1 & 2010 & Sierra El Mayor, B.C., México & Cinturón de Fuego & 7,2 & 10,0 & 2910 \\
+2 & 2017 & Tehuantepec, México & Cinturón de Fuego & 8,2 & 47,4 & 2910 \\
+3 & 2023 & Pazarcik, secuencia Kahramanmaras & Cinturón Alpino-Himalayo & 7,8 & 10,0 & 2910 \\
+4 & 2025 & Mandalay, Burma/Myanmar & Cinturón Alpino-Himalayo & 7,7 & 10,0 & 2910 \\
+5 & 2016 & Preci, Italia & Cinturón Alpino-Himalayo & 6,6 & 8,0 & 2841 \\
+6 & 2015 & Bharatpur, Nepal & Cinturón Alpino-Himalayo & 7,8 & 8,2 & 2820 \\
+7 & 2017 & Halabja, Iraq & Cinturón Alpino-Himalayo & 7,3 & 19,0 & 2790 \\
+8 & 2025 & Meseta tibetana meridional & Cinturón Alpino-Himalayo & 7,1 & 10,0 & 2787 \\
+9 & 2023 & Al Haouz, Marruecos & Cinturón Alpino-Himalayo & 6,8 & 19,0 & 2690 \\
+10 & 2023 & Elbistan, secuencia Kahramanmaras & Cinturón Alpino-Himalayo & 7,5 & 7,4 & 2614 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-eventos-mas-significativos}. Diez eventos con mayor significancia USGS dentro del catálogo analizado.}
+\endgroup
+```
+
+El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, la lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+
+
+
 ## Caracterización temporal
 
 Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media, con un aumento relativo durante la primera parte del período y una disminución posterior desde la mitad del tiempo de observación, sin que ello implique una tendencia sostenida para todo el intervalo.
