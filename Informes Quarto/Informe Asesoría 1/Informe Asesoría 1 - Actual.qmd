@@ -190,7 +190,7 @@ Primero, se delimita el período de análisis entre 2000 y 2025. A partir de est
 
 Luego se describen las variables sísmicas principales. Para `mag` y `depth` se calculan medidas de tendencia central, dispersión y posición: media, mediana, desviación estándar, máximo y cuantiles. Estos estadísticos permiten conocer el nivel típico de magnitud y profundidad, evaluar la variabilidad de los eventos y ubicar los valores extremos dentro del catálogo. En el caso de `mag`, también se revisa `magType`, ya que la magnitud reportada puede provenir de distintos métodos o escalas de estimación. Para ello se calcula la distribución de eventos por tipo de magnitud, el resumen de `mag` dentro de cada `magType`, su evolución anual y su relación con `magSource`.
 
-Después se construyen categorías de análisis para magnitud y profundidad. La variable `magnitud_cat` agrupa los eventos en "Fuerte", "Mayor" y "Grande o extremo", a partir de criterios bibliográficos sobre terremotos de gran magnitud. La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedio" y "Profundo", según el criterio sismológico solicitado en el instructivo del encargo. Estas categorías permiten comparar la composición del catálogo entre períodos y zonas. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
+Después se construyen categorías de análisis para magnitud y profundidad. La variable `magnitud_cat` agrupa los eventos en "Fuerte", "Mayor" y "Grande o extremo", a partir de criterios bibliográficos sobre terremotos de gran magnitud. La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedio" y "Profundo", según el criterio sismológico solicitado en el instructivo del encargo. Estas categorías permiten comparar la composición del catálogo entre períodos y zonas. \emph{(los criterios de construcción se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 
 ## Caracterización temporal
 
@@ -204,7 +204,7 @@ Los conteos mensuales se completan con cero cuando no existen eventos en un mes 
 
 También se calcula la recurrencia temporal global desde el enfoque categórico. Para ello se ordenan los registros por `fecha_hora_utc` y se estiman los días desde el evento anterior, tanto para el grupo agregado "Mayor o Grande o extremo" como para cada categoría de `magnitud_cat`. Esta medida describe intervalos dentro del catálogo mundial y no la recurrencia física de una falla o zona específica.
 
-Finalmente, los conteos mensuales y anuales se transforman en objetos de serie temporal (`ts`) para el catálogo completo. La serie mensual usa frecuencia 12 y la anual frecuencia 1. Estos objetos dejan los datos preparados para revisar tendencia, estacionalidad, rezagos u otros patrones temporales desde una perspectiva descriptiva. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
+Finalmente, los conteos mensuales y anuales se transforman en objetos de serie temporal (`ts`) para el catálogo completo. La serie mensual usa frecuencia 12 y la anual frecuencia 1. Estos objetos dejan los datos preparados para revisar tendencia, estacionalidad, rezagos u otros patrones temporales desde una perspectiva descriptiva. \emph{(algunas aclaraciones interpretativas se documentan en el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
 
 ## Caracterización espacial
 
@@ -500,18 +500,43 @@ El análisis se organiza en torno al script principal `Código.R`, que centraliz
 
 La separación del código responde a una decisión operativa del equipo: cada script aborda una etapa específica del análisis, lo que permite revisar, depurar y modificar componentes particulares sin alterar todo el flujo de trabajo. Esta estructura también facilita el trabajo colaborativo, ya que permite avanzar sobre módulos distintos manteniendo un punto común de ejecución.
 
-La organización principal del flujo reproducible es la siguiente:
+La organización principal del flujo reproducible se resume en la \hyperlink{dest-tbl-flujo-scripts}{Tabla~\ref*{tbl-flujo-scripts}}.
 
-| Script | Propósito principal |
-|------------------------------------|------------------------------------|
-| `Código.R` | Ejecuta el flujo principal, importa las bases, une `sig_raw` con `sismos_raw` y prepara `sismos`. |
-| `02_tratamiento_NAs.R` | Imputa `nst` y `rms` por mediana decadal para construir `nst_imp` y `rms_imp`. |
-| `01_analisis_descriptivo.R` | Desarrolla la caracterización descriptiva y espacial inicial. |
-| `03_tablas_informe.R` | Reúne salidas tabulares de apoyo para el informe. |
-| `04_analisis_temporal_limpio.R` | Desarrolla el análisis temporal con catálogo completo, `magnitud_cat` y `magType_grupo`. |
-| `05_analisis_descriptivo.R` | Profundiza análisis descriptivos complementarios, incluyendo `sig`. |
-| `05_analisis_magtype.R` | Revisa `magType`, `magSource` y sus asociaciones con categorías analíticas. |
-| `06_analisis_asociatividad.R` | Explora asociaciones entre variables numéricas y categóricas. |
+```{=latex}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.9}
+\Needspace{14\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-flujo-scripts} \hypertarget{dest-tbl-flujo-scripts}{}
+
+\begin{longtable}{p{0.33\textwidth}p{0.57\textwidth}}
+\toprule
+Script & Propósito principal \\
+\midrule
+\endfirsthead
+\toprule
+Script & Propósito principal \\
+\midrule
+\endhead
+\texttt{Código.R} & Ejecuta el flujo principal, importa las bases, une \texttt{sig\_raw} con \texttt{sismos\_raw} y prepara \texttt{sismos}. \\
+\texttt{02\_tratamiento\_NAs.R} & Imputa \texttt{nst} y \texttt{rms} por mediana decadal para construir \texttt{nst\_imp} y \texttt{rms\_imp}. \\
+\texttt{01\_analisis\_descriptivo.R} & Desarrolla la caracterización descriptiva y espacial inicial. \\
+\texttt{03\_tablas\_informe.R} & Reúne salidas tabulares de apoyo para el informe. \\
+\texttt{04\_analisis\_temporal\_limpio.R} & Desarrolla el análisis temporal con catálogo completo, \texttt{magnitud\_cat} y \texttt{magType\_grupo}. \\
+\texttt{05\_analisis\_descriptivo.R} & Profundiza análisis descriptivos complementarios, incluyendo \texttt{sig}. \\
+\texttt{05\_analisis\_magtype.R} & Revisa \texttt{magType}, \texttt{magSource} y sus asociaciones con categorías analíticas. \\
+\texttt{06\_analisis\_asociatividad.R} & Explora asociaciones entre variables numéricas y categóricas. \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-flujo-scripts}{Scripts principales del flujo reproducible y propósito de cada módulo.}
+\endgroup
+```
 
 ```{=latex}
 \begin{figure}[H]
@@ -568,33 +593,21 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 
 ## Caracterización descriptiva {#sec-anexo-caracterizacion-descriptiva}
 
-La caracterización descriptiva se realiza sobre la base `sismos`, construida a partir de `sismos_raw` luego de la selección de variables, la revisión de consistencia y la creación de variables derivadas. Esta etapa resume la estructura general del catálogo y entrega los insumos utilizados en las comparaciones temporales y espaciales del informe.
+Este anexo no reproduce los resultados descriptivos presentados en el cuerpo del informe. Su función es precisar los criterios externos y operativos usados para construir las variables categóricas que luego sostienen las comparaciones temporales y espaciales.
 
-El período de análisis se delimita entre 2000 y 2025. A partir de este rango se calcula la cantidad de años, meses y eventos observados. Estos valores permiten interpretar los conteos, proporciones y tasas de ocurrencia utilizadas posteriormente.
+La variable `magnitud_cat` se construye a partir de la magnitud `mag` reportada por USGS. Los puntos de corte se apoyan en la literatura revisada sobre grandes terremotos: magnitudes cercanas o superiores a $M \geq 7{,}0$ se usan como referencia para distinguir terremotos mayores, mientras que valores próximos a $M \geq 7{,}8$ permiten separar eventos grandes o extremos dentro de catálogos globales de alta magnitud [@gutenberg_richter_1944; @kagan_jackson_2016; @ammon_etal_2010]. En el código, esta decisión se operacionaliza como "Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$.
 
-Para las variables `mag` y `depth` se calculan medidas de tendencia central, dispersión y posición: media, mediana, desviación estándar, máximo y cuantiles. Estos estadísticos permiten describir el comportamiento general de la magnitud y la profundidad, evaluar la variabilidad del catálogo y ubicar los valores extremos. En el caso de `mag`, también se revisa `magType`, debido a que la magnitud reportada puede provenir de distintos métodos o escalas de estimación [@usgs_magnitude_types]. Para esta variable se calcula la distribución de eventos por tipo de magnitud, el resumen de `mag` dentro de cada `magType`, su evolución anual y su relación con `magSource`. Esta revisión documenta la composición metodológica del catálogo y permite dejar explícito que las comparaciones de magnitud se realizan sobre los valores reportados por USGS, sin homogeneizar escalas.
+La variable `profundidad_cat` se utiliza para ordenar la profundidad focal en tres niveles interpretables: "Superficial", "Intermedio" y "Profundo". En el código, los eventos se clasifican como "Superficial" entre 0 y 70 km, "Intermedio" entre más de 70 y 300 km, y "Profundo" sobre 300 km. Esta categorización no reemplaza el valor continuo de `depth`, sino que permite comparar de forma sintética la composición del catálogo entre zonas y períodos.
 
-La variable `magnitud_cat` agrupa los eventos en "Fuerte", "Mayor" y "Grande o extremo". La decisión de usar estos grupos se basa en criterios bibliográficos sobre la interpretación de terremotos de gran magnitud. Los eventos desde $M \geq 6{,}5$ se consideran relevantes para el encargo; el umbral $M \geq 7{,}0$ permite distinguir terremotos mayores; y el umbral cercano a $M \geq 7{,}8$ permite separar eventos grandes o extremos, coherente con literatura que trabaja con catálogos globales de terremotos de alta magnitud [@gutenberg_richter_1944; @kagan_jackson_2016; @ammon_etal_2010]. En el código, estos criterios se operacionalizan como "Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$.
-
-La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedio" y "Profundo". Esta agrupación responde al criterio sismológico solicitado en el instructivo del encargo. En el código, los eventos se clasifican como "Superficial" entre 0 y 70 km, "Intermedio" entre más de 70 y 300 km, y "Profundo" sobre 300 km. Esta clasificación permite comparar la distribución de eventos según profundidad focal y evaluar si las zonas o períodos concentran eventos en rangos distintos de profundidad.
+Finalmente, la revisión de `magType` cumple una función de trazabilidad metodológica. La magnitud reportada por USGS puede provenir de distintos métodos o escalas de estimación [@usgs_magnitude_types], por lo que las comparaciones descriptivas se interpretan sobre los valores reportados, sin homogeneizar retrospectivamente las escalas de magnitud. Esta precaución es especialmente relevante para la lectura temporal, donde se analiza la transición en los tipos de magnitud reportados.
 
 ## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
 
-La caracterización temporal se inicia con la construcción de `sismos_temporal`, objeto derivado de `sismos`. En este objeto se organizan las variables necesarias para analizar la ocurrencia por mes, año y década, la composición por categoría de magnitud, la composición por tipo de magnitud y la recurrencia global.
+La comparación decadal debe leerse mediante tasas anuales promedio, porque el tramo 2020--2025 no corresponde a una década completa. Por ello, sus conteos acumulados no son directamente equivalentes a los de 2000--2009 y 2010--2019.
 
-La variable `magnitud_cat` se utiliza como clasificación principal de magnitud. A partir de ella se calculan conteos anuales y decadales, y se construyen salidas de composición temporal. Esta lectura permite evaluar si la proporción de eventos "Fuerte", "Mayor" y "Grande o extremo" cambia durante el período analizado. Los criterios de construcción de `magnitud_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+La recurrencia temporal reportada corresponde al espaciamiento entre eventos consecutivos dentro del catálogo global. No representa la recurrencia física de una falla, zona de subducción o región específica, por lo que no debe interpretarse como predicción ni como estimación de amenaza sísmica local.
 
-Para el tipo de magnitud, primero se revisa la frecuencia de `magType` en el catálogo. Esta revisión permite identificar los tipos con mayor presencia y separar categorías con baja frecuencia. A partir de ello se construye `magType_grupo`, que conserva `mww`, `mwc` y `mwb`, y agrupa el resto como "otros". Esta decisión permite comparar la composición temporal de `magType` sin generar categorías poco informativas por baja cantidad de observaciones.
-
-Según la documentación de USGS, `mww`, `mwc` y `mwb` corresponden a estimaciones de magnitud momento derivadas de inversiones del tensor de momento, pero difieren en el tipo de ondas utilizadas y en sus condiciones de aplicación. `mww` se obtiene a partir de la fase W y corresponde a la magnitud autoritativa de USGS cuando está disponible. `mwc` se deriva de ondas superficiales de largo período y se considera autoritativa solo cuando `mww` no está disponible. `mwb` se basa en ondas de cuerpo de largo período y puede presentar limitaciones en eventos de mayor magnitud, especialmente sobre magnitudes cercanas a 7,5 [@usgs_magnitude_types].
-
-Luego se crea `fecha_mes`, que asigna cada evento al mes correspondiente. Esta variable permite construir conteos mensuales regulares. Los conteos anuales y decadales se calculan directamente sobre el catálogo completo y sobre `magnitud_cat`, evitando duplicar la clasificación de magnitud mediante indicadores auxiliares.
-
-Después se calculan tres niveles de conteo: mensual, anual y decadal. En cada nivel se registra el número total de eventos del catálogo completo y, cuando corresponde, la composición por categoría de magnitud. Los conteos mensuales se completan con cero porque los meses sin eventos forman parte del período observado. Los conteos decadales se complementan con tasas anuales promedio, ya que 2020--2025 contiene seis años observados y no una década completa.
-
-La recurrencia temporal se calcula desde la variable `magnitud_cat`. Los eventos se ordenan según `fecha_hora_utc` y se calcula `dias_desde_evento_anterior`. Luego se resumen los intervalos mediante media, mediana, cuartiles, mínimo y máximo para el grupo agregado "Mayor o Grande o extremo" y para cada categoría por separado. Esta recurrencia describe el catálogo global y no una fuente sísmica específica.
-
-Finalmente, con los conteos mensuales se define `serie_mensual_catalogo_completo`, con inicio en enero de 2000 y frecuencia 12. Con los conteos anuales se define `serie_anual_catalogo_completo`, con inicio en 2000 y frecuencia 1. Estos objetos `ts` permiten tratar los conteos del catálogo completo como series temporales regulares y dejan preparada la base para revisar tendencia, estacionalidad, rezagos u otros patrones temporales desde una perspectiva descriptiva.
+La evolución de `magType` se interpreta considerando la documentación de USGS sobre tipos de magnitud [@usgs_magnitude_types]. Esta referencia permite contextualizar la transición observada hacia `mww`, sin asumir que todo el período fue medido de forma homogénea.
 
 ## Caracterización espacial {#sec-anexo-caracterizacion-espacial}
 
