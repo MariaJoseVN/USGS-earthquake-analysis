@@ -218,6 +218,18 @@ Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `
 
 ## Análisis de asociatividad e independencia
 
+## Análisis de asociatividad e independencia
+
+El análisis de asociatividad e independencia se realiza sobre la base `sismos`. Su propósito es examinar, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué intensidad, distinguiendo el tratamiento según la naturaleza numérica o categórica de cada variable.
+
+Para las variables numéricas se calcula una matriz de correlación de Spearman, método basado en rangos que no requiere el supuesto de normalidad y que capta relaciones monótonas entre variables. El cálculo se realiza sobre observaciones completas por pares y excluye las versiones originales de `nst` y `rms`, conservando en su lugar las variables imputadas `nst_imp` y `rms_imp`.
+
+A partir de la matriz se profundizan las relaciones de mayor interés. La asociación entre `mag` y `sig` se evalúa mediante la correlación de Spearman. La significancia se compara entre las categorías de `magnitud_cat` con la prueba de Kruskal-Wallis, que permite contrastar diferencias entre grupos sin asumir normalidad en la distribución de `sig`; cuando esta prueba indica diferencias, se aplican comparaciones por pares de Wilcoxon con ajuste de Bonferroni para identificar qué categorías difieren entre sí. Además, se mide la asociación temporal de `nst_imp` y `rms_imp` con el año mediante la correlación de Spearman, a fin de describir el patrón observado en la matriz.
+
+Para las variables categóricas se definen las de interés analítico: `locationSource`, `magSource`, `net`, `magType_grupo`, `zona`, `profundidad_cat` y `magnitud_cat`. Para cada par de variables se evalúa la existencia de asociación con la prueba chi-cuadrado y se mide su fuerza con la V de Cramer, indicador que normaliza la asociación entre 0 y 1 y permite comparar variables nominales con distinto número de categorías. La medida se calcula para todos los pares posibles y los resultados se ordenan de mayor a menor fuerza de asociación.
+
+Finalmente, las asociaciones categóricas se resumen en una matriz de V de Cramer y se profundizan los pares con mayor sentido analítico: `magSource` con `magType_grupo`, para revisar si el tipo de magnitud reportado depende de la fuente que lo entrega, y `zona` con `profundidad_cat`, por su interés geofísico. En ambos casos, la relación se describe mediante tablas de frecuencias relativas. Las medidas obtenidas se interpretan como asociaciones observadas dentro del catálogo analizado y no como relaciones causales.
+
 ## Criterios de interpretación estadística
 
 El análisis se plantea como descriptivo y exploratorio. Por ello, los resultados se interpretan como resúmenes del catálogo analizado y no como estimaciones causales, predictivas o probabilísticas de amenaza sísmica.
