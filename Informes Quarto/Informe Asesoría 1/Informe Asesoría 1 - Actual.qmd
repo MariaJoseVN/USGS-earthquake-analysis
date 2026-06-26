@@ -382,14 +382,20 @@ La distribución por categoría de magnitud muestra que la mayor parte del catá
 
 ### Profundidad
 
-En cuanto a la profundidad, el catálogo presenta una mediana de 26,0 km y una media de 93,1 km. La diferencia entre ambas medidas, junto con una desviación estándar de 164,1 km, muestra una distribución asimétrica. La mayoría de los eventos se concentra en profundidades bajas, pero existen registros de profundidad considerablemente mayor, con un máximo observado de 676,4 km.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+En cuanto a la profundidad, el catálogo presenta una mediana de 26,0 km y una media de 93,1 km. La diferencia entre ambas medidas, junto con una desviación estándar de 164,1 km, muestra una distribución asimétrica. La mayoría de los eventos se concentra en profundidades bajas, pero existen registros de profundidad considerablemente mayor, con un máximo observado de 676,4 km.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
 \begingroup
 \centering
-\small
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.02}
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{0.92}
 \phantomsection
 \refstepcounter{table}
 
@@ -411,16 +417,22 @@ Máx. & 676,4 & Q90 & 354,8 \\
 \vspace{0.25em}
 {\itshape Tabla~\ref*{tbl-resumen-profundidad}. Resumen descriptivo de la profundidad focal de los eventos analizados.}
 \endgroup
-```
+\end{minipage}
 
-Para complementar el resumen numérico, la variable `depth` se categorizó en `profundidad_cat`, cuyos criterios de construcción también se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
-
-```{=latex}
+\par\vspace{1.0em}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+Para complementar el resumen numérico, la variable \texttt{depth} se categorizó en \texttt{profundidad\_cat}, cuyos criterios de construcción también se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
 \begingroup
 \centering
-\small
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{0.95}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.92}
 \phantomsection
 \refstepcounter{table}
 
@@ -440,6 +452,17 @@ Profundo & 123 & 10,4 \% \\
 \vspace{0.25em}
 {\itshape Tabla~\ref*{tbl-eventos-profundidad-cat}. Distribución de eventos según categoría de profundidad.}
 \endgroup
+\end{minipage}
+```
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{images/Análisis Descriptivo 2.png}}
+\vspace{-0.7em}
+\caption{Distribución de eventos según profundidad continua y categoría de profundidad.}
+\label{fig-analisis-descriptivo-2}
+\end{figure}
 ```
 
 La composición por categoría confirma la concentración observada en el resumen numérico: 913 eventos, equivalentes al 77,0 % del catálogo, se clasifican como superficiales. Los eventos intermedios representan el 12,6 %, mientras que los profundos alcanzan el 10,4 %. En conjunto, la profundidad muestra una estructura dominada por eventos superficiales, aunque con una fracción menor de eventos intermedios y profundos que explica la cola superior de la distribución.

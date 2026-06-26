@@ -190,32 +190,28 @@ histograma_profundidad <- hist(
   plot = FALSE
 )
 
-par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+par(mfrow = c(1, 2), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+# Panel 1: profundidad continua
+histograma_profundidad <- hist(
+  sismos$depth,
+  breaks = "Sturges",
+  plot = FALSE
+)
 
 plot(
   histograma_profundidad,
   freq = TRUE,
-  main = "Distribucion de eventos segun profundidad",
+  main = "Distribución según profundidad",
   xlab = "Profundidad (km)",
-  ylab = "Numero de eventos",
+  ylab = "Número de eventos",
   col = "gray80",
   border = "gray30",
   ylim = c(0, max(histograma_profundidad$counts) * 1.10)
 )
 
-abline(
-  v = mean(sismos$depth, na.rm = TRUE),
-  col = "black",
-  lty = 2,
-  lwd = 1.5
-)
-
-abline(
-  v = median(sismos$depth, na.rm = TRUE),
-  col = "red",
-  lty = 3,
-  lwd = 1.5
-)
+abline(v = mean(sismos$depth, na.rm = TRUE), col = "black", lty = 2, lwd = 1.5)
+abline(v = median(sismos$depth, na.rm = TRUE), col = "red", lty = 3, lwd = 1.5)
 
 legend(
   "topright",
@@ -228,6 +224,39 @@ legend(
 )
 
 box()
+
+# Panel 2: profundidad categórica
+profundidad_plot <- eventos_categoria_profundidad %>%
+  mutate(
+    profundidad_cat = factor(
+      profundidad_cat,
+      levels = c("Superficial", "Intermedio", "Profundo")
+    )
+  ) %>%
+  arrange(profundidad_cat)
+
+barras <- barplot(
+  profundidad_plot$porcentaje,
+  names.arg = profundidad_plot$profundidad_cat,
+  col = "gray80",
+  border = "gray30",
+  ylim = c(0, max(profundidad_plot$porcentaje) * 1.18),
+  main = "Distribución por categoría",
+  xlab = "Categoría de profundidad",
+  ylab = "Porcentaje de eventos"
+)
+
+text(
+  x = barras,
+  y = profundidad_plot$porcentaje,
+  labels = paste0(round(profundidad_plot$porcentaje, 1), "%"),
+  pos = 3,
+  cex = 0.85
+)
+
+box()
+
+par(mfrow = c(1, 1))
 
 
 #Zonificacion espacial----
