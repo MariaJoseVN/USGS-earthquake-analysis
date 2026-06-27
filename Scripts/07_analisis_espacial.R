@@ -348,7 +348,7 @@ print(significancia_zona, n = Inf)
 
 ##Boxplot de sig por zona----
 
-par(mfrow = c(1, 1), bg = "white", mar = c(10, 4, 4, 2) + 0.1)
+par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
 
 boxplot(
   sig ~ zona,
@@ -358,7 +358,8 @@ boxplot(
   ylab = "Significancia (sig)",
   col = unname(colores_zona[sort(unique(sismos$zona))]),
   border = "gray30",
-  las = 2,
+  names = etiquetas_zona[sort(unique(sismos$zona))],
+  las = 1,
   outline = TRUE
 )
 
@@ -418,7 +419,7 @@ matriz_zona_magtype_porcentaje <- prop.table(
 #Paleta de grises del proyecto para composiciones (mismo estilo que las figuras de magType_grupo).
 colores_magtype <- c("gray30", "gray55", "gray75", "gray90")
 
-par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 8) + 0.1)
+par(mfrow = c(1, 1), bg = "white", mar = c(7, 4, 4, 2) + 0.1)
 
 barplot(
   matriz_zona_magtype_porcentaje,
@@ -437,13 +438,14 @@ barplot(
 axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
 
 legend(
-  "topright",
-  inset = c(-0.22, 0),
-  legend = rownames(matriz_zona_magtype_porcentaje),
-  fill = colores_magtype,
+  "bottom",
+  inset = c(0, -0.28),
+  legend = rev(rownames(matriz_zona_magtype_porcentaje)),
+  fill = rev(colores_magtype),
   border = "gray30",
   bty = "n",
-  cex = 0.8,
+  cex = 0.85,
+  horiz = TRUE,
   xpd = TRUE
 )
 
@@ -518,15 +520,6 @@ boxplot(
   outline = TRUE
 )
 
-legend(
-  "topright",
-  legend = etiquetas_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
-  fill = colores_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
-  border = "gray30",
-  bty = "n",
-  cex = 0.75
-)
-
 box()
 
 
@@ -545,15 +538,6 @@ boxplot(
   names = etiquetas_zona[sort(unique(sismos$zona))],
   las = 1,
   outline = TRUE
-)
-
-legend(
-  "topright",
-  legend = etiquetas_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
-  fill = colores_zona[names(etiquetas_zona) %in% sort(unique(sismos$zona))],
-  border = "gray30",
-  bty = "n",
-  cex = 0.75
 )
 
 box()
