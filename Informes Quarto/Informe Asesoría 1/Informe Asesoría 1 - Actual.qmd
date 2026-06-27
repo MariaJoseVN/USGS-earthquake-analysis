@@ -11,7 +11,7 @@ crossref:
 format:
   pdf:
     pdf-engine: lualatex
-    block-headings: false
+    block-headings: true
     toc: false
     toc-title: "Índice"
     toc-depth: 3
@@ -620,6 +620,8 @@ Donde a diferencia de la comparación por magnitud, la significancia no presenta
 
 ### Variables categóricas
 
+#### Tipo de magnitud
+
 ```{=latex}
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
@@ -657,7 +659,41 @@ Otros        & 33  & 2,78 \% \\
 \end{minipage}
 ```
 
-La variable `magSource` identifica la red que elaboró originalmente la magnitud reportada para cada evento, de acuerdo con la documentación de USGS [@usgs_comcat_magsource]. Por tanto, a diferencia de `magType`, no describe el método de estimación, sino la procedencia institucional del valor de magnitud registrado.
+Una vez descrita la frecuencia de los tipos de magnitud, se comparan los valores reportados para `mww`, `mwc` y `mwb`. Las categorías agrupadas como ``otros'' se excluyen de esta comparación debido a su reducido número de observaciones.
+
+```{=latex}
+\Needspace{10\baselineskip}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.12}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-magnitud-principales-magtype}
+\hypertarget{dest-tbl-magnitud-principales-magtype}{}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
+\toprule
+Tipo & Eventos & Media & Mediana & Desv. est. & Mínimo & Máximo \\
+\midrule
+\texttt{mww} & 647 & 6,91 & 6,80 & 0,421 & 6,50 & 9,10 \\
+\texttt{mwc} & 390 & 6,91 & 6,80 & 0,425 & 6,50 & 8,30 \\
+\texttt{mwb} & 116 & 6,79 & 6,70 & 0,273 & 6,50 & 7,80 \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-magnitud-principales-magtype}. Resumen descriptivo de la magnitud para los tipos de magnitud más frecuentes.}
+\endgroup
+```
+
+Los tipos `mww` y `mwc` presentan resultados prácticamente equivalentes, ambos con una magnitud media de 6,91 y una mediana de 6,80. Por su parte, `mwb` registra valores ligeramente inferiores y una menor dispersión. Estas diferencias describen la composición del catálogo y no demuestran que un método produzca magnitudes sistemáticamente mayores o menores, ya que los tipos no fueron aplicados simultáneamente a los mismos eventos.
+
+#### Origen de la magnitud
+
+La variable `magSource` identifica la red que elaboró originalmente la magnitud reportada para cada evento, de acuerdo con la documentación de USGS [@usgs_comcat_magsource]. Sus valores corresponden a códigos de redes, instituciones o catálogos sismológicos, no a países. Por tanto, a diferencia de `magType`, no describe el método de estimación, sino la procedencia institucional del valor de magnitud registrado.
 
 ```{=latex}
 \begingroup
@@ -689,7 +725,7 @@ Fuente & Eventos & Porcentaje & Fuente & Eventos & Porcentaje \\
 \endgroup
 ```
 
-La fuente `us` concentra el 72,3 \% de los eventos, seguida por `hrv` con 15,6 \% y `gcmt` con 9,44 \%. En conjunto, estas tres fuentes representan aproximadamente el 97,4 \% del catálogo, mientras que las restantes aportan solo el 2,6 \%. Esta distribución describe la procedencia de los valores de magnitud y no implica una jerarquía de calidad entre las fuentes; su revisión permite contextualizar posteriormente la relación entre `magSource` y `magType_grupo`.
+La fuente USGS-NEIC (`us`) concentra el 72,3 \% de los eventos, seguida por Harvard/Global CMT (`hrv`) con 15,6 \% y Global Centroid Moment Tensor Project (`gcmt`) con 9,44 \%. En conjunto, estas tres fuentes representan aproximadamente el 97,4 \% del catálogo, mientras que las restantes aportan solo el 2,6 \%. Esta distribución describe la procedencia de los valores de magnitud y no implica una jerarquía de calidad entre las fuentes; su revisión permite contextualizar posteriormente la relación entre `magSource` y `magType_grupo`.
 
 ## Caracterización temporal
 
