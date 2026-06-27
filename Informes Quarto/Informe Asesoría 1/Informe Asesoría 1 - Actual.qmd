@@ -1133,65 +1133,43 @@ Finalmente, los indicadores de comparabilidad del registro se presentan homogén
 
 El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramer. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
-### Asociación entre variables numéricas
-
 ```{=latex}
-\Needspace{21\baselineskip}
+\Needspace{25\baselineskip}
 \noindent
-\begin{minipage}[t]{0.43\textwidth}
-\vspace{0pt}
-```
-
-La mayoría de las variables numéricas presenta asociaciones débiles. La correlación entre año y década ($\rho=0{,}931$) es estructural, porque `decada` deriva de `año`. La principal asociación sustantiva corresponde a magnitud y significancia USGS ($\rho=0{,}816$), coherente con la construcción de `sig` [@usgs_significance].
-
-```{=latex}
-\par\vspace{0.65em}
-```
-
-El año presenta asociaciones negativas moderadas con `rms_imp` ($\rho=-0{,}429$) y `nst_imp` ($\rho=-0{,}374$). La segunda requiere mayor cautela porque 402 valores fueron imputados mediante medianas decadales; en `rms_imp` solo se imputaron nueve registros.
-
-```{=latex}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.53\textwidth}
+\begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
 \includegraphics[width=\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
-\vspace{-1.4em}
+\vspace{-1.2em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-correlacion-numericas}
 \begin{center}\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.\end{center}
 \end{minipage}
-```
-
-Los coeficientes restantes son débiles o corresponden a variables derivadas, cíclicas o espaciales cuya correlación requiere una interpretación limitada. Los valores cercanos a cero no demuestran independencia. La relación entre magnitud y `sig` también se observa en los resúmenes por `magnitud_cat` de la \hyperlink{dest-tbl-significancia-categoria-magnitud-descriptiva}{Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}}; los contrastes complementarios se presentan en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
-
-### Asociación entre variables categóricas
-
-```{=latex}
-\Needspace{21\baselineskip}
-\noindent
-\begin{minipage}[t]{0.42\textwidth}
-\vspace{0pt}
-```
-
-Las asociaciones categóricas más intensas corresponden a la estructura de reporte: `magSource` con `net` ($V=1{,}00$), `locationSource` con `net` ($V=0{,}94$) y `locationSource` con `magSource` ($V=0{,}80$). También se observa una asociación moderada entre `magSource` y `magType_grupo` ($V=0{,}65$), por lo que el tipo de magnitud se relaciona con la fuente que lo reporta.
-
-```{=latex}
-\end{minipage}
 \hfill
-\begin{minipage}[t]{0.55\textwidth}
+\begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=0.88\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
-\vspace{-1.3em}
+\includegraphics[width=\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
+\vspace{-1.2em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-asociacion-categorica}
 \begin{center}\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.\end{center}
 \end{minipage}
 ```
+
+### Asociación entre variables numéricas
+
+La mayoría de las variables numéricas presenta asociaciones débiles. La correlación entre año y década ($\rho=0{,}931$) es estructural, porque `decada` deriva de `año`. La principal asociación sustantiva corresponde a magnitud y significancia USGS ($\rho=0{,}816$), coherente con la construcción de `sig` [@usgs_significance].
+
+El año presenta asociaciones negativas moderadas con `rms_imp` ($\rho=-0{,}429$) y `nst_imp` ($\rho=-0{,}374$). La segunda requiere mayor cautela porque 402 valores fueron imputados mediante medianas decadales; en `rms_imp` solo se imputaron nueve registros.
+
+Los coeficientes restantes son débiles o corresponden a variables derivadas, cíclicas o espaciales cuya correlación requiere una interpretación limitada. Los valores cercanos a cero no demuestran independencia. La relación entre magnitud y `sig` también se observa en los resúmenes por `magnitud_cat` de la \hyperlink{dest-tbl-significancia-categoria-magnitud-descriptiva}{Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}}; los contrastes complementarios se presentan en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+
+### Asociación entre variables categóricas
+
+Las asociaciones categóricas más intensas corresponden a la estructura de reporte: `magSource` con `net` ($V=1{,}00$), `locationSource` con `net` ($V=0{,}94$) y `locationSource` con `magSource` ($V=0{,}80$). También se observa una asociación moderada entre `magSource` y `magType_grupo` ($V=0{,}65$), por lo que el tipo de magnitud se relaciona con la fuente que lo reporta.
 
 Las asociaciones restantes son, en general, débiles. Las variables de fuente presentan valores inferiores a 0,13 con `zona` y `profundidad_cat`, y la relación entre estas dos últimas también es débil ($V=0{,}13$). En consecuencia, las asociaciones principales corresponden a la estructura administrativa del catálogo y no muestran una relación intensa entre las variables geofísicas y las condiciones de reporte. Estos valores no demuestran independencia; el contraste chi-cuadrado se presenta en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
