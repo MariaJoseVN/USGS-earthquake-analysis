@@ -1059,23 +1059,30 @@ Al comparar las zonas en magnitud, las medias observadas resultan similares entr
 
 \label{tbl-resumen-zona} \hypertarget{dest-tbl-resumen-zona}{}
 
-\begin{longtable}{lrrrrrrr}
+\begin{longtable}{l rrrr}
 \toprule
-Zona & Eventos & \% & Tasa anual & Mag. media & Mag. mediana & Prof. media & Prof. mediana \\
+Indicador & \shortstack{Cinturón\\de Fuego} & \shortstack{Resto del\\mundo} & \shortstack{Cinturón\\Alpino-Himalayo} & \shortstack{Dorsal\\Meso-Atlántica} \\
 \midrule
-Cinturón de Fuego & 892 & $75{,}21$ & $34{,}3$ & $6{,}90$ & $6{,}8$ & $89{,}6$ & $29{,}4$ \\
-Resto del mundo & 203 & $17{,}12$ & $7{,}8$ & $6{,}92$ & $6{,}8$ & $134{,}3$ & $16{,}0$ \\
-Cinturón Alpino-Himalayo & 63 & $5{,}31$ & $2{,}4$ & $6{,}91$ & $6{,}7$ & $45{,}8$ & $16{,}1$ \\
-Dorsal Meso-Atlántica & 28 & $2{,}36$ & $1{,}1$ & $6{,}69$ & $6{,}6$ & $11{,}0$ & $10{,}0$ \\
+Eventos & 892 & 203 & 63 & 28 \\
+\% del total & $75{,}21$ & $17{,}12$ & $5{,}31$ & $2{,}36$ \\
+Tasa anual & $34{,}3$ & $7{,}8$ & $2{,}4$ & $1{,}1$ \\
+\addlinespace
+Mag. media & $6{,}90$ & $6{,}92$ & $6{,}91$ & $6{,}69$ \\
+Mag. mediana & $6{,}80$ & $6{,}80$ & $6{,}70$ & $6{,}60$ \\
+Mag. desv. est. & $0{,}42$ & $0{,}42$ & $0{,}41$ & $0{,}19$ \\
+\addlinespace
+Prof. media (km) & $89{,}6$ & $134{,}3$ & $45{,}8$ & $11{,}0$ \\
+Prof. mediana (km) & $29{,}4$ & $16{,}0$ & $16{,}1$ & $10{,}0$ \\
+Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-resumen-zona}{Resumen por zona: frecuencia, tasa anual promedio y medidas de magnitud y profundidad (en kilómetros).}
+\bottomtablecaption{tbl-resumen-zona}{Resumen por zona: frecuencia, tasa anual promedio y medidas de magnitud y profundidad (media, mediana y desviación estándar, en kilómetros).}
 \endgroup
 ```
 
-La profundidad, en cambio, muestra diferencias más claras entre zonas. El Cinturón de Fuego registra los eventos más profundos del catálogo, con un máximo de 676,4 km, mientras que la Dorsal Meso-Atlántica concentra eventos exclusivamente superficiales, con un máximo de 35 km. Esta estructura se refleja en la composición por categoría de profundidad: el Cinturón de Fuego es la única franja con una proporción apreciable de eventos profundos (9,3 %), seguido por "Resto del mundo" (19,7 %), categoría que agrupa orígenes tectónicos heterogéneos; en contraste, el Cinturón Alpino-Himalayo no registra eventos profundos y la Dorsal Meso-Atlántica es completamente superficial.
+La profundidad muestra diferencias más marcadas que la magnitud entre las zonas. El Cinturón de Fuego registra los eventos más profundos del catálogo, con un máximo de 676,4 km, mientras que la Dorsal Meso-Atlántica concentra eventos exclusivamente superficiales, con un máximo de 35 km.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1088,16 +1095,51 @@ La profundidad, en cambio, muestra diferencias más claras entre zonas. El Cintu
 ```
 
 ```{=latex}
-\Needspace{10\baselineskip}
+\Needspace{18\baselineskip}
+\noindent
+\begin{minipage}[t]{0.485\textwidth}
+\vspace{0pt}
 \begingroup
-\small
-\setlength{\tabcolsep}{5pt}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
 \phantomsection
 \refstepcounter{table}
+\label{tbl-magnitud-zona} \hypertarget{dest-tbl-magnitud-zona}{}
 
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Zona & Fuerte & Mayor & Grande o extremo \\
+\midrule
+Cinturón de Fuego & $66{,}9$ & $27{,}8$ & $5{,}3$ \\
+Resto del mundo & $66{,}0$ & $29{,}1$ & $4{,}9$ \\
+Cinturón Alpino-Himalayo & $68{,}3$ & $28{,}6$ & $3{,}2$ \\
+Dorsal Meso-Atlántica & $89{,}3$ & $10{,}7$ & $0{,}0$ \\
+\bottomrule
+\end{tabular}
+}
+
+\vspace{-0.2em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-magnitud-zona}{Composición porcentual de la magnitud por zona (porcentajes por fila).}
+\endgroup
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\phantomsection
+\refstepcounter{table}
 \label{tbl-profundidad-zona} \hypertarget{dest-tbl-profundidad-zona}{}
 
-\begin{longtable}{lrrr}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
 \toprule
 Zona & Superficial & Intermedio & Profundo \\
 \midrule
@@ -1106,12 +1148,20 @@ Resto del mundo & $71{,}4$ & $8{,}9$ & $19{,}7$ \\
 Cinturón Alpino-Himalayo & $82{,}5$ & $17{,}5$ & $0{,}0$ \\
 Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
+\end{tabular}
+}
+
+\vspace{-0.2em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona (porcentajes calculados por fila).}
+\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona (porcentajes por fila).}
 \endgroup
+\end{minipage}
 ```
+
+En las tres franjas con mayor actividad la composición por categoría de magnitud es casi idéntica: los eventos "Fuerte" reúnen entre el 66,0 % y el 68,3 %, los "Mayor" entre el 27,8 % y el 29,1 %, y los "Grande o extremo" entre el 3,2 % y el 5,3 %. La Dorsal Meso-Atlántica es la excepción, con un 89,3 % de eventos "Fuerte" y ningún evento "Grande o extremo".
+
+La profundidad sí distingue a las zonas. El Cinturón de Fuego es la única franja con una proporción apreciable de eventos profundos, un 9,3 %; "Resto del mundo" alcanza un 19,7 %, coherente con su origen tectónico heterogéneo. El Cinturón Alpino-Himalayo no registra eventos profundos y la Dorsal Meso-Atlántica es completamente superficial.
+
 ### Zona por Tipo de Magnitud
 
 ### Zona por Significancia USGS

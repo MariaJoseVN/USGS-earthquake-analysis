@@ -273,6 +273,54 @@ legend(
 box()
 
 
+#Magnitud categorica por zona----
+##Distribucion de magnitud_cat por zona----
+
+magnitud_zona <- sismos %>%
+  count(zona, magnitud_cat, name = "numero_eventos") %>%
+  tidyr::complete(
+    zona = zonas_estudio,
+    magnitud_cat = c("Fuerte", "Mayor", "Grande o extremo"),
+    fill = list(numero_eventos = 0)
+  ) %>%
+  group_by(zona) %>%
+  mutate(
+    proporcion = numero_eventos / if_else(
+      sum(numero_eventos) == 0,
+      1,
+      sum(numero_eventos)
+    ),
+    porcentaje = proporcion * 100
+  ) %>%
+  ungroup()
+
+print(magnitud_zona, n = Inf)
+
+
+##Asociacion entre zona y magnitud_cat----
+#Chi-cuadrado para evaluar independencia y V de Cramer para medir la fuerza de asociacion.
+
+tabla_zona_magnitud <- sismos %>%
+  filter(!is.na(zona), !is.na(magnitud_cat)) %>%
+  with(table(zona, magnitud_cat))
+
+prueba_chi_zona_magnitud <- suppressWarnings(chisq.test(tabla_zona_magnitud))
+
+v_cramer_zona_magnitud <- sqrt(
+  as.numeric(prueba_chi_zona_magnitud$statistic) /
+    (sum(tabla_zona_magnitud) * (min(dim(tabla_zona_magnitud)) - 1))
+)
+
+asociacion_zona_magnitud <- tibble::tibble(
+  estadistico_chi = as.numeric(prueba_chi_zona_magnitud$statistic),
+  grados_libertad = as.numeric(prueba_chi_zona_magnitud$parameter),
+  valor_p = prueba_chi_zona_magnitud$p.value,
+  v_cramer = v_cramer_zona_magnitud
+)
+
+print(asociacion_zona_magnitud)
+
+
 #Profundidad categorica por zona----
 ##Distribucion de profundidad_cat por zona----
 
