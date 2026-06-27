@@ -618,6 +618,95 @@ Profundo    & 123 & 744,5 & 712,0 & 102,6 & 1152 \\
 
 Donde a diferencia de la comparación por magnitud, la significancia no presenta un aumento progresivo entre las categorías de profundidad. Los eventos superficiales registran la media, la dispersión y el máximo más elevados, mientras que los intermedios presentan la mediana mayor. Los eventos profundos muestran los valores centrales y la variabilidad más bajos. Estas diferencias son descriptivas y no permiten atribuir por sí solas la significancia a la profundidad del evento.
 
+### Ajuste de la localización RMS
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+El RMS resume, en segundos, las diferencias entre los tiempos de llegada de las ondas sísmicas observados en las estaciones y los calculados por el modelo de localización. Valores menores indican una mayor concordancia con el modelo, aunque no constituyen por sí solos una medida completa de confiabilidad.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.14}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-disponibilidad-rms}
+\hypertarget{dest-tbl-disponibilidad-rms}{}
+
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lr@{}}
+\toprule
+Indicador & Valor \\
+\midrule
+Total de eventos & 1.186 \\
+RMS observado & 1.177 \\
+RMS imputado & 9 \\
+Porcentaje observado & 99,2 \% \\
+Porcentaje imputado & 0,759 \% \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-disponibilidad-rms}. Disponibilidad e imputación de los valores RMS del catálogo.}
+\endgroup
+\end{minipage}
+```
+
+El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuentan con un valor originalmente observado, equivalentes al 99,2 \% del catálogo. Solamente nueve registros, correspondientes al 0,76 \%, requirieron imputación. Por tanto, los resultados descriptivos y temporales se sustentan casi completamente en información observada.
+
+```{=latex}
+\Needspace{16\baselineskip}
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+Para comprobar el efecto de este procedimiento, se comparan los principales estadísticos del RMS observado y de la versión completada mediante imputación.
+
+\par\vspace{0.9em}
+La comparación confirma que la imputación tiene un efecto prácticamente nulo sobre la distribución. La mediana, la desviación estándar y la mayoría de los cuantiles permanecen sin cambios; solo se observan diferencias mínimas en la media y el percentil 95. En consecuencia, los nueve valores imputados permiten completar la variable sin modificar de manera sustantiva su comportamiento descriptivo.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.05}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-resumen-rms-observado-imputado}
+\hypertarget{dest-tbl-resumen-rms-observado-imputado}{}
+
+\begin{tabular}{lrr}
+\toprule
+Estadístico & Observado & Imputado \\
+\midrule
+Observaciones & 1.177 & 1.186 \\
+Media         & 0,964 & 0,965 \\
+Mediana       & 0,970 & 0,970 \\
+Desv. est.    & 0,219 & 0,219 \\
+Mínimo        & 0,070 & 0,070 \\
+Q25           & 0,840 & 0,840 \\
+Q75           & 1,100 & 1,100 \\
+Q90           & 1,230 & 1,230 \\
+Q95           & 1,312 & 1,310 \\
+Máximo        & 1,720 & 1,720 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-resumen-rms-observado-imputado}. Comparación descriptiva entre el RMS observado y el RMS imputado.}
+\endgroup
+\end{minipage}
+```
+
 ### Variables categóricas
 
 #### Tipo de magnitud

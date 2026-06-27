@@ -259,6 +259,93 @@ box()
 par(mfrow = c(1, 1))
 
 
+#Ajuste RMS de localizacion----
+##Disponibilidad e imputacion----
+
+disponibilidad_rms <- sismos %>%
+  summarise(
+    total_eventos = n(),
+    rms_observado = sum(!is.na(rms)),
+    rms_imputado = sum(is.na(rms)),
+    porcentaje_observado = mean(!is.na(rms)) * 100,
+    porcentaje_imputado = mean(is.na(rms)) * 100
+  )
+
+print(disponibilidad_rms)
+
+
+##Resumen descriptivo observado e imputado----
+
+resumen_rms <- dplyr::bind_rows(
+  sismos %>%
+    summarise(
+      serie = "RMS observado",
+      observaciones = sum(!is.na(rms)),
+      media = mean(rms, na.rm = TRUE),
+      mediana = median(rms, na.rm = TRUE),
+      desviacion = sd(rms, na.rm = TRUE),
+      minimo = min(rms, na.rm = TRUE),
+      cuantil_25 = quantile(rms, 0.25, na.rm = TRUE),
+      cuantil_75 = quantile(rms, 0.75, na.rm = TRUE),
+      cuantil_90 = quantile(rms, 0.90, na.rm = TRUE),
+      cuantil_95 = quantile(rms, 0.95, na.rm = TRUE),
+      maximo = max(rms, na.rm = TRUE)
+    ),
+  sismos %>%
+    summarise(
+      serie = "RMS imputado",
+      observaciones = sum(!is.na(rms_imp)),
+      media = mean(rms_imp, na.rm = TRUE),
+      mediana = median(rms_imp, na.rm = TRUE),
+      desviacion = sd(rms_imp, na.rm = TRUE),
+      minimo = min(rms_imp, na.rm = TRUE),
+      cuantil_25 = quantile(rms_imp, 0.25, na.rm = TRUE),
+      cuantil_75 = quantile(rms_imp, 0.75, na.rm = TRUE),
+      cuantil_90 = quantile(rms_imp, 0.90, na.rm = TRUE),
+      cuantil_95 = quantile(rms_imp, 0.95, na.rm = TRUE),
+      maximo = max(rms_imp, na.rm = TRUE)
+    )
+)
+
+print(data.frame(resumen_rms))
+
+
+##Distribucion del RMS observado----
+
+rms_observado <- sismos$rms[!is.na(sismos$rms)]
+
+par(mfrow = c(1, 2), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+
+hist(
+  rms_observado,
+  breaks = "Sturges",
+  main = "Distribucion del RMS observado",
+  xlab = "RMS (segundos)",
+  ylab = "Numero de eventos",
+  col = "gray80",
+  border = "gray30"
+)
+
+abline(
+  v = median(rms_observado),
+  col = "red",
+  lty = 3,
+  lwd = 1.5
+)
+
+boxplot(
+  rms_observado,
+  horizontal = TRUE,
+  main = "Dispersion del RMS observado",
+  xlab = "RMS (segundos)",
+  col = "gray80",
+  border = "gray30",
+  outline = TRUE
+)
+
+par(mfrow = c(1, 1))
+
+
 #Zonificacion espacial----
 ##Leer poligonos de zonas sismicas----
 
