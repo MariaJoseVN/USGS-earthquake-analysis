@@ -220,7 +220,7 @@ Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `
 
 El análisis de asociatividad e independencia se realiza sobre la base `sismos`. Su propósito es examinar, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación, distinguiendo el tratamiento según la naturaleza numérica o categórica de cada variable.
 
-Para las variables numéricas se calcula una matriz de correlación de Spearman, método basado en rangos que no requiere el supuesto de normalidad y que capta relaciones monótonas entre variables. El cálculo se realiza sobre observaciones completas por pares y excluye las versiones originales de `nst` y `rms`, conservando en su lugar las variables imputadas `nst_imp` y `rms_imp`.
+En el caso de las variables numéricas, se estimó una matriz de correlación de Spearman. La elección de este coeficiente se fundamenta en que, al tratarse de una etapa exploratoria, no se han evaluado previamente los supuestos estadísticos, particularmente el supuesto de normalidad. A diferencia de la correlación de Pearson, el coeficiente de Spearman es una medida no paramétrica basada en rangos, que no exige normalidad y resulta adecuada para detectar **asociaciones monótonas** entre variables. El cálculo se realiza sobre observaciones completas por pares de las variables `nst_imp` y `rms_imp`.
 
 A partir de la matriz se profundizan las relaciones de mayor interés. La asociación entre `mag` y `sig` se evalúa mediante la correlación de Spearman. La significancia se compara entre las categorías de `magnitud_cat` con la prueba de Kruskal-Wallis, que permite contrastar diferencias entre grupos sin asumir normalidad en la distribución de `sig`; cuando esta prueba indica diferencias, se aplican comparaciones por pares de Wilcoxon con ajuste de Bonferroni para identificar qué categorías difieren entre sí. Además, se mide la asociación temporal de `nst_imp` y `rms_imp` con el año mediante la correlación de Spearman, a fin de describir el patrón observado en la matriz.
 
@@ -235,7 +235,6 @@ El análisis se plantea como descriptivo y exploratorio. Por ello, los resultado
 # Resultados y discusión
 
 <!-- Esta es la sección principal del informe. Mover aquí los resultados ya seleccionados, con tablas y figuras clave. -->
-
 
 ## Caracterización descriptiva
 
@@ -371,8 +370,7 @@ Para complementar el resumen numérico, la variable `mag` se categorizó en `mag
 \phantomsection
 \refstepcounter{table}
 
-\label{tbl-eventos-magnitud-cat}
-\hypertarget{dest-tbl-eventos-magnitud-cat}{}
+\label{tbl-eventos-magnitud-cat} \hypertarget{dest-tbl-eventos-magnitud-cat}{}
 
 \begin{tabular}{lrr}
 \toprule
@@ -385,8 +383,8 @@ Grande o extremo & 59 & 5,0 \% \\
 \end{tabular}
 
 \vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-eventos-magnitud-cat}. Distribución de eventos según categoría de magnitud.}
-\endgroup
+
+{\itshape Tabla~\ref*{tbl-eventos-magnitud-cat}. Distribución de eventos según categoría de magnitud.} \endgroup
 
 La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000--2025.
 
@@ -558,9 +556,6 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 
 El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. Además la lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
 
-
-
-
 ## Caracterización temporal
 
 Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media, con un aumento relativo durante la primera parte del período y una disminución posterior desde la mitad del tiempo de observación, sin que ello implique una tendencia sostenida para todo el intervalo.
@@ -678,9 +673,7 @@ El análisis de asociatividad evalúa, de forma exploratoria, si las variables d
 
 ### Asociación entre variables numéricas
 
-La matriz de correlación de Spearman evidencia que la mayoría de las variables numéricas presentan asociaciones débiles entre sí. La relación de mayor intensidad se observa entre la magnitud y la significancia (`sig`), con un coeficiente de 0,82, coherente con la forma en que la USGS define este indicador compuesto [@usgs_significance]. 
-La asociación elevada entre año y década (0,93) responde a que la década deriva directamente del año, por lo que no aporta información sustantiva. 
-Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociaciones negativas moderadas con el tiempo, del orden de $-0{,}37$ y $-0{,}43$ respecto del año (resultado que debe interpretarse con cautela debido al procedimiento de imputación por mediana decadal).
+La matriz de correlación de Spearman evidencia que la mayoría de las variables numéricas presentan asociaciones débiles entre sí. La relación de mayor intensidad se observa entre la magnitud y la significancia (`sig`), con un coeficiente de 0,82, coherente con la forma en que la USGS define este indicador compuesto [@usgs_significance]. La asociación elevada entre año y década (0,93) responde a que la década deriva directamente del año, por lo que no aporta información sustantiva. Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociaciones negativas moderadas con el tiempo, del orden de $-0{,}37$ y $-0{,}43$ respecto del año (resultado que debe interpretarse con cautela debido al procedimiento de imputación por mediana decadal).
 
 ```{=latex}
 \begin{figure}[H]
@@ -740,7 +733,6 @@ Entre las variables categóricas, las asociaciones de mayor intensidad se concen
 En contraste, las variables geofísicas de comparación, `zona` y `profundidad_cat`, presentan asociaciones débiles con las variables de fuente (V de Cramer inferior a 0,13) y, en la mayoría de los pares, no significativas. Este resultado respalda su uso como variables de comparación espacial, pues indica que la zonificación y la categoría de profundidad no dependen de forma marcada de la fuente de reporte. La asociación entre `zona` y `profundidad_cat`, aunque débil (V de Cramer = 0,13), resulta estadísticamente significativa ($p < 0{,}001$) y conserva sentido geofísico, ya que el Cinturón de Fuego es la única zona que concentra una proporción apreciable de eventos profundos, según el cruce documentado en la \hyperref[sec-anexo-caracterizacion-espacial]{caracterización espacial}.
 
 En síntesis, las asociaciones más fuertes del catálogo corresponden a su estructura de reporte y no a las variables de interés sísmico, mientras que las variables geofísicas de comparación se relacionan débilmente con la fuente. Estos hallazgos se interpretan de forma descriptiva y sustentan que las comparaciones de magnitud y profundidad entre zonas no están determinadas por las condiciones de reporte del catálogo.
-
 
 ## Supuestos, limitaciones y sensibilidad
 
