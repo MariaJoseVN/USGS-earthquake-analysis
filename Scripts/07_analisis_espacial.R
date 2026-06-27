@@ -348,7 +348,7 @@ print(significancia_zona, n = Inf)
 
 ##Boxplot de sig por zona----
 
-par(mfrow = c(1, 1), bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+par(mfrow = c(1, 1), bg = "white", mar = c(10, 4, 4, 2) + 0.1)
 
 boxplot(
   sig ~ zona,
@@ -358,8 +358,7 @@ boxplot(
   ylab = "Significancia (sig)",
   col = unname(colores_zona[sort(unique(sismos$zona))]),
   border = "gray30",
-  names = etiquetas_zona[sort(unique(sismos$zona))],
-  las = 1,
+  las = 2,
   outline = TRUE
 )
 
@@ -563,3 +562,4 @@ box()
 #Restablecer parametros graficos----
 
 par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
+
