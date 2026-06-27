@@ -258,6 +258,7 @@ legend(
 box()
 
 
+#ESTO DEBE IR EN ANÁLISIS DE ASOCIACIÓN e INDEPENDENCIA.
 #Relacion entre variables de fuente----
 ##magType y magSource----
 #Revisa que agencia reporta cada tipo de magnitud. Las proporciones se calculan por fila.
