@@ -838,6 +838,92 @@ La evolución de `magType_grupo` muestra una transición marcada en la composici
 
 ## Caracterización espacial
 
+La caracterización espacial asigna cada evento a una zona sísmica mediante intersección espacial y compara las zonas en frecuencia de ocurrencia, magnitud, profundidad, significancia y condiciones de reporte.
+
+Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año, muy por sobre el resto de las zonas. El conjunto "Resto del mundo" reúne 203 eventos (17,12 %), mientras que el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica registran 63 (5,31 %) y 28 eventos (2,36 %), respectivamente. Esta distribución es coherente con la concentración esperada de los grandes terremotos en el cinturón circumpacífico descrita en los antecedentes.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
+\vspace{-0.6em}
+\caption{Número de eventos y participación porcentual por zona sísmica.}
+\label{fig-eventos-espacial-zona}
+\end{figure}
+```
+
+Al comparar las zonas en magnitud, las medias observadas resultan similares entre las franjas con mayor actividad y se sitúan en torno a 6,9: 6,90 en el Cinturón de Fuego, 6,92 en "Resto del mundo" y 6,91 en el Cinturón Alpino-Himalayo. La Dorsal Meso-Atlántica presenta una media algo menor, de 6,69, y la menor dispersión del conjunto, con una desviación estándar de 0,19. La magnitud máxima del catálogo se registra en el Cinturón de Fuego, con un valor de 9,1. En conjunto, estos resultados indican que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de magnitud, aspecto relevante para la pregunta estadística del informe.
+
+```{=latex}
+\Needspace{12\baselineskip}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-resumen-zona} \hypertarget{dest-tbl-resumen-zona}{}
+
+\begin{longtable}{lrrrrrrr}
+\toprule
+Zona & Eventos & \% & Tasa anual & Mag. media & Mag. mediana & Prof. media & Prof. mediana \\
+\midrule
+Cinturón de Fuego & 892 & $75{,}21$ & $34{,}3$ & $6{,}90$ & $6{,}8$ & $89{,}6$ & $29{,}4$ \\
+Resto del mundo & 203 & $17{,}12$ & $7{,}8$ & $6{,}92$ & $6{,}8$ & $134{,}3$ & $16{,}0$ \\
+Cinturón Alpino-Himalayo & 63 & $5{,}31$ & $2{,}4$ & $6{,}91$ & $6{,}7$ & $45{,}8$ & $16{,}1$ \\
+Dorsal Meso-Atlántica & 28 & $2{,}36$ & $1{,}1$ & $6{,}69$ & $6{,}6$ & $11{,}0$ & $10{,}0$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-resumen-zona}{Resumen por zona: frecuencia, tasa anual promedio y medidas de magnitud y profundidad (en kilómetros).}
+\endgroup
+```
+
+La profundidad, en cambio, muestra diferencias más claras entre zonas. El Cinturón de Fuego registra los eventos más profundos del catálogo, con un máximo de 676,4 km, mientras que la Dorsal Meso-Atlántica concentra eventos exclusivamente superficiales, con un máximo de 35 km. Esta estructura se refleja en la composición por categoría de profundidad: el Cinturón de Fuego es la única franja con una proporción apreciable de eventos profundos (9,3 %), seguido por "Resto del mundo" (19,7 %), categoría que agrupa orígenes tectónicos heterogéneos; en contraste, el Cinturón Alpino-Himalayo no registra eventos profundos y la Dorsal Meso-Atlántica es completamente superficial.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
+\vspace{-0.6em}
+\caption{Distribución de magnitud y de profundidad por zona sísmica. El punto indica la media.}
+\label{fig-magnitud-profundidad-zona}
+\end{figure}
+```
+
+```{=latex}
+\Needspace{10\baselineskip}
+\begingroup
+\small
+\setlength{\tabcolsep}{5pt}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-profundidad-zona} \hypertarget{dest-tbl-profundidad-zona}{}
+
+\begin{longtable}{lrrr}
+\toprule
+Zona & Superficial & Intermedio & Profundo \\
+\midrule
+Cinturón de Fuego & $77{,}1$ & $13{,}6$ & $9{,}3$ \\
+Resto del mundo & $71{,}4$ & $8{,}9$ & $19{,}7$ \\
+Cinturón Alpino-Himalayo & $82{,}5$ & $17{,}5$ & $0{,}0$ \\
+Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona (porcentajes calculados por fila).}
+\endgroup
+```
+
+La asociación entre la zona y la categoría de profundidad resulta estadísticamente significativa, aunque débil ($\chi^2 = 38{,}04$; $\mathrm{gl} = 6$; $p < 0{,}001$; V de Cramer = 0,13). Esto confirma que la composición de profundidad difiere entre zonas, en línea con la presencia de eventos profundos asociados a procesos de subducción en el Cinturón de Fuego, sin que la zona determine de forma marcada la profundidad de los eventos.
+
+Respecto de la significancia USGS, el Cinturón Alpino-Himalayo presenta la mediana más alta, de 941, seguido por "Resto del mundo" y el Cinturón de Fuego, ambos en torno a 732, y la Dorsal Meso-Atlántica, con la mediana más baja, de 670. Este patrón es coherente con la composición de magnitud de cada zona, dada la fuerte asociación entre magnitud y significancia documentada en el análisis de asociatividad.
+
+Finalmente, los indicadores de comparabilidad del registro se presentan homogéneos entre zonas. En todas ellas predomina la magnitud `mww` como tipo dominante, con participaciones entre 53,9 % y 58,7 %, y la fuente `us` como `magSource` mayoritaria, con participaciones entre 71,2 % y 76,8 %. Las medianas de `nst_imp` y `rms_imp` son similares entre las franjas principales, con valores algo menores en la Dorsal Meso-Atlántica. Esta homogeneidad indica que las comparaciones de magnitud y profundidad entre zonas no están condicionadas de forma relevante por diferencias en cobertura instrumental, ajuste del evento o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
+
 ## Análisis de asociatividad e independencia
 
 El análisis de asociatividad evalúa, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación. Las relaciones se examinan por separado según la naturaleza de las variables: para las variables numéricas se utiliza la correlación de Spearman, junto con pruebas de comparación entre grupos, y para las variables categóricas se emplea la prueba chi-cuadrado complementada con la V de Cramer como medida de fuerza de asociación. Los resultados se interpretan como descripciones del catálogo analizado y no como relaciones causales.
