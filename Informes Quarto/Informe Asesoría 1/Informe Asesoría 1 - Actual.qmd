@@ -281,7 +281,7 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
 
-La magnitud de los eventos presenta una media de 6,90 y una mediana de 6,80, lo que indica que el catálogo se concentra cerca del umbral mínimo de selección definido para el estudio. El 75 % de los eventos alcanza magnitudes de hasta 7,10, mientras que el 90 % no supera 7,50 y el 95 % se mantiene bajo 7,70.
+La magnitud de los eventos presenta una media de 6,90 y una mediana de 6,80, lo que indica que el catálogo se concentra cerca del umbral mínimo de selección definido para el estudio. El 75 \% de los eventos alcanza magnitudes de hasta 7,10, mientras que el 90 \% no supera 7,50 y el 95 \% se mantiene bajo 7,70.
 
 A partir de esta descripción continua, el análisis siguiente identifica los años con mayores máximos anuales y luego resume la composición del catálogo mediante categorías de magnitud.
 \end{minipage}
@@ -585,9 +585,9 @@ Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
 \endgroup
 ```
 
-La significancia media y mediana aumentan progresivamente desde la categoría ``Fuerte'' hasta ``Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
+La significancia media y mediana aumentan progresivamente desde la categoría `Fuerte'' hasta`Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
 
-La significancia según la categoría de profundidad,  describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
+La significancia según la categoría de profundidad, describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
 
 ```{=latex}
 \begingroup
