@@ -141,7 +141,7 @@ magnitud_por_magtype <- sismos_categoricas %>%
   ) %>%
   arrange(desc(numero_eventos))
 
-print(magnitud_por_magtype, n = Inf)
+print(data.frame(magnitud_por_magtype, n = Inf))
 
 
 ##Resumen de magnitud por magType_grupo----
