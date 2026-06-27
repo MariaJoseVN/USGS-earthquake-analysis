@@ -192,31 +192,11 @@ Para la magnitud se resumió su distribución continua y se calculó el máximo 
 
 La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
 
-La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas; el contraste estadístico entre categorías de magnitud se desarrolló en el análisis de asociatividad.
+La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas; el contraste estadístico entre categorías de magnitud se documentó como complemento en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 Las variables categóricas se describieron mediante frecuencias absolutas y porcentajes. `magType` se agrupó en `mww`, `mwc`, `mwb` y "otros" para evitar la fragmentación producida por tipos poco frecuentes. Para los tres tipos principales se resumió la magnitud mediante número de observaciones, media, mediana, desviación estándar, mínimo y máximo. La categoría "otros" no se incluyó en esta comparación por reunir métodos heterogéneos y con baja frecuencia. Por su parte, `magSource` se utilizó para describir la procedencia institucional de las magnitudes reportadas y contextualizar la comparabilidad del catálogo, sin interpretarla como una clasificación de calidad.
 
-Por último, el ajuste de la localización se caracterizó mediante la variable `rms`, expresada en segundos, que corresponde a la raíz del promedio ponderado de los residuos cuadrados entre los tiempos de llegada observados y los calculados por el modelo de localización [@usgs_comcat_rms]:
-
-$$
-RMS=\sqrt{\frac{\sum_{i=1}^{n} w_i\left(t_i^{obs}-t_i^{calc}\right)^2}{\sum_{i=1}^{n}w_i}},
-$$
-
-donde $t_i^{obs}$ y $t_i^{calc}$ representan los tiempos de llegada observado y calculado para la observación $i$, respectivamente, y $w_i$ corresponde a su ponderación. Un menor RMS indica mayor concordancia entre ambos tiempos. El valor se obtuvo directamente del catálogo USGS y no se recalculó, ya que la base utilizada no contiene los tiempos de llegada ni sus ponderaciones individuales.
-
-Se cuantificó la disponibilidad de `rms` mediante el número y porcentaje de valores observados y faltantes. Los valores ausentes se imputaron con la mediana del RMS de la década correspondiente:
-
-$$
-rms\_imp_i=
-\begin{cases}
-rms_i, & \text{si } rms_i \text{ está observado},\\
-\operatorname{Mediana}(rms_j\mid decada_j=decada_i), & \text{si } rms_i \text{ está ausente}.
-\end{cases}
-$$
-
-La mediana se utilizó por su resistencia a valores extremos y la agrupación decadal para conservar diferencias temporales generales. La imputación permitió mantener todos los eventos en las comparaciones temporales y espaciales que utilizan `rms_imp`, evitando la eliminación de registros incompletos.
-
-Para evaluar el efecto de la imputación se compararon `rms` y `rms_imp` mediante el número de observaciones, media, mediana, desviación estándar, mínimo, máximo y cuantiles 25, 75, 90 y 95. Esta comparación se utilizó para verificar si la imputación modificaba de forma relevante la distribución descriptiva. Para la caracterización general se utilizaron los valores observados de `rms`, mientras que `rms_imp` se reservó para los análisis temporales, espaciales y de asociatividad que requerían registros completos.
+Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cuantificaron sus valores observados y faltantes, y estos últimos se imputaron con la mediana de la década correspondiente para mantener todos los eventos sin trasladar valores extremos a los registros ausentes. El efecto de la imputación se evaluó comparando `rms` y `rms_imp` mediante sus principales estadísticos y cuantiles. La versión observada se utilizó en la descripción general y `rms_imp` en los análisis que requerían registros completos. La definición matemática y el procedimiento se detallan en el \hyperref[sec-anexo-rms]{anexo de RMS}.
 
 ## Caracterización temporal
 
@@ -242,17 +222,11 @@ A partir de `zona` se calculan conteos, porcentajes y tasas anuales. Luego se re
 
 Finalmente, se incorporan indicadores de comparabilidad del registro por zona: `nst_imp`, `rms_imp`, `magType_grupo` y `magSource`. Estos indicadores no corrigen los resultados, pero permiten declarar si las comparaciones pueden estar condicionadas por cobertura instrumental, ajuste del evento, tipo de magnitud o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
 
-## Análisis de asociatividad e independencia
+## Análisis exploratorio de asociatividad
 
-El análisis de asociatividad e independencia se realiza sobre la base `sismos`. Su propósito es examinar, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación, distinguiendo el tratamiento según la naturaleza numérica o categórica de cada variable.
+El análisis exploratorio de asociatividad se realizó sobre `sismos` para describir la dirección e intensidad de las relaciones observadas. Para las variables numéricas se utilizó la correlación de Spearman, adecuada para asociaciones monótonas sin exigir normalidad. La matriz incluyó todas las variables numéricas, excepto `nst` y `rms`, reemplazadas por `nst_imp` y `rms_imp`, y se calculó con observaciones completas por pares. Se priorizó la interpretación de `mag` con `sig` y del año con las variables instrumentales imputadas.
 
-En el caso de las variables numéricas, se estimó una matriz de correlación de Spearman. La elección de este coeficiente se fundamenta en que, al tratarse de una etapa exploratoria, no se han evaluado previamente los supuestos estadísticos, particularmente el supuesto de normalidad. A diferencia de la correlación de Pearson, el coeficiente de Spearman es una medida no paramétrica basada en rangos, que no exige normalidad y resulta adecuada para detectar **asociaciones monótonas** entre variables. El cálculo se realiza sobre observaciones completas por pares de las variables `nst_imp` y `rms_imp`.
-
-A partir de la matriz se profundizan las relaciones de mayor interés. La asociación entre `mag` y `sig` se evalúa mediante la correlación de Spearman. La significancia se compara entre las categorías de `magnitud_cat` con la prueba de Kruskal-Wallis, que permite contrastar diferencias entre grupos sin asumir normalidad en la distribución de `sig`; cuando esta prueba indica diferencias, se aplican comparaciones por pares de Wilcoxon con ajuste de Bonferroni para identificar qué categorías difieren entre sí. Además, se mide la asociación temporal de `nst_imp` y `rms_imp` con el año mediante la correlación de Spearman, a fin de describir el patrón observado en la matriz.
-
-Para las variables categóricas se definen las de interés analítico: `locationSource`, `magSource`, `net`, `magType_grupo`, `zona`, `profundidad_cat` y `magnitud_cat`. Para cada par de variables se evalúa la existencia de asociación con la prueba chi-cuadrado y se mide su fuerza con la V de Cramer, indicador que normaliza la asociación entre 0 y 1 y permite comparar variables nominales con distinto número de categorías. La medida se calcula para todos los pares posibles y los resultados se ordenan de mayor a menor fuerza de asociación.
-
-Finalmente, las asociaciones categóricas se resumen en una matriz de V de Cramer y se profundizan los pares con mayor sentido analítico: `magSource` con `magType_grupo`, para revisar si el tipo de magnitud reportado depende de la fuente que lo entrega, y `zona` con `profundidad_cat`, por su interés geofísico. En ambos casos, la relación se describe mediante tablas de frecuencias relativas. Las medidas obtenidas se interpretan como asociaciones observadas dentro del catálogo analizado y no como relaciones causales.
+Para las variables categóricas se utilizó la V de Cramer como medida descriptiva normalizada entre 0 y 1. Se consideraron las variables de fuente, tipo de magnitud, zona y categorías de magnitud y profundidad, con énfasis en las asociaciones vinculadas con la estructura de reporte y la comparación espacial. Los contrastes inferenciales de Spearman, chi-cuadrado, Kruskal-Wallis y Wilcoxon se documentan por separado en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ## Criterios de interpretación estadística
 
@@ -1149,78 +1123,77 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 
 
 
-La asociación entre la zona y la categoría de profundidad resulta estadísticamente significativa, aunque débil ($\chi^2 = 38{,}04$; $\mathrm{gl} = 6$; $p < 0{,}001$; V de Cramer = 0,13). Esto confirma que la composición de profundidad difiere entre zonas, en línea con la presencia de eventos profundos asociados a procesos de subducción en el Cinturón de Fuego, sin que la zona determine de forma marcada la profundidad de los eventos.
+La asociación observada entre la zona y la categoría de profundidad es débil (V de Cramer = 0,13). La composición de profundidad presenta diferencias entre zonas, en línea con la presencia de eventos profundos asociados a procesos de subducción, pero la intensidad del coeficiente indica que la zona no se relaciona de forma marcada con la categoría de profundidad. El contraste inferencial de independencia se presenta en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 Respecto de la significancia USGS, el Cinturón Alpino-Himalayo presenta la mediana más alta, de 941, seguido por "Resto del mundo" y el Cinturón de Fuego, ambos en torno a 732, y la Dorsal Meso-Atlántica, con la mediana más baja, de 670. Este patrón es coherente con la composición de magnitud de cada zona, dada la fuerte asociación entre magnitud y significancia documentada en el análisis de asociatividad.
 
 Finalmente, los indicadores de comparabilidad del registro se presentan homogéneos entre zonas. En todas ellas predomina la magnitud `mww` como tipo dominante, con participaciones entre 53,9 % y 58,7 %, y la fuente `us` como `magSource` mayoritaria, con participaciones entre 71,2 % y 76,8 %. Las medianas de `nst_imp` y `rms_imp` son similares entre las franjas principales, con valores algo menores en la Dorsal Meso-Atlántica. Esta homogeneidad indica que las comparaciones de magnitud y profundidad entre zonas no están condicionadas de forma relevante por diferencias en cobertura instrumental, ajuste del evento o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
 
-## Análisis de asociatividad e independencia
+## Análisis exploratorio de asociatividad
 
-El análisis de asociatividad evalúa, de forma exploratoria, si las variables del catálogo presentan relaciones entre sí y con qué grado de asociación. Las relaciones se examinan por separado según la naturaleza de las variables: para las variables numéricas se utiliza la correlación de Spearman, junto con pruebas de comparación entre grupos, y para las variables categóricas se emplea la prueba chi-cuadrado complementada con la V de Cramer como medida de fuerza de asociación. Los resultados se interpretan como descripciones del catálogo analizado y no como relaciones causales.
+El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramer. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ### Asociación entre variables numéricas
 
-La matriz de correlación de Spearman evidencia que la mayoría de las variables numéricas presentan asociaciones débiles entre sí. La relación de mayor intensidad se observa entre la magnitud y la significancia (`sig`), con un coeficiente de 0,82, coherente con la forma en que la USGS define este indicador compuesto [@usgs_significance]. La asociación elevada entre año y década (0,93) responde a que la década deriva directamente del año, por lo que no aporta información sustantiva. Las variables instrumentales imputadas, `nst_imp` y `rms_imp`, presentan asociaciones negativas moderadas con el tiempo, del orden de $-0{,}37$ y $-0{,}43$ respecto del año (resultado que debe interpretarse con cautela debido al procedimiento de imputación por mediana decadal).
+```{=latex}
+\Needspace{21\baselineskip}
+\noindent
+\begin{minipage}[t]{0.43\textwidth}
+\vspace{0pt}
+```
+
+La mayoría de las variables numéricas presenta asociaciones débiles. La correlación entre año y década ($\rho=0{,}931$) es estructural, porque `decada` deriva de `año`. La principal asociación sustantiva corresponde a magnitud y significancia USGS ($\rho=0{,}816$), coherente con la construcción de `sig` [@usgs_significance].
 
 ```{=latex}
-\begin{figure}[H]
+\par\vspace{0.65em}
+```
+
+El año presenta asociaciones negativas moderadas con `rms_imp` ($\rho=-0{,}429$) y `nst_imp` ($\rho=-0{,}374$). La segunda requiere mayor cautela porque 402 valores fueron imputados mediante medianas decadales; en `rms_imp` solo se imputaron nueve registros.
+
+```{=latex}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+\vspace{0pt}
 \centering
-\includegraphics[width=0.79\textwidth]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
-\vspace{-1.7em}
-\caption{Matriz de correlación de Spearman entre las variables numéricas del catálogo.}
-\label{fig-matriz-correlacion-numericas}
-\end{figure}
-```
-
-La relación entre magnitud y significancia se confirma mediante la correlación de Spearman, que resulta alta y positiva ($\rho = 0{,}816$; $p < 0{,}001$): los eventos de mayor magnitud tienden a presentar mayor significancia USGS.
-
-Al examinar la significancia según la categoría de magnitud, los valores aumentan de forma progresiva desde los eventos "Fuerte" hacia los "Mayor" y los "Grande o extremo", como se resume en la \hyperlink{dest-tbl-significancia-magnitud-cat}{Tabla~\ref*{tbl-significancia-magnitud-cat}}. La prueba de Kruskal-Wallis indica diferencias estadísticamente significativas entre categorías ($\chi^2 = 546{,}98$; $\mathrm{gl} = 2$; $p < 0{,}001$), y las comparaciones por pares de Wilcoxon con ajuste de Bonferroni confirman que las tres categorías difieren entre sí ($p < 0{,}001$ en todos los pares). No obstante, las tres categorías presentan valores atípicos altos, lo que indica que la significancia no depende únicamente de la magnitud, sino también de otros elementos que la USGS incorpora en el indicador [@usgs_significance].
-
-```{=latex}
-\begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\Needspace{12\baselineskip}
+\includegraphics[width=\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
+\vspace{-1.4em}
 \phantomsection
-\refstepcounter{table}
-
-\label{tbl-significancia-magnitud-cat} \hypertarget{dest-tbl-significancia-magnitud-cat}{}
-
-\begin{longtable}{lrrrrrrr}
-\toprule
-Categoría de magnitud & Eventos & Media & Mediana & Q1 & Q3 & Mín. & Máx. \\
-\midrule
-Fuerte & 799 & $742{,}8$ & $691$ & $670{,}0$ & $733{,}0$ & $650$ & $2841$ \\
-Mayor & 328 & $992{,}2$ & $848$ & $786{,}5$ & $966{,}5$ & $754$ & $2910$ \\
-Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $2910$ \\
-\bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-significancia-magnitud-cat}{Resumen de la significancia USGS (\texttt{sig}) según categoría de magnitud.}
-\endgroup
+\refstepcounter{figure}
+\label{fig-matriz-correlacion-numericas}
+\begin{center}\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.\end{center}
+\end{minipage}
 ```
 
-Por último, las variables instrumentales imputadas presentan una asociación negativa moderada con el año (`nst_imp`: $\rho = -0{,}374$; $p < 0{,}001$; `rms_imp`: $\rho = -0{,}429$; $p < 0{,}001$). Esto sugiere que en los años más recientes los eventos tienden a asociarse a un menor número de estaciones reportadas y a menores residuos RMS, es decir, a un mejor ajuste de la localización.
+Los coeficientes restantes son débiles o corresponden a variables derivadas, cíclicas o espaciales cuya correlación requiere una interpretación limitada. Los valores cercanos a cero no demuestran independencia. La relación entre magnitud y `sig` también se observa en los resúmenes por `magnitud_cat` de la \hyperlink{dest-tbl-significancia-categoria-magnitud-descriptiva}{Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}}; los contrastes complementarios se presentan en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ### Asociación entre variables categóricas
 
-Entre las variables categóricas, las asociaciones de mayor intensidad se concentran en variables de fuente o reporte del catálogo. Los valores más altos de V de Cramer corresponden a `magSource` con `net` (1,00), `locationSource` con `net` (0,94) y `locationSource` con `magSource` (0,80), lo que indica que la red que reporta el evento y las fuentes de localización y de magnitud se encuentran estrechamente relacionadas, en una asociación de tipo administrativo del catálogo. Se observa, además, una asociación moderada entre `magSource` y `magType_grupo` (0,65), que muestra que el tipo de magnitud utilizado depende en parte de la fuente que lo reporta.
-
 ```{=latex}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\textwidth]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
-\vspace{-1.7em}
-\caption{Matriz de asociación entre variables categóricas medida con la V de Cramer.}
-\label{fig-matriz-asociacion-categorica}
-\end{figure}
+\Needspace{21\baselineskip}
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\vspace{0pt}
 ```
 
-En contraste, las variables geofísicas de comparación, `zona` y `profundidad_cat`, presentan asociaciones débiles con las variables de fuente (V de Cramer inferior a 0,13) y, en la mayoría de los pares, no significativas. Este resultado respalda su uso como variables de comparación espacial, pues indica que la zonificación y la categoría de profundidad no dependen de forma marcada de la fuente de reporte. La asociación entre `zona` y `profundidad_cat`, aunque débil (V de Cramer = 0,13), resulta estadísticamente significativa ($p < 0{,}001$) y conserva sentido geofísico, ya que el Cinturón de Fuego es la única zona que concentra una proporción apreciable de eventos profundos, según el cruce documentado en la \hyperref[sec-anexo-caracterizacion-espacial]{caracterización espacial}.
+Las asociaciones categóricas más intensas corresponden a la estructura de reporte: `magSource` con `net` ($V=1{,}00$), `locationSource` con `net` ($V=0{,}94$) y `locationSource` con `magSource` ($V=0{,}80$). También se observa una asociación moderada entre `magSource` y `magType_grupo` ($V=0{,}65$), por lo que el tipo de magnitud se relaciona con la fuente que lo reporta.
 
-En síntesis, las asociaciones más fuertes del catálogo corresponden a su estructura de reporte y no a las variables de interés sísmico, mientras que las variables geofísicas de comparación se relacionan débilmente con la fuente. Estos hallazgos se interpretan de forma descriptiva y sustentan que las comparaciones de magnitud y profundidad entre zonas no están determinadas por las condiciones de reporte del catálogo.
+```{=latex}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=0.88\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
+\vspace{-1.3em}
+\phantomsection
+\refstepcounter{figure}
+\label{fig-matriz-asociacion-categorica}
+\begin{center}\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.\end{center}
+\end{minipage}
+```
+
+Las asociaciones restantes son, en general, débiles. Las variables de fuente presentan valores inferiores a 0,13 con `zona` y `profundidad_cat`, y la relación entre estas dos últimas también es débil ($V=0{,}13$). En consecuencia, las asociaciones principales corresponden a la estructura administrativa del catálogo y no muestran una relación intensa entre las variables geofísicas y las condiciones de reporte. Estos valores no demuestran independencia; el contraste chi-cuadrado se presenta en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ## Supuestos, limitaciones y sensibilidad
 
@@ -1484,6 +1457,28 @@ La variable `profundidad_cat` se utiliza para ordenar la profundidad focal en tr
 
 Finalmente, la revisión de `magType` cumple una función de trazabilidad metodológica. La magnitud reportada por USGS puede provenir de distintos métodos o escalas de estimación [@usgs_magnitude_types], por lo que las comparaciones descriptivas se interpretan sobre los valores reportados, sin homogeneizar retrospectivamente las escalas de magnitud. Esta precaución es especialmente relevante para la lectura temporal, donde se analiza la transición en los tipos de magnitud reportados.
 
+### Definición y tratamiento del RMS {#sec-anexo-rms}
+
+El RMS corresponde a la raíz del promedio ponderado de los residuos cuadrados entre los tiempos de llegada observados y los calculados por el modelo de localización [@usgs_comcat_rms]:
+
+$$
+RMS=\sqrt{\frac{\sum_{i=1}^{n} w_i\left(t_i^{obs}-t_i^{calc}\right)^2}{\sum_{i=1}^{n}w_i}},
+$$
+
+donde $t_i^{obs}$ y $t_i^{calc}$ son los tiempos de llegada observado y calculado para la observación $i$, y $w_i$ es su ponderación. Un valor menor indica mayor concordancia entre ambos tiempos. El indicador se obtuvo directamente del catálogo USGS y no se recalculó porque la base no contiene los tiempos de llegada ni sus ponderaciones individuales.
+
+Los valores faltantes se completaron mediante la mediana del RMS de la década del evento:
+
+$$
+rms\_imp_i=
+\begin{cases}
+rms_i, & \text{si } rms_i \text{ está observado},\\
+\operatorname{Mediana}(rms_j\mid decada_j=decada_i), & \text{si } rms_i \text{ está ausente}.
+\end{cases}
+$$
+
+La mediana se utilizó por su resistencia a valores extremos y la agrupación decadal para conservar diferencias temporales generales. Para comprobar que el procedimiento no modificara sustantivamente la distribución, `rms` y `rms_imp` se compararon mediante número de observaciones, media, mediana, desviación estándar, mínimo, máximo y cuantiles 25, 75, 90 y 95.
+
 ## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
 
 La comparación decadal debe leerse mediante tasas anuales promedio, porque el tramo 2020--2025 no corresponde a una década completa. Por ello, sus conteos acumulados no son directamente equivalentes a los de 2000--2009 y 2010--2019.
@@ -1505,3 +1500,47 @@ La tercera decisión corresponde a completar con cero las combinaciones sin even
 La cuarta decisión corresponde a incorporar indicadores de comparabilidad del registro. Para ello se resumen `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` por zona. `nst_imp` y `rms_imp` provienen del tratamiento de valores faltantes mediante imputación por mediana decadal. Se usan para revisar cobertura instrumental y ajuste del evento sin excluir registros. `magType_grupo` y `magSource` permiten revisar tipo de magnitud y fuente dominante por zona.
 
 Estos indicadores son apoyo interpretativo. No modifican conteos, tasas, magnitudes ni profundidades por zona; solo documentan condiciones que pueden afectar la comparación espacial.
+
+## Contrastes inferenciales complementarios {#sec-anexo-contrastes-inferenciales}
+
+Los siguientes contrastes se conservaron como complemento exploratorio del análisis descriptivo. Sus resultados no se utilizan para realizar generalizaciones causales, predictivas ni probabilísticas fuera del catálogo analizado.
+
+### Significancia de las correlaciones de Spearman
+
+Para las asociaciones seleccionadas se contrastó $H_0:\rho_s=0$ frente a $H_1:\rho_s\neq0$. La relación entre `mag` y `sig` presentó una correlación positiva alta ($\rho_s=0{,}816$; $p<0{,}001$). El año presentó correlaciones negativas moderadas con `nst_imp` ($\rho_s=-0{,}374$; $p<0{,}001$) y `rms_imp` ($\rho_s=-0{,}429$; $p<0{,}001$). La primera relación requiere especial cautela porque 402 valores de `nst` fueron imputados mediante medianas decadales; para `rms`, solo nueve registros fueron imputados.
+
+### Significancia según categoría de magnitud
+
+Dada la asociación observada entre `mag` y `sig`, se examinó si la distribución de la significancia difería entre las categorías de `magnitud_cat`. La prueba de Kruskal-Wallis se aplicó porque se comparan tres grupos independientes y `sig` presenta asimetría y valores atípicos. Se contrastó la hipótesis nula $H_0:F_{\text{Fuerte}}=F_{\text{Mayor}}=F_{\text{Grande o extremo}}$ frente a la alternativa de que al menos una distribución difiere.
+
+La prueba permitió rechazar $H_0$ ($H=546{,}98$; $\mathrm{gl}=2$; $p<0{,}001$). Posteriormente, para cada par $i,j$, se contrastó $H_{0,ij}:F_i=F_j$ frente a $H_{1,ij}:F_i\neq F_j$ mediante Wilcoxon, aplicando el ajuste de Bonferroni para controlar el aumento del error tipo I. La igualdad de distribuciones se rechazó en los tres pares evaluados ($p_{\mathrm{ajustado}}<0{,}001$).
+
+```{=latex}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\Needspace{12\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-significancia-magnitud-cat} \hypertarget{dest-tbl-significancia-magnitud-cat}{}
+
+\begin{longtable}{lrrrrrrr}
+\toprule
+Categoría de magnitud & Eventos & Media & Mediana & Q1 & Q3 & Mín. & Máx. \\
+\midrule
+Fuerte & 799 & $742{,}8$ & $691$ & $670{,}0$ & $733{,}0$ & $650$ & $2841$ \\
+Mayor & 328 & $992{,}2$ & $848$ & $786{,}5$ & $966{,}5$ & $754$ & $2910$ \\
+Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $2910$ \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+{\itshape Tabla~\ref*{tbl-significancia-magnitud-cat}. Resumen de la significancia USGS según categoría de magnitud.}
+\endgroup
+```
+
+La separación entre categorías era esperable porque `magnitud_cat` deriva directamente de `mag` y la magnitud participa en la construcción de `sig`. Por ello, los contrastes no constituyen evidencia independiente de que la magnitud determine la significancia; únicamente muestran que la asociación continua también se refleja en las distribuciones definidas por categoría.
+
+### Independencia entre zona y categoría de profundidad
+
+Para el cruce entre `zona` y `profundidad_cat` se contrastó la hipótesis nula de independencia frente a la alternativa de asociación mediante la prueba chi-cuadrado. El contraste rechazó la independencia estadística ($\chi^2=38{,}04$; $\mathrm{gl}=6$; $p<0{,}001$). Sin embargo, la V de Cramer fue 0,13, por lo que la intensidad de la asociación observada es débil. Este resultado muestra la diferencia entre significancia estadística y magnitud de asociación: un valor $p$ pequeño no implica una relación intensa.
