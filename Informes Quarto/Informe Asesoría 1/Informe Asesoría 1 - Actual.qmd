@@ -1052,7 +1052,7 @@ Al comparar las zonas en magnitud, las medias observadas resultan similares entr
 ```{=latex}
 \Needspace{12\baselineskip}
 \begingroup
-\small
+\footnotesize
 \setlength{\tabcolsep}{4pt}
 \phantomsection
 \refstepcounter{table}
@@ -1093,6 +1093,74 @@ La profundidad muestra diferencias más marcadas que la magnitud entre las zonas
 \label{fig-magnitud-profundidad-zona}
 \end{figure}
 ```
+
+Los cuantiles y el máximo por zona precisan la cola superior de cada distribución, que las medidas centrales no reflejan.
+
+```{=latex}
+\Needspace{16\baselineskip}
+\noindent
+\begin{minipage}[t]{0.485\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-cuantiles-magnitud-zona} \hypertarget{dest-tbl-cuantiles-magnitud-zona}{}
+
+\begin{tabular}{l rrrr}
+\toprule
+ & \shortstack{Cinturón\\de Fuego} & \shortstack{Resto del\\mundo} & \shortstack{C. Alpino-\\Himalayo} & \shortstack{Dorsal\\M.-Atl.} \\
+\midrule
+Q25 & $6{,}60$ & $6{,}60$ & $6{,}60$ & $6{,}50$ \\
+Q50 & $6{,}80$ & $6{,}80$ & $6{,}70$ & $6{,}60$ \\
+Q75 & $7{,}10$ & $7{,}10$ & $7{,}20$ & $6{,}82$ \\
+Q90 & $7{,}50$ & $7{,}60$ & $7{,}58$ & $6{,}93$ \\
+Q95 & $7{,}80$ & $7{,}70$ & $7{,}70$ & $7{,}06$ \\
+Máx & $9{,}10$ & $8{,}60$ & $7{,}80$ & $7{,}10$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{-0.2em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-cuantiles-magnitud-zona}{Cuantiles y máximo de magnitud por zona.}
+\endgroup
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\vspace{0pt}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-cuantiles-profundidad-zona} \hypertarget{dest-tbl-cuantiles-profundidad-zona}{}
+
+\begin{tabular}{l rrrr}
+\toprule
+ & \shortstack{Cinturón\\de Fuego} & \shortstack{Resto del\\mundo} & \shortstack{C. Alpino-\\Himalayo} & \shortstack{Dorsal\\M.-Atl.} \\
+\midrule
+Q25 & $16{,}4$ & $10{,}0$ & $10{,}0$ & $10{,}0$ \\
+Q50 & $29{,}4$ & $16{,}0$ & $16{,}1$ & $10{,}0$ \\
+Q75 & $59{,}6$ & $128{,}2$ & $39{,}6$ & $10{,}0$ \\
+Q90 & $228{,}9$ & $577{,}5$ & $176{,}9$ & $12{,}8$ \\
+Q95 & $555{,}7$ & $602{,}7$ & $211{,}3$ & $15{,}7$ \\
+Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{-0.2em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-cuantiles-profundidad-zona}{Cuantiles y máximo de profundidad por zona (km).}
+\endgroup
+\end{minipage}
+```
+
+En magnitud, los cuantiles hasta Q75 son casi iguales entre los tres cinturones principales y las diferencias aparecen solo en la cola superior: el Cinturón de Fuego alcanza un máximo de 9,10, frente a 7,80 del Cinturón Alpino-Himalayo. En profundidad, las zonas se separan desde Q75: el Cinturón de Fuego y "Resto del mundo" presentan colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km; el Cinturón Alpino-Himalayo muestra una cola moderada y la Dorsal Meso-Atlántica una distribución plana, con sus cuantiles centrales en 10,0 km.
 
 ```{=latex}
 \Needspace{18\baselineskip}
