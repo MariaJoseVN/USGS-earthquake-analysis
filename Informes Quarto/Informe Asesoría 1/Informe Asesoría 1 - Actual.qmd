@@ -625,6 +625,9 @@ Donde a diferencia de la comparación por magnitud, la significancia no presenta
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
 El RMS resume, en segundos, las diferencias entre los tiempos de llegada de las ondas sísmicas observados en las estaciones y los calculados por el modelo de localización. Valores menores indican una mayor concordancia con el modelo, aunque no constituyen por sí solos una medida completa de confiabilidad.
+
+\par\vspace{0.9em}
+El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuentan con un valor originalmente observado, equivalentes al 99,2 \% del catálogo. Solamente nueve registros, correspondientes al 0,76 \%, requirieron imputación. Por tanto, los resultados descriptivos y temporales se sustentan casi completamente en información observada.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.42\textwidth}
@@ -633,7 +636,7 @@ El RMS resume, en segundos, las diferencias entre los tiempos de llegada de las 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.14}
+\renewcommand{\arraystretch}{1.90}
 \phantomsection
 \refstepcounter{table}
 
@@ -658,10 +661,9 @@ Porcentaje imputado & 0,759 \% \\
 \end{minipage}
 ```
 
-El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuentan con un valor originalmente observado, equivalentes al 99,2 \% del catálogo. Solamente nueve registros, correspondientes al 0,76 \%, requirieron imputación. Por tanto, los resultados descriptivos y temporales se sustentan casi completamente en información observada.
-
 ```{=latex}
 \Needspace{16\baselineskip}
+\vspace{1.0em}
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
@@ -675,16 +677,16 @@ La comparación confirma que la imputación tiene un efecto prácticamente nulo 
 \vspace{0pt}
 \begingroup
 \centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.05}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.12}
 \phantomsection
 \refstepcounter{table}
 
 \label{tbl-resumen-rms-observado-imputado}
 \hypertarget{dest-tbl-resumen-rms-observado-imputado}{}
 
-\begin{tabular}{lrr}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}
 \toprule
 Estadístico & Observado & Imputado \\
 \midrule
@@ -699,13 +701,26 @@ Q90           & 1,230 & 1,230 \\
 Q95           & 1,312 & 1,310 \\
 Máximo        & 1,720 & 1,720 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 
 \vspace{0.25em}
 {\itshape Tabla~\ref*{tbl-resumen-rms-observado-imputado}. Comparación descriptiva entre el RMS observado y el RMS imputado.}
 \endgroup
 \end{minipage}
 ```
+
+```{=latex}
+\begin{figure}[H]
+\centering
+% Bajamos el ancho al 65% o 70% para que la altura proporcional encaje
+\includegraphics[width=1\textwidth]{\detokenize{images/Análisis Descriptivo 3.png}}
+\vspace{-0.7em}
+\caption{Distribución y dispersión del RMS observado en el catálogo.}
+\label{fig-analisis-descriptivo-3}
+\end{figure}
+```
+
+La visualización muestra una distribución unimodal concentrada alrededor de la mediana de 0,97 segundos. La mitad central de los eventos se sitúa entre 0,84 y 1,10 segundos, mientras que el diagrama de caja identifica valores atípicos tanto en el extremo inferior como en el superior. Estos registros reflejan ajustes menos habituales dentro del catálogo, pero no permiten calificar por sí solos la confiabilidad completa de cada localización.
 
 ### Variables categóricas
 
