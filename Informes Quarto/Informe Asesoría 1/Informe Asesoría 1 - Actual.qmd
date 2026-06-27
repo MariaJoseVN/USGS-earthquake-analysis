@@ -1045,9 +1045,11 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 \label{fig-eventos-espacial-zona}
 \end{figure}
 ```
-### Zona por Magnitud y Profundidad (Tambien por categorias)
+### Zona por Magnitud y Profundidad
 
-Al comparar las zonas en magnitud, las medias observadas resultan similares entre las franjas con mayor actividad y se sitúan en torno a 6,9: 6,90 en el Cinturón de Fuego, 6,92 en "Resto del mundo" y 6,91 en el Cinturón Alpino-Himalayo. La Dorsal Meso-Atlántica presenta una media algo menor, de 6,69, y la menor dispersión del conjunto, con una desviación estándar de 0,19. La magnitud máxima del catálogo se registra en el Cinturón de Fuego, con un valor de 9,1. En conjunto, estos resultados indican que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de magnitud, aspecto relevante para la pregunta estadística del informe.
+Los tres cinturones con mayor actividad comparten un nivel de magnitud prácticamente idéntico, con medias en torno a 6,9 y medianas igualmente próximas. La Dorsal Meso-Atlántica es la única que se aparta, con una media menor, de 6,69, y la dispersión más baja del conjunto, de 0,19. En conjunto, estos resultados indican
+que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de
+magnitud, aspecto relevante para la pregunta estadística del informe.
 
 ```{=latex}
 \Needspace{12\baselineskip}
@@ -1082,7 +1084,7 @@ Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \endgroup
 ```
 
-La profundidad muestra diferencias más marcadas que la magnitud entre las zonas. El Cinturón de Fuego registra los eventos más profundos del catálogo, con un máximo de 676,4 km, mientras que la Dorsal Meso-Atlántica concentra eventos exclusivamente superficiales, con un máximo de 35 km.
+Los valores de la profundidad difieren ampliamente entre zonas, desde una profundidad con una desviación estándar de 155,2 km en el Cinturón de Fuego y una desviación estandar de 5,0 km de la Dorsal Meso-Atlántica.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1094,7 +1096,7 @@ La profundidad muestra diferencias más marcadas que la magnitud entre las zonas
 \end{figure}
 ```
 
-Los cuantiles y el máximo por zona precisan la cola superior de cada distribución, que las medidas centrales no reflejan.
+Los diagramas de caja reflejan esta doble situación. En magnitud, las distribuciones de las distintas zonas se superponen, con medianas y rangos intercuartílicos semejantes, mientras que en profundidad se distinguen con claridad: el Cinturón de Fuego presenta numerosos eventos profundos, frente a una Dorsal Meso-Atlántica con una profundidad completamente superficial.
 
 ```{=latex}
 \Needspace{16\baselineskip}
@@ -1160,7 +1162,7 @@ Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
 \end{minipage}
 ```
 
-En magnitud, los cuantiles hasta Q75 son casi iguales entre los tres cinturones principales y las diferencias aparecen solo en la cola superior: el Cinturón de Fuego alcanza un máximo de 9,10, frente a 7,80 del Cinturón Alpino-Himalayo. En profundidad, las zonas se separan desde Q75: el Cinturón de Fuego y "Resto del mundo" presentan colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km; el Cinturón Alpino-Himalayo muestra una cola moderada y la Dorsal Meso-Atlántica una distribución plana, con sus cuantiles centrales en 10,0 km.
+El comportamiento por cuantiles precisa dónde aparecen las diferencias. En magnitud, los tres cinturones principales coinciden hasta el cuantil 75 y solo difieren en el extremo, donde el Cinturón de Fuego llega a 9,10 y el Dorsal Meso-Atlántica se detiene en 7,10. En profundidad, la separación surge antes: el Cinturón de Fuego y "Resto del mundo" mantienen colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km, mientras que el Alpino-Himalayo presenta una cola moderada y la Dorsal Meso-Atlántica permanece plana, con sus cuantiles centrales en 10,0 km.
 
 ```{=latex}
 \Needspace{18\baselineskip}
@@ -1226,9 +1228,9 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 \end{minipage}
 ```
 
-En las tres franjas con mayor actividad la composición por categoría de magnitud es casi idéntica: los eventos "Fuerte" reúnen entre el 66,0 % y el 68,3 %, los "Mayor" entre el 27,8 % y el 29,1 %, y los "Grande o extremo" entre el 3,2 % y el 5,3 %. La Dorsal Meso-Atlántica es la excepción, con un 89,3 % de eventos "Fuerte" y ningún evento "Grande o extremo".
+En la composición por magnitud, las primeras tres zonas, presentan un reparto casi idéntico: entre 66,0 % y 68,3 % de eventos "Fuerte", entre 27,8 % y 29,1 % "Mayor" y entre 3,2 % y 5,3 % "Grande o extremo". La Dorsal Meso-Atlántica es la excepción, con un 89,3 % de eventos "Fuerte" y ninguno en la categoría "Grande o extremo".
 
-La profundidad sí distingue a las zonas. El Cinturón de Fuego es la única franja con una proporción apreciable de eventos profundos, un 9,3 %; "Resto del mundo" alcanza un 19,7 %, coherente con su origen tectónico heterogéneo. El Cinturón Alpino-Himalayo no registra eventos profundos y la Dorsal Meso-Atlántica es completamente superficial.
+En la composición por profundidad, los eventos superficiales predominan en todas las zonas, pero la proporción de eventos profundos las diferencia. Solo el Cinturón de Fuego (9,3 %) y "Resto del mundo" (19,7 %) registran una proporción apreciable de eventos profundos, mientras que el Cinturón Alpino-Himalayo no presenta ninguno, con un 82,5 % superficial y un 17,5 % intermedio, y la Dorsal Meso-Atlántica es completamente superficial.
 
 ### Zona por Tipo de Magnitud
 
