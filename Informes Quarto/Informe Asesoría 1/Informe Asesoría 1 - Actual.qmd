@@ -184,13 +184,39 @@ Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookL
 
 ## Caracterización descriptiva
 
-La caracterización descriptiva se realiza sobre la base `sismos`, construida a partir de `sismos_raw` luego de la selección de variables, la revisión de consistencia y la creación de variables derivadas. Esta etapa tiene como propósito resumir la estructura general del catálogo antes de desarrollar las comparaciones temporales y espaciales.
+La caracterización descriptiva se realizó sobre la base `sismos`, construida a partir de `sismos_raw` después de la selección de variables, la revisión de consistencia y la creación de variables derivadas. La unidad de análisis corresponde a cada evento registrado por USGS entre 2000 y 2025 con magnitud igual o superior a $M \geq 6{,}5$. Se determinaron la extensión temporal y el número de eventos para establecer el universo sobre el cual se calcularon los resúmenes posteriores.
 
-Primero, se delimita el período de análisis entre 2000 y 2025. A partir de este rango se calcula la cantidad de años, meses y eventos observados. Estos valores se utilizan como referencia para interpretar conteos, proporciones y tasas de ocurrencia en las etapas siguientes.
+Las variables numéricas se caracterizaron mediante medidas de tendencia central, dispersión, posición y valores extremos. La media y la mediana se utilizaron conjuntamente para distinguir el nivel promedio del valor central cuando las distribuciones presentan asimetría. La desviación estándar permitió cuantificar la variabilidad, mientras que los cuantiles permitieron localizar la mitad central de los datos y describir la cola superior sin depender exclusivamente del máximo. Estos estadísticos se calcularon para `mag`, `depth`, `sig` y `rms`, con las adecuaciones requeridas por la naturaleza y disponibilidad de cada variable.
 
-Luego se describen las variables sísmicas principales. Para `mag` y `depth` se calculan medidas de tendencia central, dispersión y posición: media, mediana, desviación estándar, máximo y cuantiles. Estos estadísticos permiten conocer el nivel típico de magnitud y profundidad, evaluar la variabilidad de los eventos y ubicar los valores extremos dentro del catálogo. En el caso de `mag`, también se revisa `magType`, ya que la magnitud reportada puede provenir de distintos métodos o escalas de estimación. Para ello se calcula la distribución de eventos por tipo de magnitud, el resumen de `mag` dentro de cada `magType`, su evolución anual y su relación con `magSource`.
+Para la magnitud se resumió su distribución continua y se calculó el máximo registrado en cada año. Los máximos anuales se ordenaron para identificar los años asociados con los valores superiores del catálogo, los cuales no quedan representados por las medidas centrales. Además, `mag` se transformó en `magnitud_cat`, con las categorías "Fuerte", "Mayor" y "Grande o extremo", y se calcularon sus frecuencias y porcentajes para describir la composición del catálogo y permitir comparaciones temporales y espaciales posteriores.
 
-Después se construyen categorías de análisis para magnitud y profundidad. La variable `magnitud_cat` agrupa los eventos en "Fuerte", "Mayor" y "Grande o extremo", a partir de criterios bibliográficos sobre terremotos de gran magnitud. La variable `profundidad_cat` clasifica los eventos en "Superficial", "Intermedio" y "Profundo", según el criterio sismológico solicitado en el instructivo del encargo. Estas categorías permiten comparar la composición del catálogo entre períodos y zonas. \emph{(los criterios de construcción se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
+La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+
+La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas; el contraste estadístico entre categorías de magnitud se desarrolló en el análisis de asociatividad.
+
+Las variables categóricas se describieron mediante frecuencias absolutas y porcentajes. `magType` se agrupó en `mww`, `mwc`, `mwb` y "otros" para evitar la fragmentación producida por tipos poco frecuentes. Para los tres tipos principales se resumió la magnitud mediante número de observaciones, media, mediana, desviación estándar, mínimo y máximo. La categoría "otros" no se incluyó en esta comparación por reunir métodos heterogéneos y con baja frecuencia. Por su parte, `magSource` se utilizó para describir la procedencia institucional de las magnitudes reportadas y contextualizar la comparabilidad del catálogo, sin interpretarla como una clasificación de calidad.
+
+Por último, el ajuste de la localización se caracterizó mediante la variable `rms`, expresada en segundos, que corresponde a la raíz del promedio ponderado de los residuos cuadrados entre los tiempos de llegada observados y los calculados por el modelo de localización [@usgs_comcat_rms]:
+
+$$
+RMS=\sqrt{\frac{\sum_{i=1}^{n} w_i\left(t_i^{obs}-t_i^{calc}\right)^2}{\sum_{i=1}^{n}w_i}},
+$$
+
+donde $t_i^{obs}$ y $t_i^{calc}$ representan los tiempos de llegada observado y calculado para la observación $i$, respectivamente, y $w_i$ corresponde a su ponderación. Un menor RMS indica mayor concordancia entre ambos tiempos. El valor se obtuvo directamente del catálogo USGS y no se recalculó, ya que la base utilizada no contiene los tiempos de llegada ni sus ponderaciones individuales.
+
+Se cuantificó la disponibilidad de `rms` mediante el número y porcentaje de valores observados y faltantes. Los valores ausentes se imputaron con la mediana del RMS de la década correspondiente:
+
+$$
+rms\_imp_i=
+\begin{cases}
+rms_i, & \text{si } rms_i \text{ está observado},\\
+\operatorname{Mediana}(rms_j\mid decada_j=decada_i), & \text{si } rms_i \text{ está ausente}.
+\end{cases}
+$$
+
+La mediana se utilizó por su resistencia a valores extremos y la agrupación decadal para conservar diferencias temporales generales. La imputación permitió mantener todos los eventos en las comparaciones temporales y espaciales que utilizan `rms_imp`, evitando la eliminación de registros incompletos.
+
+Para evaluar el efecto de la imputación se compararon `rms` y `rms_imp` mediante el número de observaciones, media, mediana, desviación estándar, mínimo, máximo y cuantiles 25, 75, 90 y 95. Esta comparación se utilizó para verificar si la imputación modificaba de forma relevante la distribución descriptiva. Para la caracterización general se utilizaron los valores observados de `rms`, mientras que `rms_imp` se reservó para los análisis temporales, espaciales y de asociatividad que requerían registros completos.
 
 ## Caracterización temporal
 
@@ -833,6 +859,8 @@ La fuente USGS-NEIC (`us`) concentra el 72,3 \% de los eventos, seguida por Harv
 
 ## Caracterización temporal
 
+### Frecuencia temporal de los eventos
+
 Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6 eventos por año. La frecuencia anual alcanza su valor máximo en 2010, con 61 eventos, y su valor mínimo en 2024, con 28 eventos. En términos descriptivos, la serie presenta oscilaciones interanuales alrededor de la media, con un aumento relativo durante la primera parte del período y una disminución posterior desde la mitad del tiempo de observación, sin que ello implique una tendencia sostenida para todo el intervalo.
 
 ```{=latex}
@@ -846,6 +874,8 @@ Entre 2000 y 2025 se registran 1.186 eventos, equivalentes a un promedio de 45,6
 ```
 
 La visualización anual refuerza esta lectura: algunos años se ubican por sobre el nivel típico del período, especialmente 2007, 2010, 2011, 2013, 2014 y 2015, mientras que 2019, 2020 y 2024 presentan conteos más bajos. Por ello, la comparación decadal permite una lectura más estable que la revisión año a año.
+
+### Composición temporal por categoría de magnitud
 
 ```{=latex}
 \Needspace{16\baselineskip}
@@ -896,6 +926,8 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 
 Dado que el período 2020--2025 contiene solo seis años observados, la comparación decadal debe interpretarse mediante tasas anuales promedio y no a partir de conteos absolutos. Bajo este criterio, la década de 2010 presenta la mayor actividad relativa en las categorías "Fuerte" y "Mayor", con tasas de 32,9 y 13,4 eventos por año, respectivamente. El período 2020--2025 mantiene una tasa de eventos "Mayor" cercana a la observada en 2010, pero muestra una menor tasa anual de eventos "Fuerte" y "Grande o extremo". En conjunto, la comparación decadal evidencia fluctuaciones en la frecuencia de ocurrencia, sin mostrar un aumento o disminución uniforme en todas las categorías de magnitud.
 
+### Recurrencia temporal
+
 Para complementar esta lectura de frecuencia, se analiza la recurrencia temporal global, entendida como el número de días transcurridos entre eventos consecutivos dentro del catálogo. Este análisis permite pasar de los conteos por período a una medida descriptiva del espaciamiento temporal entre eventos. Dado el enfoque categórico adoptado, se calcula la recurrencia tanto para el grupo agregado "Mayor o Grande o extremo", equivalente a eventos con magnitud igual o superior a 7,0 dentro de la clasificación usada en este informe, como para cada categoría de `magnitud_cat` por separado.
 
 ```{=latex}
@@ -926,6 +958,8 @@ Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,
 
 Desde una perspectiva descriptiva, la recurrencia temporal muestra que los eventos de mayor magnitud presentan intervalos más amplios entre ocurrencias consecutivas dentro del catálogo global. El grupo agregado "Mayor o Grande o extremo", comparable con los eventos desde magnitud 7,0, registra 387 eventos y una mediana de 15,6 días entre eventos consecutivos. Al separar por categorías, los eventos "Mayor" presentan una mediana de 19,6 días, mientras que los eventos "Grande o extremo" muestran una mediana considerablemente mayor, de 123,0 días. Esta diferencia es coherente con la menor frecuencia de los eventos de magnitud más alta dentro del período analizado. Además, la distancia entre media y mediana, especialmente en "Grande o extremo", sugiere una distribución asimétrica, con algunos períodos prolongados sin eventos de esa categoría. En conjunto, estos resultados describen el espaciamiento temporal de los grandes terremotos en el catálogo global, sin implicar regularidad física ni recurrencia de una falla o zona específica.
 
+### Evolución del tipo de magnitud reportado
+
 Además, se revisa la evolución temporal de `magType`, ya que la magnitud reportada por USGS puede provenir de distintos métodos de estimación [@usgs_magnitude_types]. Primero se estudia la frecuencia de cada tipo de magnitud y, para evitar categorías con muy pocas observaciones, se construye `magType_grupo`, conservando `mww`, `mwc` y `mwb`, y agrupando el resto como "otros". Esta decisión permite observar la composición temporal de los métodos principales sin fragmentar el análisis en grupos poco informativos.
 
 ```{=latex}
@@ -939,6 +973,88 @@ Además, se revisa la evolución temporal de `magType`, ya que la magnitud repor
 ```
 
 La evolución de `magType_grupo` muestra una transición marcada en la composición metodológica del catálogo. Durante la década de 2000 predominan tipos como `mwc` y `mwb`, mientras que desde 2011 aumenta fuertemente la participación de `mww`, que pasa a concentrar la mayor parte de los registros en los años posteriores. Dado que `mww` corresponde a la magnitud autoritativa de USGS cuando está disponible, este cambio sugiere una mayor presencia de un método de estimación más consistente en la segunda parte del período [@usgs_magnitude_types]. Por ello, las comparaciones temporales de magnitud deben interpretarse considerando que el tipo de magnitud reportado no es homogéneo a lo largo de todo el catálogo.
+
+### Evolución temporal del ajuste RMS
+
+La evolución temporal del ajuste de la localización se examinó mediante la mediana anual de `rms_imp` y su rango intercuartílico. La figura presenta las variaciones anuales, mientras que la tabla resume el nivel y la dispersión del indicador para los períodos 2000--2009, 2010--2019 y 2020--2025.
+
+```{=latex}
+\Needspace{11\baselineskip}
+\begingroup
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.08}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-rms-periodo}
+\hypertarget{dest-tbl-rms-periodo}{}
+
+\begin{tabular}{lrrr}
+\toprule
+Período & Eventos & Mediana (s) & Rango intercuartílico (s) \\
+\midrule
+2000--2009 & 455 & 1,030 & 0,920--1,140 \\
+2010--2019 & 489 & 0,980 & 0,850--1,120 \\
+2020--2025 & 242 & 0,745 & 0,640--0,900 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-rms-periodo}. Resumen del RMS imputado según período.}
+\endgroup
+```
+
+Dado que la disminución más sostenida del RMS se observa desde 2019, se presentan los estadísticos anuales de este tramo para respaldar los valores destacados en la interpretación. La evolución completa del período se muestra en la figura.
+
+```{=latex}
+\Needspace{20\baselineskip}
+\noindent
+\begin{minipage}[t]{0.39\textwidth}
+\vspace{0.5em}
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.70}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-rms-anual-2019-2025}
+\hypertarget{dest-tbl-rms-anual-2019-2025}{}
+
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rrrr@{}}
+\toprule
+Año & $n$ & Mediana & RIC \\
+\midrule
+2019 & 33 & 0,910 & 0,800--1,080 \\
+2020 & 29 & 0,850 & 0,690--1,010 \\
+2021 & 45 & 0,760 & 0,640--0,950 \\
+2022 & 42 & 0,700 & 0,620--0,853 \\
+2023 & 53 & 0,720 & 0,630--0,890 \\
+2024 & 28 & 0,755 & 0,640--0,853 \\
+2025 & 45 & 0,750 & 0,630--0,830 \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.15em}
+\begin{center}\itshape Tabla~\ref*{tbl-rms-anual-2019-2025}. RMS imputado anual, 2019--2025 (segundos).\end{center}
+\endgroup
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth]{\detokenize{images/Analisis temporal 4.png}}
+\vspace{-1.0em}
+\phantomsection
+\refstepcounter{figure}
+\label{fig-analisis-temporal-4}
+\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-4}. Evolución anual de la mediana y del rango intercuartílico del RMS imputado.\end{center}
+\end{minipage}
+```
+
+El RMS presenta una disminución temporal. Entre 2000--2009 y 2010--2019, la mediana disminuye de 1,030 a 0,980 segundos. El cambio es más marcado en 2020--2025, cuando alcanza 0,745 segundos. La evolución anual muestra que esta reducción se concentra desde 2019, con un mínimo de 0,700 segundos en 2022 y valores posteriores entre 0,720 y 0,755 segundos. El rango intercuartílico también se desplaza hacia valores menores. Esto indica una mayor concordancia entre los tiempos observados y calculados en los registros recientes, pero no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas estimadas.
 
 ## Caracterización espacial
 

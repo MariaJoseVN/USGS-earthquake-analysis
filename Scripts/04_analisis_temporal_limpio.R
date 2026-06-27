@@ -264,6 +264,35 @@ matriz_anual_magtype_porcentaje <- prop.table(
 ) * 100
 
 
+# Ajuste RMS a lo largo del tiempo----
+# Se utiliza rms_imp para mantener todos los eventos. Los valores faltantes se
+# completaron previamente con la mediana decadal, que conserva el nivel temporal
+# general y reduce la influencia de valores atipicos. La mediana y el rango
+# intercuartilico se usan como resumen temporal por la misma razon.
+
+resumen_rms_anual <- sismos_temporal %>%
+  group_by(año) %>%
+  summarise(
+    n_eventos = n(),
+    rms_mediana = median(rms_imp),
+    rms_q25 = quantile(rms_imp, 0.25),
+    rms_q75 = quantile(rms_imp, 0.75),
+    .groups = "drop"
+  ) %>%
+  arrange(año)
+
+resumen_rms_decadal <- sismos_temporal %>%
+  group_by(decada) %>%
+  summarise(
+    n_eventos = n(),
+    rms_mediana = median(rms_imp),
+    rms_q25 = quantile(rms_imp, 0.25),
+    rms_q75 = quantile(rms_imp, 0.75),
+    .groups = "drop"
+  ) %>%
+  arrange(decada)
+
+
 # Graficos para resultados y discusion----
 ## Figura temporal 1: magnitud_cat anual y serie mensual del catalogo----
 
@@ -503,6 +532,76 @@ legend(
   lty = c(1, 2),
   lwd = c(1.8, 1.2),
   pch = c(16, NA),
+  bty = "n",
+  cex = 0.8
+)
+
+box()
+
+par(mfrow = c(1, 1))
+
+
+## Figura temporal 4: evolucion anual del ajuste RMS----
+
+par(mfrow = c(1, 1), bg = "white", mar = c(4.3, 4, 3, 1) + 0.1)
+
+plot(
+  resumen_rms_anual$año,
+  resumen_rms_anual$rms_mediana,
+  type = "n",
+  main = "Evolución anual del ajuste RMS",
+  xlab = "Año",
+  ylab = "RMS imputado (segundos)",
+  ylim = range(
+    resumen_rms_anual$rms_q25,
+    resumen_rms_anual$rms_q75
+  ),
+  xaxt = "n",
+  axes = FALSE
+)
+
+polygon(
+  x = c(resumen_rms_anual$año, rev(resumen_rms_anual$año)),
+  y = c(resumen_rms_anual$rms_q25, rev(resumen_rms_anual$rms_q75)),
+  col = adjustcolor("gray70", alpha.f = 0.55),
+  border = NA
+)
+
+lines(
+  resumen_rms_anual$año,
+  resumen_rms_anual$rms_mediana,
+  col = "gray20",
+  lwd = 1.8
+)
+
+points(
+  resumen_rms_anual$año,
+  resumen_rms_anual$rms_mediana,
+  pch = 16,
+  col = "gray20",
+  cex = 0.7
+)
+
+axis(
+  side = 1,
+  at = seq(año_inicio, año_fin, by = 5),
+  labels = seq(año_inicio, año_fin, by = 5),
+  las = 1,
+  cex.axis = 0.8,
+  lwd = 0,
+  lwd.ticks = 1
+)
+
+axis(side = 2, las = 1, lwd = 0, lwd.ticks = 1)
+
+legend(
+  "topright",
+  legend = c("Mediana anual", "Rango intercuartílico"),
+  col = c("gray20", "gray70"),
+  lty = c(1, NA),
+  lwd = c(1.8, NA),
+  pch = c(16, 15),
+  pt.cex = c(0.7, 1.5),
   bty = "n",
   cex = 0.8
 )
