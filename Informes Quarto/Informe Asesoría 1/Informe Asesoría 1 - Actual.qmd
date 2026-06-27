@@ -851,6 +851,7 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 \label{fig-eventos-espacial-zona}
 \end{figure}
 ```
+### Zona por Magnitud y Profundidad (Tambien por categorias)
 
 Al comparar las zonas en magnitud, las medias observadas resultan similares entre las franjas con mayor actividad y se sitúan en torno a 6,9: 6,90 en el Cinturón de Fuego, 6,92 en "Resto del mundo" y 6,91 en el Cinturón Alpino-Himalayo. La Dorsal Meso-Atlántica presenta una media algo menor, de 6,69, y la menor dispersión del conjunto, con una desviación estándar de 0,19. La magnitud máxima del catálogo se registra en el Cinturón de Fuego, con un valor de 9,1. En conjunto, estos resultados indican que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de magnitud, aspecto relevante para la pregunta estadística del informe.
 
@@ -917,6 +918,16 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 \bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona (porcentajes calculados por fila).}
 \endgroup
 ```
+### Zona por Tipo de Magnitud
+
+### Zona por Significancia USGS
+
+### Zona por Caracterización Temporal
+
+### Zona por Condiciones de Reporte (ejemplo NST y RMS)
+
+
+
 
 La asociación entre la zona y la categoría de profundidad resulta estadísticamente significativa, aunque débil ($\chi^2 = 38{,}04$; $\mathrm{gl} = 6$; $p < 0{,}001$; V de Cramer = 0,13). Esto confirma que la composición de profundidad difiere entre zonas, en línea con la presencia de eventos profundos asociados a procesos de subducción en el Cinturón de Fuego, sin que la zona determine de forma marcada la profundidad de los eventos.
 
