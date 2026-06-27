@@ -202,7 +202,7 @@ significancia_profundidad_cat <- sismos %>%
 
 print(significancia_profundidad_cat, n = Inf)
 
-
+#ESTO DEBE IR EN LA SECCIÖN NUEVA DE ANÁLISIS DE ASOACIATIVIDAD E INDEPENDENCIA.
 ##Relacion entre sig y mag----
 #sig se construye en parte a partir de la magnitud, por lo que se espera correlacion alta.
 

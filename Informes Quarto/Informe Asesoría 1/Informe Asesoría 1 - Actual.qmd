@@ -554,7 +554,69 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 \endgroup
 ```
 
-El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. Además la lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. La lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
+
+Para contrastar se revisa la significancia según la categoría de magnitud y la categoría profundidad.
+
+```{=latex}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.08}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-significancia-categoria-magnitud-descriptiva}
+\hypertarget{dest-tbl-significancia-categoria-magnitud-descriptiva}{}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
+\toprule
+Categoría de magnitud & Eventos & Media & Mediana & Desv. est. & Máximo \\
+\midrule
+Fuerte            & 799 & 742,8  & 691  & 188,7 & 2841 \\
+Mayor             & 328 & 992,2  & 848  & 383,2 & 2910 \\
+Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de magnitud.}
+\endgroup
+```
+
+La significancia media y mediana aumentan progresivamente desde la categoría ``Fuerte'' hasta ``Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
+
+La significancia según la categoría de profundidad,  describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
+
+```{=latex}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.08}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-significancia-categoria-profundidad-descriptiva}
+\hypertarget{dest-tbl-significancia-categoria-profundidad-descriptiva}{}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
+\toprule
+Categoría de profundidad & Eventos & Media & Mediana & Desv. est. & Máximo \\
+\midrule
+Superficial & 913 & 854,3 & 732,0 & 347,3 & 2910 \\
+Intermedio  & 150 & 828,9 & 762,5 & 211,1 & 1890 \\
+Profundo    & 123 & 744,5 & 712,0 & 102,6 & 1152 \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.25em}
+{\itshape Tabla~\ref*{tbl-significancia-categoria-profundidad-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de profundidad.}
+\endgroup
+```
+
+Donde a diferencia de la comparación por magnitud, la significancia no presenta un aumento progresivo entre las categorías de profundidad. Los eventos superficiales registran la media, la dispersión y el máximo más elevados, mientras que los intermedios presentan la mediana mayor. Los eventos profundos muestran los valores centrales y la variabilidad más bajos. Estas diferencias son descriptivas y no permiten atribuir por sí solas la significancia a la profundidad del evento.
 
 ## Caracterización temporal
 
