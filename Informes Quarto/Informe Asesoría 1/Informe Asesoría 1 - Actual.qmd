@@ -1199,7 +1199,6 @@ Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
 El comportamiento por cuantiles precisa dónde aparecen las diferencias. En magnitud, los tres cinturones principales coinciden hasta el cuantil 75 y solo difieren en el extremo, donde el Cinturón de Fuego llega a 9,10 y el Dorsal Meso-Atlántica se detiene en 7,10. En profundidad, la separación surge antes: el Cinturón de Fuego y "Resto del mundo" mantienen colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km, mientras que el Alpino-Himalayo presenta una cola moderada y la Dorsal Meso-Atlántica permanece plana, con sus cuantiles centrales en 10,0 km.
 
 ```{=latex}
-\Needspace{18\baselineskip}
 \noindent
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
@@ -1291,8 +1290,8 @@ Dorsal Meso-Atlántica & $57{,}1$ & $39{,}3$ & $3{,}6$ & $0{,}0$ \\
 \bottomrule
 \end{tabular}
 
-\vspace{-0.2em}
-\bottomtablecaption{tbl-magtype-zona}{Composición porcentual de los tipos de magnitud reportados por zona.}
+\par\vspace{-0.55em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-magtype-zona}. Composición porcentual de los tipos de magnitud reportados por zona.\par}
 \endgroup
 ```
 
@@ -1433,28 +1432,28 @@ Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
 El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramer. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ```{=latex}
-\Needspace{25\baselineskip}
+\vspace{-0.2em}
 \noindent
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}
-\vspace{-1.2em}
+\makebox[\linewidth][c]{\includegraphics[width=0.62\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}}
+\par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-correlacion-numericas}
-\begin{center}\scriptsize\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.\end{center}
+\parbox{0.88\linewidth}{\centering\scriptsize\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}
-\vspace{-1.2em}
+\makebox[\linewidth][c]{\includegraphics[width=0.62\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}}
+\par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-asociacion-categorica}
-\begin{center}\scriptsize\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.\end{center}
+\parbox{0.88\linewidth}{\centering\scriptsize\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.}
 \end{minipage}
 ```
 
