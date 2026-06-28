@@ -261,9 +261,9 @@ El catálogo analizado considera eventos sísmicos registrados entre los años 2
 \begin{minipage}[t]{0.40\textwidth}
 \vspace{0pt}
 \centering
-\small
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{0.95}
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{0.86}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-alcance-catalogo}
@@ -281,7 +281,7 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{0.1em}
+\par\vspace{-0.15em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-alcance-catalogo}. Alcance temporal y tamaño del catálogo analizado.\par}
 \end{minipage}
 \vspace{0.1em}
@@ -298,12 +298,12 @@ A partir de esta descripción continua, el análisis siguiente identifica los a�
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
-\vspace{0pt}
+\vspace{1.2em}
 \begingroup
 \centering
-\small
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.02}
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{0.86}
 \phantomsection
 \refstepcounter{table}
 
@@ -322,7 +322,7 @@ Máx. & 9,10 & Q90 & 7,50 \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{0.1em}
+\par\vspace{-0.15em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-magnitud}. Resumen descriptivo de la magnitud de los eventos analizados.\par}
 \endgroup
 
@@ -330,18 +330,28 @@ Máx. & 9,10 & Q90 & 7,50 \\
 ```
 
 ```{=latex}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.62\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
-\vspace{-1.1em}
-\caption{Distribución de eventos según magnitud, con media y mediana del catálogo.}
-\label{fig-analisis-descriptivo-1}
-\end{figure}
-```
-
+\Needspace{13\baselineskip}
+\noindent
+\begin{minipage}[t]{0.43\textwidth}
+\vspace{0.6em}
 La distribución observada confirma la lectura anterior, ya que se concentra en los valores más cercanos al umbral de inclusión y presenta una cola hacia magnitudes más altas.
 
+\vspace{0.15em}
+
 Para revisar con mayor detalle los valores superiores de la distribución, se construye un ranking de los años con mayores magnitudes máximas registradas en el catálogo.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\par\vspace{-0.8em}
+\phantomsection
+\refstepcounter{figure}
+\label{fig-analisis-descriptivo-1}
+{\centering\scriptsize\itshape Figura~\ref*{fig-analisis-descriptivo-1}. Distribución de eventos según magnitud, con media y mediana del catálogo.\par}
+\end{minipage}
+```
 
 ```{=latex}
 \begingroup
@@ -376,9 +386,9 @@ Para complementar el resumen numérico, la variable `mag` se categorizó en `mag
 ```{=latex}
 \begingroup
 \centering
-\small
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{0.95}
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 
