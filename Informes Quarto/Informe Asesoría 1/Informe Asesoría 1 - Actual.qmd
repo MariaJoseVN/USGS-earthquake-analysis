@@ -332,8 +332,8 @@ Máx. & 9,10 & Q90 & 7,50 \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.72\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
-\vspace{-1.0em}
+\includegraphics[width=0.62\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\vspace{-1.1em}
 \caption{Distribución de eventos según magnitud, con media y mediana del catálogo.}
 \label{fig-analisis-descriptivo-1}
 \end{figure}
@@ -1029,10 +1029,10 @@ Año & $n$ & Mediana & RIC \\
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.58\textwidth}
-\vspace{0pt}
+\vspace{-1.20em}
 \centering
 \includegraphics[width=\linewidth]{\detokenize{images/Analisis temporal 4.png}}
-\par\vspace{-1.2em}
+\par\vspace{0.05em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-analisis-temporal-4}
