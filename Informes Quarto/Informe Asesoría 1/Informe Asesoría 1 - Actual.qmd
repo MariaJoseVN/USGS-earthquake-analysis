@@ -1298,23 +1298,26 @@ Dorsal Meso-Atlántica & $57{,}1$ & $39{,}3$ & $3{,}6$ & $0{,}0$ \\
 
 ### Zona por Significancia USGS
 
-La significancia USGS es la dimensión donde las zonas se diferencian con mayor claridad. El Cinturón Alpino-Himalayo presenta los valores más altos, con una mediana de 941 y una media de 1209,4, muy por encima del Cinturón de Fuego y de "Resto del mundo", que coinciden en una mediana de 732, y de la Dorsal Meso-Atlántica, la más baja, con 670. Esta diferencia no proviene de la magnitud, similar entre las franjas en torno a 6,9, sino de los demás componentes de la significancia: los eventos del Cinturón Alpino-Himalayo son mayoritariamente superficiales y se localizan en regiones pobladas, condición que eleva su relevancia según el indicador de la USGS y que ya se reflejaba en el predominio de esta zona entre los diez eventos más significativos del catálogo. Su elevada dispersión, con una desviación estándar de 693,9 frente a 40,4 en la Dorsal Meso-Atlántica, confirma que esa alta significancia se concentra en un grupo de eventos de gran impacto.
-
 ```{=latex}
-\Needspace{22\baselineskip}
+\Needspace{24\baselineskip}
 \noindent
-\begin{minipage}[t]{0.46\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+La significancia USGS es la dimensión donde las zonas se diferencian con mayor claridad. El Cinturón Alpino-Himalayo presenta los valores más altos, con una mediana de 941 y una media de 1209,4, muy por encima del Cinturón de Fuego y de ``Resto del mundo'', que coinciden en una mediana de 732, y de la Dorsal Meso-Atlántica, la más baja, con 670. Esta diferencia no proviene de la magnitud, similar entre las franjas en torno a 6,9, sino de los demás componentes de la significancia: los eventos del Cinturón Alpino-Himalayo son mayoritariamente superficiales y se localizan en regiones pobladas, condición que eleva su relevancia según el indicador de la USGS y que ya se reflejaba en el predominio de esta zona entre los diez eventos más significativos del catálogo. Su elevada dispersión, con una desviación estándar de 693,9 frente a 40,4 en la Dorsal Meso-Atlántica, confirma que esa alta significancia se concentra en un grupo de eventos de gran impacto.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \centering
 \scriptsize
-\setlength{\tabcolsep}{2.3pt}
-\renewcommand{\arraystretch}{2.1}
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-significancia-zona} \hypertarget{dest-tbl-significancia-zona}{}
 
-\begin{minipage}[t][0.27\textheight][c]{\linewidth}
+\begin{minipage}[t]{\linewidth}
 \centering
 \begin{tabular}{lcccc}
 \toprule
@@ -1330,22 +1333,19 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \end{tabular}
 \end{minipage}
 
+\vspace{-0.2em}
 \bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona.}
 \endgroup
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.515\textwidth}
-\vspace{0pt}
-\begin{minipage}[t][0.27\textheight][t]{\linewidth}
-\vspace{0pt}
+
+\vspace{0.55em}
+
 \centering
-\includegraphics[width=\linewidth]{\detokenize{../Imágenes y Recursos/significancia-zona.png}}
-\end{minipage}
-\par\vspace{-0.2em}
+\includegraphics[width=0.88\linewidth]{\detokenize{../Imágenes y Recursos/significancia-zona.png}}
+\par\vspace{-0.45em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-significancia-zona}
-\begin{center}\scriptsize\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica.\end{center}
+{\centering\scriptsize\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica.\par}
 \end{minipage}
 ```
 
