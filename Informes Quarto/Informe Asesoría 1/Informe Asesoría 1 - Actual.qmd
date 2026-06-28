@@ -281,7 +281,7 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{-0.15em}
+\par\vspace{0.35em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-alcance-catalogo}. Alcance temporal y tamaño del catálogo analizado.\par}
 \end{minipage}
 \vspace{0.1em}
@@ -322,7 +322,7 @@ Máx. & 9,10 & Q90 & 7,50 \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{-0.15em}
+\par\vspace{0.35em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-magnitud}. Resumen descriptivo de la magnitud de los eventos analizados.\par}
 \endgroup
 
@@ -1368,9 +1368,9 @@ La evolución anual confirma el dominio del Cinturón de Fuego durante todo el p
 \Needspace{10\baselineskip}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-temporal-zona} \hypertarget{dest-tbl-temporal-zona}{}
