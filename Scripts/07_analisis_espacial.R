@@ -158,6 +158,124 @@ eventos_zona_anio <- sismos %>%
 print(eventos_zona_anio, n = Inf)
 
 
+# Gráfico evolución anual de eventos por zona
+orden_zonas <- c(
+  "Cinturon Alpino-Himalayo",
+  "Cinturon de Fuego",
+  "Dorsal Meso-Atlantica",
+  "Resto del mundo"
+)
+
+anios_grafico <- sort(unique(eventos_zona_anio$año))
+
+
+par(
+  mfrow = c(2, 2),
+  bg = "white",
+  oma = c(3.2, 3.2, 3, 0.5),
+  mar = c(5.6, 3.6, 2.7, 1) + 0.1
+)
+
+for (zona_actual in orden_zonas) {
+
+  datos_zona <- eventos_zona_anio[
+    eventos_zona_anio$zona == zona_actual,
+  ]
+
+  datos_zona <- datos_zona[order(datos_zona$año), ]
+
+  media_zona <- mean(datos_zona$numero_eventos)
+  limite_inferior_y <- if (zona_actual == "Cinturon de Fuego") 10 else 0
+  limite_y <- max(datos_zona$numero_eventos) * 1.12
+
+  plot(
+    datos_zona$año,
+    datos_zona$numero_eventos,
+    type = "n",
+    xlim = range(anios_grafico),
+    ylim = c(limite_inferior_y, limite_y),
+    axes = FALSE,
+    xlab = "",
+    ylab = "",
+    main = etiquetas_zona[zona_actual],
+    cex.main = 1
+  )
+
+  # Todos los años en el eje X
+  axis(
+    side = 1,
+    at = anios_grafico,
+    labels = anios_grafico,
+    las = 2,
+    cex.axis = 0.55
+  )
+
+  axis(
+    side = 2,
+    las = 1,
+    cex.axis = 0.82
+  )
+
+  # Media anual
+  abline(
+    h = media_zona,
+    col = "gray45",
+    lty = 2,
+    lwd = 1.2
+  )
+
+  # Serie anual
+  lines(
+    datos_zona$año,
+    datos_zona$numero_eventos,
+    col = colores_zona[zona_actual],
+    lwd = 2.2
+  )
+
+  points(
+    datos_zona$año,
+    datos_zona$numero_eventos,
+    pch = 21,
+    cex = 0.85,
+    bg = colores_zona[zona_actual],
+    col = "gray25"
+  )
+
+  box(col = "gray30")
+
+  # Leyenda de la media anual en cada panel
+  legend(
+    "topright",
+    legend = "Media anual",
+    col = "gray45",
+    lty = 2,
+    lwd = 1.2,
+    bty = "n",
+    cex = 0.75
+  )
+}
+
+mtext("Año", side = 1, outer = TRUE, line = 1.2)
+mtext("Número de eventos", side = 2, outer = TRUE, line = 1.2)
+
+mtext(
+  "Evolución anual de eventos por zona",
+  side = 3,
+  outer = TRUE,
+  font = 2,
+  line = 1
+)
+
+dev.off()
+
+
+
+
+
+
+
+
+
 #Magnitud y profundidad por zona----
 ##Estadisticos descriptivos por zona----
 
@@ -594,4 +712,3 @@ box()
 #Restablecer parametros graficos----
 
 par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
-
