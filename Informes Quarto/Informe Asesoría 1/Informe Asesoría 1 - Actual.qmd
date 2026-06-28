@@ -593,7 +593,7 @@ Para contrastar se revisa la significancia según la categoría de magnitud y la
 \label{tbl-significancia-categoria-magnitud-descriptiva}
 \hypertarget{dest-tbl-significancia-categoria-magnitud-descriptiva}{}
 
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
+\begin{tabular}{lrrrrr}
 \toprule
 Categoría de magnitud & Eventos & Media & Mediana & Desv. est. & Máximo \\
 \midrule
@@ -601,7 +601,7 @@ Fuerte            & 799 & 742,8  & 691  & 188,7 & 2841 \\
 Mayor             & 328 & 992,2  & 848  & 383,2 & 2910 \\
 Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
 \bottomrule
-\end{tabular*}
+\end{tabular}
 
 \par\vspace{0em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de magnitud.\par}
@@ -624,7 +624,7 @@ La significancia según la categoría de profundidad, describe cómo se distribu
 \label{tbl-significancia-categoria-profundidad-descriptiva}
 \hypertarget{dest-tbl-significancia-categoria-profundidad-descriptiva}{}
 
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrr@{}}
+\begin{tabular}{lrrrrr}
 \toprule
 Categoría de profundidad & Eventos & Media & Mediana & Desv. est. & Máximo \\
 \midrule
@@ -632,7 +632,7 @@ Superficial & 913 & 854,3 & 732,0 & 347,3 & 2910 \\
 Intermedio  & 150 & 828,9 & 762,5 & 211,1 & 1890 \\
 Profundo    & 123 & 744,5 & 712,0 & 102,6 & 1152 \\
 \bottomrule
-\end{tabular*}
+\end{tabular}
 
 \par\vspace{0em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-significancia-categoria-profundidad-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de profundidad.\par}
@@ -800,7 +800,7 @@ Una vez descrita la frecuencia de los tipos de magnitud, se comparan los valores
 \label{tbl-magnitud-principales-magtype}
 \hypertarget{dest-tbl-magnitud-principales-magtype}{}
 
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
+\begin{tabular}{lrrrrrr}
 \toprule
 Tipo & Eventos & Media & Mediana & Desv. est. & Mínimo & Máximo \\
 \midrule
@@ -808,7 +808,7 @@ Tipo & Eventos & Media & Mediana & Desv. est. & Mínimo & Máximo \\
 \texttt{mwc} & 390 & 6,91 & 6,80 & 0,425 & 6,50 & 8,30 \\
 \texttt{mwb} & 116 & 6,79 & 6,70 & 0,273 & 6,50 & 7,80 \\
 \bottomrule
-\end{tabular*}
+\end{tabular}
 
 \par\vspace{0em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-magnitud-principales-magtype}. Resumen descriptivo de la magnitud para los tipos de magnitud más frecuentes.\par}
@@ -833,7 +833,7 @@ La variable `magSource` identifica la red que elaboró originalmente la magnitud
 \label{tbl-distribucion-magsource}
 \hypertarget{dest-tbl-distribucion-magsource}{}
 
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrlrr@{}}
+\begin{tabular}{lrrlrr}
 \toprule
 Fuente & Eventos & Porcentaje & Fuente & Eventos & Porcentaje \\
 \midrule
@@ -844,7 +844,7 @@ Fuente & Eventos & Porcentaje & Fuente & Eventos & Porcentaje \\
 \texttt{official} & 7   & 0,590 \% & \texttt{nn}      & 1 & 0,084 \% \\
 \texttt{nc}       & 4   & 0,337 \% & \texttt{uw}      & 1 & 0,084 \% \\
 \bottomrule
-\end{tabular*}
+\end{tabular}
 
 \par\vspace{0em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-distribucion-magsource}. Distribución de eventos según la fuente de magnitud reportada.\par}
@@ -1067,7 +1067,7 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 \vspace{0pt}
 \centering
 \includegraphics[width=0.90\linewidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
-\par\vspace{-0.75em}
+\par\vspace{-0.45em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-eventos-espacial-zona}
@@ -1386,8 +1386,8 @@ Dorsal Meso-Atlántica & $1{,}1$ & $0$ & $4$ & $11$ \\
 \bottomrule
 \end{tabular}
 
-\vspace{-0.2em}
-\bottomtablecaption{tbl-temporal-zona}{Resumen anual de eventos por zona (2000--2025).}
+\par\vspace{-0.55em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-temporal-zona}. Resumen anual de eventos por zona (2000--2025).\par}
 \endgroup
 ```
 
@@ -1401,9 +1401,9 @@ En conjunto, las comparaciones de magnitud, profundidad y significancia entre zo
 \Needspace{10\baselineskip}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-reporte-zona} \hypertarget{dest-tbl-reporte-zona}{}
@@ -1419,8 +1419,8 @@ Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
 \bottomrule
 \end{tabular}
 
-\vspace{-0.2em}
-\bottomtablecaption{tbl-reporte-zona}{Condiciones de reporte por zona: mediana del número de estaciones (\texttt{nst}), mediana del ajuste RMS (en segundos) y participación de la fuente \texttt{us}.}
+\par\vspace{-0.55em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-reporte-zona}. Condiciones de reporte por zona: mediana del número de estaciones (\texttt{nst}), mediana del ajuste RMS (en segundos) y participación de la fuente \texttt{us}.\par}
 \endgroup
 ```
 
