@@ -1362,7 +1362,39 @@ Dorsal Meso-Atlántica & $1{,}1$ & $0$ & $4$ & $11$ \\
 \endgroup
 ```
 
-### Zona por Condiciones de Reporte (ejemplo NST y RMS)
+### Zona por Condiciones de Reporte
+
+Las condiciones de reporte son homogéneas entre las zonas, lo que respalda la comparabilidad de los resultados anteriores. La fuente de magnitud `us` predomina en todas las zonas, con participaciones entre 71,2 % y 76,8 %. La cobertura instrumental (`nst`) presenta medianas similares en las tres zonas con mayor actividad, en torno a 442 a 454 estaciones, con un valor algo menor en la Dorsal Meso-Atlántica, de 378,5, coherente con su carácter oceánico y alejado; el ajuste de la localización (`rms`) sigue el mismo patrón, con medianas entre 0,94 y 0,97 segundos y un valor de 0,86 en la Dorsal. 
+
+En conjunto, las comparaciones de magnitud, profundidad y significancia entre zonas no están condicionadas de forma relevante por diferencias en cobertura instrumental, ajuste del evento o fuente de reporte.
+
+```{=latex}
+\Needspace{10\baselineskip}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.15}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-reporte-zona} \hypertarget{dest-tbl-reporte-zona}{}
+
+\begin{tabular}{lrrr}
+\toprule
+Zona & \texttt{nst} mediana & \texttt{rms} mediana & Fuente \texttt{us} \\
+\midrule
+Cinturón de Fuego & $454{,}0$ & $0{,}97$ & $71{,}2$ \% \\
+Resto del mundo & $442{,}5$ & $0{,}94$ & $76{,}8$ \% \\
+Cinturón Alpino-Himalayo & $454{,}0$ & $0{,}97$ & $73{,}0$ \% \\
+Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
+\bottomrule
+\end{tabular}
+
+\vspace{-0.2em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-reporte-zona}{Condiciones de reporte por zona: mediana del número de estaciones (\texttt{nst}), mediana del ajuste RMS (en segundos) y participación de la fuente \texttt{us}.}
+\endgroup
+```
 
 
 
