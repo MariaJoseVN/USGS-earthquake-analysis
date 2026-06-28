@@ -91,7 +91,7 @@ header-includes:
 \null
 \newpage
 
-\newgeometry{top=1.55cm,bottom=1.45cm,left=2.25cm,right=2.25cm}
+\newgeometry{top=1.30cm,bottom=1.35cm,left=2.15cm,right=2.15cm}
 
 \begingroup
 \color{asesoriaTextColor}
@@ -133,8 +133,8 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
-\vspace{-0.6em}
+\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
+\vspace{-0.8em}
 \caption{Eventos sísmicos y las zonas utilizadas para la comparación espacial.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
@@ -332,8 +332,8 @@ Máx. & 9,10 & Q90 & 7,50 \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
-\vspace{-0.9em}
+\includegraphics[width=0.72\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\vspace{-1.0em}
 \caption{Distribución de eventos según magnitud, con media y mediana del catálogo.}
 \label{fig-analisis-descriptivo-1}
 \end{figure}
@@ -1339,8 +1339,8 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.97\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
-\vspace{-0.6em}
+\includegraphics[width=0.72\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
+\vspace{-0.8em}
 \caption{Evolución anual del número de eventos por zona sísmica, 2000--2025.}
 \label{fig-evolucion-anual-eventos-zona}
 \end{figure}
