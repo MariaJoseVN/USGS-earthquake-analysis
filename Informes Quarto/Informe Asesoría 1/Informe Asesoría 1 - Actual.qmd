@@ -1485,6 +1485,18 @@ La sensibilidad indica cuánto cambian los resultados ante una modificación de 
 
 <!-- Ajustar las conclusiones para que respondan explícitamente la pregunta estadística y los objetivos. -->
 
+# Propuesta metodológica para la etapa inferencial
+
+La etapa inferencial compara las zonas sísmicas en el vector respuesta $\mathbf{Y}=(mag,\ depth)$, con `zona` como factor de cuatro niveles y un nivel de significación $\alpha=0{,}05$.
+
+**Supuestos.** Normalidad multivariante de Mardia, $H_0$: $\mathbf{Y}$ es normal multivariante; $H_1$: no lo es. Homogeneidad de covarianzas de Box, $H_0:\ \boldsymbol{\Sigma}_{\text{Fuego}}=\boldsymbol{\Sigma}_{\text{Resto}}=\boldsymbol{\Sigma}_{\text{Alpino}}=\boldsymbol{\Sigma}_{\text{Dorsal}}$; $H_1$: al menos una difiere. Esfericidad de Bartlett, $H_0:\ \mathbf{R}=\mathbf{I}$; $H_1:\ \mathbf{R}\neq\mathbf{I}$. El resultado define la ruta paramétrica o la no paramétrica.
+
+**Comparación entre zonas.** MANOVA, $H_0:\ \boldsymbol{\mu}_{\text{Fuego}}=\boldsymbol{\mu}_{\text{Resto}}=\boldsymbol{\mu}_{\text{Alpino}}=\boldsymbol{\mu}_{\text{Dorsal}}$; $H_1$: al menos un par difiere. Si los supuestos se rechazan, se aplica Kruskal-Wallis a la magnitud y a la profundidad por separado, $H_0$: las cuatro zonas tienen igual distribución; $H_1$: al menos una difiere, con post-hoc de Dunn ($H_0:\ F_i=F_j$; $H_1:\ F_i\neq F_j$) y ajuste de Holm. PERMANOVA, $H_0$: los centroides multivariantes son iguales; $H_1$: al menos uno difiere. PERMDISP, $H_0$: la dispersión multivariante es igual entre zonas; $H_1$: al menos una difiere.
+
+**Asociación categórica.** Chi-cuadrado entre `zona` y las categorías de magnitud y de profundidad, $H_0$: independencia; $H_1$: asociación. La V de Cramer cuantifica la fuerza de asociación.
+
+**Ocurrencia temporal por zona.** Estacionariedad de las series de conteo con Dickey-Fuller aumentado y Phillips-Perron ($H_0$: raíz unitaria; $H_1$: estacionaria) y KPSS ($H_0$: estacionaria; $H_1$: no estacionaria). Blancura con Ljung-Box ($H_0:\ \rho_1=\cdots=\rho_k=0$; $H_1$: alguna $\rho_h\neq0$). Distribución de los conteos, Poisson frente a binomial negativa ($H_0$: Poisson; $H_1$: sobredispersión). Bondad de ajuste de los tiempos entre eventos consecutivos a la distribución exponencial con Kolmogorov-Smirnov y Anderson-Darling ($H_0$: exponencial; $H_1$: no exponencial).
+
 # Referencias
 
 ::: {#refs}
