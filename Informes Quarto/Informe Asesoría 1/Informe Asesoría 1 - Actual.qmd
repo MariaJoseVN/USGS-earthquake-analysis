@@ -72,14 +72,14 @@ header-includes:
     }
     \makeatother
   - \KOMAoption{captions}{tablesignature}
-  - \captionsetup{font={it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
-  - \captionsetup[table]{position=bottom}
-  - \captionsetup[longtable]{position=bottom}
-  - \captionsetup[figure]{position=bottom}
+  - \captionsetup{font={footnotesize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
+  - \captionsetup[table]{position=bottom,justification=centering,singlelinecheck=false}
+  - \captionsetup[longtable]{position=bottom,justification=centering,singlelinecheck=false}
+  - \captionsetup[figure]{position=bottom,font={scriptsize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
 ---
 
 ```{=latex}
-\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\itshape Tabla~\ref*{#1}. #2\end{center}}
+\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\footnotesize\itshape Tabla~\ref*{#1}. #2\end{center}}
 ```
 
 \thispagestyle{empty}
@@ -281,10 +281,10 @@ Eventos con $M \geq 6{,}5$ & 1.186 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-alcance-catalogo}. Alcance temporal y tamaño del catálogo analizado.}
+\par\vspace{0.1em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-alcance-catalogo}. Alcance temporal y tamaño del catálogo analizado.\par}
 \end{minipage}
-\vspace{0.8em}
+\vspace{0.1em}
 ```
 
 ```{=latex}
@@ -322,8 +322,8 @@ Máx. & 9,10 & Q90 & 7,50 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-resumen-magnitud}. Resumen descriptivo de la magnitud de los eventos analizados.}
+\par\vspace{0.1em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-magnitud}. Resumen descriptivo de la magnitud de los eventos analizados.\par}
 \endgroup
 
 \end{minipage}
@@ -332,8 +332,8 @@ Máx. & 9,10 & Q90 & 7,50 \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
-\vspace{-0.7em}
+\includegraphics[width=0.82\textwidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\vspace{-0.9em}
 \caption{Distribución de eventos según magnitud, con media y mediana del catálogo.}
 \label{fig-analisis-descriptivo-1}
 \end{figure}
@@ -364,8 +364,8 @@ Magnitud máxima & 9,10 & 8,80 & 8,60 & 8,40 & 8,30 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-ranking-magnitud-maxima-anual}. Ranking de mayores magnitudes máximas anuales del catálogo.}
+\par\vspace{-0.45em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-ranking-magnitud-maxima-anual}. Ranking de mayores magnitudes máximas anuales del catálogo.\par}
 \endgroup
 ```
 
@@ -373,6 +373,7 @@ El ranking de máximos anuales muestra que los valores más altos se concentran 
 
 Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`, cuyos criterios de construcción se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
 
+```{=latex}
 \begingroup
 \centering
 \small
@@ -393,9 +394,10 @@ Grande o extremo & 59 & 5,0 \% \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-
-{\itshape Tabla~\ref*{tbl-eventos-magnitud-cat}. Distribución de eventos según categoría de magnitud.} \endgroup
+\par\vspace{-0.45em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-eventos-magnitud-cat}. Distribución de eventos según categoría de magnitud.\par}
+\endgroup
+```
 
 La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000--2025.
 
@@ -433,8 +435,8 @@ Máx. & 676,4 & Q90 & 354,8 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-resumen-profundidad}. Resumen descriptivo de la profundidad focal de los eventos analizados.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-profundidad}. Resumen descriptivo de la profundidad focal de los eventos analizados.\par}
 \endgroup
 \end{minipage}
 
@@ -468,8 +470,8 @@ Profundo & 123 & 10,4 \% \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-eventos-profundidad-cat}. Distribución de eventos según categoría de profundidad.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-eventos-profundidad-cat}. Distribución de eventos según categoría de profundidad.\par}
 \endgroup
 \end{minipage}
 ```
@@ -523,8 +525,8 @@ Máx. & 2910,0 & Q95 & 1445,8 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-resumen-significancia}. Resumen descriptivo de la significancia USGS de los eventos analizados.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-significancia}. Resumen descriptivo de la significancia USGS de los eventos analizados.\par}
 \endgroup
 \end{minipage}
 ```
@@ -560,8 +562,8 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-eventos-mas-significativos}. Diez eventos con mayor significancia USGS dentro del catálogo analizado.}
+\par\vspace{0em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-eventos-mas-significativos}. Diez eventos con mayor significancia USGS dentro del catálogo analizado.\par}
 \endgroup
 ```
 
@@ -591,8 +593,8 @@ Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de magnitud.}
+\par\vspace{0em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de magnitud.\par}
 \endgroup
 ```
 
@@ -622,8 +624,8 @@ Profundo    & 123 & 744,5 & 712,0 & 102,6 & 1152 \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-significancia-categoria-profundidad-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de profundidad.}
+\par\vspace{0em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-significancia-categoria-profundidad-descriptiva}. Resumen descriptivo de la significancia USGS según categoría de profundidad.\par}
 \endgroup
 ```
 
@@ -666,8 +668,8 @@ Porcentaje imputado & 0,759 \% \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-disponibilidad-rms}. Disponibilidad e imputación de los valores RMS del catálogo.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-disponibilidad-rms}. Disponibilidad e imputación de los valores RMS del catálogo.\par}
 \endgroup
 \end{minipage}
 ```
@@ -714,8 +716,8 @@ Máximo        & 1,720 & 1,720 \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-resumen-rms-observado-imputado}. Comparación descriptiva entre el RMS observado y el RMS imputado.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-resumen-rms-observado-imputado}. Comparación descriptiva entre el RMS observado y el RMS imputado.\par}
 \endgroup
 \end{minipage}
 ```
@@ -768,8 +770,8 @@ Otros        & 33  & 2,78 \% \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-distribucion-magtype-grupo}. Distribución de eventos según la agrupación del tipo de magnitud.}
+\par\vspace{0.2em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-distribucion-magtype-grupo}. Distribución de eventos según la agrupación del tipo de magnitud.\par}
 \endgroup
 \end{minipage}
 ```
@@ -799,8 +801,8 @@ Tipo & Eventos & Media & Mediana & Desv. est. & Mínimo & Máximo \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-magnitud-principales-magtype}. Resumen descriptivo de la magnitud para los tipos de magnitud más frecuentes.}
+\par\vspace{0em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-magnitud-principales-magtype}. Resumen descriptivo de la magnitud para los tipos de magnitud más frecuentes.\par}
 \endgroup
 ```
 
@@ -835,8 +837,8 @@ Fuente & Eventos & Porcentaje & Fuente & Eventos & Porcentaje \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-distribucion-magsource}. Distribución de eventos según la fuente de magnitud reportada.}
+\par\vspace{0em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-distribucion-magsource}. Distribución de eventos según la fuente de magnitud reportada.\par}
 \endgroup
 ```
 
@@ -891,7 +893,7 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 \bottomrule
 \end{tabular}
 }
-\vspace{-0.6em}
+\vspace{-1.25em}
 \bottomtablecaption{tbl-conteo-decadal-magnitud-cat}{Conteo y tasa anual promedio por período según categoría de magnitud.}
 \endgroup
 \end{minipage}
@@ -904,7 +906,7 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 \phantomsection
 \refstepcounter{figure}
 \label{fig-analisis-temporal-2}
-\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-2}. Composición de los eventos por período y categoría de magnitud.\end{center}
+\begin{center}\scriptsize\itshape Figura~\ref*{fig-analisis-temporal-2}. Composición de los eventos por período y categoría de magnitud.\end{center}
 \end{minipage}
 ```
 
@@ -934,7 +936,7 @@ Mayor & 328 & 327 & $28{,}9$ & $19{,}6$ & $7{,}2$ & $40{,}0$ & $0{,}0$ & $189{,}
 Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,}0$ & $905{,}0$ \\
 \bottomrule
 \end{longtable}
-\vspace{-3.08em}
+\vspace{-2.80em}
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-recurrencia-magnitud-cat}{Resumen de recurrencia temporal entre eventos consecutivos según grupo de magnitud.}
 \endgroup
@@ -985,8 +987,8 @@ Período & Eventos & Mediana (s) & Rango intercuartílico (s) \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.25em}
-{\itshape Tabla~\ref*{tbl-rms-periodo}. Resumen del RMS imputado según período.}
+\par\vspace{-0.55em}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-rms-periodo}. Resumen del RMS imputado según período.\par}
 \endgroup
 ```
 
@@ -1021,8 +1023,8 @@ Año & $n$ & Mediana & RIC \\
 \bottomrule
 \end{tabular*}
 
-\vspace{0.15em}
-\begin{center}\itshape Tabla~\ref*{tbl-rms-anual-2019-2025}. RMS imputado anual, 2019--2025 (segundos).\end{center}
+\vspace{-0.35em}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-rms-anual-2019-2025}. RMS imputado anual, 2019--2025 (segundos).\end{center}
 \endgroup
 \end{minipage}
 \hfill
@@ -1030,11 +1032,11 @@ Año & $n$ & Mediana & RIC \\
 \vspace{0pt}
 \centering
 \includegraphics[width=\linewidth]{\detokenize{images/Analisis temporal 4.png}}
-\vspace{-1.0em}
+\par\vspace{-1.2em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-analisis-temporal-4}
-\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-4}. Evolución anual de la mediana y del rango intercuartílico del RMS imputado.\end{center}
+{\centering\scriptsize\itshape Figura~\ref*{fig-analisis-temporal-4}. Evolución anual de la mediana y del rango intercuartílico del RMS imputado.\par}
 \end{minipage}
 ```
 
@@ -1044,17 +1046,26 @@ El RMS presenta una disminución temporal. Entre 2000--2009 y 2010--2019, la med
 
 La caracterización espacial asigna cada evento a una zona sísmica mediante intersección espacial y compara las zonas en frecuencia de ocurrencia, magnitud, profundidad, significancia y condiciones de reporte.
 
-Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año, muy por sobre el resto de las zonas. El conjunto "Resto del mundo" reúne 203 eventos (17,12 %), mientras que el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica registran 63 (5,31 %) y 28 eventos (2,36 %), respectivamente. Esta distribución es coherente con la concentración esperada de los grandes terremotos en el cinturón circumpacífico descrita en los antecedentes.
-
 ```{=latex}
-\begin{figure}[H]
+\Needspace{16\baselineskip}
+\noindent
+\begin{minipage}[t]{0.46\textwidth}
+\vspace{0pt}
+Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 \% del catálogo y a una tasa de 34,3 eventos por año, muy por sobre el resto de las zonas. El conjunto ``Resto del mundo'' reúne 203 eventos (17,12 \%), mientras que el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica registran 63 (5,31 \%) y 28 eventos (2,36 \%), respectivamente. Esta distribución es coherente con la concentración esperada de los grandes terremotos en el cinturón circumpacífico descrita en los antecedentes.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.50\textwidth}
+\vspace{0pt}
 \centering
-\includegraphics[width=0.72\textwidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
-\vspace{-0.6em}
-\caption{Número de eventos y participación porcentual por zona sísmica.}
+\includegraphics[width=\linewidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
+\par\vspace{-0.85em}
+\phantomsection
+\refstepcounter{figure}
 \label{fig-eventos-espacial-zona}
-\end{figure}
+{\centering\scriptsize\itshape Figura~\ref*{fig-eventos-espacial-zona}. Número de eventos y participación porcentual por zona sísmica.\par}
+\end{minipage}
 ```
+
 ### Zona por Magnitud y Profundidad
 
 Los tres cinturones con mayor actividad comparten un nivel de magnitud prácticamente idéntico, con medias en torno a 6,9 y medianas igualmente próximas. La Dorsal Meso-Atlántica es la única que se aparta, con una media menor, de 6,69, y la dispersión más baja del conjunto, de 0,19. En conjunto, estos resultados indican
@@ -1319,7 +1330,7 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \phantomsection
 \refstepcounter{figure}
 \label{fig-significancia-zona}
-\begin{center}\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica.\end{center}
+\begin{center}\scriptsize\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica.\end{center}
 \end{minipage}
 ```
 
@@ -1417,7 +1428,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-correlacion-numericas}
-\begin{center}\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.\end{center}
+\begin{center}\scriptsize\itshape Figura~\ref*{fig-matriz-correlacion-numericas}. Matriz de correlación de Spearman entre las variables numéricas del catálogo.\end{center}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.485\textwidth}
@@ -1428,7 +1439,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-asociacion-categorica}
-\begin{center}\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.\end{center}
+\begin{center}\scriptsize\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.\end{center}
 \end{minipage}
 ```
 
@@ -1799,7 +1810,7 @@ Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $
 \end{longtable}
 \vspace{-3.08em}
 \addtocounter{table}{-1}
-{\itshape Tabla~\ref*{tbl-significancia-magnitud-cat}. Resumen de la significancia USGS según categoría de magnitud.}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-significancia-magnitud-cat}. Resumen de la significancia USGS según categoría de magnitud.\end{center}
 \endgroup
 ```
 
@@ -1844,7 +1855,7 @@ Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortograf
 \end{longtable}
 \vspace{-3.08em}
 \addtocounter{table}{-1}
-{\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.\end{center}
 \endgroup
 ```
 
