@@ -158,6 +158,22 @@ eventos_zona_anio <- sismos %>%
 print(eventos_zona_anio, n = Inf)
 
 
+##Resumen anual por zona (media, minimo, maximo y años sin eventos)----
+
+resumen_temporal_zona <- eventos_zona_anio %>%
+  group_by(zona) %>%
+  summarise(
+    media_anual = mean(numero_eventos),
+    minimo_anual = min(numero_eventos),
+    maximo_anual = max(numero_eventos),
+    años_sin_eventos = sum(numero_eventos == 0),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(media_anual))
+
+print(resumen_temporal_zona, n = Inf)
+
+
 # Gráfico evolución anual de eventos por zona
 orden_zonas <- c(
   "Cinturon Alpino-Himalayo",

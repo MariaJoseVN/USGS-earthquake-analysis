@@ -1080,7 +1080,7 @@ Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \end{longtable}
 \vspace{-3.08em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-resumen-zona}{Resumen por zona: frecuencia, tasa anual promedio y medidas de magnitud y profundidad (media, mediana y desviación estándar, en kilómetros).}
+\bottomtablecaption{tbl-resumen-zona}{Resumen por zona.}
 \endgroup
 ```
 
@@ -1091,7 +1091,7 @@ Los valores de la profundidad difieren ampliamente entre zonas, desde una profun
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
 \vspace{-0.6em}
-\caption{Distribución de magnitud y de profundidad por zona sísmica. El punto indica la media.}
+\caption{Distribución de magnitud y de profundidad por zona sísmica.}
 \label{fig-magnitud-profundidad-zona}
 \end{figure}
 ```
@@ -1193,7 +1193,7 @@ Dorsal Meso-Atlántica & $89{,}3$ & $10{,}7$ & $0{,}0$ \\
 
 \vspace{-0.2em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-magnitud-zona}{Composición porcentual de la magnitud por zona (porcentajes por fila).}
+\bottomtablecaption{tbl-magnitud-zona}{Composición porcentual de la magnitud por zona.}
 \endgroup
 \end{minipage}
 \hfill
@@ -1223,7 +1223,7 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 
 \vspace{-0.2em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona (porcentajes por fila).}
+\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona.}
 \endgroup
 \end{minipage}
 ```
@@ -1261,7 +1261,7 @@ Dorsal Meso-Atlántica & $57{,}1$ & $39{,}3$ & $3{,}6$ & $0{,}0$ \\
 
 \vspace{-0.2em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-magtype-zona}{Composición porcentual del tipo de magnitud por zona (porcentajes por fila).}
+\bottomtablecaption{tbl-magtype-zona}{Composición porcentual del tipo de magnitud por zona.}
 \endgroup
 ```
 
@@ -1300,7 +1300,7 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \end{minipage}
 
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona (media, mediana, desviación estándar y máximo) y magnitud media de referencia.}
+\bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona y magnitud media de referencia.}
 \endgroup
 \end{minipage}
 \hfill
@@ -1315,11 +1315,52 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \phantomsection
 \refstepcounter{figure}
 \label{fig-significancia-zona}
-\begin{center}\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica. El punto indica la media.\end{center}
+\begin{center}\itshape Figura~\ref*{fig-significancia-zona}. Distribución de la significancia USGS por zona sísmica.\end{center}
 \end{minipage}
 ```
 
 ### Zona por Caracterización Temporal
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.97\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
+\vspace{-0.6em}
+\caption{Evolución anual del número de eventos por zona sísmica, 2000--2025.}
+\label{fig-evolucion-anual-eventos-zona}
+\end{figure}
+```
+
+
+La evolución anual confirma el dominio del Cinturón de Fuego durante todo el período. Esta zona registra eventos cada año, con un promedio de 34,3 eventos y un mínimo anual de 19 eventos en 2024, que aun así supera el máximo de cualquier otra zona. Su serie fluctúa alrededor de la media, con años altos en 2007, 2010 y 2011 y años bajos en 2020 y 2024, sin una tendencia sostenida. Las demás zonas se mantienen en niveles bajos: "Resto del mundo" aparece todos los años con un promedio de 7,8 eventos, mientras que el Cinturón Alpino-Himalayo, con 2,4 eventos, y la Dorsal Meso-Atlántica, con 1,1, lo hacen de forma intermitente, con años sin registros, en especial la Dorsal, sin eventos en 11 de los 26 años. La diferencia temporal entre zonas es, por tanto, de nivel y continuidad y no de patrón: el Cinturón de Fuego sostiene la ocurrencia año a año y las demás franjas contribuyen de manera baja o esporádica.
+
+```{=latex}
+\Needspace{10\baselineskip}
+\begingroup
+\centering
+\footnotesize
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.15}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-zona} \hypertarget{dest-tbl-temporal-zona}{}
+
+\begin{tabular}{lrrrr}
+\toprule
+Zona & Media anual & Mín & Máx & Años sin eventos \\
+\midrule
+Cinturón de Fuego & $34{,}3$ & $19$ & $49$ & $0$ \\
+Resto del mundo & $7{,}8$ & $2$ & $15$ & $0$ \\
+Cinturón Alpino-Himalayo & $2{,}4$ & $0$ & $7$ & $5$ \\
+Dorsal Meso-Atlántica & $1{,}1$ & $0$ & $4$ & $11$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{-0.2em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-temporal-zona}{Resumen anual de eventos por zona (2000--2025).}
+\endgroup
+```
 
 ### Zona por Condiciones de Reporte (ejemplo NST y RMS)
 
