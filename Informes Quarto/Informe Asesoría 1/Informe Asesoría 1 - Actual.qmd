@@ -1491,7 +1491,7 @@ La sensibilidad se evaluó solo en los aspectos modificados durante el análisis
 
 # Propuesta metodológica para la etapa inferencial
 
-Para el siguiente informe se propone una etapa inferencial orientada a formalizar los patrones descriptivos más relevantes: diferencias espaciales entre zonas, categorías de magnitud y profundidad, ocurrencia temporal y condiciones de reporte. El eje principal sería la comparación espacial del vector respuesta $\mathbf{Y}_{hi}=(mag_{hi},depth_{hi})'$, donde $h$ indica zona e $i$ identifica el evento dentro de esa zona. Se codifican las zonas como:
+Para el siguiente informe se propone, de manera preliminar, una etapa inferencial orientada a formalizar los patrones descriptivos más relevantes: diferencias espaciales entre zonas, categorías de magnitud y profundidad, ocurrencia temporal y condiciones de reporte. Las dócimas y modelos indicados no constituyen una decisión cerrada; su aplicación quedará sujeta a una evaluación de viabilidad estadística, computacional y metodológica en la siguiente etapa. El eje principal sería la comparación espacial del vector respuesta $\mathbf{Y}_{hi}=(mag_{hi},depth_{hi})'$, donde $h$ indica zona e $i$ identifica el evento dentro de esa zona. Se codifican las zonas como:
 
 $$
 1=\text{C. Fuego},\quad
@@ -1501,6 +1501,8 @@ $$
 $$
 
 Así, $h=1,\ldots,k$, con $k=4$, e $i=1,\ldots,n_h$, donde $n_h$ es el número de eventos en la zona $h$. Se considera $\alpha=0{,}05$ como nivel base. Para el diagnóstico de supuestos podría usarse además un criterio exploratorio más flexible, por ejemplo $\alpha=0{,}10$, dado que la evidencia descriptiva sugiere asimetría y dispersión desigual; esto debe quedar sujeto a evaluación formal.
+
+La propuesta principal se concentra en las dócimas asociadas a supuestos multivariantes, comparación del vector de medias y revisión temporal básica. Los demás contrastes se plantean como extensiones metodológicas, respaldadas por el instructivo de la asesoría y por literatura de catálogos sísmicos, pero no constituyen el núcleo obligatorio del siguiente informe [@instructivo_asesoria_2026; @ogata_1988; @kagan_jackson_2016; @siegel_etal_2024].
 
 1) **Supuestos del modelo multivariante.**  
 Antes de comparar zonas se evaluarían: 1.1) normalidad multivariante mediante Mardia; 1.2) homogeneidad de matrices de varianza-covarianza mediante M-Box, con $H_0:\boldsymbol{\Sigma}_{\text{Fuego}}=\boldsymbol{\Sigma}_{\text{Resto}}=\boldsymbol{\Sigma}_{\text{Alpino}}=\boldsymbol{\Sigma}_{\text{Dorsal}}$; y 1.3) esfericidad de Bartlett, con $H_0:|\mathbf{R}|=1$. Estos resultados definirían si se justifica una ruta paramétrica.
@@ -1520,16 +1522,16 @@ $$
 Si los supuestos no se cumplen, se usarían alternativas no paramétricas o robustas; como mínimo, Kruskal-Wallis para `mag` y `depth` por separado, con comparaciones post-hoc si corresponde.
 
 3) **Categorías de magnitud y profundidad según zona.**  
-Se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramer se mantendría como medida de intensidad de asociación.
+Como extensión, se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramer se mantendría como medida de intensidad de asociación.
 
 4) **Ocurrencia temporal global y por zona.**  
-Para las series de conteo anual $X_t$ y $X_{h,t}$ se propone revisar estacionariedad con Dickey-Fuller aumentado y KPSS. La independencia temporal podría evaluarse con Ljung-Box. Como extensión, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto.
+Para las series de conteo anual $X_t$ y $X_{h,t}$ se propone revisar estacionariedad con Dickey-Fuller aumentado y KPSS. La independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto [@instructivo_asesoria_2026; @kagan_jackson_2016].
 
 5) **Recurrencia temporal según categoría de magnitud.**  
-Como extensión, los tiempos entre eventos consecutivos podrían compararse por categoría de magnitud y contrastarse frente a una distribución exponencial. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
+Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría de magnitud y contrastarse frente a una distribución exponencial, línea coherente con estudios de procesos puntuales y tiempos de espera sísmicos [@ogata_1988; @siegel_etal_2024]. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
 
 6) **Condiciones de reporte y comparabilidad.**  
-Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte.
+Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte. Su inclusión se vincula con la importancia de la homogeneidad y completitud de los catálogos sísmicos [@cabello_etal_2025; @wiemer_wyss_2000].
 
 # Referencias
 
