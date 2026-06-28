@@ -31,6 +31,7 @@ header-includes:
   - \usepackage{caption}
   - \usepackage{needspace}
   - \usepackage{float}
+  - \usepackage{array}
   - \input{../layout-control.tex}
   - \usepackage{etoolbox}
   - |
@@ -178,7 +179,11 @@ El estudio no incluye predicción de terremotos, alerta temprana, estimación pr
 
 El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
-Respecto del uso de inteligencia artificial, el equipo acuerda emplear NotebookLM solo como apoyo para la lectura en español de bibliografía en inglés, y una extensión de ChatGPT en Positron únicamente como soporte de programación; estructura del código, simplificación de procedimientos y resolución de errores puntuales, priorizando funciones nativas de R. Ninguna herramienta de inteligencia artificial puede generar redacción, interpretación, análisis, conclusiones ni contenido final del informe.
+## Declaración y lineamientos para el uso responsable de inteligencia artificial
+
+El equipo declara que sí utilizó herramientas de inteligencia artificial generativa como apoyo técnico, documental y editorial durante el desarrollo de la asesoría. Su uso se mantuvo bajo criterios de trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible. La selección de fuentes, la construcción del análisis, la interpretación de los resultados, las conclusiones y las decisiones finales permanecieron bajo responsabilidad de los integrantes, y ninguna asistencia modificó los datos ni los resultados estadísticos presentados.
+
+La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial}.
 
 # Metodología
 
@@ -1448,6 +1453,18 @@ Las asociaciones restantes son, en general, débiles. Las variables de fuente pr
 
 ## Supuestos, limitaciones y sensibilidad
 
+El análisis supone que cada registro corresponde a un evento sísmico individual y utiliza como válidos los valores publicados por el USGS. Por tanto, los resultados caracterizan el catálogo analizado eventos de magnitud igual o superior a 6,5 registrados entre 2000 y 2025 y no la totalidad de la actividad sísmica mundial. Su alcance es descriptivo y exploratorio, es decir las asociaciones observadas no permiten establecer causalidad, efectuar predicciones ni estimar peligro o riesgo sísmico.
+
+La comparabilidad temporal está condicionada por cambios en los métodos de estimación, las fuentes de reporte y la cobertura instrumental. En particular, las magnitudes no fueron homogeneizadas entre tipos de magnitud, por lo que parte de sus variaciones puede responder a cambios en la composición de los métodos utilizados. Asimismo, el periodo 2020--2025 comprende solo seis años; por esta razón, las comparaciones por década se realizaron mediante tasas anuales. Los tiempos de recurrencia corresponden al intervalo entre eventos consecutivos del catálogo global y no representan recurrencia física en una falla o zona tectónica específica.
+
+La caracterización espacial depende de los polígonos empleados para delimitar las zonas sísmicas.
+
+Respecto de la completitud de variables, se incorporaron el número de estaciones y el RMS, variables que habían quedado pendientes en el preinforme. Sus valores ausentes fueron imputados mediante medianas decadales para conservar la estructura temporal y reducir la influencia de valores extremos. La comparación del RMS observado e imputado mostró cambios despreciables debido a que solo se reemplazaron nueve registros. En cambio, la interpretación temporal del número de estaciones requiere mayor cautela, dado que 402 valores fueron imputados y el procedimiento puede reforzar diferencias entre décadas. El RMS se interpretó como una medida del ajuste de la localización, no como una medida completa de precisión, ya que su disminución no demuestra por sí sola una mejora instrumental ni una menor incertidumbre en las coordenadas. Otras variables de error del catálogo no se incorporaron por su elevada incompletitud.
+
+Las medidas de asociación también están sujetas a restricciones interpretativas. Spearman resume relaciones monótonas, pero no representa adecuadamente la naturaleza cíclica del mes ni la dependencia espacial de las coordenadas. Del mismo modo, una V de Cramér baja no demuestra independencia poblacional, y algunas asociaciones elevadas son estructurales porque involucran variables derivadas o administrativas.
+
+La sensibilidad indica cuánto cambian los resultados ante una modificación de las decisiones metodológicas. En este informe se evaluó el efecto de la imputación del RMS mediante la comparación de sus medidas descriptivas antes y después del reemplazo de los valores ausentes. Las diferencias fueron mínimas. No se evaluaron cambios en el umbral de magnitud, las categorías ni la delimitación de las zonas; por tanto, los resultados se restringen a los criterios definidos en este informe.
+
 # Conclusiones y recomendaciones
 
 <!-- Ajustar las conclusiones para que respondan explícitamente la pregunta estadística y los objetivos. -->
@@ -1795,3 +1812,53 @@ La separación entre categorías era esperable porque `magnitud_cat` deriva dire
 ### Independencia entre zona y categoría de profundidad
 
 Para el cruce entre `zona` y `profundidad_cat` se contrastó la hipótesis nula de independencia frente a la alternativa de asociación mediante la prueba chi-cuadrado. El contraste rechazó la independencia estadística ($\chi^2=38{,}04$; $\mathrm{gl}=6$; $p<0{,}001$). Sin embargo, la V de Cramer fue 0,13, por lo que la intensidad de la asociación observada es débil. Este resultado muestra la diferencia entre significancia estadística y magnitud de asociación: un valor $p$ pequeño no implica una relación intensa.
+
+## Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
+
+- [X] El equipo declara que sí utilizó herramientas de Inteligencia Artificial Generativa durante el desarrollo de esta asesoría, según se detalla a continuación:
+
+```{=latex}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.16}
+\Needspace{18\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-declaracion-uso-ia}
+\hypertarget{dest-tbl-declaracion-uso-ia}{}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}}
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endfirsthead
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endhead
+NotebookLM & junio 2026 & Apoyo para la lectura en español de bibliografía en inglés. & Antecedentes y revisión bibliográfica. & Traducción y apoyo de lectura. & Lectura de las fuentes originales y selección manual de la bibliografía. \\
+Extensión de ChatGPT en Positron & junio 2026 & Generación inicial de una plantilla QMD con la estructura del informe. & Estructura general del archivo QMD. & Propuesta de secciones y organización documental. & Revisión, modificación y completado manual de toda la estructura. \\
+Extensión de ChatGPT en Positron & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapageorreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Sólo en terminos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraidos del informe final. \\
+Extensión de ChatGPT en Positron & junio 2026 & Conversión de fuentes al formato académico y vinculación de hipervínculos. & Archivo \texttt{referencias.bib}, citas y enlaces. & Formato BibTeX, sintaxis y vinculación documental. & Comprobación manual de autores, títulos, fechas, DOI, URL y correspondencia con la fuente original. \\
+Extensión de ChatGPT en Positron & junio 2026 & Sugerencia de código para graficar y corregir puntualmente gráficos y tablas. & Figuras, tablas LaTeX y maquetación del informe. & Ajustes de código, dimensiones, etiquetas y disposición visual. & Ejecución del código, comparación con los datos y revisión visual de cada producto. \\
+Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortografía, vocabulario, coherencia y redundancia. & Prototipos avanzados y versión final del informe. & Sugerencias editoriales y detección de inconsistencias formales. & Lectura crítica, aceptación o rechazo manual de cada sugerencia. \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+{\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.}
+\endgroup
+```
+
+### Detalle aclaratorio del uso
+
+NotebookLM se empleó como apoyo para la lectura en español de bibliografía en inglés, mientras que la extensión de ChatGPT en Positron se utilizó en tareas de programación, organización documental y revisión formal. La selección de fuentes, la construcción del análisis, la interpretación de los resultados y las decisiones finales permanecieron bajo responsabilidad del equipo.
+
+El apoyo computacional fue especialmente relevante para implementar prototipos de dashboards y mapas georreferenciados interactivos, incluida la revisión de cambios temporales. Estas tareas requieren competencias de desarrollo cercanas a un perfil informático, por lo que la IA se utilizó para estructurar código, resolver errores puntuales y ajustar visualizaciones. Todo el código fue ejecutado y revisado por el equipo, y este apoyo no modificó los datos ni los resultados estadísticos presentados.
+
+La bibliografía fue localizada y seleccionada manualmente; la IA apoyó su conversión al formato académico de `referencias.bib` y la vinculación de citas, frases e hipervínculos. También se utilizó en una etapa inicial para generar una plantilla QMD con la estructura general del informe, posteriormente completada y modificada por el equipo, y para realizar correcciones puntuales de gráficos. Una vez elaborados los prototipos del informe, se solicitaron revisiones ortográficas, de vocabulario, coherencia formal y disposición visual de tablas LaTeX. Estos apoyos funcionaron como control editorial posterior y no sustituyeron la redacción, evaluación crítica ni aprobación de los integrantes.
+
+El uso responsable se basó en trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible del código. El equipo verificó las referencias, enlaces, tablas, gráficos y productos computacionales antes de incorporarlos al informe.
+
+El equipo declara que todos los análisis, resultados, interpretaciones, conclusiones, códigos y referencias incluidos en este informe fueron revisados críticamente por sus integrantes. Asimismo, declara que asume plena responsabilidad por la exactitud, reproducibilidad y pertinencia profesional del trabajo presentado.
