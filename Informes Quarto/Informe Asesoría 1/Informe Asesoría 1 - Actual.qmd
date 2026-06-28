@@ -584,9 +584,9 @@ Para contrastar se revisa la significancia según la categoría de magnitud y la
 ```{=latex}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.08}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.98}
 \phantomsection
 \refstepcounter{table}
 
@@ -615,9 +615,9 @@ La significancia según la categoría de profundidad, describe cómo se distribu
 ```{=latex}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.08}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.98}
 \phantomsection
 \refstepcounter{table}
 
@@ -659,7 +659,7 @@ El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuenta
 \centering
 \footnotesize
 \setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.90}
+\renewcommand{\arraystretch}{1.05}
 \phantomsection
 \refstepcounter{table}
 
