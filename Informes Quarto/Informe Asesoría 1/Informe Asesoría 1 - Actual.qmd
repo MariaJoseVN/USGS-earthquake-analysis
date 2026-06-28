@@ -648,9 +648,6 @@ Donde a diferencia de la comparación por magnitud, la significancia no presenta
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
 El RMS resume, en segundos, las diferencias entre los tiempos de llegada de las ondas sísmicas observados en las estaciones y los calculados por el modelo de localización. Valores menores indican una mayor concordancia con el modelo, aunque no constituyen por sí solos una medida completa de confiabilidad.
-
-\par\vspace{0.9em}
-El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuentan con un valor originalmente observado, equivalentes al 99,2 \% del catálogo. Solamente nueve registros, correspondientes al 0,76 \%, requirieron imputación. Por tanto, los resultados descriptivos y temporales se sustentan casi completamente en información observada.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.42\textwidth}
@@ -683,6 +680,8 @@ Porcentaje imputado & 0,759 \% \\
 \endgroup
 \end{minipage}
 ```
+
+El indicador presenta una alta disponibilidad: 1.177 de los 1.186 eventos cuentan con un valor originalmente observado, equivalentes al 99,2 \% del catálogo. Solamente nueve registros, correspondientes al 0,76 \%, requirieron imputación. Por tanto, los resultados descriptivos y temporales se sustentan casi completamente en información observada.
 
 ```{=latex}
 \Needspace{16\baselineskip}
@@ -762,7 +761,7 @@ El tipo de magnitud reportado, representado por \texttt{magType}, permite identi
 \centering
 \footnotesize
 \setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.28}
+\renewcommand{\arraystretch}{1.02}
 \phantomsection
 \refstepcounter{table}
 
@@ -794,7 +793,7 @@ Una vez descrita la frecuencia de los tipos de magnitud, se comparan los valores
 \centering
 \footnotesize
 \setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.12}
+\renewcommand{\arraystretch}{0.88}
 \phantomsection
 \refstepcounter{table}
 
@@ -827,7 +826,7 @@ La variable `magSource` identifica la red que elaboró originalmente la magnitud
 \centering
 \footnotesize
 \setlength{\tabcolsep}{7pt}
-\renewcommand{\arraystretch}{1.08}
+\renewcommand{\arraystretch}{0.88}
 \phantomsection
 \refstepcounter{table}
 
@@ -928,8 +927,8 @@ Para complementar esta lectura de frecuencia, se analiza la recurrencia temporal
 
 ```{=latex}
 \begingroup
-\small
-\setlength{\tabcolsep}{3.5pt}
+\footnotesize
+\setlength{\tabcolsep}{2.8pt}
 \Needspace{12\baselineskip}
 \phantomsection
 \refstepcounter{table}
@@ -946,7 +945,7 @@ Mayor & 328 & 327 & $28{,}9$ & $19{,}6$ & $7{,}2$ & $40{,}0$ & $0{,}0$ & $189{,}
 Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,}0$ & $905{,}0$ \\
 \bottomrule
 \end{longtable}
-\vspace{-2.80em}
+\vspace{-2.25em}
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-recurrencia-magnitud-cat}{Resumen de recurrencia temporal entre eventos consecutivos según grupo de magnitud.}
 \endgroup
@@ -975,12 +974,12 @@ La evolución de `magType_grupo` muestra una transición marcada en la composici
 La evolución temporal del ajuste de la localización se examinó mediante la mediana anual de `rms_imp` y su rango intercuartílico. La figura presenta las variaciones anuales, mientras que la tabla resume el nivel y la dispersión del indicador para los períodos 2000--2009, 2010--2019 y 2020--2025.
 
 ```{=latex}
-\Needspace{11\baselineskip}
+\Needspace{9\baselineskip}
 \begingroup
 \centering
-\small
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.08}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{0.92}
 \phantomsection
 \refstepcounter{table}
 
@@ -989,7 +988,7 @@ La evolución temporal del ajuste de la localización se examinó mediante la me
 
 \begin{tabular}{lrrr}
 \toprule
-Período & Eventos & Mediana (s) & Rango intercuartílico (s) \\
+Período & Eventos & Mediana (s) & RIC (s) \\
 \midrule
 2000--2009 & 455 & 1,030 & 0,920--1,140 \\
 2010--2019 & 489 & 0,980 & 0,850--1,120 \\
@@ -997,7 +996,7 @@ Período & Eventos & Mediana (s) & Rango intercuartílico (s) \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{-0.55em}
+\par\vspace{-0.35em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-rms-periodo}. Resumen del RMS imputado según período.\par}
 \endgroup
 ```
@@ -1012,7 +1011,7 @@ Dado que la disminución más sostenida del RMS se observa desde 2019, se presen
 \begingroup
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.70}
+\renewcommand{\arraystretch}{1.00}
 \phantomsection
 \refstepcounter{table}
 
@@ -1039,10 +1038,10 @@ Año & $n$ & Mediana & RIC \\
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.58\textwidth}
-\vspace{-1.20em}
+\vspace{-0.45em}
 \centering
-\includegraphics[width=\linewidth]{\detokenize{images/Analisis temporal 4.png}}
-\par\vspace{0.05em}
+\includegraphics[width=0.68\linewidth]{\detokenize{images/Analisis temporal 4.png}}
+\par\vspace{0em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-analisis-temporal-4}
@@ -1067,8 +1066,8 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 \begin{minipage}[t]{0.50\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
-\par\vspace{-0.85em}
+\includegraphics[width=0.90\linewidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
+\par\vspace{-0.75em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-eventos-espacial-zona}
@@ -1078,23 +1077,29 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 
 ### Zona por Magnitud y Profundidad
 
-Los tres cinturones con mayor actividad comparten un nivel de magnitud prácticamente idéntico, con medias en torno a 6,9 y medianas igualmente próximas. La Dorsal Meso-Atlántica es la única que se aparta, con una media menor, de 6,69, y la dispersión más baja del conjunto, de 0,19. En conjunto, estos resultados indican
-que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de
-magnitud, aspecto relevante para la pregunta estadística del informe.
-
 ```{=latex}
-\Needspace{12\baselineskip}
+\Needspace{16\baselineskip}
+\noindent
+\begin{minipage}[t]{0.43\textwidth}
+\vspace{0pt}
+Los tres cinturones con mayor actividad comparten un nivel de magnitud prácticamente idéntico, con medias en torno a 6,9 y medianas igualmente próximas. La Dorsal Meso-Atlántica es la única que se aparta, con una media menor, de 6,69, y la dispersión más baja del conjunto, de 0,19. En conjunto, estos resultados indican que la diferencia principal entre zonas radica en la frecuencia de ocurrencia y no en el nivel medio de magnitud, aspecto relevante para la pregunta estadística del informe.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+\vspace{0pt}
 \begingroup
-\footnotesize
-\setlength{\tabcolsep}{4pt}
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 
 \label{tbl-resumen-zona} \hypertarget{dest-tbl-resumen-zona}{}
 
-\begin{longtable}{l rrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Indicador & \shortstack{Cinturón\\de Fuego} & \shortstack{Resto del\\mundo} & \shortstack{Cinturón\\Alpino-Himalayo} & \shortstack{Dorsal\\Meso-Atlántica} \\
+Indicador & \shortstack{C.\\Fuego} & \shortstack{Resto\\mundo} & \shortstack{C.\\Alp.-Him.} & \shortstack{Dorsal\\M.-Atl.} \\
 \midrule
 Eventos & 892 & 203 & 63 & 28 \\
 \% del total & $75{,}21$ & $17{,}12$ & $5{,}31$ & $2{,}36$ \\
@@ -1108,11 +1113,11 @@ Prof. media (km) & $89{,}6$ & $134{,}3$ & $45{,}8$ & $11{,}0$ \\
 Prof. mediana (km) & $29{,}4$ & $16{,}0$ & $16{,}1$ & $10{,}0$ \\
 Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
+\end{tabular}
+\par\vspace{-0.45em}
 \bottomtablecaption{tbl-resumen-zona}{Frecuencia, magnitud y profundidad de los eventos por zona sísmica.}
 \endgroup
+\end{minipage}
 ```
 
 Los valores de la profundidad difieren ampliamente entre zonas, desde una profundidad con una desviación estándar de 155,2 km en el Cinturón de Fuego y una desviación estandar de 5,0 km de la Dorsal Meso-Atlántica.
@@ -1120,8 +1125,8 @@ Los valores de la profundidad difieren ampliamente entre zonas, desde una profun
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
-\vspace{-0.6em}
+\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
+\vspace{-1.35em}
 \caption{Distribución de magnitud y de profundidad por zona sísmica.}
 \label{fig-magnitud-profundidad-zona}
 \end{figure}
@@ -1136,9 +1141,9 @@ Los diagramas de caja reflejan esta doble situación. En magnitud, las distribuc
 \vspace{0pt}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-cuantiles-magnitud-zona} \hypertarget{dest-tbl-cuantiles-magnitud-zona}{}
@@ -1165,9 +1170,9 @@ Máx & $9{,}10$ & $8{,}60$ & $7{,}80$ & $7{,}10$ \\
 \vspace{0pt}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-cuantiles-profundidad-zona} \hypertarget{dest-tbl-cuantiles-profundidad-zona}{}
@@ -1200,9 +1205,9 @@ El comportamiento por cuantiles precisa dónde aparecen las diferencias. En magn
 \vspace{0pt}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.18}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-magnitud-zona} \hypertarget{dest-tbl-magnitud-zona}{}
@@ -1229,9 +1234,9 @@ Dorsal Meso-Atlántica & $89{,}3$ & $10{,}7$ & $0{,}0$ \\
 \vspace{0pt}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.18}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-profundidad-zona} \hypertarget{dest-tbl-profundidad-zona}{}
@@ -1268,9 +1273,9 @@ El tipo de magnitud se reparte de forma homogénea entre las zonas. En las cuatr
 \Needspace{10\baselineskip}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-magtype-zona} \hypertarget{dest-tbl-magtype-zona}{}
