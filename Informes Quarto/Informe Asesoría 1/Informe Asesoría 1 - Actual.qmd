@@ -892,8 +892,7 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 \end{tabular}
 }
 \vspace{-0.6em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-conteo-decadal-magnitud-cat}{Conteo y tasa anual promedio por década según categoría de magnitud.}
+\bottomtablecaption{tbl-conteo-decadal-magnitud-cat}{Conteo y tasa anual promedio por período según categoría de magnitud.}
 \endgroup
 \end{minipage}
 \hfill
@@ -905,7 +904,7 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 \phantomsection
 \refstepcounter{figure}
 \label{fig-analisis-temporal-2}
-\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-2}. Composición decadal de eventos según categoría de magnitud.\end{center}
+\begin{center}\itshape Figura~\ref*{fig-analisis-temporal-2}. Composición de los eventos por período y categoría de magnitud.\end{center}
 \end{minipage}
 ```
 
@@ -1091,7 +1090,7 @@ Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \end{longtable}
 \vspace{-3.08em}
 \addtocounter{table}{-1}
-\bottomtablecaption{tbl-resumen-zona}{Resumen por zona.}
+\bottomtablecaption{tbl-resumen-zona}{Frecuencia, magnitud y profundidad de los eventos por zona sísmica.}
 \endgroup
 ```
 
@@ -1137,7 +1136,6 @@ Máx & $9{,}10$ & $8{,}60$ & $7{,}80$ & $7{,}10$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
 \bottomtablecaption{tbl-cuantiles-magnitud-zona}{Cuantiles y máximo de magnitud por zona.}
 \endgroup
 \end{minipage}
@@ -1167,7 +1165,6 @@ Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
 \bottomtablecaption{tbl-cuantiles-profundidad-zona}{Cuantiles y máximo de profundidad por zona (km).}
 \endgroup
 \end{minipage}
@@ -1203,8 +1200,7 @@ Dorsal Meso-Atlántica & $89{,}3$ & $10{,}7$ & $0{,}0$ \\
 }
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-magnitud-zona}{Composición porcentual de la magnitud por zona.}
+\bottomtablecaption{tbl-magnitud-zona}{Composición porcentual de los eventos según categoría de magnitud y zona.}
 \endgroup
 \end{minipage}
 \hfill
@@ -1233,8 +1229,7 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 }
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de la profundidad por zona.}
+\bottomtablecaption{tbl-profundidad-zona}{Composición porcentual de los eventos según categoría de profundidad y zona.}
 \endgroup
 \end{minipage}
 ```
@@ -1271,8 +1266,7 @@ Dorsal Meso-Atlántica & $57{,}1$ & $39{,}3$ & $3{,}6$ & $0{,}0$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-magtype-zona}{Composición porcentual del tipo de magnitud por zona.}
+\bottomtablecaption{tbl-magtype-zona}{Composición porcentual de los tipos de magnitud reportados por zona.}
 \endgroup
 ```
 
@@ -1310,8 +1304,7 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \end{tabular}
 \end{minipage}
 
-\addtocounter{table}{-1}
-\bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona y magnitud media de referencia.}
+\bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona.}
 \endgroup
 \end{minipage}
 \hfill
@@ -1368,7 +1361,6 @@ Dorsal Meso-Atlántica & $1{,}1$ & $0$ & $4$ & $11$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
 \bottomtablecaption{tbl-temporal-zona}{Resumen anual de eventos por zona (2000--2025).}
 \endgroup
 ```
@@ -1402,7 +1394,6 @@ Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
 \end{tabular}
 
 \vspace{-0.2em}
-\addtocounter{table}{-1}
 \bottomtablecaption{tbl-reporte-zona}{Condiciones de reporte por zona: mediana del número de estaciones (\texttt{nst}), mediana del ajuste RMS (en segundos) y participación de la fuente \texttt{us}.}
 \endgroup
 ```
@@ -1714,8 +1705,8 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
 \vspace{-0.6em}
-\caption{Visualización QGIS: eventos sísmicos y las zonas utilizadas para la comparación espacial.}
-\label{fig-mapa-qgis-zonas-sismicas}
+\caption{Verificación en QGIS de los eventos y las zonas utilizadas para la comparación espacial.}
+\label{fig-implementacion-qgis-mapa-zonas}
 \end{figure}
 ```
 
@@ -1807,6 +1798,7 @@ Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
+\addtocounter{table}{-1}
 {\itshape Tabla~\ref*{tbl-significancia-magnitud-cat}. Resumen de la significancia USGS según categoría de magnitud.}
 \endgroup
 ```
@@ -1851,6 +1843,7 @@ Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortograf
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
+\addtocounter{table}{-1}
 {\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.}
 \endgroup
 ```
