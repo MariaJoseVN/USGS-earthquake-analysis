@@ -1487,7 +1487,17 @@ La sensibilidad se evaluó solo en los aspectos modificados durante el análisis
 
 # Conclusiones y recomendaciones
 
-<!-- Ajustar las conclusiones para que respondan explícitamente la pregunta estadística y los objetivos. -->
+El informe caracterizó 1.186 terremotos de magnitud igual o superior a 6,5 registrados por USGS entre 2000 y 2025. Los resultados muestran que la distribución global de estos eventos no es espacialmente uniforme. El Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año, muy por encima del resto de las zonas analizadas. Esta concentración confirma que la principal diferencia espacial observada corresponde a la frecuencia de ocurrencia y continuidad temporal de los eventos, más que al nivel medio de magnitud.
+
+Respecto de la pregunta estadística, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica sí pueden ser usados como zonas de comparación con el Cinturón de Fuego, porque corresponden a cinturones sísmicos definidos y no a un conjunto residual heterogéneo. La comparación muestra que las magnitudes medias son similares entre el Cinturón de Fuego, el Cinturón Alpino-Himalayo y el resto del mundo, con valores cercanos a 6,9; la Dorsal Meso-Atlántica presenta una media menor, de 6,69. La diferencia más clara entre cinturones aparece en la profundidad: el Cinturón de Fuego incluye eventos superficiales, intermedios y profundos; el Cinturón Alpino-Himalayo no registra eventos profundos; y la Dorsal Meso-Atlántica concentra eventos completamente superficiales.
+
+En términos temporales, la serie presenta fluctuaciones interanuales y diferencias entre períodos, pero no un aumento o disminución uniforme de la ocurrencia durante todo el intervalo. Los eventos de mayor magnitud son menos frecuentes y presentan mayores tiempos entre ocurrencias consecutivas: el grupo de magnitud igual o superior a 7,0 registra una mediana de 15,6 días, mientras que los eventos "Grande o extremo" alcanzan una mediana de 123,0 días. Estos intervalos describen el catálogo global y no deben interpretarse como recurrencia física de una falla o zona tectónica específica.
+
+La caracterización de variables de reporte permitió contextualizar la comparabilidad de los resultados. El tipo de magnitud y la fuente de magnitud no muestran diferencias espaciales que invaliden la comparación principal entre zonas. El RMS presenta una disminución temporal, desde una mediana de 1,030 segundos en 2000--2009 a 0,745 segundos en 2020--2025, lo que indica mayor concordancia entre tiempos observados y calculados en registros recientes. Sin embargo, este resultado no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas. La imputación del RMS tuvo efecto despreciable, mientras que la interpretación de `nst_imp` requiere mayor cautela por la mayor proporción de valores imputados.
+
+Las asociaciones exploratorias refuerzan esta lectura descriptiva. La relación más fuerte entre variables numéricas corresponde a magnitud y significancia USGS, coherente con la construcción del indicador `sig`. Entre variables categóricas, las asociaciones más altas corresponden a variables administrativas o de reporte, como fuente y red. Por tanto, los patrones principales del informe se explican por la estructura espacial, temporal y de reporte del catálogo, sin que el análisis permita establecer causalidad, predicción, peligro sísmico ni independencia poblacional.
+
+Se recomienda que el siguiente informe concentre la etapa inferencial en los hallazgos principales: comparación del vector de medias de magnitud y profundidad entre zonas, evaluación formal de supuestos multivariantes, análisis temporal de conteos y revisión de la comparabilidad del registro. Las extensiones sobre recurrencia, modelos de conteo o categorías de magnitud y profundidad deben aplicarse solo si son viables estadística y computacionalmente, y siempre manteniendo el alcance definido: caracterizar grandes terremotos a nivel mundial bajo el catálogo, umbral, período y zonificación adoptados.
 
 # Propuesta metodológica para la etapa inferencial
 
@@ -1525,10 +1535,18 @@ Si los supuestos no se cumplen, se usarían alternativas no paramétricas o robu
 Como extensión, se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramer se mantendría como medida de intensidad de asociación.
 
 4) **Ocurrencia temporal global y por zona.**  
-Para las series de conteo anual $X_t$ y $X_{h,t}$ se propone revisar estacionariedad con Dickey-Fuller aumentado y KPSS. La independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto [@instructivo_asesoria_2026; @kagan_jackson_2016].
+Para las series de conteo anual $X_t$ y $X_{h,t}$ se mantiene como propuesta principal la dócima de Dickey-Fuller aumentada para revisar estacionariedad:
+
+$$
+H_0:\ \phi=1
+\quad \text{v/s} \quad
+H_1:\ \phi<1.
+$$
+
+De forma complementaria, podría considerarse KPSS y la independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto [@instructivo_asesoria_2026; @kagan_jackson_2016].
 
 5) **Recurrencia temporal según categoría de magnitud.**  
-Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría de magnitud y contrastarse frente a una distribución exponencial, línea coherente con estudios de procesos puntuales y tiempos de espera sísmicos [@ogata_1988; @siegel_etal_2024]. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
+Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría o umbral de magnitud y contrastarse frente a una distribución exponencial. Ogata entrega la base general de procesos puntuales en sismología, mientras que la aplicación a tiempos entre eventos, modelos Poisson y umbrales de magnitud se vincula de forma más directa con Lombardi y Marzocchi, Kagan y Jackson, y Siegel et al. [@ogata_1988; @lombardi_marzocchi_2007; @kagan_jackson_2016; @siegel_etal_2024]. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
 
 6) **Condiciones de reporte y comparabilidad.**  
 Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte. Su inclusión se vincula con la importancia de la homogeneidad y completitud de los catálogos sísmicos [@cabello_etal_2025; @wiemer_wyss_2000].
