@@ -1437,7 +1437,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\makebox[\linewidth][c]{\includegraphics[width=0.62\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}}
+\makebox[\linewidth][c]{\includegraphics[width=0.75\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}}
 \par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
@@ -1448,7 +1448,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\makebox[\linewidth][c]{\includegraphics[width=0.62\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}}
+\makebox[\linewidth][c]{\includegraphics[width=0.75\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}}
 \par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
@@ -1473,17 +1473,17 @@ Las asociaciones restantes son, en general, débiles. Las variables de fuente pr
 
 ## Supuestos, limitaciones y sensibilidad
 
-El análisis supone que cada registro corresponde a un evento sísmico individual y utiliza como válidos los valores publicados por el USGS. Por tanto, los resultados caracterizan el catálogo analizado eventos de magnitud igual o superior a 6,5 registrados entre 2000 y 2025 y no la totalidad de la actividad sísmica mundial. Su alcance es descriptivo y exploratorio, es decir las asociaciones observadas no permiten establecer causalidad, efectuar predicciones ni estimar peligro o riesgo sísmico.
+El análisis supone que cada registro corresponde a un evento sísmico individual y utiliza como válidos los valores publicados por USGS. Los resultados caracterizan el catálogo analizado, es decir, eventos con magnitud igual o superior a 6,5 registrados entre 2000 y 2025. No representan la totalidad de la actividad sísmica mundial ni permiten establecer causalidad, predicción, peligro o riesgo sísmico.
 
-La comparabilidad temporal está condicionada por cambios en los métodos de estimación, las fuentes de reporte y la cobertura instrumental. En particular, las magnitudes no fueron homogeneizadas entre tipos de magnitud, por lo que parte de sus variaciones puede responder a cambios en la composición de los métodos utilizados. Asimismo, el periodo 2020--2025 comprende solo seis años; por esta razón, las comparaciones por década se realizaron mediante tasas anuales. Los tiempos de recurrencia corresponden al intervalo entre eventos consecutivos del catálogo global y no representan recurrencia física en una falla o zona tectónica específica.
+La comparabilidad temporal y espacial depende de las decisiones de construcción del catálogo: umbral de magnitud, período observado, categorías definidas, delimitación de zonas, fuentes de reporte y métodos de estimación de magnitud. Las magnitudes no fueron homogeneizadas entre `magType`, por lo que parte de las diferencias temporales puede reflejar cambios en la composición del método reportado. Además, el período 2020--2025 contiene solo seis años; por ello, las comparaciones decadales se interpretaron mediante tasas anuales. La recurrencia se calculó como intervalo entre eventos consecutivos del catálogo global y no como recurrencia física de una falla o zona específica.
 
-La caracterización espacial depende de los polígonos empleados para delimitar las zonas sísmicas.
+No se caracterizó la condición de réplica. El catálogo se construyó según la indicación de analizar sismos con magnitud igual o superior a 6,5, sin clasificar eventos principales y réplicas. Incorporar esa distinción requeriría criterios adicionales de secuencia sísmica, ventana temporal y proximidad espacial, lo que modificaría la unidad de análisis definida para este informe.
 
-Respecto de la completitud de variables, se incorporaron el número de estaciones y el RMS, variables que habían quedado pendientes en el preinforme. Sus valores ausentes fueron imputados mediante medianas decadales para conservar la estructura temporal y reducir la influencia de valores extremos. La comparación del RMS observado e imputado mostró cambios despreciables debido a que solo se reemplazaron nueve registros. En cambio, la interpretación temporal del número de estaciones requiere mayor cautela, dado que 402 valores fueron imputados y el procedimiento puede reforzar diferencias entre décadas. El RMS se interpretó como una medida del ajuste de la localización, no como una medida completa de precisión, ya que su disminución no demuestra por sí sola una mejora instrumental ni una menor incertidumbre en las coordenadas. Otras variables de error del catálogo no se incorporaron por su elevada incompletitud.
+Las variables `nst` y `rms` se incorporaron como indicadores complementarios de comparabilidad del registro. Sus valores ausentes se imputaron mediante medianas decadales. En `rms`, la imputación afectó solo nueve registros y no modificó de forma relevante sus medidas descriptivas; por tanto, su uso es estable para la caracterización realizada. En `nst`, en cambio, se imputaron 402 valores, por lo que su interpretación temporal requiere mayor cautela. El RMS se interpretó como ajuste de localización, no como medida completa de precisión instrumental o espacial.
 
-Las medidas de asociación también están sujetas a restricciones interpretativas. Spearman resume relaciones monótonas, pero no representa adecuadamente la naturaleza cíclica del mes ni la dependencia espacial de las coordenadas. Del mismo modo, una V de Cramér baja no demuestra independencia poblacional, y algunas asociaciones elevadas son estructurales porque involucran variables derivadas o administrativas.
+Las asociaciones observadas también tienen límites. Spearman resume relaciones monótonas, pero no captura adecuadamente la naturaleza cíclica del mes ni la dependencia espacial de las coordenadas. La V de Cramér describe intensidad de asociación entre categorías, pero valores bajos no prueban independencia. Algunas asociaciones altas responden a relaciones estructurales entre variables derivadas o administrativas.
 
-La sensibilidad indica cuánto cambian los resultados ante una modificación de las decisiones metodológicas. En este informe se evaluó el efecto de la imputación del RMS mediante la comparación de sus medidas descriptivas antes y después del reemplazo de los valores ausentes. Las diferencias fueron mínimas. No se evaluaron cambios en el umbral de magnitud, las categorías ni la delimitación de las zonas; por tanto, los resultados se restringen a los criterios definidos en este informe.
+La sensibilidad se evaluó solo en los aspectos modificados durante el análisis, principalmente el efecto de la imputación del RMS. No se realizó una sensibilidad formal variando el umbral de magnitud, las categorías o los polígonos de zonificación. Por ello, las conclusiones deben interpretarse bajo los criterios metodológicos definidos en este informe.
 
 # Conclusiones y recomendaciones
 
@@ -1491,15 +1491,45 @@ La sensibilidad indica cuánto cambian los resultados ante una modificación de 
 
 # Propuesta metodológica para la etapa inferencial
 
-La etapa inferencial compara las zonas sísmicas en el vector respuesta $\mathbf{Y}=(mag,\ depth)$, con `zona` como factor de cuatro niveles y un nivel de significación $\alpha=0{,}05$.
+Para el siguiente informe se propone una etapa inferencial orientada a formalizar los patrones descriptivos más relevantes: diferencias espaciales entre zonas, categorías de magnitud y profundidad, ocurrencia temporal y condiciones de reporte. El eje principal sería la comparación espacial del vector respuesta $\mathbf{Y}_{hi}=(mag_{hi},depth_{hi})'$, donde $h$ indica zona e $i$ identifica el evento dentro de esa zona. Se codifican las zonas como:
 
-**Supuestos.** Normalidad multivariante de Mardia, $H_0$: $\mathbf{Y}$ es normal multivariante; $H_1$: no lo es. Homogeneidad de covarianzas de Box, $H_0:\ \boldsymbol{\Sigma}_{\text{Fuego}}=\boldsymbol{\Sigma}_{\text{Resto}}=\boldsymbol{\Sigma}_{\text{Alpino}}=\boldsymbol{\Sigma}_{\text{Dorsal}}$; $H_1$: al menos una difiere. Esfericidad de Bartlett, $H_0:\ \mathbf{R}=\mathbf{I}$; $H_1:\ \mathbf{R}\neq\mathbf{I}$. El resultado define la ruta paramétrica o la no paramétrica.
+$$
+1=\text{C. Fuego},\quad
+2=\text{Resto},\quad
+3=\text{C. Alp.-Him.},\quad
+4=\text{Dorsal M.-Atl.}.
+$$
 
-**Comparación entre zonas.** MANOVA, $H_0:\ \boldsymbol{\mu}_{\text{Fuego}}=\boldsymbol{\mu}_{\text{Resto}}=\boldsymbol{\mu}_{\text{Alpino}}=\boldsymbol{\mu}_{\text{Dorsal}}$; $H_1$: al menos un par difiere. Si los supuestos se rechazan, se aplica Kruskal-Wallis a la magnitud y a la profundidad por separado, $H_0$: las cuatro zonas tienen igual distribución; $H_1$: al menos una difiere, con post-hoc de Dunn ($H_0:\ F_i=F_j$; $H_1:\ F_i\neq F_j$) y ajuste de Holm. PERMANOVA, $H_0$: los centroides multivariantes son iguales; $H_1$: al menos uno difiere. PERMDISP, $H_0$: la dispersión multivariante es igual entre zonas; $H_1$: al menos una difiere.
+Así, $h=1,\ldots,k$, con $k=4$, e $i=1,\ldots,n_h$, donde $n_h$ es el número de eventos en la zona $h$. Se considera $\alpha=0{,}05$ como nivel base. Para el diagnóstico de supuestos podría usarse además un criterio exploratorio más flexible, por ejemplo $\alpha=0{,}10$, dado que la evidencia descriptiva sugiere asimetría y dispersión desigual; esto debe quedar sujeto a evaluación formal.
 
-**Asociación categórica.** Chi-cuadrado entre `zona` y las categorías de magnitud y de profundidad, $H_0$: independencia; $H_1$: asociación. La V de Cramer cuantifica la fuerza de asociación.
+1) **Supuestos del modelo multivariante.**  
+Antes de comparar zonas se evaluarían: 1.1) normalidad multivariante mediante Mardia; 1.2) homogeneidad de matrices de varianza-covarianza mediante M-Box, con $H_0:\boldsymbol{\Sigma}_{\text{Fuego}}=\boldsymbol{\Sigma}_{\text{Resto}}=\boldsymbol{\Sigma}_{\text{Alpino}}=\boldsymbol{\Sigma}_{\text{Dorsal}}$; y 1.3) esfericidad de Bartlett, con $H_0:|\mathbf{R}|=1$. Estos resultados definirían si se justifica una ruta paramétrica.
 
-**Ocurrencia temporal por zona.** Estacionariedad de las series de conteo con Dickey-Fuller aumentado y Phillips-Perron ($H_0$: raíz unitaria; $H_1$: estacionaria) y KPSS ($H_0$: estacionaria; $H_1$: no estacionaria). Blancura con Ljung-Box ($H_0:\ \rho_1=\cdots=\rho_k=0$; $H_1$: alguna $\rho_h\neq0$). Distribución de los conteos, Poisson frente a binomial negativa ($H_0$: Poisson; $H_1$: sobredispersión). Bondad de ajuste de los tiempos entre eventos consecutivos a la distribución exponencial con Kolmogorov-Smirnov y Anderson-Darling ($H_0$: exponencial; $H_1$: no exponencial).
+2) **Comparación del vector de medias entre zonas.**  
+Si los supuestos son aceptables, se aplicaría MANOVA:
+
+$$
+H_0:\ \boldsymbol{\mu}_{\text{Fuego}}
+=\boldsymbol{\mu}_{\text{Resto}}
+=\boldsymbol{\mu}_{\text{Alpino}}
+=\boldsymbol{\mu}_{\text{Dorsal}}
+\quad \text{vs} \quad
+H_1:\ \boldsymbol{\mu}_{h}\neq\boldsymbol{\mu}_{h'}\ \text{para algún }h\neq h'.
+$$
+
+Si los supuestos no se cumplen, se usarían alternativas no paramétricas o robustas; como mínimo, Kruskal-Wallis para `mag` y `depth` por separado, con comparaciones post-hoc si corresponde.
+
+3) **Categorías de magnitud y profundidad según zona.**  
+Se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramer se mantendría como medida de intensidad de asociación.
+
+4) **Ocurrencia temporal global y por zona.**  
+Para las series de conteo anual $X_t$ y $X_{h,t}$ se propone revisar estacionariedad con Dickey-Fuller aumentado y KPSS. La independencia temporal podría evaluarse con Ljung-Box. Como extensión, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto.
+
+5) **Recurrencia temporal según categoría de magnitud.**  
+Como extensión, los tiempos entre eventos consecutivos podrían compararse por categoría de magnitud y contrastarse frente a una distribución exponencial. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
+
+6) **Condiciones de reporte y comparabilidad.**  
+Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte.
 
 # Referencias
 
