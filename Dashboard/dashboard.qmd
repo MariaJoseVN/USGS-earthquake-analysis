@@ -54,6 +54,40 @@ format:
           line-height: 1 !important;
         }
 
+        /* --- Resumen visual con tarjetas y barras de composicion --- */
+        .resumen-visual { padding: 0.2rem 0.15rem; color: #001632; }
+        .resumen-visual__intro { margin: 0 0 0.8rem; color: #6b7682; font-size: 0.74rem; }
+        .resumen-visual__metricas {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 0.55rem;
+          margin-bottom: 1rem;
+        }
+        .resumen-metrica {
+          min-height: 68px;
+          padding: 0.65rem 0.7rem;
+          border-radius: 11px;
+          background: #f1f4f8;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .resumen-metrica__valor { font-size: 1.18rem; line-height: 1; font-weight: 700; }
+        .resumen-metrica__unidad { margin-left: 0.2rem; font-size: 0.68rem; font-weight: 500; color: #5b6876; }
+        .resumen-metrica__etiqueta { margin-top: 0.38rem; color: #5b6876; font-size: 0.68rem; }
+        .resumen-visual__subtitulo { margin: 0 0 0.65rem; font-size: 0.78rem; font-weight: 650; }
+        .resumen-barra {
+          display: grid;
+          grid-template-columns: 116px minmax(70px, 1fr) 48px;
+          align-items: center;
+          gap: 0.5rem;
+          margin: 0.6rem 0;
+          font-size: 0.68rem;
+        }
+        .resumen-barra__pista { height: 15px; overflow: hidden; border-radius: 5px; background: #e9eef4; }
+        .resumen-barra__relleno { height: 100%; min-width: 3px; border-radius: 5px; }
+        .resumen-barra__porcentaje { text-align: right; font-variant-numeric: tabular-nums; }
+
         /* --- Barra de filtros flotante: acompaña el scroll --- */
         .bslib-sidebar-layout > .sidebar {
           position: sticky !important;
@@ -208,6 +242,31 @@ tabla_explorador <- function(sd) {
     )
   )
 }
+
+# Componentes HTML reutilizables para los resumenes visuales por variable.
+metrica_resumen <- function(valor, etiqueta, unidad = "") {
+  div(class = "resumen-metrica",
+      div(class = "resumen-metrica__valor", valor,
+          if (nzchar(unidad)) span(class = "resumen-metrica__unidad", unidad)),
+      div(class = "resumen-metrica__etiqueta", etiqueta))
+}
+
+barra_resumen <- function(etiqueta, porcentaje, color) {
+  div(class = "resumen-barra",
+      span(etiqueta),
+      div(class = "resumen-barra__pista",
+          div(class = "resumen-barra__relleno",
+              style = paste0("width:", porcentaje, "%;background:", color, ";"))),
+      span(class = "resumen-barra__porcentaje", paste0(fmt(porcentaje, 2), "%")))
+}
+
+panel_resumen <- function(intro, metricas, subtitulo, barras) {
+  div(class = "resumen-visual",
+      p(class = "resumen-visual__intro", intro),
+      div(class = "resumen-visual__metricas", metricas),
+      p(class = "resumen-visual__subtitulo", subtitulo),
+      barras)
+}
 ```
 
 # Descriptiva
@@ -287,31 +346,66 @@ g <- ggplot(sismos, aes(x = sig,
 interactivo(g)
 ```
 
-### Column {width="42%"}
+### Column {.tabset width="42%"}
 
 ```{r}
-#| title: "Resumen numérico"
-# Sintaxis general: para cada variable se calculan min/media/mediana/max/desv
-# y se apilan con bind_rows() en una tabla unica.
-resumen_var <- function(x, etiqueta) {
-  tibble::tibble(
-    Variable = etiqueta,
-    `Mínimo` = min(x, na.rm = TRUE),
-    Media    = mean(x, na.rm = TRUE),
-    Mediana  = median(x, na.rm = TRUE),
-    `Máximo` = max(x, na.rm = TRUE),
-    `Desv. est.` = sd(x, na.rm = TRUE)
-  )
-}
-resumen_numerico <- bind_rows(
-  resumen_var(sismos$mag,   "Magnitud"),
-  resumen_var(sismos$depth, "Profundidad (km)"),
-  resumen_var(sismos$sig,   "Significancia")
-) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+#| title: "Magnitud"
+porc_mag <- prop.table(table(sismos$magnitud_cat)) * 100
+panel_resumen(
+  "Estadísticos de tendencia central, dispersión y posición sobre la magnitud.",
+  list(
+    metrica_resumen(fmt(mean(sismos$mag), 2), "Media"),
+    metrica_resumen(fmt(median(sismos$mag), 2), "Mediana"),
+    metrica_resumen(fmt(max(sismos$mag), 2), "Máxima"),
+    metrica_resumen(fmt(quantile(sismos$mag, .75), 2), "Cuantil 75"),
+    metrica_resumen(fmt(quantile(sismos$mag, .90), 2), "Cuantil 90"),
+    metrica_resumen(fmt(quantile(sismos$mag, .95), 2), "Cuantil 95")
+  ),
+  "Eventos según categoría de magnitud",
+  Map(barra_resumen, names(porc_mag), as.numeric(porc_mag),
+      unname(colores_magnitud[names(porc_mag)]))
+)
+```
 
-datatable(resumen_numerico, rownames = FALSE,
-          options = list(dom = "t", ordering = FALSE))
+```{r}
+#| title: "Profundidad"
+porc_prof <- prop.table(table(sismos$profundidad_cat)) * 100
+panel_resumen(
+  "Estadísticos sobre la profundidad, expresada en kilómetros.",
+  list(
+    metrica_resumen(fmt(median(sismos$depth), 1), "Mediana", "km"),
+    metrica_resumen(fmt(mean(sismos$depth), 1), "Media", "km"),
+    metrica_resumen(fmt(min(sismos$depth), 1), "Mínima", "km"),
+    metrica_resumen(fmt(max(sismos$depth), 1), "Máxima", "km"),
+    metrica_resumen(paste0(fmt(porc_prof["Superficial"], 2), "%"), "Superficial"),
+    metrica_resumen(paste0(fmt(porc_prof["Profundo"], 2), "%"), "Profundo")
+  ),
+  "Eventos según categoría de profundidad",
+  Map(barra_resumen, names(porc_prof), as.numeric(porc_prof),
+      unname(colores_profundidad[names(porc_prof)]))
+)
+```
+
+```{r}
+#| title: "Significancia"
+sig_valida <- sismos$sig[!is.na(sismos$sig)]
+sig_rango <- cut(sig_valida, breaks = c(-Inf, 749, 999, Inf),
+                 labels = c("Hasta 749", "750 a 999", "1.000 o más"))
+porc_sig <- prop.table(table(sig_rango)) * 100
+colores_sig <- c("#24466f", "#416c9f", "#E06B70")
+panel_resumen(
+  "Estadísticos de la significancia calculada por USGS.",
+  list(
+    metrica_resumen(fmt(mean(sig_valida), 2), "Media"),
+    metrica_resumen(fmt(median(sig_valida), 0), "Mediana"),
+    metrica_resumen(fmt(min(sig_valida), 0), "Mínima"),
+    metrica_resumen(fmt(max(sig_valida), 0), "Máxima"),
+    metrica_resumen(fmt(quantile(sig_valida, .75), 0), "Cuantil 75"),
+    metrica_resumen(fmt(sd(sig_valida), 2), "Desv. est.")
+  ),
+  "Eventos según rango de significancia",
+  Map(barra_resumen, names(porc_sig), as.numeric(porc_sig), colores_sig)
+)
 ```
 
 ## Row {height="380px"}
