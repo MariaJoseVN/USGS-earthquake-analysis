@@ -7,7 +7,7 @@ format:
     orientation: rows
     scrolling: true
     nav-buttons: []
-    embed-resources: true
+    embed-resources: false
     include-in-header:
       text: |
         <style>
