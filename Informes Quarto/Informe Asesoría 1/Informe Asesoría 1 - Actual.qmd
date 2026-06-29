@@ -38,7 +38,6 @@ header-includes:
   - |
     \definecolor{asesoriaSectionBarColor}{HTML}{001632}
     \definecolor{asesoriaSectionRuleColor}{HTML}{00D1C3}
-    \definecolor{asesoriaLinkColor}{HTML}{00A499}
     \makeatletter
     \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
     \@secpenalty=0\relax
@@ -116,8 +115,8 @@ En conjunto, los resultados indican que el Cinturón de Fuego se diferencia prin
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
-- Mapa Georreferenciado Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir mapa interactivo}}}
-- Dashboard Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir dashboard interactivo}}}
+- Mapa Georreferenciado Interactivo: (enlace)
+- Dashboard Interactivo: (enlace)
 
 # Formulación del problema y pregunta estadística
 
@@ -389,7 +388,7 @@ Magnitud máxima & 9,10 & 8,80 & 8,60 & 8,40 & 8,30 \\
 
 El ranking de máximos anuales muestra que los valores más altos se concentran en pocos años del período. Los máximos de 2004 y 2011 alcanzan magnitud 9,1, mientras que 2010 y 2025 registran 8,8. Esta lectura complementa el resumen global: aunque la mayor parte de los eventos se concentra bajo magnitud 7,7, existen años con eventos de magnitud excepcionalmente alta que influyen en la caracterización general del catálogo.
 
-Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`, cuyos criterios de construcción se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 
 ```{=latex}
 \begingroup
@@ -793,15 +792,16 @@ Otros        & 33  & 2,78 \% \\
 \end{minipage}
 ```
 
-Una vez descrita la frecuencia de los tipos de magnitud, se comparan los valores reportados para `mww`, `mwc` y `mwb`. Las categorías agrupadas como ``otros'' se excluyen de esta comparación debido a su reducido número de observaciones.
-
 ```{=latex}
-\Needspace{10\baselineskip}
+\Needspace{12\baselineskip}
+Una vez descrita la frecuencia de los tipos de magnitud, se comparan los valores reportados para \texttt{mww}, \texttt{mwc} y \texttt{mwb}. Las categorías agrupadas como ``otros'' se excluyen de esta comparación debido a su reducido número de observaciones.
+
+\par\vspace{0.5em}
 \begingroup
 \centering
-\footnotesize
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{0.88}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.86}
 \phantomsection
 \refstepcounter{table}
 
@@ -818,7 +818,7 @@ Tipo & Eventos & Media & Mediana & Desv. est. & Mínimo & Máximo \\
 \bottomrule
 \end{tabular}
 
-\par\vspace{0em}
+\par\vspace{-0.25em}
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-magnitud-principales-magtype}. Resumen descriptivo de la magnitud para los tipos de magnitud más frecuentes.\par}
 \endgroup
 ```
