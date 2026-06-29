@@ -91,7 +91,7 @@ header-includes:
 \null
 \newpage
 
-\newgeometry{top=1.30cm,bottom=1.35cm,left=2.15cm,right=2.15cm}
+\newgeometry{top=1.30cm,bottom=1.35cm,left=2.15cm,right=2.15cm,footskip=0.65cm}
 
 \begingroup
 \color{asesoriaTextColor}
