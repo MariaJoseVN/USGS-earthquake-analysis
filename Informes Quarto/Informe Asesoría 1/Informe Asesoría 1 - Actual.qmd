@@ -497,7 +497,7 @@ Profundo & 123 & 10,4 \% \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{images/Análisis Descriptivo 2.png}}
-\vspace{-0.7em}
+\vspace{-1.2em}
 \caption{Distribución de eventos según profundidad continua y categoría de profundidad.}
 \label{fig-analisis-descriptivo-2}
 \end{figure}
@@ -743,8 +743,9 @@ Máximo        & 1,720 & 1,720 \\
 \centering
 % Bajamos el ancho al 65% o 70% para que la altura proporcional encaje
 \includegraphics[width=1\textwidth]{\detokenize{images/Análisis Descriptivo 3.png}}
-\vspace{-0.7em}
+\vspace{-2.2em}
 \caption{Distribución y dispersión del RMS observado en el catálogo.}
+\vspace{-0.8em}
 \label{fig-analisis-descriptivo-3}
 \end{figure}
 ```
