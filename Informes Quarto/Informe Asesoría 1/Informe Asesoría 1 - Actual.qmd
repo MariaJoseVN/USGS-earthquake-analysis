@@ -1,6 +1,7 @@
 ---
 lang: es
 bibliography: ../referencias.bib
+link-citations: true
 output-file: "Informe Asesoría 1 - Actual.pdf"
 crossref:
   fig-title: "Figura"
@@ -110,7 +111,7 @@ Este informe caracteriza la distribución espacial y temporal de 1.186 terremoto
 
 En la dimensión temporal, la categoría "Fuerte" concentra la mayoría de los registros. Los 387 eventos de magnitud igual o superior a 7,0 presentan una mediana de 15,6 días entre eventos consecutivos, mientras que para los eventos "Grandes o extremos" esta aumenta a 123 días. Las tasas anuales muestran fluctuaciones entre periodos, pero no una tendencia uniforme en la frecuencia de los eventos. El Cinturón de Fuego mantiene el mayor número de registros durante todo el periodo. Por su parte, la mediana del RMS disminuye de 1,030 segundos en 2000--2009 a 0,745 segundos en 2020--2025, sin que este resultado demuestre por sí solo una mayor precisión de las localizaciones.
 
-En conjunto, los resultados indican que el Cinturón de Fuego se diferencia y destaca principalmente por la frecuencia y continuidad de su actividad, sin embargo, en terminos de significancia los mayores 10 puntajes más altos de sig revelan que la mayoría se concentra en el Cinturón Alpino-Himalayo con 8 eventos en el top 10 y en terminos Magnitud el valor máximo registrado es de 9,10 dentro del Cinturón de Fuego. Estas Las conclusiones describen el catálogo analizado y no permiten estimar peligro sísmico, establecer causalidad ni representar la recurrencia de una falla específica.
+En conjunto, los resultados indican que el Cinturón de Fuego se diferencia principalmente por la frecuencia y continuidad de su actividad. En significancia USGS, en cambio, ocho de los diez eventos con mayor puntaje se ubican en el Cinturón Alpino-Himalayo. En magnitud, el valor máximo del catálogo corresponde a 9,10 y se registra en el Cinturón de Fuego. Estas conclusiones describen el catálogo analizado y no permiten estimar peligro sísmico, establecer causalidad ni representar la recurrencia de una falla específica.
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
@@ -125,6 +126,7 @@ El estudio se articula en torno a la siguiente pregunta estadística:
 
 Esta pregunta surge de la pregunta orientadora del encargo, que solicita comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. No obstante, el "resto del mundo" constituye un conjunto heterogéneo que agrupa eventos de orígenes tectónicos diversos, por lo que su uso directo como término de comparación limita la interpretabilidad de las diferencias observadas. Por esta razón, la pregunta se orienta a identificar otras zonas sísmicas de tipo cinturón, con características comparables a las del Cinturón de Fuego, que permitan una comparación más estándar y equilibrada de la magnitud y la profundidad entre regiones sísmicamente análogas.
 
+\newpage
 # Antecedentes
 
 La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
@@ -149,7 +151,7 @@ Los límites entre placas coinciden con los principales cinturones sísmicos del
 
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
 
-La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. @gutenberg_richter_1944 proporcionan una base clásica para distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$. @kagan_jackson_2016 refuerzan la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos. @ammon_etal_2010 destacan la relevancia instrumental y científica de los eventos $M \geq 8{,}0$ dentro del registro global. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
+La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. Una base clásica permite distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$ [@gutenberg_richter_1944]. También se respalda la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos [@kagan_jackson_2016]. Finalmente, los eventos $M \geq 8{,}0$ presentan relevancia instrumental y científica dentro del registro global [@ammon_etal_2010]. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
 
 # Objetivos
 
@@ -192,7 +194,7 @@ El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, 
 
 El equipo declara que sí utilizó herramientas de inteligencia artificial generativa como apoyo técnico, documental y editorial durante el desarrollo de la asesoría. Su uso se mantuvo bajo criterios de trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible. La selección de fuentes, la construcción del análisis, la interpretación de los resultados, las conclusiones y las decisiones finales permanecieron bajo responsabilidad de los integrantes, y ninguna asistencia modificó los datos ni los resultados estadísticos presentados.
 
-La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial}.
+La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
 
 # Metodología
 
