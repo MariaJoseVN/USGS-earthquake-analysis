@@ -1,5 +1,5 @@
 ---
-title: "Grandes terremotos USGS · 2000-2025"
+title: "Análisis Global de Grandes Terremotos"
 subtitle: "Caracterización descriptiva, temporal y espacial"
 format:
   dashboard:
@@ -159,10 +159,10 @@ colores_profundidad <- c(
   "Profundo"    = coral
 )
 colores_zona <- c(
-  "Cinturon de Fuego"        = coral,
-  "Cinturon Alpino-Himalayo" = azul_principal,
-  "Dorsal Meso-Atlantica"    = azul_medio,
-  "Resto del mundo"          = "#91A4BA"
+  "Cinturon de Fuego"        = "#e31a1cD9",
+  "Cinturon Alpino-Himalayo" = "#47cea8D9",
+  "Dorsal Meso-Atlantica"    = "#dfbf8aD9",
+  "Resto del mundo"          = "#9e9e9eD9"
 )
 colores_magtype <- c(
   "mww"   = azul_principal,
@@ -217,6 +217,20 @@ interactivo <- function(g, tooltip = "text") {
 
   # Se aplica a todos los graficos: si no contiene barras, no altera nada.
   redondear_barras_plotly(widget)
+}
+
+# Evita que las leyendas de los graficos angostos invadan ejes.
+leyenda_abajo_grafico_angosto <- function(widget) {
+  widget %>%
+    layout(
+      legend = list(
+        orientation = "h",
+        x = 0.5, xanchor = "center",
+        y = -0.28, yanchor = "top",
+        bgcolor = "rgba(255,255,255,0)"
+      ),
+      margin = list(t = 55, r = 12, b = 95, l = 68)
+    )
 }
 
 # --- Periodo de estudio ------------------------------------------------------
@@ -631,12 +645,13 @@ eventos_magtype <- sismos %>%
     posicion_etiqueta = eventos + max(eventos) * 0.04
   )
 
-# Paleta monocromatica utilizada en el analisis temporal y el Informe 1.
+# Paleta monocromatica azul para magType en el analisis temporal.
+# mww usa el tono mas oscuro por ser el tipo predominante.
 colores_magtype_script <- c(
-  "mww" = "gray30",
-  "mwc" = "gray55",
-  "mwb" = "gray75",
-  "otros" = "gray90"
+  "mww" = "#001632",
+  "mwc" = "#24466F",
+  "mwb" = "#6F86A1",
+  "otros" = "#C4CEDA"
 )
 
 g <- ggplot(eventos_magtype,
@@ -742,25 +757,42 @@ tagList(
 
 ```{r}
 #| content: valuebox
-#| title: "Promedio anual de eventos"
-list(icon = "calendar3", color = azul_principal,
-     value = fmt(total_eventos / cantidad_anios, 1))
+#| title: "Eventos extremos M ≥ 8,0"
+eventos_m80 <- sum(sismos$mag >= 8.0, na.rm = TRUE)
+list(icon = "exclamation-triangle", color = azul_principal,
+     value = fmt(eventos_m80, 0))
 ```
 
 ```{r}
 #| content: valuebox
-#| title: "Año con más eventos"
-conteo_anual <- sismos %>% count(anio, name = "n")
-anio_top <- conteo_anual$anio[which.max(conteo_anual$n)]
-list(icon = "graph-up-arrow", color = azul_medio,
-     value = paste0(anio_top, " (", max(conteo_anual$n), ")"))
+#| title: "Mediana recurrencia M ≥ 7,0"
+recurrencia_m70 <- sismos %>%
+  filter(magnitud_cat %in% c("Mayor", "Grande o extremo")) %>%
+  arrange(fecha_hora_utc) %>%
+  mutate(
+    dias_desde_anterior = as.numeric(difftime(fecha_hora_utc,
+                                              lag(fecha_hora_utc),
+                                              units = "days"))
+  )
+
+mediana_recurrencia_m70 <- median(recurrencia_m70$dias_desde_anterior,
+                                  na.rm = TRUE)
+
+list(icon = "clock-history", color = azul_medio,
+     value = paste0(fmt(mediana_recurrencia_m70, 1), " días"))
 ```
 
 ```{r}
 #| content: valuebox
-#| title: "Eventos M ≥ 6,5"
-list(icon = "activity", color = turquesa,
-     value = fmt(sum(sismos$mag >= 6.5), 0))
+#| title: "Meses sin eventos"
+meses_periodo <- seq.Date(as.Date(paste0(anio_inicio, "-01-01")),
+                          as.Date(paste0(anio_fin, "-12-01")),
+                          by = "month")
+meses_con_eventos <- unique(floor_date(sismos$fecha, "month"))
+meses_sin_eventos <- length(setdiff(meses_periodo, meses_con_eventos))
+
+list(icon = "calendar-x", color = turquesa,
+     value = fmt(meses_sin_eventos, 0))
 ```
 
 ### Row {height="440px"}
@@ -857,7 +889,8 @@ g <- ggplot(conteo_anual_mag,
   geom_col() +
   scale_fill_manual(values = colores_magnitud, name = NULL) +
   labs(title = "Eventos anuales por magnitud", x = "Año", y = "Eventos")
-interactivo(g)
+interactivo(g) %>%
+  leyenda_abajo_grafico_angosto()
 ```
 
 ```{r}
@@ -876,7 +909,8 @@ g <- ggplot(conteo_decadal,
   geom_col(position = "dodge") +
   scale_fill_manual(values = colores_magnitud, name = NULL) +
   labs(title = "Tasa anual por década", x = "Década", y = "Eventos por año")
-interactivo(g)
+interactivo(g) %>%
+  leyenda_abajo_grafico_angosto()
 ```
 
 ```{r}
@@ -915,15 +949,10 @@ g <- ggplot(
     title = "Eventos por década según categoría de magnitud",
     x = "Década", y = "Número de eventos"
   ) +
-  theme(legend.position = "right")
+  theme(legend.position = "bottom")
 
 interactivo(g) %>%
-  layout(
-    legend = list(
-      orientation = "v", x = 0.98, xanchor = "right",
-      y = 0.98, yanchor = "top", bgcolor = "rgba(255,255,255,0.65)"
-    )
-  )
+  leyenda_abajo_grafico_angosto()
 ```
 
 ```{r}
@@ -1162,7 +1191,8 @@ g <- ggplot(zona_magnitud,
   geom_col() +
   scale_fill_manual(values = colores_magnitud, name = NULL) +
   labs(title = "Composición de magnitud por zona", x = "Zona sísmica", y = "%")
-interactivo(g)
+interactivo(g) %>%
+  leyenda_abajo_grafico_angosto()
 ```
 
 ```{r}
@@ -1181,7 +1211,8 @@ g <- ggplot(zona_profundidad,
   geom_col() +
   scale_fill_manual(values = colores_profundidad, name = NULL) +
   labs(title = "Composición de profundidad por zona", x = "Zona sísmica", y = "%")
-interactivo(g)
+interactivo(g) %>%
+  leyenda_abajo_grafico_angosto()
 ```
 
 ```{r}
@@ -1200,7 +1231,8 @@ g <- ggplot(zona_magtype,
   geom_col() +
   scale_fill_manual(values = colores_magtype, name = NULL) +
   labs(title = "Composición de magType por zona", x = "Zona sísmica", y = "%")
-interactivo(g)
+interactivo(g) %>%
+  leyenda_abajo_grafico_angosto()
 ```
 
 ### Row {height="560px"}
