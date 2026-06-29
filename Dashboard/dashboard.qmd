@@ -84,8 +84,8 @@ format:
           margin: 0.6rem 0;
           font-size: 0.68rem;
         }
-        .resumen-barra__pista { height: 15px; overflow: hidden; border-radius: 5px; background: #e9eef4; }
-        .resumen-barra__relleno { height: 100%; min-width: 3px; border-radius: 5px; }
+        .resumen-barra__pista { height: 15px; overflow: hidden; border-radius: 999px; background: #e9eef4; }
+        .resumen-barra__relleno { height: 100%; min-width: 3px; border-radius: 999px; }
         .resumen-barra__porcentaje { text-align: right; font-variant-numeric: tabular-nums; }
 
         /* --- Barra de filtros flotante: acompaña el scroll --- */
@@ -141,36 +141,38 @@ source("R/preparar_datos.R")
 sismos <- preparar_datos(ruta_proyecto = "..")
 
 # --- Paleta corporativa ------------------------------------------------------
-azul_principal <- "#001632"
-turquesa       <- "#00d1c3"
+azul_principal <- "#24466f"
+azul_medio     <- "#416c9f"
+coral          <- "#E06B70"
+turquesa       <- coral
 gris_texto     <- "#394049"
 
 # Escalas de color por categoria (sobrias: del turquesa al azul)
 colores_magnitud <- c(
-  "Fuerte"           = "#8ec9c3",
-  "Mayor"            = "#1f8fa6",
-  "Grande o extremo" = "#001632"
+  "Fuerte"           = azul_principal,
+  "Mayor"            = azul_medio,
+  "Grande o extremo" = coral
 )
 colores_profundidad <- c(
-  "Superficial" = "#00d1c3",
-  "Intermedio"  = "#3f7a99",
-  "Profundo"    = "#001632"
+  "Superficial" = azul_principal,
+  "Intermedio"  = azul_medio,
+  "Profundo"    = coral
 )
 colores_zona <- c(
-  "Cinturon de Fuego"        = "#E06B70",
-  "Cinturon Alpino-Himalayo" = "#5AC8AE",
-  "Dorsal Meso-Atlantica"    = "#C7B17A",
-  "Resto del mundo"          = "#BDBDBD"
+  "Cinturon de Fuego"        = coral,
+  "Cinturon Alpino-Himalayo" = azul_principal,
+  "Dorsal Meso-Atlantica"    = azul_medio,
+  "Resto del mundo"          = "#91A4BA"
 )
 colores_magtype <- c(
-  "mww"   = "#001632",
-  "mwc"   = "#1f8fa6",
-  "mwb"   = "#8ec9c3",
-  "otros" = "#cdd4da"
+  "mww"   = azul_principal,
+  "mwc"   = azul_medio,
+  "mwb"   = coral,
+  "otros" = "#91A4BA"
 )
 
 # Paleta comun para las barras de los tres resumenes visuales.
-colores_barras_resumen <- c("#24466f", "#416c9f", "#E06B70")
+colores_barras_resumen <- c(azul_principal, azul_medio, coral)
 
 # Etiquetas cortas de zona para los ejes
 etiquetas_zona <- c(
@@ -213,6 +215,12 @@ anio_fin       <- 2025
 cantidad_anios <- anio_fin - anio_inicio + 1
 total_eventos  <- nrow(sismos)
 
+# Indicadores principales de cobertura y valores extremos del catalogo.
+periodo_catalogo <- paste0(min(sismos$anio, na.rm = TRUE), "–",
+                           max(sismos$anio, na.rm = TRUE))
+magnitud_maxima <- max(sismos$mag, na.rm = TRUE)
+significancia_maxima <- max(sismos$sig, na.rm = TRUE)
+
 # --- Datos para los exploradores con filtros (crosstalk) ---------------------
 # Se arma un data.frame a nivel de evento; dos objetos SharedData independientes
 # (uno por pestaña) permiten que los filtros de cada pestaña no se mezclen.
@@ -244,6 +252,94 @@ tabla_explorador <- function(sd) {
       columnDefs = list(list(className = "dt-center", targets = "_all"))
     )
   )
+}
+
+# Redondea las esquinas superiores de las barras que Plotly genera como SVG.
+redondear_barras_plotly <- function(widget) {
+  htmlwidgets::onRender(widget, "
+    function(el, x) {
+      function redondearBarras() {
+        el.querySelectorAll('.barlayer .trace path').forEach(function(barra) {
+          var d = barra.getAttribute('d');
+          var m = d && d.match(/^M\\s*(-?[0-9.]+),(-?[0-9.]+)V\\s*(-?[0-9.]+)H\\s*(-?[0-9.]+)V\\s*(-?[0-9.]+)Z$/);
+          if (!m) return;
+          var izquierda = Number(m[1]);
+          var base = Number(m[2]);
+          var cima = Number(m[3]);
+          var derecha = Number(m[4]);
+          var radio = Math.min(8, (derecha - izquierda) / 2, Math.abs(base - cima) / 2);
+          if (radio <= 0) return;
+          barra.setAttribute('d',
+            'M' + izquierda + ',' + base +
+            'V' + (cima + radio) +
+            'Q' + izquierda + ',' + cima + ' ' + (izquierda + radio) + ',' + cima +
+            'H' + (derecha - radio) +
+            'Q' + derecha + ',' + cima + ' ' + derecha + ',' + (cima + radio) +
+            'V' + base + 'Z'
+          );
+        });
+      }
+      el.on('plotly_afterplot', redondearBarras);
+      window.requestAnimationFrame(redondearBarras);
+    }
+  ")
+}
+
+# Histograma con la logica usada en los scripts: cortes de Sturges, frecuencias
+# visibles y una linea discontinua para el estadistico central.
+grafico_distribucion <- function(x, titulo, eje_x, central = c("media", "mediana"),
+                                digitos = 1, unidad = "") {
+  central <- match.arg(central)
+  x <- x[is.finite(x)]
+  h <- hist(x, breaks = "Sturges", plot = FALSE)
+  datos_h <- tibble::tibble(
+    centro = h$mids,
+    eventos = h$counts,
+    ancho = diff(h$breaks)
+  ) %>%
+    mutate(posicion_etiqueta = eventos + max(eventos) * 0.035)
+  referencia <- if (central == "media") mean(x) else median(x)
+  etiqueta_ref <- if (central == "media") "Media" else "Mediana"
+
+  g <- ggplot(datos_h, aes(
+    x = centro, y = eventos,
+    text = paste0(eje_x, ": ", fmt(centro, digitos), unidad,
+                  "<br>Eventos: ", eventos)
+  )) +
+    geom_col(aes(width = ancho * 0.86), fill = azul_principal,
+             color = azul_principal, alpha = 0.9) +
+    geom_text(aes(y = posicion_etiqueta,
+                  label = ifelse(eventos > 0, eventos, "")),
+              vjust = 0, size = 3, color = azul_principal) +
+    geom_vline(xintercept = referencia, color = coral,
+               linetype = "dashed", linewidth = 0.5) +
+    annotate("text", x = referencia, y = max(datos_h$eventos) * 1.13,
+             label = paste0(etiqueta_ref, ": ", fmt(referencia, digitos), unidad),
+             color = coral, hjust = -0.08, size = 3) +
+    scale_x_continuous(expand = expansion(mult = c(0.025, 0.025))) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
+    labs(title = titulo, x = eje_x, y = "Número de eventos") +
+    theme_minimal(base_size = 11) +
+    theme(
+      plot.title = element_text(color = azul_principal, face = "bold", size = 13,
+                                hjust = 0, margin = margin(b = 8)),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+      panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+      panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+      axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+      axis.ticks.length = grid::unit(3, "pt"),
+      axis.title = element_text(color = gris_texto),
+      axis.text = element_text(color = gris_texto),
+      axis.text.x = element_text(margin = margin(t = 8)),
+      axis.title.x = element_text(margin = margin(t = 7)),
+      plot.margin = margin(8, 12, 8, 8)
+    )
+
+  widget <- interactivo(g) %>%
+    config(displaylogo = FALSE, responsive = TRUE)
+
+  redondear_barras_plotly(widget)
 }
 
 # Componentes HTML reutilizables para los resumenes visuales por variable.
@@ -285,68 +381,61 @@ list(icon = "activity", color = azul_principal,
 
 ```{r}
 #| content: valuebox
-#| title: "Magnitud media"
-list(icon = "graph-up-arrow", color = "#1f8fa6",
-     value = fmt(mean(sismos$mag), 2))
+#| title: "Período cubierto por el catálogo"
+list(icon = "calendar-range", color = azul_medio,
+     value = periodo_catalogo)
 ```
 
 ```{r}
 #| content: valuebox
-#| title: "Profundidad mediana (km)"
-list(icon = "layers", color = "#3f7a99",
-     value = fmt(median(sismos$depth), 1))
+#| title: "Terremoto de mayor magnitud"
+list(icon = "trophy", color = azul_medio,
+     value = fmt(magnitud_maxima, 2))
 ```
 
 ```{r}
 #| content: valuebox
-#| title: "Significancia mediana"
-list(icon = "star", color = turquesa,
-     value = fmt(median(sismos$sig, na.rm = TRUE), 0))
+#| title: "Significancia máxima"
+list(icon = "star-fill", color = coral,
+     value = fmt(significancia_maxima, 0))
 ```
 
 ## Row {height="450px"}
 
-### Column {.tabset width="58%"}
+### Column {.tabset .distribuciones-principales width="58%"}
 
 ```{r}
 #| title: "Magnitud"
-# Sintaxis general: ggplot(datos, aes(x)) + geom_histogram() -> interactivo()
-# geom_histogram() agrupa una variable continua en intervalos (binwidth).
-g <- ggplot(sismos, aes(x = mag,
-                        text = paste0("Magnitud: ", round(after_stat(x), 1),
-                                      "<br>Eventos: ", after_stat(count)))) +
-  geom_histogram(binwidth = 0.1, fill = azul_principal, color = "white") +
-  geom_vline(xintercept = mean(sismos$mag), linetype = "dashed",
-             color = turquesa, linewidth = 0.8) +
-  labs(title = "Distribución de la magnitud", x = "Magnitud",
-       y = "Número de eventos")
-interactivo(g)
+grafico_distribucion(
+  sismos$mag,
+  titulo = "Distribución de la magnitud",
+  eje_x = "Magnitud",
+  central = "media",
+  digitos = 2
+)
 ```
 
 ```{r}
 #| title: "Profundidad"
-g <- ggplot(sismos, aes(x = depth,
-                        text = paste0("Profundidad: ", round(after_stat(x)), " km",
-                                      "<br>Eventos: ", after_stat(count)))) +
-  geom_histogram(binwidth = 25, fill = azul_principal, color = "white") +
-  geom_vline(xintercept = median(sismos$depth), linetype = "dashed",
-             color = turquesa, linewidth = 0.8) +
-  labs(title = "Distribución de la profundidad", x = "Profundidad (km)",
-       y = "Número de eventos")
-interactivo(g)
+grafico_distribucion(
+  sismos$depth,
+  titulo = "Distribución de la profundidad",
+  eje_x = "Profundidad",
+  central = "mediana",
+  digitos = 1,
+  unidad = " km"
+)
 ```
 
 ```{r}
 #| title: "Significancia"
-g <- ggplot(sismos, aes(x = sig,
-                        text = paste0("Significancia: ", round(after_stat(x)),
-                                      "<br>Eventos: ", after_stat(count)))) +
-  geom_histogram(binwidth = 100, fill = azul_principal, color = "white") +
-  geom_vline(xintercept = median(sismos$sig, na.rm = TRUE), linetype = "dashed",
-             color = turquesa, linewidth = 0.8) +
-  labs(title = "Distribución de la significancia USGS", x = "Significancia (sig)",
-       y = "Número de eventos")
-interactivo(g)
+grafico_distribucion(
+  sismos$sig,
+  titulo = "Distribución de la significancia USGS",
+  eje_x = "Significancia (sig)",
+  central = "mediana",
+  digitos = 0
+)
 ```
 
 ### Column {.tabset width="42%"}
@@ -418,48 +507,161 @@ panel_resumen(
 # Sintaxis general: count() cuenta por categoria; mutate() agrega el porcentaje.
 eventos_magnitud <- sismos %>%
   count(magnitud_cat, name = "eventos", .drop = FALSE) %>%
-  mutate(porcentaje = eventos / sum(eventos) * 100)
+  mutate(
+    porcentaje = eventos / sum(eventos) * 100,
+    posicion_etiqueta = eventos + max(eventos) * 0.035
+  )
 
 g <- ggplot(eventos_magnitud,
             aes(x = magnitud_cat, y = eventos, fill = magnitud_cat,
                 text = paste0(magnitud_cat, "<br>", eventos, " eventos (",
                               fmt(porcentaje, 1), "%)"))) +
-  geom_col(width = 0.7) +
+  geom_col(width = 0.68) +
+  geom_text(aes(y = posicion_etiqueta, label = eventos),
+            vjust = 0, size = 3.2, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = colores_magnitud, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(title = "Eventos por categoría de magnitud", x = NULL,
-       y = "Número de eventos")
-interactivo(g)
+       y = "Número de eventos") +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(color = azul_principal, face = "bold", size = 13,
+                              hjust = 0, margin = margin(b = 8)),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+    panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+    axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+    axis.ticks.length = grid::unit(3, "pt"),
+    axis.text.x = element_text(color = gris_texto, margin = margin(t = 8)),
+    axis.text.y = element_text(color = gris_texto),
+    axis.title.y = element_text(color = gris_texto),
+    plot.margin = margin(8, 12, 8, 8)
+  )
+redondear_barras_plotly(interactivo(g))
 ```
 
 ```{r}
 #| title: "Categoría de profundidad"
 eventos_profundidad <- sismos %>%
   count(profundidad_cat, name = "eventos", .drop = FALSE) %>%
-  mutate(porcentaje = eventos / sum(eventos) * 100)
+  mutate(
+    porcentaje = eventos / sum(eventos) * 100,
+    posicion_etiqueta = eventos + max(eventos) * 0.035
+  )
 
 g <- ggplot(eventos_profundidad,
             aes(x = profundidad_cat, y = eventos, fill = profundidad_cat,
                 text = paste0(profundidad_cat, "<br>", eventos, " eventos (",
                               fmt(porcentaje, 1), "%)"))) +
-  geom_col(width = 0.7) +
+  geom_col(width = 0.68) +
+  geom_text(aes(y = posicion_etiqueta, label = eventos),
+            vjust = 0, size = 3.2, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = colores_profundidad, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(title = "Eventos por categoría de profundidad", x = NULL,
-       y = "Número de eventos")
-interactivo(g)
+       y = "Número de eventos") +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(color = azul_principal, face = "bold", size = 13,
+                              hjust = 0, margin = margin(b = 8)),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+    panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+    axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+    axis.ticks.length = grid::unit(3, "pt"),
+    axis.text.x = element_text(color = gris_texto, margin = margin(t = 8)),
+    axis.text.y = element_text(color = gris_texto),
+    axis.title.y = element_text(color = gris_texto),
+    plot.margin = margin(8, 12, 8, 8)
+  )
+redondear_barras_plotly(interactivo(g))
+```
+
+### Column {.tabset}
+
+```{r}
+#| title: "Tipo de magnitud"
+eventos_magtype <- sismos %>%
+  count(magType_grupo, name = "eventos", .drop = FALSE) %>%
+  mutate(
+    porcentaje = eventos / sum(eventos) * 100,
+    posicion_etiqueta = eventos + max(eventos) * 0.04
+  )
+
+g <- ggplot(eventos_magtype,
+            aes(x = magType_grupo, y = eventos, fill = magType_grupo,
+                text = paste0(magType_grupo, "<br>", eventos, " eventos (",
+                              fmt(porcentaje, 1), "%)"))) +
+  geom_col(width = 0.64) +
+  geom_text(aes(y = posicion_etiqueta, label = eventos),
+            vjust = 0, size = 3, color = azul_principal, show.legend = FALSE) +
+  scale_fill_manual(values = colores_magtype, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(title = "Eventos por tipo de magnitud", x = NULL,
+       y = "Número de eventos") +
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(color = azul_principal, face = "bold", size = 12,
+                              hjust = 0, margin = margin(b = 7)),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+    panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+    axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+    axis.text.x = element_text(color = gris_texto, margin = margin(t = 7)),
+    axis.text.y = element_text(color = gris_texto),
+    axis.title.y = element_text(color = gris_texto),
+    plot.margin = margin(8, 10, 8, 8)
+  )
+redondear_barras_plotly(interactivo(g))
 ```
 
 ```{r}
-#| title: "Frecuencias (absolutas y relativas)"
-frecuencias <- bind_rows(
-  eventos_magnitud %>%
-    transmute(Dimensión = "Magnitud", Categoría = as.character(magnitud_cat),
-              Eventos = eventos, `%` = round(porcentaje, 1)),
-  eventos_profundidad %>%
-    transmute(Dimensión = "Profundidad", Categoría = as.character(profundidad_cat),
-              Eventos = eventos, `%` = round(porcentaje, 1))
-)
-datatable(frecuencias, rownames = FALSE,
-          options = list(dom = "t", ordering = FALSE, pageLength = 10))
+#| title: "Origen de la magnitud"
+eventos_magsource <- sismos %>%
+  count(magSource, name = "eventos", sort = TRUE) %>%
+  mutate(origen = if_else(row_number() <= 5, magSource, "Otros")) %>%
+  group_by(origen) %>%
+  summarise(eventos = sum(eventos), .groups = "drop") %>%
+  arrange(desc(eventos)) %>%
+  mutate(
+    origen = factor(origen, levels = origen),
+    porcentaje = eventos / sum(eventos) * 100,
+    posicion_etiqueta = eventos + max(eventos) * 0.04
+  )
+
+paleta_origen <- c("#24466f", "#416c9f", "#6888ad",
+                   "#91a4ba", "#b7c3d0", "#E06B70")
+
+g <- ggplot(eventos_magsource,
+            aes(x = origen, y = eventos, fill = origen,
+                text = paste0(origen, "<br>", eventos, " eventos (",
+                              fmt(porcentaje, 1), "%)"))) +
+  geom_col(width = 0.64) +
+  geom_text(aes(y = posicion_etiqueta, label = eventos),
+            vjust = 0, size = 2.8, color = azul_principal, show.legend = FALSE) +
+  scale_fill_manual(values = paleta_origen, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(title = "Eventos por origen de la magnitud", x = NULL,
+       y = "Número de eventos") +
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(color = azul_principal, face = "bold", size = 12,
+                              hjust = 0, margin = margin(b = 7)),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+    panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+    axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+    axis.text.x = element_text(color = gris_texto, angle = 35, hjust = 1,
+                               margin = margin(t = 7)),
+    axis.text.y = element_text(color = gris_texto),
+    axis.title.y = element_text(color = gris_texto),
+    plot.margin = margin(8, 10, 8, 8)
+  )
+redondear_barras_plotly(interactivo(g))
 ```
 
 # Temporal
@@ -499,7 +701,7 @@ list(icon = "calendar3", color = azul_principal,
 #| title: "Año con más eventos"
 conteo_anual <- sismos %>% count(anio, name = "n")
 anio_top <- conteo_anual$anio[which.max(conteo_anual$n)]
-list(icon = "graph-up-arrow", color = "#1f8fa6",
+list(icon = "graph-up-arrow", color = azul_medio,
      value = paste0(anio_top, " (", max(conteo_anual$n), ")"))
 ```
 
@@ -690,7 +892,7 @@ list(icon = "geo-alt", color = azul_principal, value = fmt(n_fuego, 0))
 ```{r}
 #| content: valuebox
 #| title: "% del catálogo en el Cinturón de Fuego"
-list(icon = "pie-chart", color = "#1f8fa6",
+list(icon = "pie-chart", color = azul_medio,
      value = paste0(fmt(n_fuego / total_eventos * 100, 1), "%"))
 ```
 
