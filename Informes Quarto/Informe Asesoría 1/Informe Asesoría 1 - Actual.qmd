@@ -122,9 +122,9 @@ Se adjuntan los siguientes enlaces como productos derivados del informe.
 
 El estudio se articula en torno a la siguiente pregunta estadística:
 
-> **¿Existen otras zonas o regiones sísmicas de tipo cinturón que puedan ser comparadas con el Cinturón de Fuego en términos estadísticos de magnitud y profundidad?**
+> **¿Cómo se diferencian la frecuencia, magnitud y profundidad de los terremotos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025 según la zona sísmica en que ocurren, y qué tan comparable es el Cinturón de Fuego con otros cinturones sísmicos globales?**
 
-Esta pregunta surge de la pregunta orientadora del encargo, que solicita comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. No obstante, el "resto del mundo" constituye un conjunto heterogéneo que agrupa eventos de orígenes tectónicos diversos, por lo que su uso directo como término de comparación limita la interpretabilidad de las diferencias observadas. Por esta razón, la pregunta se orienta a identificar otras zonas sísmicas de tipo cinturón, con características comparables a las del Cinturón de Fuego, que permitan una comparación más estándar y equilibrada de la magnitud y la profundidad entre regiones sísmicamente análogas.
+Esta pregunta surge del encargo de comparar la actividad del Cinturón de Fuego del Pacífico con el resto del mundo bajo una definición explícita y reproducible. La categoría "resto del mundo" se conserva para cerrar el total del catálogo, pero se interpreta con cautela porque constituye un conjunto **heterogéneo** de eventos asociados a distintos contextos tectónicos. La **unidad de análisis** corresponde a cada evento sísmico registrado en el catálogo USGS. La **variable de agrupación** es la zona sísmica, definida como Cinturón de Fuego, Cinturón Alpino-Himalayo, Dorsal Meso-Atlántica y resto del mundo. Las **variables principales de comparación** son la frecuencia de ocurrencia, la magnitud y la profundidad. El **alcance** del análisis es descriptivo y exploratorio, por lo que los resultados caracterizan el catálogo observado y no representan predicción, causalidad ni estimación de amenaza sísmica.
 
 \newpage
 # Antecedentes
@@ -1794,6 +1794,57 @@ Este flujo conecta la revisión cartográfica de QGIS con el análisis estadíst
 \end{figure}
 ```
 
+### Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
+
+- [X] El equipo declara que sí utilizó herramientas de Inteligencia Artificial Generativa durante el desarrollo de esta asesoría, según se detalla a continuación:
+
+```{=latex}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.16}
+\Needspace{18\baselineskip}
+\phantomsection
+\refstepcounter{table}
+
+\label{tbl-declaracion-uso-ia}
+\hypertarget{dest-tbl-declaracion-uso-ia}{}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}}
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endfirsthead
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endhead
+NotebookLM & junio 2026 & Apoyo para la lectura en español de bibliografía en inglés. & Antecedentes y revisión bibliográfica. & Traducción y apoyo de lectura. & Lectura de las fuentes originales y selección manual de la bibliografía. \\
+Extensión de ChatGPT en Positron & junio 2026 & Generación inicial de una plantilla QMD con la estructura del informe. & Estructura general del archivo QMD. & Propuesta de secciones y organización documental. & Revisión, modificación y completado manual de toda la estructura. \\
+Claude Code & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapas georreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Solo en términos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraídos del informe final. \\
+Extensión de ChatGPT en Positron & junio 2026 & Conversión de fuentes al formato académico y vinculación de hipervínculos. & Archivo \texttt{referencias.bib}, citas y enlaces. & Formato BibTeX, sintaxis y vinculación documental. & Comprobación manual de autores, títulos, fechas, DOI, URL y correspondencia con la fuente original. \\
+Extensión de ChatGPT en Positron & junio 2026 & Sugerencia de código para graficar y corregir puntualmente gráficos y tablas. & Figuras, tablas LaTeX y maquetación del informe. & Ajustes de código, dimensiones, etiquetas y disposición visual. & Ejecución del código, comparación con los datos y revisión visual de cada producto. \\
+Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortografía, vocabulario, coherencia y redundancia. & Prototipos avanzados y versión final del informe. & Sugerencias editoriales y detección de inconsistencias formales. & Lectura crítica, aceptación o rechazo manual de cada sugerencia. \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.\end{center}
+\endgroup
+```
+
+#### Detalle aclaratorio del uso
+
+NotebookLM se empleó como apoyo para la lectura en español de bibliografía en inglés, mientras que la extensión de ChatGPT en Positron se utilizó en tareas de programación, organización documental y revisión formal. La selección de fuentes, la construcción del análisis, la interpretación de los resultados y las decisiones finales permanecieron bajo responsabilidad del equipo.
+
+La implementación interactiva del dashboard y del mapa georreferenciado se realizó con apoyo de Claude Code. Este uso se justifica porque la construcción de productos interactivos corresponde principalmente a una tarea de implementación computacional, más cercana a competencias de desarrollo informático que al análisis estadístico propiamente tal. En este caso, la IA se utilizó para estructurar código, resolver errores puntuales y ajustar la interacción de los productos. No se empleó para realizar cálculos estadísticos, modificar resultados ni definir interpretaciones. Todo el código fue ejecutado y revisado por el equipo.
+
+La bibliografía fue localizada y seleccionada manualmente; la IA apoyó su conversión al formato académico de `referencias.bib` y la vinculación de citas, frases e hipervínculos. También se utilizó en una etapa inicial para generar una plantilla QMD con la estructura general del informe, posteriormente completada y modificada por el equipo, y para realizar correcciones puntuales de gráficos. Una vez elaborados los prototipos del informe, se solicitaron revisiones ortográficas, de vocabulario, coherencia formal y disposición visual de tablas LaTeX. Estos apoyos funcionaron como control editorial posterior y no sustituyeron la redacción, evaluación crítica ni aprobación de los integrantes.
+
+El uso responsable se basó en trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible del código. El equipo verificó las referencias, enlaces, tablas, gráficos y productos computacionales antes de incorporarlos al informe.
+
+El equipo declara que todos los análisis, resultados, interpretaciones, conclusiones, códigos y referencias incluidos en este informe fueron revisados críticamente por sus integrantes. Asimismo, declara que asume plena responsabilidad por la exactitud, reproducibilidad y pertinencia profesional del trabajo presentado.
+
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
 
 Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la página [Where do earthquakes occur?](https://www.usgs.gov/faqs/where-do-earthquakes-occur) de USGS [@usgs_faq_terremotos].
@@ -1873,53 +1924,3 @@ La cuarta decisión corresponde a incorporar indicadores de comparabilidad del r
 Estos indicadores son apoyo interpretativo. No modifican conteos, tasas, magnitudes ni profundidades por zona; solo documentan condiciones que pueden afectar la comparación espacial.
 
 
-## Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
-
-- [X] El equipo declara que sí utilizó herramientas de Inteligencia Artificial Generativa durante el desarrollo de esta asesoría, según se detalla a continuación:
-
-```{=latex}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{2.5pt}
-\renewcommand{\arraystretch}{1.16}
-\Needspace{18\baselineskip}
-\phantomsection
-\refstepcounter{table}
-
-\label{tbl-declaracion-uso-ia}
-\hypertarget{dest-tbl-declaracion-uso-ia}{}
-
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}}
-\toprule
-Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
-\midrule
-\endfirsthead
-\toprule
-Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
-\midrule
-\endhead
-NotebookLM & junio 2026 & Apoyo para la lectura en español de bibliografía en inglés. & Antecedentes y revisión bibliográfica. & Traducción y apoyo de lectura. & Lectura de las fuentes originales y selección manual de la bibliografía. \\
-Extensión de ChatGPT en Positron & junio 2026 & Generación inicial de una plantilla QMD con la estructura del informe. & Estructura general del archivo QMD. & Propuesta de secciones y organización documental. & Revisión, modificación y completado manual de toda la estructura. \\
-Claude Code & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapas georreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Solo en términos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraídos del informe final. \\
-Extensión de ChatGPT en Positron & junio 2026 & Conversión de fuentes al formato académico y vinculación de hipervínculos. & Archivo \texttt{referencias.bib}, citas y enlaces. & Formato BibTeX, sintaxis y vinculación documental. & Comprobación manual de autores, títulos, fechas, DOI, URL y correspondencia con la fuente original. \\
-Extensión de ChatGPT en Positron & junio 2026 & Sugerencia de código para graficar y corregir puntualmente gráficos y tablas. & Figuras, tablas LaTeX y maquetación del informe. & Ajustes de código, dimensiones, etiquetas y disposición visual. & Ejecución del código, comparación con los datos y revisión visual de cada producto. \\
-Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortografía, vocabulario, coherencia y redundancia. & Prototipos avanzados y versión final del informe. & Sugerencias editoriales y detección de inconsistencias formales. & Lectura crítica, aceptación o rechazo manual de cada sugerencia. \\
-\bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
-\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.\end{center}
-\endgroup
-```
-
-### Detalle aclaratorio del uso
-
-NotebookLM se empleó como apoyo para la lectura en español de bibliografía en inglés, mientras que la extensión de ChatGPT en Positron se utilizó en tareas de programación, organización documental y revisión formal. La selección de fuentes, la construcción del análisis, la interpretación de los resultados y las decisiones finales permanecieron bajo responsabilidad del equipo.
-
-El apoyo computacional fue especialmente relevante para implementar prototipos de dashboards y mapas georreferenciados interactivos, incluida la revisión de cambios temporales. Estas tareas requieren competencias de desarrollo cercanas a un perfil informático, por lo que la IA se utilizó para estructurar código, resolver errores puntuales y ajustar visualizaciones. Todo el código fue ejecutado y revisado por el equipo, y este apoyo no modificó los datos ni los resultados estadísticos presentados.
-
-La bibliografía fue localizada y seleccionada manualmente; la IA apoyó su conversión al formato académico de `referencias.bib` y la vinculación de citas, frases e hipervínculos. También se utilizó en una etapa inicial para generar una plantilla QMD con la estructura general del informe, posteriormente completada y modificada por el equipo, y para realizar correcciones puntuales de gráficos. Una vez elaborados los prototipos del informe, se solicitaron revisiones ortográficas, de vocabulario, coherencia formal y disposición visual de tablas LaTeX. Estos apoyos funcionaron como control editorial posterior y no sustituyeron la redacción, evaluación crítica ni aprobación de los integrantes.
-
-El uso responsable se basó en trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible del código. El equipo verificó las referencias, enlaces, tablas, gráficos y productos computacionales antes de incorporarlos al informe.
-
-El equipo declara que todos los análisis, resultados, interpretaciones, conclusiones, códigos y referencias incluidos en este informe fueron revisados críticamente por sus integrantes. Asimismo, declara que asume plena responsabilidad por la exactitud, reproducibilidad y pertinencia profesional del trabajo presentado.
