@@ -461,7 +461,7 @@ Máx. & 676,4 & Q90 & 354,8 \\
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
-Para complementar el resumen numérico, la variable \texttt{depth} se categorizó en \texttt{profundidad\_cat}, cuyos criterios de construcción también se describen en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+Para complementar el resumen numérico, la variable \texttt{depth} se categorizó en \texttt{profundidad\_cat}. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
@@ -1724,6 +1724,8 @@ El análisis se organiza en torno al script principal `Código.R`, que centraliz
 
 La separación del código responde a una decisión operativa del equipo: cada script aborda una etapa específica del análisis, lo que permite revisar, depurar y modificar componentes particulares sin alterar todo el flujo de trabajo. Esta estructura también facilita el trabajo colaborativo, ya que permite avanzar sobre módulos distintos manteniendo un punto común de ejecución.
 
+El proyecto se respaldó mediante control de versiones con Git desde Positron y un repositorio de GitHub. La rama `main` concentra la versión consolidada del trabajo, incluyendo bases de datos, scripts, bibliografía, recursos geográficos, informe, dashboard y mapa interactivo. Los commits permitieron registrar cambios, ordenar los insumos y productos derivados, y mantener trazabilidad del desarrollo computacional y documental.
+
 La organización principal del flujo reproducible se resume en la \hyperlink{dest-tbl-flujo-scripts}{Tabla~\ref*{tbl-flujo-scripts}}.
 
 ```{=latex}
@@ -1853,6 +1855,8 @@ La comparación decadal debe leerse mediante tasas anuales promedio, porque el t
 La recurrencia temporal reportada corresponde al espaciamiento entre eventos consecutivos dentro del catálogo global. No representa la recurrencia física de una falla, zona de subducción o región específica, por lo que no debe interpretarse como predicción ni como estimación de amenaza sísmica local.
 
 La evolución de `magType` se interpreta considerando la documentación de USGS sobre tipos de magnitud [@usgs_magnitude_types]. Esta referencia permite contextualizar la transición observada hacia `mww`, sin asumir que todo el período fue medido de forma homogénea.
+
+La evolución temporal del RMS se interpreta como una descripción del ajuste de localización reportado en el catálogo. La disminución observada en años recientes indica menor residuo entre tiempos observados y calculados, pero no demuestra por sí sola una mejora instrumental ni una mayor precisión de las coordenadas. Su lectura debe mantenerse como indicador de comparabilidad del registro.
 
 ## Caracterización espacial {#sec-anexo-caracterizacion-espacial}
 
