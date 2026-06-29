@@ -757,29 +757,32 @@ tagList(
 
 ```{r}
 #| content: valuebox
-#| title: "Eventos extremos M ≥ 8,0"
-eventos_m80 <- sum(sismos$mag >= 8.0, na.rm = TRUE)
+#| title: "Eventos Grande o extremo"
+eventos_grande_extremo <- sum(sismos$magnitud_cat == "Grande o extremo",
+                              na.rm = TRUE)
 list(icon = "exclamation-triangle", color = azul_principal,
-     value = fmt(eventos_m80, 0))
+     value = fmt(eventos_grande_extremo, 0))
 ```
 
 ```{r}
 #| content: valuebox
-#| title: "Mediana recurrencia M ≥ 7,0"
-recurrencia_m70 <- sismos %>%
+#| title: "Mediana recurrencia Mayor o Grande o extremo"
+recurrencia_mayor_extremo <- sismos %>%
   filter(magnitud_cat %in% c("Mayor", "Grande o extremo")) %>%
   arrange(fecha_hora_utc) %>%
   mutate(
     dias_desde_anterior = as.numeric(difftime(fecha_hora_utc,
                                               lag(fecha_hora_utc),
                                               units = "days"))
-  )
+      )
 
-mediana_recurrencia_m70 <- median(recurrencia_m70$dias_desde_anterior,
-                                  na.rm = TRUE)
+mediana_recurrencia_mayor_extremo <- median(
+  recurrencia_mayor_extremo$dias_desde_anterior,
+  na.rm = TRUE
+)
 
 list(icon = "clock-history", color = azul_medio,
-     value = paste0(fmt(mediana_recurrencia_m70, 1), " días"))
+     value = paste0(fmt(mediana_recurrencia_mayor_extremo, 1), " días"))
 ```
 
 ```{r}
@@ -1049,9 +1052,10 @@ participacion_mww <- sismos %>%
 g <- ggplot(participacion_mww, aes(x = anio, y = porcentaje_mww, group = 1,
                                    text = paste0(anio, "<br>",
                                                  fmt(porcentaje_mww, 1), "% mww"))) +
-  geom_line(color = "gray30", linewidth = 0.75) +
-  geom_point(color = "gray30", size = 1.2) +
-  geom_hline(yintercept = 50, linetype = "dashed", color = "gray70",
+  geom_line(color = colores_magtype_script["mww"], linewidth = 0.75) +
+  geom_point(color = colores_magtype_script["mww"], size = 1.2) +
+  geom_hline(yintercept = 50, linetype = "dashed",
+             color = colores_magtype_script["mwb"],
              linewidth = 0.5) +
   scale_x_continuous(breaks = 2000:2025) +
   labs(title = "Porcentaje anual de eventos mww", x = "Año", y = "% mww") +
@@ -1076,14 +1080,14 @@ g <- ggplot(resumen_rms_anual, aes(x = anio, group = 1)) +
                   text = paste0(anio, "<br>IQR: ", fmt(rms_q25, 2), " – ",
                                 fmt(rms_q75, 2)),
                   fill = "Rango intercuartílico"),
-              alpha = 0.9) +
+              alpha = 0.32) +
   geom_line(aes(y = rms_mediana, text = paste0(anio, "<br>Mediana: ",
                                                fmt(rms_mediana, 2), " s"),
                 color = "Mediana anual"),
-            linewidth = 0.65) +
-  geom_point(aes(y = rms_mediana, color = "Mediana anual"), size = 1.15) +
-  scale_fill_manual(values = c("Rango intercuartílico" = "gray82"), name = NULL) +
-  scale_color_manual(values = c("Mediana anual" = "gray30"), name = NULL) +
+            linewidth = 0.95) +
+  geom_point(aes(y = rms_mediana, color = "Mediana anual"), size = 1.45) +
+  scale_fill_manual(values = c("Rango intercuartílico" = "#E6ECF2"), name = NULL) +
+  scale_color_manual(values = c("Mediana anual" = colores_magtype_script["mww"]), name = NULL) +
   scale_x_continuous(breaks = seq(2000, 2025, by = 5)) +
   guides(color = guide_legend(order = 1), fill = guide_legend(order = 2)) +
   labs(title = "Evolución anual del ajuste RMS", x = "Año",
