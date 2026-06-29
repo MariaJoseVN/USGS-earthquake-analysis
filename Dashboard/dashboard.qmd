@@ -1,0 +1,743 @@
+---
+title: "Grandes terremotos USGS · 2000-2025"
+subtitle: "Caracterización descriptiva, temporal y espacial"
+format:
+  dashboard:
+    theme: [default, estilos.scss]
+    orientation: rows
+    scrolling: true
+    nav-buttons: []
+    embed-resources: true
+    include-in-header:
+      text: |
+        <style>
+        /* --- Value boxes SIN color: fondo blanco, estadísticas legibles --- */
+        .value-box { background: #ffffff !important; color: #394049 !important; }
+        .value-box .value-box-value { font-size: 1.85rem !important; line-height: 1.15 !important; white-space: normal !important; color: #001632 !important; font-weight: 700; }
+        .value-box .value-box-title { font-size: 0.8rem !important; line-height: 1.2 !important; color: #6b7682 !important; text-transform: uppercase; letter-spacing: 0.03em; }
+        .value-box .value-box-area { padding: 0.6rem 0.85rem !important; overflow: visible !important; justify-content: center !important; }
+        .value-box .value-box-showcase, .value-box .value-box-showcase .bi { color: #c2cad2 !important; opacity: 0.9; }
+
+        /* --- Barra de filtros flotante: acompaña el scroll --- */
+        .bslib-sidebar-layout > .sidebar {
+          position: sticky !important;
+          top: 0.75rem;
+          align-self: start;
+          max-height: calc(100vh - 1.5rem);
+          overflow-y: auto;
+        }
+        </style>
+execute:
+  echo: false
+  warning: false
+  message: false
+lang: es
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# =============================================================================
+# BLOQUE DE CONFIGURACION
+# -----------------------------------------------------------------------------
+# Librerias utilizadas:
+#   dplyr / tidyr / forcats -> manipulacion y resumenes
+#   lubridate               -> variables temporales (floor_date)
+#   ggplot2 + plotly        -> graficos -> versiones interactivas con ggplotly()
+#   DT                      -> tablas interactivas (orden, busqueda, paginado)
+#   crosstalk               -> filtros enlazados a graficos/tablas sin servidor
+#   htmltools               -> apilar varios widgets (tagList)
+#
+# Sintaxis general:
+#   source("archivo.R")  -> ejecuta el helper y deja disponibles sus funciones
+#   preparar_datos("..") -> devuelve el data.frame `sismos` ya listo
+# =============================================================================
+
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(lubridate)
+library(ggplot2)
+library(plotly)
+library(DT)
+library(crosstalk)
+library(htmltools)
+
+# --- Carga de datos (reutiliza la logica de los scripts del proyecto) --------
+# RECOMENDACION: si mueves el dashboard de carpeta, ajusta ruta_proyecto para
+# que apunte a la carpeta que contiene BBDD/ y SIG/.
+source("R/preparar_datos.R")
+sismos <- preparar_datos(ruta_proyecto = "..")
+
+# --- Paleta corporativa ------------------------------------------------------
+azul_principal <- "#001632"
+turquesa       <- "#00d1c3"
+gris_texto     <- "#394049"
+
+# Escalas de color por categoria (sobrias: del turquesa al azul)
+colores_magnitud <- c(
+  "Fuerte"           = "#8ec9c3",
+  "Mayor"            = "#1f8fa6",
+  "Grande o extremo" = "#001632"
+)
+colores_profundidad <- c(
+  "Superficial" = "#00d1c3",
+  "Intermedio"  = "#3f7a99",
+  "Profundo"    = "#001632"
+)
+colores_zona <- c(
+  "Cinturon de Fuego"        = "#E06B70",
+  "Cinturon Alpino-Himalayo" = "#5AC8AE",
+  "Dorsal Meso-Atlantica"    = "#C7B17A",
+  "Resto del mundo"          = "#BDBDBD"
+)
+colores_magtype <- c(
+  "mww"   = "#001632",
+  "mwc"   = "#1f8fa6",
+  "mwb"   = "#8ec9c3",
+  "otros" = "#cdd4da"
+)
+
+# Etiquetas cortas de zona para los ejes
+etiquetas_zona <- c(
+  "Cinturon de Fuego"        = "C. de Fuego",
+  "Cinturon Alpino-Himalayo" = "C. Alpino-H.",
+  "Dorsal Meso-Atlantica"    = "Dorsal M.-Atl.",
+  "Resto del mundo"          = "Resto"
+)
+sismos <- sismos %>%
+  mutate(zona_corta = factor(etiquetas_zona[as.character(zona)],
+                             levels = unname(etiquetas_zona)))
+
+# --- Tema visual de ggplot ---------------------------------------------------
+tema_dashboard <- theme_minimal(base_size = 12) +
+  theme(
+    text         = element_text(color = gris_texto),
+    plot.title   = element_text(color = azul_principal, face = "bold", size = 13),
+    panel.grid.minor = element_blank(),
+    legend.position  = "bottom"
+  )
+theme_set(tema_dashboard)
+
+# --- Helpers -----------------------------------------------------------------
+# fmt(): formato chileno (coma decimal, punto de miles) y cifras exactas.
+fmt <- function(x, d = 1) {
+  format(round(x, d), decimal.mark = ",", nsmall = d, big.mark = ".")
+}
+
+# interactivo(): convierte un ggplot en grafico plotly con barra limpia.
+interactivo <- function(g, tooltip = "text") {
+  ggplotly(g, tooltip = tooltip) %>%
+    layout(font = list(family = "Segoe UI, sans-serif", color = gris_texto)) %>%
+    config(displaylogo = FALSE,
+           modeBarButtonsToRemove = c("lasso2d", "select2d", "autoScale2d"))
+}
+
+# --- Periodo de estudio ------------------------------------------------------
+anio_inicio    <- 2000
+anio_fin       <- 2025
+cantidad_anios <- anio_fin - anio_inicio + 1
+total_eventos  <- nrow(sismos)
+
+# --- Datos para los exploradores con filtros (crosstalk) ---------------------
+# Se arma un data.frame a nivel de evento; dos objetos SharedData independientes
+# (uno por pestaña) permiten que los filtros de cada pestaña no se mezclen.
+base_explorador <- sismos %>%
+  transmute(
+    fecha, anio, decada, mag, magnitud_cat,
+    depth, profundidad_cat, magType_grupo, sig, zona, place
+  )
+
+sd_temporal <- SharedData$new(base_explorador, group = "temporal")
+sd_espacial <- SharedData$new(base_explorador, group = "espacial")
+
+# Nombres de columnas en español para las tablas DT de los exploradores
+cols_explorador <- c("Fecha", "Año", "Década", "Magnitud", "Cat. magnitud",
+                     "Profundidad", "Cat. profundidad", "Tipo magnitud",
+                     "Significancia", "Zona", "Lugar")
+
+# Tabla DT compacta y reutilizable para los exploradores
+tabla_explorador <- function(sd) {
+  datatable(
+    sd,
+    rownames = FALSE,
+    colnames = cols_explorador,
+    extensions = "Buttons",
+    options = list(
+      pageLength = 7,
+      dom = "tip",
+      scrollX = TRUE,
+      columnDefs = list(list(className = "dt-center", targets = "_all"))
+    )
+  )
+}
+```
+
+# Descriptiva
+
+## Row {height="135px"}
+
+```{r}
+#| content: valuebox
+#| title: "Eventos totales (M ≥ 6,5)"
+list(icon = "activity", color = azul_principal,
+     value = fmt(total_eventos, 0))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Magnitud media"
+list(icon = "graph-up-arrow", color = "#1f8fa6",
+     value = fmt(mean(sismos$mag), 2))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Profundidad mediana (km)"
+list(icon = "layers", color = "#3f7a99",
+     value = fmt(median(sismos$depth), 1))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Significancia mediana"
+list(icon = "star", color = turquesa,
+     value = fmt(median(sismos$sig, na.rm = TRUE), 0))
+```
+
+## Row {height="450px"}
+
+### Column {.tabset width="58%"}
+
+```{r}
+#| title: "Magnitud"
+# Sintaxis general: ggplot(datos, aes(x)) + geom_histogram() -> interactivo()
+# geom_histogram() agrupa una variable continua en intervalos (binwidth).
+g <- ggplot(sismos, aes(x = mag,
+                        text = paste0("Magnitud: ", round(after_stat(x), 1),
+                                      "<br>Eventos: ", after_stat(count)))) +
+  geom_histogram(binwidth = 0.1, fill = azul_principal, color = "white") +
+  geom_vline(xintercept = mean(sismos$mag), linetype = "dashed",
+             color = turquesa, linewidth = 0.8) +
+  labs(title = "Distribución de la magnitud", x = "Magnitud",
+       y = "Número de eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Profundidad"
+g <- ggplot(sismos, aes(x = depth,
+                        text = paste0("Profundidad: ", round(after_stat(x)), " km",
+                                      "<br>Eventos: ", after_stat(count)))) +
+  geom_histogram(binwidth = 25, fill = azul_principal, color = "white") +
+  geom_vline(xintercept = median(sismos$depth), linetype = "dashed",
+             color = turquesa, linewidth = 0.8) +
+  labs(title = "Distribución de la profundidad", x = "Profundidad (km)",
+       y = "Número de eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Significancia"
+g <- ggplot(sismos, aes(x = sig,
+                        text = paste0("Significancia: ", round(after_stat(x)),
+                                      "<br>Eventos: ", after_stat(count)))) +
+  geom_histogram(binwidth = 100, fill = azul_principal, color = "white") +
+  geom_vline(xintercept = median(sismos$sig, na.rm = TRUE), linetype = "dashed",
+             color = turquesa, linewidth = 0.8) +
+  labs(title = "Distribución de la significancia USGS", x = "Significancia (sig)",
+       y = "Número de eventos")
+interactivo(g)
+```
+
+### Column {width="42%"}
+
+```{r}
+#| title: "Resumen numérico"
+# Sintaxis general: para cada variable se calculan min/media/mediana/max/desv
+# y se apilan con bind_rows() en una tabla unica.
+resumen_var <- function(x, etiqueta) {
+  tibble::tibble(
+    Variable = etiqueta,
+    `Mínimo` = min(x, na.rm = TRUE),
+    Media    = mean(x, na.rm = TRUE),
+    Mediana  = median(x, na.rm = TRUE),
+    `Máximo` = max(x, na.rm = TRUE),
+    `Desv. est.` = sd(x, na.rm = TRUE)
+  )
+}
+resumen_numerico <- bind_rows(
+  resumen_var(sismos$mag,   "Magnitud"),
+  resumen_var(sismos$depth, "Profundidad (km)"),
+  resumen_var(sismos$sig,   "Significancia")
+) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+datatable(resumen_numerico, rownames = FALSE,
+          options = list(dom = "t", ordering = FALSE))
+```
+
+## Row {height="380px"}
+
+```{r}
+#| title: "Categoría de magnitud"
+# Sintaxis general: count() cuenta por categoria; mutate() agrega el porcentaje.
+eventos_magnitud <- sismos %>%
+  count(magnitud_cat, name = "eventos", .drop = FALSE) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100)
+
+g <- ggplot(eventos_magnitud,
+            aes(x = magnitud_cat, y = eventos, fill = magnitud_cat,
+                text = paste0(magnitud_cat, "<br>", eventos, " eventos (",
+                              fmt(porcentaje, 1), "%)"))) +
+  geom_col(width = 0.7) +
+  scale_fill_manual(values = colores_magnitud, guide = "none") +
+  labs(title = "Eventos por categoría de magnitud", x = NULL,
+       y = "Número de eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Categoría de profundidad"
+eventos_profundidad <- sismos %>%
+  count(profundidad_cat, name = "eventos", .drop = FALSE) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100)
+
+g <- ggplot(eventos_profundidad,
+            aes(x = profundidad_cat, y = eventos, fill = profundidad_cat,
+                text = paste0(profundidad_cat, "<br>", eventos, " eventos (",
+                              fmt(porcentaje, 1), "%)"))) +
+  geom_col(width = 0.7) +
+  scale_fill_manual(values = colores_profundidad, guide = "none") +
+  labs(title = "Eventos por categoría de profundidad", x = NULL,
+       y = "Número de eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Frecuencias (absolutas y relativas)"
+frecuencias <- bind_rows(
+  eventos_magnitud %>%
+    transmute(Dimensión = "Magnitud", Categoría = as.character(magnitud_cat),
+              Eventos = eventos, `%` = round(porcentaje, 1)),
+  eventos_profundidad %>%
+    transmute(Dimensión = "Profundidad", Categoría = as.character(profundidad_cat),
+              Eventos = eventos, `%` = round(porcentaje, 1))
+)
+datatable(frecuencias, rownames = FALSE,
+          options = list(dom = "t", ordering = FALSE, pageLength = 10))
+```
+
+# Temporal
+
+##  {.sidebar width="290"}
+
+**Filtros**
+
+Afectan al *Explorador de eventos* (panel inferior derecho). Los gráficos de resumen muestran siempre el panorama completo del período.
+
+```{r}
+# Sintaxis general: filter_slider()/filter_select() crean controles enlazados
+# al objeto SharedData (sd_temporal). Al mover un control, se filtran los
+# widgets construidos a partir del mismo objeto.
+tagList(
+  filter_slider("f_anio", "Año", sd_temporal, ~anio, sep = "", step = 1),
+  filter_select("f_dec",  "Década", sd_temporal, ~decada),
+  filter_select("f_mag",  "Categoría de magnitud", sd_temporal, ~magnitud_cat),
+  filter_select("f_prof", "Categoría de profundidad", sd_temporal, ~profundidad_cat),
+  filter_select("f_type", "Tipo de magnitud (magType)", sd_temporal, ~magType_grupo)
+)
+```
+
+## Column
+
+### Row {height="135px"}
+
+```{r}
+#| content: valuebox
+#| title: "Promedio anual de eventos"
+list(icon = "calendar3", color = azul_principal,
+     value = fmt(total_eventos / cantidad_anios, 1))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Año con más eventos"
+conteo_anual <- sismos %>% count(anio, name = "n")
+anio_top <- conteo_anual$anio[which.max(conteo_anual$n)]
+list(icon = "graph-up-arrow", color = "#1f8fa6",
+     value = paste0(anio_top, " (", max(conteo_anual$n), ")"))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Eventos M ≥ 6,5"
+list(icon = "activity", color = turquesa,
+     value = fmt(sum(sismos$mag >= 6.5), 0))
+```
+
+### Row {height="440px"}
+
+#### Column {width="58%"}
+
+```{r}
+#| title: "Serie mensual del catálogo"
+# Sintaxis general: floor_date() lleva cada fecha al inicio de su mes; count()
+# cuenta por mes; complete() rellena con 0 los meses sin eventos.
+conteo_mensual <- sismos %>%
+  mutate(fecha_mes = floor_date(fecha, "month")) %>%
+  count(fecha_mes, name = "eventos") %>%
+  complete(fecha_mes = seq(as.Date("2000-01-01"), as.Date("2025-12-01"),
+                           by = "month"),
+           fill = list(eventos = 0))
+
+g <- ggplot(conteo_mensual, aes(x = fecha_mes, y = eventos, group = 1,
+                                text = paste0(format(fecha_mes, "%b %Y"),
+                                              "<br>", eventos, " eventos"))) +
+  geom_line(color = azul_principal, linewidth = 0.5) +
+  geom_hline(yintercept = mean(conteo_mensual$eventos), linetype = "dashed",
+             color = turquesa) +
+  labs(title = "Eventos por mes (2000-2025)", x = NULL, y = "Eventos")
+interactivo(g)
+```
+
+#### Column {.tabset width="42%"}
+
+```{r}
+#| title: "Por magnitud (anual)"
+# Sintaxis general: count(año, categoria) + geom_col(position="stack") apila las
+# categorias dentro de cada año.
+conteo_anual_mag <- sismos %>%
+  count(anio, magnitud_cat, name = "eventos", .drop = FALSE)
+
+g <- ggplot(conteo_anual_mag,
+            aes(x = anio, y = eventos, fill = magnitud_cat,
+                text = paste0(anio, " · ", magnitud_cat, "<br>",
+                              eventos, " eventos"))) +
+  geom_col() +
+  scale_fill_manual(values = colores_magnitud, name = NULL) +
+  labs(title = "Eventos anuales por magnitud", x = NULL, y = "Eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Por magnitud (tasa decadal)"
+# Sintaxis general: tasa anual = eventos de la decada / años observados.
+# La decada 2020 solo tiene 6 años observados (2020-2025).
+conteo_decadal <- sismos %>%
+  count(decada, magnitud_cat, name = "eventos", .drop = FALSE) %>%
+  mutate(anios_obs = recode(decada, `2000` = 10, `2010` = 10, `2020` = 6),
+         tasa_anual = eventos / anios_obs)
+
+g <- ggplot(conteo_decadal,
+            aes(x = factor(decada), y = tasa_anual, fill = magnitud_cat,
+                text = paste0(decada, "s · ", magnitud_cat, "<br>",
+                              fmt(tasa_anual, 1), " eventos/año"))) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = colores_magnitud, name = NULL) +
+  labs(title = "Tasa anual por década", x = "Década", y = "Eventos por año")
+interactivo(g)
+```
+
+### Row {height="450px"}
+
+#### Column {.tabset width="55%"}
+
+```{r}
+#| title: "Tipo de magnitud (magType)"
+# Sintaxis general: porcentaje anual por tipo de magnitud (composicion 100%).
+comp_magtype <- sismos %>%
+  count(anio, magType_grupo, name = "eventos", .drop = FALSE) %>%
+  group_by(anio) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100) %>%
+  ungroup()
+
+g <- ggplot(comp_magtype,
+            aes(x = anio, y = porcentaje, fill = magType_grupo,
+                text = paste0(anio, " · ", magType_grupo, "<br>",
+                              fmt(porcentaje, 1), "%"))) +
+  geom_col() +
+  scale_fill_manual(values = colores_magtype, name = NULL) +
+  labs(title = "Composición anual por tipo de magnitud", x = NULL,
+       y = "Porcentaje de eventos")
+interactivo(g)
+```
+
+```{r}
+#| title: "Participación de mww"
+participacion_mww <- sismos %>%
+  group_by(anio) %>%
+  summarise(porcentaje_mww = mean(magType_grupo == "mww") * 100, .groups = "drop")
+
+g <- ggplot(participacion_mww, aes(x = anio, y = porcentaje_mww, group = 1,
+                                   text = paste0(anio, "<br>",
+                                                 fmt(porcentaje_mww, 1), "% mww"))) +
+  geom_line(color = azul_principal, linewidth = 0.9) +
+  geom_point(color = azul_principal, size = 1.2) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = turquesa) +
+  labs(title = "Porcentaje anual de eventos mww", x = NULL, y = "% mww") +
+  ylim(0, 100)
+interactivo(g)
+```
+
+```{r}
+#| title: "Ajuste RMS anual"
+# Sintaxis general: mediana y cuartiles del RMS imputado por año; geom_ribbon()
+# dibuja la banda intercuartilica y geom_line() la mediana.
+resumen_rms_anual <- sismos %>%
+  group_by(anio) %>%
+  summarise(rms_mediana = median(rms_imp),
+            rms_q25 = quantile(rms_imp, 0.25),
+            rms_q75 = quantile(rms_imp, 0.75), .groups = "drop")
+
+g <- ggplot(resumen_rms_anual, aes(x = anio, group = 1)) +
+  geom_ribbon(aes(ymin = rms_q25, ymax = rms_q75,
+                  text = paste0(anio, "<br>IQR: ", fmt(rms_q25, 2), " – ",
+                                fmt(rms_q75, 2))),
+              fill = turquesa, alpha = 0.25) +
+  geom_line(aes(y = rms_mediana, text = paste0(anio, "<br>Mediana: ",
+                                               fmt(rms_mediana, 2), " s")),
+            color = azul_principal, linewidth = 0.9) +
+  labs(title = "Evolución anual del ajuste RMS", x = NULL,
+       y = "RMS imputado (s)")
+interactivo(g)
+```
+
+#### Column {.tabset width="45%"}
+
+```{r}
+#| title: "Dispersión (filtrable)"
+# Sintaxis general: plot_ly(SharedData, ...) crea un grafico que reacciona a los
+# filtros de la barra lateral.
+plot_ly(sd_temporal, x = ~fecha, y = ~mag, color = ~magnitud_cat,
+        colors = colores_magnitud, type = "scatter", mode = "markers",
+        marker = list(size = 6, opacity = 0.7),
+        text = ~paste0(place, "<br>", fecha, "<br>M ", mag),
+        hoverinfo = "text") %>%
+  layout(title = list(text = "Magnitud en el tiempo", font = list(size = 13)),
+         xaxis = list(title = ""), yaxis = list(title = "Magnitud"),
+         legend = list(orientation = "h", y = -0.2)) %>%
+  config(displaylogo = FALSE)
+```
+
+```{r}
+#| title: "Tabla (filtrable)"
+tabla_explorador(sd_temporal)
+```
+
+# Espacial
+
+##  {.sidebar width="290"}
+
+**Filtros**
+
+Afectan al *Explorador espacial* (panel inferior derecho). Los resúmenes por zona muestran el catálogo completo.
+
+```{r}
+tagList(
+  filter_select("e_zona", "Zona", sd_espacial, ~zona),
+  filter_select("e_mag",  "Categoría de magnitud", sd_espacial, ~magnitud_cat),
+  filter_select("e_prof", "Categoría de profundidad", sd_espacial, ~profundidad_cat),
+  filter_slider("e_anio", "Año", sd_espacial, ~anio, sep = "", step = 1)
+)
+```
+
+## Column
+
+### Row {height="135px"}
+
+```{r}
+#| content: valuebox
+#| title: "Eventos en el Cinturón de Fuego"
+n_fuego <- sum(sismos$zona == "Cinturon de Fuego")
+list(icon = "geo-alt", color = azul_principal, value = fmt(n_fuego, 0))
+```
+
+```{r}
+#| content: valuebox
+#| title: "% del catálogo en el Cinturón de Fuego"
+list(icon = "pie-chart", color = "#1f8fa6",
+     value = paste0(fmt(n_fuego / total_eventos * 100, 1), "%"))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Zonas analizadas"
+list(icon = "diagram-3", color = turquesa,
+     value = fmt(dplyr::n_distinct(sismos$zona), 0))
+```
+
+### Row {height="480px"}
+
+#### Column {width="50%"}
+
+```{r}
+#| title: "Eventos por zona"
+# Sintaxis general: count(zona) + porcentaje + tasa anual.
+total_zona <- sismos %>%
+  count(zona, name = "eventos", .drop = FALSE) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100,
+         tasa_anual = eventos / cantidad_anios,
+         zona_corta = etiquetas_zona[as.character(zona)])
+
+g <- ggplot(total_zona,
+            aes(x = reorder(zona_corta, -eventos), y = eventos, fill = zona,
+                text = paste0(zona, "<br>", eventos, " eventos (",
+                              fmt(porcentaje, 1), "%)<br>",
+                              fmt(tasa_anual, 1), " por año"))) +
+  geom_col(width = 0.7) +
+  scale_fill_manual(values = colores_zona, guide = "none") +
+  labs(title = "Frecuencia de eventos por zona", x = NULL, y = "Eventos")
+interactivo(g)
+```
+
+#### Column {.tabset width="50%"}
+
+```{r}
+#| title: "Zona × magnitud"
+# Sintaxis general: porcentaje de cada categoria de magnitud dentro de la zona
+# (composicion 100%).
+zona_magnitud <- sismos %>%
+  count(zona, magnitud_cat, name = "eventos", .drop = FALSE) %>%
+  group_by(zona) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100) %>%
+  ungroup() %>%
+  mutate(zona_corta = etiquetas_zona[as.character(zona)])
+
+g <- ggplot(zona_magnitud,
+            aes(x = zona_corta, y = porcentaje, fill = magnitud_cat,
+                text = paste0(zona, " · ", magnitud_cat, "<br>",
+                              fmt(porcentaje, 1), "% (", eventos, ")"))) +
+  geom_col() +
+  scale_fill_manual(values = colores_magnitud, name = NULL) +
+  labs(title = "Composición de magnitud por zona", x = NULL, y = "%")
+interactivo(g)
+```
+
+```{r}
+#| title: "Zona × profundidad"
+zona_profundidad <- sismos %>%
+  count(zona, profundidad_cat, name = "eventos", .drop = FALSE) %>%
+  group_by(zona) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100) %>%
+  ungroup() %>%
+  mutate(zona_corta = etiquetas_zona[as.character(zona)])
+
+g <- ggplot(zona_profundidad,
+            aes(x = zona_corta, y = porcentaje, fill = profundidad_cat,
+                text = paste0(zona, " · ", profundidad_cat, "<br>",
+                              fmt(porcentaje, 1), "% (", eventos, ")"))) +
+  geom_col() +
+  scale_fill_manual(values = colores_profundidad, name = NULL) +
+  labs(title = "Composición de profundidad por zona", x = NULL, y = "%")
+interactivo(g)
+```
+
+```{r}
+#| title: "Zona × tipo de magnitud"
+zona_magtype <- sismos %>%
+  count(zona, magType_grupo, name = "eventos", .drop = FALSE) %>%
+  group_by(zona) %>%
+  mutate(porcentaje = eventos / sum(eventos) * 100) %>%
+  ungroup() %>%
+  mutate(zona_corta = etiquetas_zona[as.character(zona)])
+
+g <- ggplot(zona_magtype,
+            aes(x = zona_corta, y = porcentaje, fill = magType_grupo,
+                text = paste0(zona, " · ", magType_grupo, "<br>",
+                              fmt(porcentaje, 1), "%"))) +
+  geom_col() +
+  scale_fill_manual(values = colores_magtype, name = NULL) +
+  labs(title = "Composición de magType por zona", x = NULL, y = "%")
+interactivo(g)
+```
+
+### Row {height="560px"}
+
+#### Column {.tabset width="58%"}
+
+```{r}
+#| title: "Magnitud por zona"
+# Sintaxis general: geom_boxplot() resume la distribucion (mediana, cuartiles y
+# valores atipicos) de una variable numerica por grupo.
+g <- ggplot(sismos, aes(x = zona_corta, y = mag, fill = zona)) +
+  geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
+  scale_fill_manual(values = colores_zona, guide = "none") +
+  labs(title = "Distribución de magnitud por zona", x = NULL, y = "Magnitud")
+interactivo(g, tooltip = c("x", "y"))
+```
+
+```{r}
+#| title: "Profundidad por zona"
+g <- ggplot(sismos, aes(x = zona_corta, y = depth, fill = zona)) +
+  geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
+  scale_fill_manual(values = colores_zona, guide = "none") +
+  labs(title = "Distribución de profundidad por zona", x = NULL,
+       y = "Profundidad (km)")
+interactivo(g, tooltip = c("x", "y"))
+```
+
+```{r}
+#| title: "Significancia por zona"
+g <- ggplot(sismos, aes(x = zona_corta, y = sig, fill = zona)) +
+  geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
+  scale_fill_manual(values = colores_zona, guide = "none") +
+  labs(title = "Distribución de significancia por zona", x = NULL,
+       y = "Significancia (sig)")
+interactivo(g, tooltip = c("x", "y"))
+```
+
+```{r}
+#| title: "Estadísticos por zona"
+estadisticos_zona <- sismos %>%
+  group_by(Zona = zona) %>%
+  summarise(
+    Eventos = n(),
+    `Mag. media`   = round(mean(mag), 2),
+    `Mag. máx.`    = max(mag),
+    `Prof. mediana`= round(median(depth), 1),
+    `Prof. máx.`   = round(max(depth), 1),
+    `Sig. media`   = round(mean(sig, na.rm = TRUE), 1),
+    .groups = "drop"
+  )
+datatable(estadisticos_zona, rownames = FALSE,
+          options = list(dom = "t", ordering = TRUE, scrollX = TRUE))
+```
+
+```{r}
+#| title: "Dentro vs fuera del Cinturón de Fuego"
+# Sintaxis general: comparacion descriptiva usando la marca en_cinturon_fuego.
+comparacion_fuego <- sismos %>%
+  group_by(Grupo = en_cinturon_fuego) %>%
+  summarise(
+    Eventos = n(),
+    `Mag. media`    = round(mean(mag), 2),
+    `Prof. mediana` = round(median(depth), 1),
+    `Sig. media`    = round(mean(sig, na.rm = TRUE), 1),
+    .groups = "drop"
+  )
+datatable(comparacion_fuego, rownames = FALSE,
+          options = list(dom = "t", ordering = FALSE))
+```
+
+#### Column {.tabset width="42%"}
+
+```{r}
+#| title: "Dispersión (filtrable)"
+plot_ly(sd_espacial, x = ~depth, y = ~mag, color = ~zona,
+        colors = colores_zona, type = "scatter", mode = "markers",
+        marker = list(size = 6, opacity = 0.7),
+        text = ~paste0(place, "<br>", zona, "<br>M ", mag, " · ", depth, " km"),
+        hoverinfo = "text") %>%
+  layout(title = list(text = "Magnitud vs profundidad", font = list(size = 13)),
+         xaxis = list(title = "Profundidad (km)"),
+         yaxis = list(title = "Magnitud"),
+         legend = list(orientation = "h", y = -0.2)) %>%
+  config(displaylogo = FALSE)
+```
+
+```{r}
+#| title: "Tabla (filtrable)"
+tabla_explorador(sd_espacial)
+```

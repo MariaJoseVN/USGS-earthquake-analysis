@@ -1,0 +1,70 @@
+/*-- scss:defaults --*/
+// Paleta del estilo "pre-informe" (la que el usuario quiere replicar)
+$accent:    #1f3a5f;   // azul acero principal
+$accent-2:  #3f6190;   // azul medio
+$fuego:     #E06B70;   // coral (resaltes)
+$ink:       #1b2530;   // texto fuerte
+$ink-soft:  #5b6876;   // texto suave
+$line:      #e3e8ee;   // separadores
+
+// Variables Bootstrap/bslib
+$primary:        $accent;
+$secondary:      $accent-2;
+$body-color:     $ink;
+$link-color:     $accent;
+$font-family-sans-serif: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+// Minimalismo del pre-informe: fondo gris claro, tarjetas redondeadas sin borde
+$body-bg:           #eef1f5;
+$card-border-color: transparent;
+$card-cap-bg:       #ffffff;
+$border-radius:     14px;
+
+/*-- scss:rules --*/
+// === Barra de navegacion: banda oscura del pre-informe (se CONSERVA) =========
+.navbar {
+  background-color: #0f1720 !important;
+  border-bottom: none;
+}
+.navbar .navbar-brand,
+.navbar .nav-link { color: #d6e1ee !important; }
+.navbar .nav-link.active {
+  color: #ffffff !important;
+  font-weight: 600;
+  border-bottom: 2px solid $fuego;
+}
+
+// === Tarjetas redondeadas, blancas, sombra suave en capas, sin borde =========
+.card,
+.bslib-value-box,
+.value-box {
+  border: none !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(16, 30, 48, 0.08), 0 8px 24px rgba(16, 30, 48, 0.06) !important;
+}
+
+// Título de tarjeta como el pre-informe (h3 oscuro, sin barra ni mayúsculas)
+.card-header {
+  background: #ffffff !important;
+  color: $ink !important;
+  font-weight: 640;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  border-bottom: none !important;
+  padding-bottom: 0.15rem;
+}
+
+// === Pestañas internas (tabsets dentro de una tarjeta) =======================
+.nav-tabs { border-bottom: 1px solid $line; }
+.nav-tabs .nav-link { color: #8a94a0; border: none; }
+.nav-tabs .nav-link.active {
+  color: $accent;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid $fuego;
+}
+
+// === Barra lateral de filtros: tarjeta clara redondeada ======================
+.sidebar { background-color: #ffffff; border-radius: 14px; }
