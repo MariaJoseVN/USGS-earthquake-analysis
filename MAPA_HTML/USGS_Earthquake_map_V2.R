@@ -8,9 +8,9 @@ library(stringr)         #Sirve para buscar texto dentro de columnas
 
 #Lectura de archivos
 #Toma los archivos espaciales y los tranformar en objetos sf
-sismos <- st_read("Datos/sismos.json", quiet = TRUE)
-placas <- st_read("Datos/placas.geojson", quiet = TRUE)
-zonas  <- st_read("Datos/zonas.geojson", quiet = TRUE)
+sismos <- st_read("MAPA_HTML/Datos/sismos.json", quiet = TRUE)
+placas <- st_read("MAPA_HTML/Datos/placas.geojson", quiet = TRUE)
+zonas  <- st_read("MAPA_HTML/Datos/zonas.geojson", quiet = TRUE)
 
 #Extracción de coordenadas y profundidad
 coords <- st_coordinates(sismos)        #Extrae coordenadas X,Y,Z
@@ -43,13 +43,6 @@ placas$color_boundary <- dplyr::case_when(
   placas$tipo_boundary == "Límite Convergente" ~ "#ff7f00",
   placas$tipo_boundary == "Límite Divergente" ~ "#ffd92f",
   TRUE ~ "#000000"
-)
-
-#Corrección de zonas que cruzan el antimeridiano
-zonas <- st_wrap_dateline(
-  zonas,
-  options = c("WRAPDATELINE=YES", "DATELINEOFFSET=180"),
-  quiet = TRUE
 )
 
 #Formato de fecha
@@ -355,4 +348,4 @@ mapa <- mapa %>%
     }
   "))
 #Guardado del HTML
-saveWidget(mapa, "mapa_interactivo_sismos_v2.html", selfcontained = TRUE)
+saveWidget(mapa, "MAPA_HTML/mapa_interactivo_sismos_v2.html", selfcontained = TRUE)
