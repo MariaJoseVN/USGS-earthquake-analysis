@@ -191,6 +191,13 @@ tema_dashboard <- theme_minimal(base_size = 12) +
     text         = element_text(color = gris_texto),
     plot.title   = element_text(color = azul_principal, face = "bold", size = 13),
     panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "#edf1f5", linewidth = 0.4),
+    panel.grid.major.y = element_line(color = "#e8edf2", linewidth = 0.45),
+    panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
+    axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
+    axis.ticks.length = grid::unit(3, "pt"),
+    axis.text.x = element_text(margin = margin(t = 7)),
+    axis.title.x = element_text(margin = margin(t = 7)),
     legend.position  = "bottom"
   )
 theme_set(tema_dashboard)
@@ -203,10 +210,13 @@ fmt <- function(x, d = 1) {
 
 # interactivo(): convierte un ggplot en grafico plotly con barra limpia.
 interactivo <- function(g, tooltip = "text") {
-  ggplotly(g, tooltip = tooltip) %>%
+  widget <- ggplotly(g, tooltip = tooltip) %>%
     layout(font = list(family = "Segoe UI, sans-serif", color = gris_texto)) %>%
     config(displaylogo = FALSE,
            modeBarButtonsToRemove = c("lasso2d", "select2d", "autoScale2d"))
+
+  # Se aplica a todos los graficos: si no contiene barras, no altera nada.
+  redondear_barras_plotly(widget)
 }
 
 # --- Periodo de estudio ------------------------------------------------------
@@ -259,6 +269,7 @@ redondear_barras_plotly <- function(widget) {
   htmlwidgets::onRender(widget, "
     function(el, x) {
       function redondearBarras() {
+        var grupos = {};
         el.querySelectorAll('.barlayer .trace path').forEach(function(barra) {
           var d = barra.getAttribute('d');
           var m = d && d.match(/^M\\s*(-?[0-9.]+),(-?[0-9.]+)V\\s*(-?[0-9.]+)H\\s*(-?[0-9.]+)V\\s*(-?[0-9.]+)Z$/);
@@ -267,6 +278,34 @@ redondear_barras_plotly <- function(widget) {
           var base = Number(m[2]);
           var cima = Number(m[3]);
           var derecha = Number(m[4]);
+          // Plotly puede variar unas decimas el ancho entre trazas apiladas.
+          // El centro en pixeles permanece estable y permite reunir la pila.
+          var centro = (izquierda + derecha) / 2;
+          var clave = String(Math.round(centro));
+          if (!grupos[clave]) grupos[clave] = [];
+          grupos[clave].push({
+            barra: barra,
+            izquierda: izquierda,
+            base: base,
+            cima: cima,
+            derecha: derecha
+          });
+        });
+
+        Object.keys(grupos).forEach(function(clave) {
+          var segmentos = grupos[clave].filter(function(s) {
+            return Math.abs(s.base - s.cima) > 0.5;
+          });
+          if (!segmentos.length) return;
+
+          // En barras apiladas, solo se curva el segmento visible superior.
+          segmentos.sort(function(a, b) { return a.cima - b.cima; });
+          var s = segmentos[0];
+          var barra = s.barra;
+          var izquierda = s.izquierda;
+          var base = s.base;
+          var cima = s.cima;
+          var derecha = s.derecha;
           var radio = Math.min(8, (derecha - izquierda) / 2, Math.abs(base - cima) / 2);
           if (radio <= 0) return;
           barra.setAttribute('d',
@@ -339,7 +378,7 @@ grafico_distribucion <- function(x, titulo, eje_x, central = c("media", "mediana
   widget <- interactivo(g) %>%
     config(displaylogo = FALSE, responsive = TRUE)
 
-  redondear_barras_plotly(widget)
+  widget
 }
 
 # Componentes HTML reutilizables para los resumenes visuales por variable.
@@ -521,7 +560,7 @@ g <- ggplot(eventos_magnitud,
             vjust = 0, size = 3.2, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = colores_magnitud, guide = "none") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
-  labs(title = "Eventos por categoría de magnitud", x = NULL,
+  labs(title = "Eventos por categoría de magnitud", x = "Categoría de magnitud",
        y = "Número de eventos") +
   theme_minimal(base_size = 11) +
   theme(
@@ -534,11 +573,12 @@ g <- ggplot(eventos_magnitud,
     axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
     axis.ticks.length = grid::unit(3, "pt"),
     axis.text.x = element_text(color = gris_texto, margin = margin(t = 8)),
+    axis.title.x = element_text(color = gris_texto, margin = margin(t = 7)),
     axis.text.y = element_text(color = gris_texto),
     axis.title.y = element_text(color = gris_texto),
     plot.margin = margin(8, 12, 8, 8)
   )
-redondear_barras_plotly(interactivo(g))
+interactivo(g)
 ```
 
 ```{r}
@@ -559,7 +599,7 @@ g <- ggplot(eventos_profundidad,
             vjust = 0, size = 3.2, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = colores_profundidad, guide = "none") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
-  labs(title = "Eventos por categoría de profundidad", x = NULL,
+  labs(title = "Eventos por categoría de profundidad", x = "Categoría de profundidad",
        y = "Número de eventos") +
   theme_minimal(base_size = 11) +
   theme(
@@ -572,11 +612,12 @@ g <- ggplot(eventos_profundidad,
     axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
     axis.ticks.length = grid::unit(3, "pt"),
     axis.text.x = element_text(color = gris_texto, margin = margin(t = 8)),
+    axis.title.x = element_text(color = gris_texto, margin = margin(t = 7)),
     axis.text.y = element_text(color = gris_texto),
     axis.title.y = element_text(color = gris_texto),
     plot.margin = margin(8, 12, 8, 8)
   )
-redondear_barras_plotly(interactivo(g))
+interactivo(g)
 ```
 
 ### Column {.tabset}
@@ -590,6 +631,14 @@ eventos_magtype <- sismos %>%
     posicion_etiqueta = eventos + max(eventos) * 0.04
   )
 
+# Paleta monocromatica utilizada en el analisis temporal y el Informe 1.
+colores_magtype_script <- c(
+  "mww" = "gray30",
+  "mwc" = "gray55",
+  "mwb" = "gray75",
+  "otros" = "gray90"
+)
+
 g <- ggplot(eventos_magtype,
             aes(x = magType_grupo, y = eventos, fill = magType_grupo,
                 text = paste0(magType_grupo, "<br>", eventos, " eventos (",
@@ -599,7 +648,7 @@ g <- ggplot(eventos_magtype,
             vjust = 0, size = 3, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = colores_magtype, guide = "none") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-  labs(title = "Eventos por tipo de magnitud", x = NULL,
+  labs(title = "Eventos por tipo de magnitud", x = "Tipo de magnitud",
        y = "Número de eventos") +
   theme_minimal(base_size = 10) +
   theme(
@@ -611,11 +660,12 @@ g <- ggplot(eventos_magtype,
     panel.border = element_rect(color = "#9aa5b1", fill = NA, linewidth = 0.55),
     axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
     axis.text.x = element_text(color = gris_texto, margin = margin(t = 7)),
+    axis.title.x = element_text(color = gris_texto, margin = margin(t = 6)),
     axis.text.y = element_text(color = gris_texto),
     axis.title.y = element_text(color = gris_texto),
     plot.margin = margin(8, 10, 8, 8)
   )
-redondear_barras_plotly(interactivo(g))
+interactivo(g)
 ```
 
 ```{r}
@@ -644,7 +694,7 @@ g <- ggplot(eventos_magsource,
             vjust = 0, size = 2.8, color = azul_principal, show.legend = FALSE) +
   scale_fill_manual(values = paleta_origen, guide = "none") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-  labs(title = "Eventos por origen de la magnitud", x = NULL,
+  labs(title = "Eventos por origen de la magnitud", x = "Origen de la magnitud",
        y = "Número de eventos") +
   theme_minimal(base_size = 10) +
   theme(
@@ -657,11 +707,12 @@ g <- ggplot(eventos_magsource,
     axis.ticks = element_line(color = "#9aa5b1", linewidth = 0.45),
     axis.text.x = element_text(color = gris_texto, angle = 35, hjust = 1,
                                margin = margin(t = 7)),
+    axis.title.x = element_text(color = gris_texto, margin = margin(t = 6)),
     axis.text.y = element_text(color = gris_texto),
     axis.title.y = element_text(color = gris_texto),
     plot.margin = margin(8, 10, 8, 8)
   )
-redondear_barras_plotly(interactivo(g))
+interactivo(g)
 ```
 
 # Temporal
@@ -670,7 +721,7 @@ redondear_barras_plotly(interactivo(g))
 
 **Filtros**
 
-Afectan al *Explorador de eventos* (panel inferior derecho). Los gráficos de resumen muestran siempre el panorama completo del período.
+Afectan la pestaña *Serie filtrable* y la tabla de eventos. La *Serie original* y los demás gráficos de resumen conservan el panorama completo del período.
 
 ```{r}
 # Sintaxis general: filter_slider()/filter_select() crean controles enlazados
@@ -714,26 +765,79 @@ list(icon = "activity", color = turquesa,
 
 ### Row {height="440px"}
 
-#### Column {width="58%"}
+#### Column {.tabset width="58%"}
 
 ```{r}
-#| title: "Serie mensual del catálogo"
-# Sintaxis general: floor_date() lleva cada fecha al inicio de su mes; count()
-# cuenta por mes; complete() rellena con 0 los meses sin eventos.
+#| title: "Serie filtrable"
+# El histograma recibe los eventos sin agregar desde SharedData. Plotly vuelve
+# a calcular los conteos mensuales cada vez que cambia un filtro de Crosstalk.
+serie_mensual_filtrable <- plot_ly(
+  sd_temporal,
+  x = ~fecha,
+  type = "histogram",
+  histfunc = "count",
+  xbins = list(
+    start = "2000-01-01",
+    end = "2026-01-01",
+    size = "M1"
+  ),
+  marker = list(color = azul_principal, line = list(width = 0)),
+  hovertemplate = "%{x|%b %Y}<br>%{y} eventos<extra></extra>"
+) %>%
+  layout(
+    title = list(text = "Eventos por mes (2000-2025)", x = 0,
+                 font = list(size = 13, color = azul_principal)),
+    xaxis = list(
+      title = list(text = "Fecha", standoff = 10),
+      showgrid = TRUE, gridcolor = "#edf1f5",
+      showline = TRUE, mirror = TRUE, linecolor = "#9aa5b1"
+    ),
+    yaxis = list(
+      title = list(text = "Número de eventos", standoff = 8),
+      showgrid = TRUE, gridcolor = "#e8edf2",
+      showline = TRUE, mirror = TRUE, linecolor = "#9aa5b1",
+      rangemode = "tozero"
+    ),
+    bargap = 0.08,
+    margin = list(t = 48, r = 18, b = 55, l = 62),
+    paper_bgcolor = "white",
+    plot_bgcolor = "white",
+    font = list(family = "Segoe UI, sans-serif", color = gris_texto)
+  ) %>%
+  config(displaylogo = FALSE,
+         modeBarButtonsToRemove = c("lasso2d", "select2d", "autoScale2d"))
+
+redondear_barras_plotly(serie_mensual_filtrable)
+```
+
+```{r}
+#| title: "Serie original"
+# Serie mensual fija para conservar la visualizacion original del catalogo.
 conteo_mensual <- sismos %>%
   mutate(fecha_mes = floor_date(fecha, "month")) %>%
   count(fecha_mes, name = "eventos") %>%
-  complete(fecha_mes = seq(as.Date("2000-01-01"), as.Date("2025-12-01"),
-                           by = "month"),
-           fill = list(eventos = 0))
+  complete(
+    fecha_mes = seq(as.Date("2000-01-01"), as.Date("2025-12-01"), by = "month"),
+    fill = list(eventos = 0)
+  )
 
-g <- ggplot(conteo_mensual, aes(x = fecha_mes, y = eventos, group = 1,
-                                text = paste0(format(fecha_mes, "%b %Y"),
-                                              "<br>", eventos, " eventos"))) +
-  geom_line(color = azul_principal, linewidth = 0.5) +
-  geom_hline(yintercept = mean(conteo_mensual$eventos), linetype = "dashed",
-             color = turquesa) +
-  labs(title = "Eventos por mes (2000-2025)", x = NULL, y = "Eventos")
+g <- ggplot(
+  conteo_mensual,
+  aes(
+    x = fecha_mes, y = eventos, group = 1,
+    text = paste0(format(fecha_mes, "%b %Y"), "<br>", eventos, " eventos")
+  )
+) +
+  geom_line(color = azul_principal, linewidth = 0.55) +
+  geom_hline(
+    yintercept = mean(conteo_mensual$eventos),
+    linetype = "dashed", color = coral, linewidth = 0.5
+  ) +
+  labs(
+    title = "Serie mensual completa del catálogo",
+    x = "Fecha", y = "Número de eventos"
+  )
+
 interactivo(g)
 ```
 
@@ -752,7 +856,7 @@ g <- ggplot(conteo_anual_mag,
                               eventos, " eventos"))) +
   geom_col() +
   scale_fill_manual(values = colores_magnitud, name = NULL) +
-  labs(title = "Eventos anuales por magnitud", x = NULL, y = "Eventos")
+  labs(title = "Eventos anuales por magnitud", x = "Año", y = "Eventos")
 interactivo(g)
 ```
 
@@ -775,6 +879,105 @@ g <- ggplot(conteo_decadal,
 interactivo(g)
 ```
 
+```{r}
+#| title: "Composición temporal"
+# Conteos por decada y categoria, equivalentes a la figura del Informe 1.
+composicion_decadal_mag <- sismos %>%
+  count(decada, magnitud_cat, name = "eventos", .drop = FALSE)
+
+colores_magnitud_informe <- c(
+  "Fuerte" = "#24466F",
+  "Mayor" = "#416C9F",
+  "Grande o extremo" = "#E06B70"
+)
+colores_texto_informe <- c(
+  "Fuerte" = "white",
+  "Mayor" = "white",
+  "Grande o extremo" = "white"
+)
+
+g <- ggplot(
+  composicion_decadal_mag,
+  aes(
+    x = factor(decada), y = eventos, fill = magnitud_cat,
+    text = paste0(decada, "s · ", magnitud_cat, "<br>", eventos, " eventos")
+  )
+) +
+  geom_col(width = 0.72, color = "gray30", linewidth = 0.25) +
+  geom_text(
+    aes(label = eventos, color = magnitud_cat),
+    position = position_stack(vjust = 0.5), size = 3, show.legend = FALSE
+  ) +
+  scale_fill_manual(values = colores_magnitud_informe, name = NULL) +
+  scale_color_manual(values = colores_texto_informe, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = "Eventos por década según categoría de magnitud",
+    x = "Década", y = "Número de eventos"
+  ) +
+  theme(legend.position = "right")
+
+interactivo(g) %>%
+  layout(
+    legend = list(
+      orientation = "v", x = 0.98, xanchor = "right",
+      y = 0.98, yanchor = "top", bgcolor = "rgba(255,255,255,0.65)"
+    )
+  )
+```
+
+```{r}
+#| title: "Recurrencia temporal"
+# Estadisticos de dias entre eventos consecutivos, siguiendo el script 04.
+resumir_recurrencia <- function(datos, etiqueta) {
+  datos %>%
+    arrange(fecha_hora_utc) %>%
+    mutate(
+      dias = as.numeric(difftime(fecha_hora_utc, lag(fecha_hora_utc),
+                                 units = "days"))
+    ) %>%
+    summarise(
+      `Grupo de análisis` = etiqueta,
+      Eventos = n(),
+      Intervalos = sum(!is.na(dias)),
+      Media = mean(dias, na.rm = TRUE),
+      Mediana = median(dias, na.rm = TRUE),
+      Q1 = quantile(dias, 0.25, na.rm = TRUE),
+      Q3 = quantile(dias, 0.75, na.rm = TRUE),
+      `Mín.` = min(dias, na.rm = TRUE),
+      `Máx.` = max(dias, na.rm = TRUE)
+    )
+}
+
+resumen_recurrencia <- bind_rows(
+  resumir_recurrencia(
+    filter(sismos, magnitud_cat %in% c("Mayor", "Grande o extremo")),
+    "Mayor o Grande o extremo"
+  ),
+  resumir_recurrencia(filter(sismos, magnitud_cat == "Fuerte"), "Fuerte"),
+  resumir_recurrencia(filter(sismos, magnitud_cat == "Mayor"), "Mayor"),
+  resumir_recurrencia(
+    filter(sismos, magnitud_cat == "Grande o extremo"), "Grande o extremo"
+  )
+) %>%
+  mutate(across(c(Media, Mediana, Q1, Q3, `Mín.`, `Máx.`), ~ round(.x, 1)))
+
+datatable(
+  resumen_recurrencia,
+  rownames = FALSE,
+  options = list(
+    dom = "t",
+    ordering = FALSE,
+    paging = FALSE,
+    scrollX = TRUE,
+    columnDefs = list(
+      list(className = "dt-left", targets = 0),
+      list(className = "dt-center", targets = 1:8)
+    )
+  )
+)
+```
+
 ### Row {height="450px"}
 
 #### Column {.tabset width="55%"}
@@ -793,10 +996,19 @@ g <- ggplot(comp_magtype,
                 text = paste0(anio, " · ", magType_grupo, "<br>",
                               fmt(porcentaje, 1), "%"))) +
   geom_col() +
-  scale_fill_manual(values = colores_magtype, name = NULL) +
-  labs(title = "Composición anual por tipo de magnitud", x = NULL,
-       y = "Porcentaje de eventos")
-interactivo(g)
+  scale_fill_manual(values = colores_magtype_script, name = NULL) +
+  scale_x_continuous(breaks = 2000:2025) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(title = "Composición anual por tipo de magnitud", x = "Año",
+       y = "Porcentaje de eventos") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1,
+                                   size = 7))
+interactivo(g) %>%
+  layout(
+    margin = list(b = 105),
+    xaxis = list(title = list(text = "Año", standoff = 12)),
+    legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.30)
+  )
 ```
 
 ```{r}
@@ -808,12 +1020,16 @@ participacion_mww <- sismos %>%
 g <- ggplot(participacion_mww, aes(x = anio, y = porcentaje_mww, group = 1,
                                    text = paste0(anio, "<br>",
                                                  fmt(porcentaje_mww, 1), "% mww"))) +
-  geom_line(color = azul_principal, linewidth = 0.9) +
-  geom_point(color = azul_principal, size = 1.2) +
-  geom_hline(yintercept = 50, linetype = "dashed", color = turquesa) +
-  labs(title = "Porcentaje anual de eventos mww", x = NULL, y = "% mww") +
+  geom_line(color = "gray30", linewidth = 0.75) +
+  geom_point(color = "gray30", size = 1.2) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "gray70",
+             linewidth = 0.5) +
+  scale_x_continuous(breaks = 2000:2025) +
+  labs(title = "Porcentaje anual de eventos mww", x = "Año", y = "% mww") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1,
+                                   size = 7)) +
   ylim(0, 100)
-interactivo(g)
+interactivo(g) %>% layout(margin = list(b = 68))
 ```
 
 ```{r}
@@ -829,32 +1045,31 @@ resumen_rms_anual <- sismos %>%
 g <- ggplot(resumen_rms_anual, aes(x = anio, group = 1)) +
   geom_ribbon(aes(ymin = rms_q25, ymax = rms_q75,
                   text = paste0(anio, "<br>IQR: ", fmt(rms_q25, 2), " – ",
-                                fmt(rms_q75, 2))),
-              fill = turquesa, alpha = 0.25) +
+                                fmt(rms_q75, 2)),
+                  fill = "Rango intercuartílico"),
+              alpha = 0.9) +
   geom_line(aes(y = rms_mediana, text = paste0(anio, "<br>Mediana: ",
-                                               fmt(rms_mediana, 2), " s")),
-            color = azul_principal, linewidth = 0.9) +
-  labs(title = "Evolución anual del ajuste RMS", x = NULL,
-       y = "RMS imputado (s)")
-interactivo(g)
+                                               fmt(rms_mediana, 2), " s"),
+                color = "Mediana anual"),
+            linewidth = 0.65) +
+  geom_point(aes(y = rms_mediana, color = "Mediana anual"), size = 1.15) +
+  scale_fill_manual(values = c("Rango intercuartílico" = "gray82"), name = NULL) +
+  scale_color_manual(values = c("Mediana anual" = "gray30"), name = NULL) +
+  scale_x_continuous(breaks = seq(2000, 2025, by = 5)) +
+  guides(color = guide_legend(order = 1), fill = guide_legend(order = 2)) +
+  labs(title = "Evolución anual del ajuste RMS", x = "Año",
+       y = "RMS imputado (segundos)") +
+  theme(legend.position = "right")
+interactivo(g) %>%
+  layout(
+    legend = list(
+      orientation = "v", x = 0.98, xanchor = "right",
+      y = 0.98, yanchor = "top", bgcolor = "rgba(255,255,255,0.65)"
+    )
+  )
 ```
 
-#### Column {.tabset width="45%"}
-
-```{r}
-#| title: "Dispersión (filtrable)"
-# Sintaxis general: plot_ly(SharedData, ...) crea un grafico que reacciona a los
-# filtros de la barra lateral.
-plot_ly(sd_temporal, x = ~fecha, y = ~mag, color = ~magnitud_cat,
-        colors = colores_magnitud, type = "scatter", mode = "markers",
-        marker = list(size = 6, opacity = 0.7),
-        text = ~paste0(place, "<br>", fecha, "<br>M ", mag),
-        hoverinfo = "text") %>%
-  layout(title = list(text = "Magnitud en el tiempo", font = list(size = 13)),
-         xaxis = list(title = ""), yaxis = list(title = "Magnitud"),
-         legend = list(orientation = "h", y = -0.2)) %>%
-  config(displaylogo = FALSE)
-```
+#### Column {width="45%"}
 
 ```{r}
 #| title: "Tabla (filtrable)"
@@ -923,7 +1138,7 @@ g <- ggplot(total_zona,
                               fmt(tasa_anual, 1), " por año"))) +
   geom_col(width = 0.7) +
   scale_fill_manual(values = colores_zona, guide = "none") +
-  labs(title = "Frecuencia de eventos por zona", x = NULL, y = "Eventos")
+  labs(title = "Frecuencia de eventos por zona", x = "Zona sísmica", y = "Eventos")
 interactivo(g)
 ```
 
@@ -946,7 +1161,7 @@ g <- ggplot(zona_magnitud,
                               fmt(porcentaje, 1), "% (", eventos, ")"))) +
   geom_col() +
   scale_fill_manual(values = colores_magnitud, name = NULL) +
-  labs(title = "Composición de magnitud por zona", x = NULL, y = "%")
+  labs(title = "Composición de magnitud por zona", x = "Zona sísmica", y = "%")
 interactivo(g)
 ```
 
@@ -965,7 +1180,7 @@ g <- ggplot(zona_profundidad,
                               fmt(porcentaje, 1), "% (", eventos, ")"))) +
   geom_col() +
   scale_fill_manual(values = colores_profundidad, name = NULL) +
-  labs(title = "Composición de profundidad por zona", x = NULL, y = "%")
+  labs(title = "Composición de profundidad por zona", x = "Zona sísmica", y = "%")
 interactivo(g)
 ```
 
@@ -984,7 +1199,7 @@ g <- ggplot(zona_magtype,
                               fmt(porcentaje, 1), "%"))) +
   geom_col() +
   scale_fill_manual(values = colores_magtype, name = NULL) +
-  labs(title = "Composición de magType por zona", x = NULL, y = "%")
+  labs(title = "Composición de magType por zona", x = "Zona sísmica", y = "%")
 interactivo(g)
 ```
 
@@ -999,7 +1214,7 @@ interactivo(g)
 g <- ggplot(sismos, aes(x = zona_corta, y = mag, fill = zona)) +
   geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
   scale_fill_manual(values = colores_zona, guide = "none") +
-  labs(title = "Distribución de magnitud por zona", x = NULL, y = "Magnitud")
+  labs(title = "Distribución de magnitud por zona", x = "Zona sísmica", y = "Magnitud")
 interactivo(g, tooltip = c("x", "y"))
 ```
 
@@ -1008,7 +1223,7 @@ interactivo(g, tooltip = c("x", "y"))
 g <- ggplot(sismos, aes(x = zona_corta, y = depth, fill = zona)) +
   geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
   scale_fill_manual(values = colores_zona, guide = "none") +
-  labs(title = "Distribución de profundidad por zona", x = NULL,
+  labs(title = "Distribución de profundidad por zona", x = "Zona sísmica",
        y = "Profundidad (km)")
 interactivo(g, tooltip = c("x", "y"))
 ```
@@ -1018,7 +1233,7 @@ interactivo(g, tooltip = c("x", "y"))
 g <- ggplot(sismos, aes(x = zona_corta, y = sig, fill = zona)) +
   geom_boxplot(outlier.size = 0.6, alpha = 0.9) +
   scale_fill_manual(values = colores_zona, guide = "none") +
-  labs(title = "Distribución de significancia por zona", x = NULL,
+  labs(title = "Distribución de significancia por zona", x = "Zona sísmica",
        y = "Significancia (sig)")
 interactivo(g, tooltip = c("x", "y"))
 ```
@@ -1056,21 +1271,7 @@ datatable(comparacion_fuego, rownames = FALSE,
           options = list(dom = "t", ordering = FALSE))
 ```
 
-#### Column {.tabset width="42%"}
-
-```{r}
-#| title: "Dispersión (filtrable)"
-plot_ly(sd_espacial, x = ~depth, y = ~mag, color = ~zona,
-        colors = colores_zona, type = "scatter", mode = "markers",
-        marker = list(size = 6, opacity = 0.7),
-        text = ~paste0(place, "<br>", zona, "<br>M ", mag, " · ", depth, " km"),
-        hoverinfo = "text") %>%
-  layout(title = list(text = "Magnitud vs profundidad", font = list(size = 13)),
-         xaxis = list(title = "Profundidad (km)"),
-         yaxis = list(title = "Magnitud"),
-         legend = list(orientation = "h", y = -0.2)) %>%
-  config(displaylogo = FALSE)
-```
+#### Column {width="42%"}
 
 ```{r}
 #| title: "Tabla (filtrable)"
