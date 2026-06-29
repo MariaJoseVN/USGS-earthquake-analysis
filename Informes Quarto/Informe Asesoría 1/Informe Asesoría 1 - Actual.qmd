@@ -1065,6 +1065,7 @@ Año & $n$ & Mediana & RIC \\
 
 El RMS presenta una disminución temporal. Entre 2000--2009 y 2010--2019, la mediana disminuye de 1,030 a 0,980 segundos. El cambio es más marcado en 2020--2025, cuando alcanza 0,745 segundos. La evolución anual muestra que esta reducción se concentra desde 2019, con un mínimo de 0,700 segundos en 2022 y valores posteriores entre 0,720 y 0,755 segundos. El rango intercuartílico también se desplaza hacia valores menores. Esto indica una mayor concordancia entre los tiempos observados y calculados en los registros recientes, pero no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas estimadas.
 
+
 ## Caracterización espacial
 
 La caracterización espacial asigna cada evento a una zona sísmica mediante intersección espacial y compara las zonas en frecuencia de ocurrencia, magnitud, profundidad, significancia y condiciones de reporte.
@@ -1308,7 +1309,7 @@ Dorsal Meso-Atlántica & $57{,}1$ & $39{,}3$ & $3{,}6$ & $0{,}0$ \\
 {\centering\footnotesize\itshape Tabla~\ref*{tbl-magtype-zona}. Composición porcentual de los tipos de magnitud reportados por zona.\par}
 \endgroup
 ```
-
+\newpage
 ### Zona por Significancia USGS
 
 ```{=latex}
@@ -1564,6 +1565,8 @@ Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían 
 
 6) **Condiciones de reporte y comparabilidad.**  
 Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte. Su inclusión se vincula con la importancia de la homogeneidad y completitud de los catálogos sísmicos [@cabello_etal_2025; @wiemer_wyss_2000].
+
+\newpage
 
 # Referencias
 
