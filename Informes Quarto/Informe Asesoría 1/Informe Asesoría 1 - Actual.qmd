@@ -177,7 +177,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 # Alcance del informe
 
-Este pre-informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
+Este informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
 El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
@@ -237,7 +237,7 @@ Por último, se incorporan indicadores de comparabilidad del registro por zona, 
 
 El análisis exploratorio de asociatividad se realizó sobre `sismos` para describir la dirección e intensidad de las relaciones observadas. Para las variables numéricas se utilizó la correlación de Spearman, adecuada para asociaciones monótonas sin exigir normalidad. La matriz incluyó todas las variables numéricas, excepto `nst` y `rms`, reemplazadas por `nst_imp` y `rms_imp`, y se calculó con observaciones completas por pares. Se priorizó la interpretación de `mag` con `sig` y del año con las variables instrumentales imputadas.
 
-Para las variables categóricas se utilizó la V de Cramer como medida descriptiva normalizada entre 0 y 1. Se consideraron las variables de fuente, tipo de magnitud, zona y categorías de magnitud y profundidad, con énfasis en las asociaciones vinculadas con la estructura de reporte y la comparación espacial. Los contrastes inferenciales de Spearman, chi-cuadrado, Kruskal-Wallis y Wilcoxon se documentan por separado en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+Para las variables categóricas se utilizó la V de Cramér como medida descriptiva normalizada entre 0 y 1. Se consideraron las variables de fuente, tipo de magnitud, zona y categorías de magnitud y profundidad, con énfasis en las asociaciones vinculadas con la estructura de reporte y la comparación espacial. Los contrastes inferenciales de Spearman, chi-cuadrado, Kruskal-Wallis y Wilcoxon se documentan por separado en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ## Criterios de interpretación estadística
 
@@ -579,7 +579,7 @@ Puesto & Año & Evento o lugar & Zona & Mag. & Prof. & sig \\
 
 El ranking muestra que cuatro eventos alcanzan el valor máximo de significancia observado en el catálogo (2910 puntos). Además, varios de los registros con mayor significancia corresponden al Cinturón Alpino-Himalayo, aspecto que se retoma en la caracterización espacial. La lista no está formada únicamente por los eventos de mayor magnitud: aparecen registros de magnitud 6,6 y 6,8 con valores de `sig` muy altos. Esto refuerza que la significancia USGS debe interpretarse como un indicador compuesto de relevancia del evento, no como una medida equivalente a la magnitud.
 
-Para contrastar se revisa la significancia según la categoría de magnitud y la categoría profundidad.
+Para contrastar se revisa la significancia según la categoría de magnitud y la categoría de profundidad.
 
 ```{=latex}
 \begingroup
@@ -608,9 +608,9 @@ Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
 \endgroup
 ```
 
-La significancia media y mediana aumentan progresivamente desde la categoría `Fuerte'' hasta`Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
+La significancia media y mediana aumentan progresivamente desde la categoría ``Fuerte'' hasta ``Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
 
-La significancia según la categoría de profundidad, describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
+La significancia según la categoría de profundidad describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
 
 ```{=latex}
 \begingroup
@@ -639,7 +639,7 @@ Profundo    & 123 & 744,5 & 712,0 & 102,6 & 1152 \\
 \endgroup
 ```
 
-Donde a diferencia de la comparación por magnitud, la significancia no presenta un aumento progresivo entre las categorías de profundidad. Los eventos superficiales registran la media, la dispersión y el máximo más elevados, mientras que los intermedios presentan la mediana mayor. Los eventos profundos muestran los valores centrales y la variabilidad más bajos. Estas diferencias son descriptivas y no permiten atribuir por sí solas la significancia a la profundidad del evento.
+A diferencia de la comparación por magnitud, la significancia no presenta un aumento progresivo entre las categorías de profundidad. Los eventos superficiales registran la media, la dispersión y el máximo más elevados, mientras que los intermedios presentan la mediana mayor. Los eventos profundos muestran los valores centrales y la variabilidad más bajos. Estas diferencias son descriptivas y no permiten atribuir por sí solas la significancia a la profundidad del evento.
 
 ### Ajuste de la localización RMS
 
@@ -1120,7 +1120,7 @@ Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 \end{minipage}
 ```
 
-Los valores de la profundidad difieren ampliamente entre zonas, desde una profundidad con una desviación estándar de 155,2 km en el Cinturón de Fuego y una desviación estandar de 5,0 km de la Dorsal Meso-Atlántica.
+Los valores de la profundidad difieren ampliamente entre zonas, desde una profundidad con una desviación estándar de 155,2 km en el Cinturón de Fuego y una desviación estándar de 5,0 km de la Dorsal Meso-Atlántica.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1196,7 +1196,7 @@ Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
 \end{minipage}
 ```
 
-El comportamiento por cuantiles precisa dónde aparecen las diferencias. En magnitud, los tres cinturones principales coinciden hasta el cuantil 75 y solo difieren en el extremo, donde el Cinturón de Fuego llega a 9,10 y el Dorsal Meso-Atlántica se detiene en 7,10. En profundidad, la separación surge antes: el Cinturón de Fuego y "Resto del mundo" mantienen colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km, mientras que el Alpino-Himalayo presenta una cola moderada y la Dorsal Meso-Atlántica permanece plana, con sus cuantiles centrales en 10,0 km.
+El comportamiento por cuantiles precisa dónde aparecen las diferencias. En magnitud, los tres cinturones principales coinciden hasta el cuantil 75 y solo difieren en el extremo, donde el Cinturón de Fuego llega a 9,10 y la Dorsal Meso-Atlántica se detiene en 7,10. En profundidad, la separación surge antes: el Cinturón de Fuego y "Resto del mundo" mantienen colas profundas extensas, con cuantiles 95 de 555,7 km y 602,7 km, mientras que el Alpino-Himalayo presenta una cola moderada y la Dorsal Meso-Atlántica permanece plana, con sus cuantiles centrales en 10,0 km.
 
 ```{=latex}
 \noindent
@@ -1259,14 +1259,14 @@ Dorsal Meso-Atlántica & $100{,}0$ & $0{,}0$ & $0{,}0$ \\
 \end{minipage}
 ```
 
-En la composición por magnitud, las primeras tres zonas, presentan un reparto casi idéntico: entre 66,0 % y 68,3 % de eventos "Fuerte", entre 27,8 % y 29,1 % "Mayor" y entre 3,2 % y 5,3 % "Grande o extremo". La Dorsal Meso-Atlántica es la excepción, con un 89,3 % de eventos "Fuerte" y ninguno en la categoría "Grande o extremo".
+En la composición por magnitud, las primeras tres zonas presentan un reparto casi idéntico: entre 66,0 % y 68,3 % de eventos "Fuerte", entre 27,8 % y 29,1 % "Mayor" y entre 3,2 % y 5,3 % "Grande o extremo". La Dorsal Meso-Atlántica es la excepción, con un 89,3 % de eventos "Fuerte" y ninguno en la categoría "Grande o extremo".
 
 En la composición por profundidad, los eventos superficiales predominan en todas las zonas, pero la proporción de eventos profundos las diferencia. Solo el Cinturón de Fuego (9,3 %) y "Resto del mundo" (19,7 %) registran una proporción apreciable de eventos profundos, mientras que el Cinturón Alpino-Himalayo no presenta ninguno, con un 82,5 % superficial y un 17,5 % intermedio, y la Dorsal Meso-Atlántica es completamente superficial.
 
 ### Zona por Tipo de Magnitud
 
 El tipo de magnitud (magType) corresponde al método con que la USGS estimó la magnitud de cada evento.
-El tipo de magnitud se reparte de forma homogénea entre las zonas. En las cuatro, `mww` es el método mayoritario, con participaciones entre 53,9 % y 58,7 %, seguido por `mwc`, entre 31,5 % y 39,3 %; los tipos `mwb` y "otros" son marginales en todos los casos. Esta homogeneidad indica que la comparación de tipo magnitud entre zonas no está condicionada por el método de estimación, ya que ninguna franja se apoya en un tipo de magnitud distinto al del resto.
+El tipo de magnitud se reparte de forma homogénea entre las zonas. En las cuatro, `mww` es el método mayoritario, con participaciones entre 53,9 % y 58,7 %, seguido por `mwc`, entre 31,5 % y 39,3 %; los tipos `mwb` y "otros" son marginales en todos los casos. Esta homogeneidad indica que la comparación de tipo de magnitud entre zonas no está condicionada por el método de estimación, ya que ninguna franja se apoya en un tipo de magnitud distinto al del resto.
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -1429,7 +1429,7 @@ Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
 
 ## Análisis exploratorio de asociatividad
 
-El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramer. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramér. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
 
 ```{=latex}
 \vspace{-0.2em}
@@ -1453,7 +1453,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \phantomsection
 \refstepcounter{figure}
 \label{fig-matriz-asociacion-categorica}
-\parbox{0.88\linewidth}{\centering\scriptsize\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramer.}
+\parbox{0.88\linewidth}{\centering\scriptsize\itshape Figura~\ref*{fig-matriz-asociacion-categorica}. Matriz de asociación entre variables categóricas medida con la V de Cramér.}
 \end{minipage}
 ```
 
@@ -1532,7 +1532,7 @@ $$
 Si los supuestos no se cumplen, se usarían alternativas no paramétricas o robustas; como mínimo, Kruskal-Wallis para `mag` y `depth` por separado, con comparaciones post-hoc si corresponde.
 
 3) **Categorías de magnitud y profundidad según zona.**  
-Como extensión, se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramer se mantendría como medida de intensidad de asociación.
+Como extensión, se propone usar chi-cuadrado para contrastar independencia entre `zona` y `magnitud_cat`, y entre `zona` y `profundidad_cat`. La V de Cramér se mantendría como medida de intensidad de asociación.
 
 4) **Ocurrencia temporal global y por zona.**  
 Para las series de conteo anual $X_t$ y $X_{h,t}$ se mantiene como propuesta principal la dócima de Dickey-Fuller aumentada para revisar estacionariedad:
@@ -1894,7 +1894,7 @@ La separación entre categorías era esperable porque `magnitud_cat` deriva dire
 
 ### Independencia entre zona y categoría de profundidad
 
-Para el cruce entre `zona` y `profundidad_cat` se contrastó la hipótesis nula de independencia frente a la alternativa de asociación mediante la prueba chi-cuadrado. El contraste rechazó la independencia estadística ($\chi^2=38{,}04$; $\mathrm{gl}=6$; $p<0{,}001$). Sin embargo, la V de Cramer fue 0,13, por lo que la intensidad de la asociación observada es débil. Este resultado muestra la diferencia entre significancia estadística y magnitud de asociación: un valor $p$ pequeño no implica una relación intensa.
+Para el cruce entre `zona` y `profundidad_cat` se contrastó la hipótesis nula de independencia frente a la alternativa de asociación mediante la prueba chi-cuadrado. El contraste rechazó la independencia estadística ($\chi^2=38{,}04$; $\mathrm{gl}=6$; $p<0{,}001$). Sin embargo, la V de Cramér fue 0,13, por lo que la intensidad de la asociación observada es débil. Este resultado muestra la diferencia entre significancia estadística y magnitud de asociación: un valor $p$ pequeño no implica una relación intensa.
 
 ## Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
 
@@ -1923,7 +1923,7 @@ Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección 
 \endhead
 NotebookLM & junio 2026 & Apoyo para la lectura en español de bibliografía en inglés. & Antecedentes y revisión bibliográfica. & Traducción y apoyo de lectura. & Lectura de las fuentes originales y selección manual de la bibliografía. \\
 Extensión de ChatGPT en Positron & junio 2026 & Generación inicial de una plantilla QMD con la estructura del informe. & Estructura general del archivo QMD. & Propuesta de secciones y organización documental. & Revisión, modificación y completado manual de toda la estructura. \\
-Extensión de ChatGPT en Positron & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapageorreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Sólo en terminos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraidos del informe final. \\
+Extensión de ChatGPT en Positron & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapas georreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Solo en términos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraídos del informe final. \\
 Extensión de ChatGPT en Positron & junio 2026 & Conversión de fuentes al formato académico y vinculación de hipervínculos. & Archivo \texttt{referencias.bib}, citas y enlaces. & Formato BibTeX, sintaxis y vinculación documental. & Comprobación manual de autores, títulos, fechas, DOI, URL y correspondencia con la fuente original. \\
 Extensión de ChatGPT en Positron & junio 2026 & Sugerencia de código para graficar y corregir puntualmente gráficos y tablas. & Figuras, tablas LaTeX y maquetación del informe. & Ajustes de código, dimensiones, etiquetas y disposición visual. & Ejecución del código, comparación con los datos y revisión visual de cada producto. \\
 Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortografía, vocabulario, coherencia y redundancia. & Prototipos avanzados y versión final del informe. & Sugerencias editoriales y detección de inconsistencias formales. & Lectura crítica, aceptación o rechazo manual de cada sugerencia. \\
