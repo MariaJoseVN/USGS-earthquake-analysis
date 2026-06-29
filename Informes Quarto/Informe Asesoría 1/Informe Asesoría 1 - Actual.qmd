@@ -141,7 +141,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
-\vspace{-0.8em}
+\vspace{-1.4em}
 \caption{Eventos sísmicos y las zonas utilizadas para la comparación espacial.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
@@ -351,7 +351,7 @@ Para revisar con mayor detalle los valores superiores de la distribución, se co
 \begin{minipage}[t]{0.53\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth]{\detokenize{images/Análisis Descriptivo 1.png}}
+\includegraphics[width=0.92\linewidth]{\detokenize{images/Análisis Descriptivo 1.png}}
 \par\vspace{-0.8em}
 \phantomsection
 \refstepcounter{figure}
@@ -953,10 +953,15 @@ Mayor & 328 & 327 & $28{,}9$ & $19{,}6$ & $7{,}2$ & $40{,}0$ & $0{,}0$ & $189{,}
 Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,}0$ & $905{,}0$ \\
 \bottomrule
 \end{longtable}
-\vspace{-2.25em}
+\vspace{-2.55em}
 \addtocounter{table}{-1}
 \bottomtablecaption{tbl-recurrencia-magnitud-cat}{Resumen de recurrencia temporal entre eventos consecutivos según grupo de magnitud.}
+\vspace{-0.8em}
 \endgroup
+```
+
+```{=latex}
+\vspace{-1.2\baselineskip}
 ```
 
 Desde una perspectiva descriptiva, la recurrencia temporal muestra que los eventos de mayor magnitud presentan intervalos más amplios entre ocurrencias consecutivas dentro del catálogo global. El grupo agregado "Mayor o Grande o extremo", comparable con los eventos desde magnitud 7,0, registra 387 eventos y una mediana de 15,6 días entre eventos consecutivos. Al separar por categorías, los eventos "Mayor" presentan una mediana de 19,6 días, mientras que los eventos "Grande o extremo" muestran una mediana considerablemente mayor, de 123,0 días. Esta diferencia es coherente con la menor frecuencia de los eventos de magnitud más alta dentro del período analizado. Además, la distancia entre media y mediana, especialmente en "Grande o extremo", sugiere una distribución asimétrica, con algunos períodos prolongados sin eventos de esa categoría. En conjunto, estos resultados describen el espaciamiento temporal de los grandes terremotos en el catálogo global, sin implicar regularidad física ni recurrencia de una falla o zona específica.
