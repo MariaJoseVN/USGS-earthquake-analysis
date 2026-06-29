@@ -206,13 +206,13 @@ Las variables numéricas se caracterizaron mediante medidas de tendencia central
 
 Para la magnitud se resumió su distribución continua y se calculó el máximo registrado en cada año. Los máximos anuales se ordenaron para identificar los años asociados con los valores superiores del catálogo, los cuales no quedan representados por las medidas centrales. Además, `mag` se transformó en `magnitud_cat`, con las categorías "Fuerte", "Mayor" y "Grande o extremo", y se calcularon sus frecuencias y porcentajes para describir la composición del catálogo y permitir comparaciones temporales y espaciales posteriores.
 
-La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat` se documentan en el \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva}.
+La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat`, junto con el tratamiento de `magType`, se documentan en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 
-La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas; el contraste estadístico entre categorías de magnitud se documentó como complemento en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas.
 
 Las variables categóricas se describieron mediante frecuencias absolutas y porcentajes. `magType` se agrupó en `mww`, `mwc`, `mwb` y "otros" para evitar la fragmentación producida por tipos poco frecuentes. Para los tres tipos principales se resumió la magnitud mediante número de observaciones, media, mediana, desviación estándar, mínimo y máximo. La categoría "otros" no se incluyó en esta comparación por reunir métodos heterogéneos y con baja frecuencia. Por su parte, `magSource` se utilizó para describir la procedencia institucional de las magnitudes reportadas y contextualizar la comparabilidad del catálogo, sin interpretarla como una clasificación de calidad.
 
-Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cuantificaron sus valores observados y faltantes, y estos últimos se imputaron con la mediana de la década correspondiente para mantener todos los eventos sin trasladar valores extremos a los registros ausentes. El efecto de la imputación se evaluó comparando `rms` y `rms_imp` mediante sus principales estadísticos y cuantiles. La versión observada se utilizó en la descripción general y `rms_imp` en los análisis que requerían registros completos. La definición matemática y el procedimiento se detallan en el \hyperref[sec-anexo-rms]{anexo de RMS}.
+Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cuantificaron sus valores observados y faltantes, y estos últimos se imputaron con la mediana de la década correspondiente para mantener todos los eventos sin trasladar valores extremos a los registros ausentes. El efecto de la imputación se evaluó comparando `rms` y `rms_imp` mediante sus principales estadísticos y cuantiles. La versión observada se utilizó en la descripción general y `rms_imp` en los análisis que requerían registros completos. La definición matemática y el procedimiento se detallan en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-rms]{anexo de RMS})}.
 
 ## Caracterización temporal
 
@@ -244,7 +244,7 @@ Por último, se incorporan indicadores de comparabilidad del registro por zona, 
 
 El análisis exploratorio de asociatividad se realizó sobre `sismos` para describir la dirección e intensidad de las relaciones observadas. Para las variables numéricas se utilizó la correlación de Spearman, adecuada para asociaciones monótonas sin exigir normalidad. La matriz incluyó todas las variables numéricas, excepto `nst` y `rms`, reemplazadas por `nst_imp` y `rms_imp`, y se calculó con observaciones completas por pares. Se priorizó la interpretación de `mag` con `sig` y del año con las variables instrumentales imputadas.
 
-Para las variables categóricas se utilizó la V de Cramér como medida descriptiva normalizada entre 0 y 1. Se consideraron las variables de fuente, tipo de magnitud, zona y categorías de magnitud y profundidad, con énfasis en las asociaciones vinculadas con la estructura de reporte y la comparación espacial. Los contrastes inferenciales de Spearman, chi-cuadrado, Kruskal-Wallis y Wilcoxon se documentan por separado en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+Para las variables categóricas se utilizó la V de Cramér como medida descriptiva normalizada entre 0 y 1. Se consideraron las variables de fuente, tipo de magnitud, zona y categorías de magnitud y profundidad, con énfasis en las asociaciones vinculadas con la estructura de reporte y la comparación espacial.
 
 ## Criterios de interpretación estadística
 
@@ -1436,7 +1436,7 @@ Dorsal Meso-Atlántica & $378{,}5$ & $0{,}86$ & $75{,}0$ \% \\
 
 ## Análisis exploratorio de asociatividad
 
-El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramér. Los contrastes inferenciales asociados se presentan de forma complementaria en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+El análisis exploratorio de asociatividad describe la dirección y la intensidad de las relaciones observadas en el catálogo. Para las variables numéricas se utilizan los coeficientes de Spearman y para las variables categóricas la V de Cramér.
 
 ```{=latex}
 \vspace{-0.2em}
@@ -1470,13 +1470,13 @@ La mayoría de las variables numéricas presenta asociaciones débiles. La corre
 
 El año presenta asociaciones negativas moderadas con `rms_imp` ($\rho=-0{,}429$) y `nst_imp` ($\rho=-0{,}374$). La segunda requiere mayor cautela porque 402 valores fueron imputados mediante medianas decadales; en `rms_imp` solo se imputaron nueve registros.
 
-Los coeficientes restantes son débiles o corresponden a variables derivadas, cíclicas o espaciales cuya correlación requiere una interpretación limitada. Los valores cercanos a cero no demuestran independencia. La relación entre magnitud y `sig` también se observa en los resúmenes por `magnitud_cat` de la \hyperlink{dest-tbl-significancia-categoria-magnitud-descriptiva}{Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}}; los contrastes complementarios se presentan en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+Los coeficientes restantes son débiles o corresponden a variables derivadas, cíclicas o espaciales cuya correlación requiere una interpretación limitada. Los valores cercanos a cero no demuestran independencia. La relación entre magnitud y `sig` también se observa en los resúmenes por `magnitud_cat` de la \hyperlink{dest-tbl-significancia-categoria-magnitud-descriptiva}{Tabla~\ref*{tbl-significancia-categoria-magnitud-descriptiva}}.
 
 ### Asociación entre variables categóricas
 
 Las asociaciones categóricas más intensas corresponden a la estructura de reporte: `magSource` con `net` ($V=1{,}00$), `locationSource` con `net` ($V=0{,}94$) y `locationSource` con `magSource` ($V=0{,}80$). También se observa una asociación moderada entre `magSource` y `magType_grupo` ($V=0{,}65$), por lo que el tipo de magnitud se relaciona con la fuente que lo reporta.
 
-Las asociaciones restantes son, en general, débiles. Las variables de fuente presentan valores inferiores a 0,13 con `zona` y `profundidad_cat`, y la relación entre estas dos últimas también es débil ($V=0{,}13$). En consecuencia, las asociaciones principales corresponden a la estructura administrativa del catálogo y no muestran una relación intensa entre las variables geofísicas y las condiciones de reporte. Estos valores no demuestran independencia; el contraste chi-cuadrado se presenta en el \hyperref[sec-anexo-contrastes-inferenciales]{anexo de contrastes inferenciales}.
+Las asociaciones restantes son, en general, débiles. Las variables de fuente presentan valores inferiores a 0,13 con `zona` y `profundidad_cat`, y la relación entre estas dos últimas también es débil ($V=0{,}13$). En consecuencia, las asociaciones principales corresponden a la estructura administrativa del catálogo y no muestran una relación intensa entre las variables geofísicas y las condiciones de reporte. Estos valores no demuestran independencia.
 
 ## Supuestos, limitaciones y sensibilidad
 
