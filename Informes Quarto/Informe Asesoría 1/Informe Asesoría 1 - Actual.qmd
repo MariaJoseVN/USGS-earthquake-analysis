@@ -38,6 +38,7 @@ header-includes:
   - |
     \definecolor{asesoriaSectionBarColor}{HTML}{001632}
     \definecolor{asesoriaSectionRuleColor}{HTML}{00D1C3}
+    \definecolor{asesoriaLinkColor}{HTML}{00A499}
     \makeatletter
     \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
     \@secpenalty=0\relax
@@ -115,8 +116,8 @@ En conjunto, los resultados indican que el Cinturón de Fuego se diferencia prin
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
-- Mapa Georreferenciado Interactivo: (enlace)
-- Dashboard Interactivo: (enlace)
+- Mapa Georreferenciado Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir mapa interactivo}}}
+- Dashboard Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir dashboard interactivo}}}
 
 # Formulación del problema y pregunta estadística
 
