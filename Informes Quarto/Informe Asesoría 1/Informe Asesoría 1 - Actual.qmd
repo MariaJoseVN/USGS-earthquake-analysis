@@ -1851,50 +1851,6 @@ La cuarta decisión corresponde a incorporar indicadores de comparabilidad del r
 
 Estos indicadores son apoyo interpretativo. No modifican conteos, tasas, magnitudes ni profundidades por zona; solo documentan condiciones que pueden afectar la comparación espacial.
 
-## Contrastes inferenciales complementarios {#sec-anexo-contrastes-inferenciales}
-
-Los siguientes contrastes se conservaron como complemento exploratorio del análisis descriptivo. Sus resultados no se utilizan para realizar generalizaciones causales, predictivas ni probabilísticas fuera del catálogo analizado.
-
-### Significancia de las correlaciones de Spearman
-
-Para las asociaciones seleccionadas se contrastó $H_0:\rho_s=0$ frente a $H_1:\rho_s\neq0$. La relación entre `mag` y `sig` presentó una correlación positiva alta ($\rho_s=0{,}816$; $p<0{,}001$). El año presentó correlaciones negativas moderadas con `nst_imp` ($\rho_s=-0{,}374$; $p<0{,}001$) y `rms_imp` ($\rho_s=-0{,}429$; $p<0{,}001$). La primera relación requiere especial cautela porque 402 valores de `nst` fueron imputados mediante medianas decadales; para `rms`, solo nueve registros fueron imputados.
-
-### Significancia según categoría de magnitud
-
-Dada la asociación observada entre `mag` y `sig`, se examinó si la distribución de la significancia difería entre las categorías de `magnitud_cat`. La prueba de Kruskal-Wallis se aplicó porque se comparan tres grupos independientes y `sig` presenta asimetría y valores atípicos. Se contrastó la hipótesis nula $H_0:F_{\text{Fuerte}}=F_{\text{Mayor}}=F_{\text{Grande o extremo}}$ frente a la alternativa de que al menos una distribución difiere.
-
-La prueba permitió rechazar $H_0$ ($H=546{,}98$; $\mathrm{gl}=2$; $p<0{,}001$). Posteriormente, para cada par $i,j$, se contrastó $H_{0,ij}:F_i=F_j$ frente a $H_{1,ij}:F_i\neq F_j$ mediante Wilcoxon, aplicando el ajuste de Bonferroni para controlar el aumento del error tipo I. La igualdad de distribuciones se rechazó en los tres pares evaluados ($p_{\mathrm{ajustado}}<0{,}001$).
-
-```{=latex}
-\begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\Needspace{12\baselineskip}
-\phantomsection
-\refstepcounter{table}
-
-\label{tbl-significancia-magnitud-cat} \hypertarget{dest-tbl-significancia-magnitud-cat}{}
-
-\begin{longtable}{lrrrrrrr}
-\toprule
-Categoría de magnitud & Eventos & Media & Mediana & Q1 & Q3 & Mín. & Máx. \\
-\midrule
-Fuerte & 799 & $742{,}8$ & $691$ & $670{,}0$ & $733{,}0$ & $650$ & $2841$ \\
-Mayor & 328 & $992{,}2$ & $848$ & $786{,}5$ & $966{,}5$ & $754$ & $2910$ \\
-Grande o extremo & 59 & $1303{,}2$ & $1064$ & $982{,}0$ & $1415{,}5$ & $936$ & $2910$ \\
-\bottomrule
-\end{longtable}
-\vspace{-3.08em}
-\addtocounter{table}{-1}
-\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-significancia-magnitud-cat}. Resumen de la significancia USGS según categoría de magnitud.\end{center}
-\endgroup
-```
-
-La separación entre categorías era esperable porque `magnitud_cat` deriva directamente de `mag` y la magnitud participa en la construcción de `sig`. Por ello, los contrastes no constituyen evidencia independiente de que la magnitud determine la significancia; únicamente muestran que la asociación continua también se refleja en las distribuciones definidas por categoría.
-
-### Independencia entre zona y categoría de profundidad
-
-Para el cruce entre `zona` y `profundidad_cat` se contrastó la hipótesis nula de independencia frente a la alternativa de asociación mediante la prueba chi-cuadrado. El contraste rechazó la independencia estadística ($\chi^2=38{,}04$; $\mathrm{gl}=6$; $p<0{,}001$). Sin embargo, la V de Cramér fue 0,13, por lo que la intensidad de la asociación observada es débil. Este resultado muestra la diferencia entre significancia estadística y magnitud de asociación: un valor $p$ pequeño no implica una relación intensa.
 
 ## Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
 
@@ -1923,7 +1879,7 @@ Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección 
 \endhead
 NotebookLM & junio 2026 & Apoyo para la lectura en español de bibliografía en inglés. & Antecedentes y revisión bibliográfica. & Traducción y apoyo de lectura. & Lectura de las fuentes originales y selección manual de la bibliografía. \\
 Extensión de ChatGPT en Positron & junio 2026 & Generación inicial de una plantilla QMD con la estructura del informe. & Estructura general del archivo QMD. & Propuesta de secciones y organización documental. & Revisión, modificación y completado manual de toda la estructura. \\
-Extensión de ChatGPT en Positron & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapas georreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Solo en términos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraídos del informe final. \\
+Claude Code & junio 2026 & \textbf{Implementación Interactiva} de Dashboard y Mapas georreferenciados. & Dashboard Interactivo y Mapa Interactivo. & Estructuración de código (Solo en términos de implementación), depuración y resolución de errores. & Ejecución en Positron y QGIS, relleno manual de resultados extraídos del informe final. \\
 Extensión de ChatGPT en Positron & junio 2026 & Conversión de fuentes al formato académico y vinculación de hipervínculos. & Archivo \texttt{referencias.bib}, citas y enlaces. & Formato BibTeX, sintaxis y vinculación documental. & Comprobación manual de autores, títulos, fechas, DOI, URL y correspondencia con la fuente original. \\
 Extensión de ChatGPT en Positron & junio 2026 & Sugerencia de código para graficar y corregir puntualmente gráficos y tablas. & Figuras, tablas LaTeX y maquetación del informe. & Ajustes de código, dimensiones, etiquetas y disposición visual. & Ejecución del código, comparación con los datos y revisión visual de cada producto. \\
 Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortografía, vocabulario, coherencia y redundancia. & Prototipos avanzados y versión final del informe. & Sugerencias editoriales y detección de inconsistencias formales. & Lectura crítica, aceptación o rechazo manual de cada sugerencia. \\
