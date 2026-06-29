@@ -20,7 +20,7 @@ format:
     colorlinks: true
     linkcolor: asesoriaTextColor
     urlcolor: asesoriaTextColor
-    citecolor: asesoriaTextColor
+    citecolor: asesoriaLinkColor
     papersize: letter
     geometry:
       - margin=0cm
@@ -39,6 +39,12 @@ header-includes:
     \definecolor{asesoriaSectionBarColor}{HTML}{001632}
     \definecolor{asesoriaSectionRuleColor}{HTML}{00D1C3}
     \definecolor{asesoriaLinkColor}{HTML}{00A499}
+    \newcommand{\asesoriaStyledRef}[1]{%
+      {\hypersetup{linkcolor=asesoriaLinkColor}\emph{#1}}%
+    }
+    \newcommand{\asesoriaExternalLink}[2]{%
+      {\hypersetup{urlcolor=asesoriaLinkColor}\href{#1}{\textcolor{asesoriaLinkColor}{\emph{#2}}}}%
+    }
     \makeatletter
     \let\asesoriaOriginalSectionLinesFormat\sectionlinesformat
     \@secpenalty=0\relax
@@ -68,7 +74,7 @@ header-includes:
     }
     \AtBeginDocument{%
       \color{asesoriaTextColor}%
-      \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaTextColor}%
+      \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaLinkColor}%
       \addtokomafont{subsection}{\color{asesoriaTextColor}}%
       \addtokomafont{subsubsection}{\color{asesoriaTextColor}}%
     }
@@ -116,8 +122,8 @@ En conjunto, los resultados indican que el Cinturón de Fuego se diferencia prin
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
-- Mapa Georreferenciado Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir mapa interactivo}}}
-- Dashboard Interactivo: \href{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{\textcolor{asesoriaLinkColor}{\textbf{Abrir dashboard interactivo}}}
+- Mapa Georreferenciado Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{Abrir mapa interactivo}
+- Dashboard Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{Abrir dashboard interactivo}
 
 # Formulación del problema y pregunta estadística
 
@@ -132,11 +138,11 @@ Esta pregunta surge del encargo de comparar la actividad del Cinturón de Fuego 
 
 La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
 
-La fuente principal de información del presente informe corresponde al catálogo de terremotos de la [United States Geological Survey (USGS)](https://earthquake.usgs.gov/earthquakes/search/), que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
+La fuente principal de información del presente informe corresponde al catálogo de terremotos de la \asesoriaExternalLink{https://earthquake.usgs.gov/earthquakes/search/}{United States Geological Survey (USGS)}, que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
 
 ## Distribución global de la sismicidad {#sec-distribucion-sismicidad}
 
-La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas [@usgs_faq_terremotos]. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81 % de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17 %; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas [@usgs_faq_terremotos].
+La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el planeta: históricamente se concentra en tres grandes cinturones asociados a los límites entre placas tectónicas *[@usgs_faq_terremotos]*. El cinturón circumpacífico o "Cinturón de Fuego" concentra cerca del 81 % de los grandes terremotos; el cinturón Alpino-Himalayo, aproximadamente el 17 %; y la Dorsal Meso-Atlántica corresponde a un límite divergente de menor frecuencia. El resto de los eventos ocurre de manera dispersa fuera de estas franjas *[@usgs_faq_terremotos]*.
 
 ```{=latex}
 \begin{figure}[H]
@@ -148,11 +154,11 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \end{figure}
 ```
 
-Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
 
-La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. Una base clásica permite distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$ [@gutenberg_richter_1944]. También se respalda la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos [@kagan_jackson_2016]. Finalmente, los eventos $M \geq 8{,}0$ presentan relevancia instrumental y científica dentro del registro global [@ammon_etal_2010]. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
+La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. Una base clásica permite distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$ *[@gutenberg_richter_1944]*. También se respalda la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos *[@kagan_jackson_2016]*. Finalmente, los eventos $M \geq 8{,}0$ presentan relevancia instrumental y científica dentro del registro global *[@ammon_etal_2010]*. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
 
 # Objetivos
 
@@ -189,13 +195,13 @@ Este informe corresponde a una primera etapa del análisis estadístico descript
 
 El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
-El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \emph{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
+El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
 ## Declaración y lineamientos para el uso responsable de inteligencia artificial
 
 El equipo declara que sí utilizó herramientas de inteligencia artificial generativa como apoyo técnico, documental y editorial durante el desarrollo de la asesoría. Su uso se mantuvo bajo criterios de trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible. La selección de fuentes, la construcción del análisis, la interpretación de los resultados, las conclusiones y las decisiones finales permanecieron bajo responsabilidad de los integrantes, y ninguna asistencia modificó los datos ni los resultados estadísticos presentados.
 
-La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
+La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
 
 # Metodología
 
@@ -207,13 +213,13 @@ Las variables numéricas se caracterizaron mediante medidas de tendencia central
 
 Para la magnitud se resumió su distribución continua y se calculó el máximo registrado en cada año. Los máximos anuales se ordenaron para identificar los años asociados con los valores superiores del catálogo, los cuales no quedan representados por las medidas centrales. Además, `mag` se transformó en `magnitud_cat`, con las categorías "Fuerte", "Mayor" y "Grande o extremo", y se calcularon sus frecuencias y porcentajes para describir la composición del catálogo y permitir comparaciones temporales y espaciales posteriores.
 
-La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat`, junto con el tratamiento de `magType`, se documentan en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
+La profundidad se analizó de forma continua y mediante `profundidad_cat`. La comparación entre media y mediana permitió evaluar la asimetría producida por la presencia de eventos de gran profundidad. La categorización en eventos "Superficial", "Intermedio" y "Profundo" se utilizó para cuantificar la composición del catálogo y disponer de grupos comunes para los análisis posteriores. Los criterios de construcción de `magnitud_cat` y `profundidad_cat`, junto con el tratamiento de `magType`, se documentan en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 
 La significancia USGS (`sig`) se incorporó como un indicador compuesto de relevancia del evento. Además de su resumen general, se ordenaron los diez registros con mayor significancia para identificar los eventos asociados con la cola superior. Posteriormente, `sig` se resumió dentro de las categorías de magnitud y profundidad mediante número de observaciones, media, mediana, desviación estándar y máximo. Estas comparaciones se plantearon como descriptivas.
 
 Las variables categóricas se describieron mediante frecuencias absolutas y porcentajes. `magType` se agrupó en `mww`, `mwc`, `mwb` y "otros" para evitar la fragmentación producida por tipos poco frecuentes. Para los tres tipos principales se resumió la magnitud mediante número de observaciones, media, mediana, desviación estándar, mínimo y máximo. La categoría "otros" no se incluyó en esta comparación por reunir métodos heterogéneos y con baja frecuencia. Por su parte, `magSource` se utilizó para describir la procedencia institucional de las magnitudes reportadas y contextualizar la comparabilidad del catálogo, sin interpretarla como una clasificación de calidad.
 
-Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cuantificaron sus valores observados y faltantes, y estos últimos se imputaron con la mediana de la década correspondiente para mantener todos los eventos sin trasladar valores extremos a los registros ausentes. El efecto de la imputación se evaluó comparando `rms` y `rms_imp` mediante sus principales estadísticos y cuantiles. La versión observada se utilizó en la descripción general y `rms_imp` en los análisis que requerían registros completos. La definición matemática y el procedimiento se detallan en el anexo correspondiente. \emph{(véase \hyperref[sec-anexo-rms]{anexo de RMS})}.
+Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cuantificaron sus valores observados y faltantes, y estos últimos se imputaron con la mediana de la década correspondiente para mantener todos los eventos sin trasladar valores extremos a los registros ausentes. El efecto de la imputación se evaluó comparando `rms` y `rms_imp` mediante sus principales estadísticos y cuantiles. La versión observada se utilizó en la descripción general y `rms_imp` en los análisis que requerían registros completos. La definición matemática y el procedimiento se detallan en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-rms]{anexo de RMS})}.
 
 ## Caracterización temporal
 
@@ -227,11 +233,11 @@ La recurrencia temporal global se calculó ordenando los eventos por `fecha_hora
 
 La evolución de los métodos de magnitud se evaluó mediante `magType_grupo`, conservando `mww`, `mwc` y `mwb` y agrupando los tipos menos frecuentes como "otros". Se calcularon la composición porcentual anual de estos grupos y la participación anual de `mww` para determinar si la estructura metodológica del catálogo se mantuvo constante durante el período. Este análisis se utilizó para contextualizar las comparaciones temporales de magnitud, dado que los métodos reportados no presentan la misma participación en todos los años.
 
-Por último, la evolución del ajuste de la localización se describió mediante `rms_imp`. Para cada año se calcularon la mediana y los cuantiles 25 y 75, y para los períodos 2000--2009, 2010--2019 y 2020--2025 se obtuvo el resumen equivalente. La mediana se utilizó como medida central por su menor sensibilidad a valores atípicos. El uso de la variable imputada permitió conservar todos los eventos y se sustentó en la comparación previa entre `rms` y `rms_imp`, que mostró un efecto prácticamente nulo de la imputación sobre la distribución. \emph{(las limitaciones interpretativas de la recurrencia y de las comparaciones entre períodos se documentan en el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
+Por último, la evolución del ajuste de la localización se describió mediante `rms_imp`. Para cada año se calcularon la mediana y los cuantiles 25 y 75, y para los períodos 2000--2009, 2010--2019 y 2020--2025 se obtuvo el resumen equivalente. La mediana se utilizó como medida central por su menor sensibilidad a valores atípicos. El uso de la variable imputada permitió conservar todos los eventos y se sustentó en la comparación previa entre `rms` y `rms_imp`, que mostró un efecto prácticamente nulo de la imputación sobre la distribución. \asesoriaStyledRef{(las limitaciones interpretativas de la recurrencia y de las comparaciones entre períodos se documentan en el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
 
 ## Caracterización espacial
 
-La caracterización espacial se realiza sobre `sismos`, a partir de `longitude` y `latitude`, con el fin de transformar la ubicación puntual de cada evento en una variable categórica que permita comparar zonas sísmicas. La variable `zona` se obtiene por intersección espacial entre los eventos y los polígonos de `area_regiones.geojson`, capa que delimita el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica; los eventos que no intersectan ningún polígono se clasifican como "Resto del mundo", categoría que reúne los eventos fuera de las tres zonas sísmicas principales. \emph{(véase en más detalle el \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
+La caracterización espacial se realiza sobre `sismos`, a partir de `longitude` y `latitude`, con el fin de transformar la ubicación puntual de cada evento en una variable categórica que permita comparar zonas sísmicas. La variable `zona` se obtiene por intersección espacial entre los eventos y los polígonos de `area_regiones.geojson`, capa que delimita el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica; los eventos que no intersectan ningún polígono se clasifican como "Resto del mundo", categoría que reúne los eventos fuera de las tres zonas sísmicas principales. \asesoriaStyledRef{(véase en más detalle el \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
 Sobre `zona` se calculan la frecuencia de ocurrencia, mediante conteos, porcentajes y tasa anual, y su evolución temporal, mediante la serie anual de eventos por zona con su promedio, mínimo y máximo, para establecer cómo se distribuye la actividad entre zonas y si cada una la sostiene de forma continua o esporádica durante el período 2000--2025.
 
@@ -239,7 +245,7 @@ La magnitud (`mag`) y la profundidad (`depth`) se resumen por zona mediante medi
 
 Se describe la composición del tipo de magnitud (`magType_grupo`) por zona para verificar si el método de estimación se reparte de forma homogénea entre las zonas y no condiciona la comparación de magnitud. La significancia USGS (`sig`) se resume por zona mediante media, mediana, desviación estándar y máximo, con diagramas de caja, para comparar la relevancia de los eventos entre zonas más allá de su magnitud.
 
-Por último, se incorporan indicadores de comparabilidad del registro por zona, el número de estaciones (`nst_imp`), el ajuste de la localización (`rms_imp`) y la fuente de magnitud (`magSource`), que no corrigen los resultados pero permiten declarar si las comparaciones pueden estar condicionadas por cobertura instrumental, ajuste del evento o fuente de reporte. \emph{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
+Por último, se incorporan indicadores de comparabilidad del registro por zona, el número de estaciones (`nst_imp`), el ajuste de la localización (`rms_imp`) y la fuente de magnitud (`magSource`), que no corrigen los resultados pero permiten declarar si las comparaciones pueden estar condicionadas por cobertura instrumental, ajuste del evento o fuente de reporte. \asesoriaStyledRef{(véase en más detalle el \hyperref[sec-anexo-caracterizacion-espacial]{anexo de caracterización espacial})}.
 
 ## Análisis exploratorio de asociatividad
 
@@ -389,7 +395,7 @@ Magnitud máxima & 9,10 & 8,80 & 8,60 & 8,40 & 8,30 \\
 
 El ranking de máximos anuales muestra que los valores más altos se concentran en pocos años del período. Los máximos de 2004 y 2011 alcanzan magnitud 9,1, mientras que 2010 y 2025 registran 8,8. Esta lectura complementa el resumen global: aunque la mayor parte de los eventos se concentra bajo magnitud 7,7, existen años con eventos de magnitud excepcionalmente alta que influyen en la caracterización general del catálogo.
 
-Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
+Para complementar el resumen numérico, la variable `mag` se categorizó en `magnitud_cat`. \asesoriaStyledRef{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 
 ```{=latex}
 \begingroup
@@ -462,7 +468,7 @@ Máx. & 676,4 & Q90 & 354,8 \\
 \noindent
 \begin{minipage}[t]{0.54\textwidth}
 \vspace{0pt}
-Para complementar el resumen numérico, la variable \texttt{depth} se categorizó en \texttt{profundidad\_cat}. \emph{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
+Para complementar el resumen numérico, la variable \texttt{depth} se categorizó en \texttt{profundidad\_cat}. \asesoriaStyledRef{(véase \hyperref[sec-anexo-caracterizacion-descriptiva]{anexo de caracterización descriptiva})}.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
@@ -829,7 +835,7 @@ Los tipos `mww` y `mwc` presentan resultados prácticamente equivalentes, ambos 
 
 #### Origen de la magnitud
 
-La variable `magSource` identifica la red que elaboró originalmente la magnitud reportada para cada evento, de acuerdo con la documentación de USGS [@usgs_comcat_magsource]. Sus valores corresponden a códigos de redes, instituciones o catálogos sismológicos, no a países. Por tanto, a diferencia de `magType`, no describe el método de estimación, sino la procedencia institucional del valor de magnitud registrado.
+La variable `magSource` identifica la red que elaboró originalmente la magnitud reportada para cada evento, de acuerdo con la documentación de USGS *[@usgs_comcat_magsource]*. Sus valores corresponden a códigos de redes, instituciones o catálogos sismológicos, no a países. Por tanto, a diferencia de `magType`, no describe el método de estimación, sino la procedencia institucional del valor de magnitud registrado.
 
 ```{=latex}
 \begingroup
@@ -970,7 +976,7 @@ Desde una perspectiva descriptiva, la recurrencia temporal muestra que los event
 
 ### Evolución del tipo de magnitud reportado
 
-Además, se revisa la evolución temporal de `magType`, ya que la magnitud reportada por USGS puede provenir de distintos métodos de estimación [@usgs_magnitude_types]. Primero se estudia la frecuencia de cada tipo de magnitud y, para evitar categorías con muy pocas observaciones, se construye `magType_grupo`, conservando `mww`, `mwc` y `mwb`, y agrupando el resto como "otros". Esta decisión permite observar la composición temporal de los métodos principales sin fragmentar el análisis en grupos poco informativos.
+Además, se revisa la evolución temporal de `magType`, ya que la magnitud reportada por USGS puede provenir de distintos métodos de estimación *[@usgs_magnitude_types]*. Primero se estudia la frecuencia de cada tipo de magnitud y, para evitar categorías con muy pocas observaciones, se construye `magType_grupo`, conservando `mww`, `mwc` y `mwb`, y agrupando el resto como "otros". Esta decisión permite observar la composición temporal de los métodos principales sin fragmentar el análisis en grupos poco informativos.
 
 ```{=latex}
 \begin{figure}[H]
@@ -982,7 +988,7 @@ Además, se revisa la evolución temporal de `magType`, ya que la magnitud repor
 \end{figure}
 ```
 
-La evolución de `magType_grupo` muestra una transición marcada en la composición metodológica del catálogo. Durante la década de 2000 predominan tipos como `mwc` y `mwb`, mientras que desde 2011 aumenta fuertemente la participación de `mww`, que pasa a concentrar la mayor parte de los registros en los años posteriores. Dado que `mww` corresponde a la magnitud autoritativa de USGS cuando está disponible, este cambio sugiere una mayor presencia de un método de estimación más consistente en la segunda parte del período [@usgs_magnitude_types]. Por ello, las comparaciones temporales de magnitud deben interpretarse considerando que el tipo de magnitud reportado no es homogéneo a lo largo de todo el catálogo.
+La evolución de `magType_grupo` muestra una transición marcada en la composición metodológica del catálogo. Durante la década de 2000 predominan tipos como `mwc` y `mwb`, mientras que desde 2011 aumenta fuertemente la participación de `mww`, que pasa a concentrar la mayor parte de los registros en los años posteriores. Dado que `mww` corresponde a la magnitud autoritativa de USGS cuando está disponible, este cambio sugiere una mayor presencia de un método de estimación más consistente en la segunda parte del período *[@usgs_magnitude_types]*. Por ello, las comparaciones temporales de magnitud deben interpretarse considerando que el tipo de magnitud reportado no es homogéneo a lo largo de todo el catálogo.
 
 ### Evolución temporal del ajuste RMS
 
@@ -1475,7 +1481,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 
 ### Asociación entre variables numéricas
 
-La mayoría de las variables numéricas presenta asociaciones débiles. La correlación entre año y década ($\rho=0{,}931$) es estructural, porque `decada` deriva de `año`. La principal asociación sustantiva corresponde a magnitud y significancia USGS ($\rho=0{,}816$), coherente con la construcción de `sig` [@usgs_significance].
+La mayoría de las variables numéricas presenta asociaciones débiles. La correlación entre año y década ($\rho=0{,}931$) es estructural, porque `decada` deriva de `año`. La principal asociación sustantiva corresponde a magnitud y significancia USGS ($\rho=0{,}816$), coherente con la construcción de `sig` *[@usgs_significance]*.
 
 El año presenta asociaciones negativas moderadas con `rms_imp` ($\rho=-0{,}429$) y `nst_imp` ($\rho=-0{,}374$). La segunda requiere mayor cautela porque 402 valores fueron imputados mediante medianas decadales; en `rms_imp` solo se imputaron nueve registros.
 
@@ -1528,7 +1534,7 @@ $$
 
 Así, $h=1,\ldots,k$, con $k=4$, e $i=1,\ldots,n_h$, donde $n_h$ es el número de eventos en la zona $h$. Se considera $\alpha=0{,}05$ como nivel base. Para el diagnóstico de supuestos podría usarse además un criterio exploratorio más flexible, por ejemplo $\alpha=0{,}10$, dado que la evidencia descriptiva sugiere asimetría y dispersión desigual; esto debe quedar sujeto a evaluación formal.
 
-La propuesta principal se concentra en las dócimas asociadas a supuestos multivariantes, comparación del vector de medias y revisión temporal básica. Los demás contrastes se plantean como extensiones metodológicas, respaldadas por el instructivo de la asesoría y por literatura de catálogos sísmicos, pero no constituyen el núcleo obligatorio del siguiente informe [@instructivo_asesoria_2026; @ogata_1988; @kagan_jackson_2016; @siegel_etal_2024].
+La propuesta principal se concentra en las dócimas asociadas a supuestos multivariantes, comparación del vector de medias y revisión temporal básica. Los demás contrastes se plantean como extensiones metodológicas, respaldadas por el instructivo de la asesoría y por literatura de catálogos sísmicos, pero no constituyen el núcleo obligatorio del siguiente informe *[@instructivo_asesoria_2026; @ogata_1988; @kagan_jackson_2016; @siegel_etal_2024]*.
 
 1) **Supuestos del modelo multivariante.**  
 Antes de comparar zonas se evaluarían: 1.1) normalidad multivariante mediante Mardia; 1.2) homogeneidad de matrices de varianza-covarianza mediante M-Box, con $H_0:\boldsymbol{\Sigma}_{\text{Fuego}}=\boldsymbol{\Sigma}_{\text{Resto}}=\boldsymbol{\Sigma}_{\text{Alpino}}=\boldsymbol{\Sigma}_{\text{Dorsal}}$; y 1.3) esfericidad de Bartlett, con $H_0:|\mathbf{R}|=1$. Estos resultados definirían si se justifica una ruta paramétrica.
@@ -1559,22 +1565,28 @@ H_0:\ \phi=1
 H_1:\ \phi<1.
 $$
 
-De forma complementaria, podría considerarse KPSS y la independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto [@instructivo_asesoria_2026; @kagan_jackson_2016].
+De forma complementaria, podría considerarse KPSS y la independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto *[@instructivo_asesoria_2026; @kagan_jackson_2016]*.
 
 5) **Recurrencia temporal según categoría de magnitud.**  
-Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría o umbral de magnitud y contrastarse frente a una distribución exponencial. Ogata entrega la base general de procesos puntuales en sismología, mientras que la aplicación a tiempos entre eventos, modelos Poisson y umbrales de magnitud se vincula de forma más directa con Lombardi y Marzocchi, Kagan y Jackson, y Siegel et al. [@ogata_1988; @lombardi_marzocchi_2007; @kagan_jackson_2016; @siegel_etal_2024]. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
+Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría o umbral de magnitud y contrastarse frente a una distribución exponencial. Ogata entrega la base general de procesos puntuales en sismología, mientras que la aplicación a tiempos entre eventos, modelos Poisson y umbrales de magnitud se vincula de forma más directa con Lombardi y Marzocchi, Kagan y Jackson, y Siegel et al. *[@ogata_1988; @lombardi_marzocchi_2007; @kagan_jackson_2016; @siegel_etal_2024]*. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
 
 6) **Condiciones de reporte y comparabilidad.**  
-Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte. Su inclusión se vincula con la importancia de la homogeneidad y completitud de los catálogos sísmicos [@cabello_etal_2025; @wiemer_wyss_2000].
+Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` varían entre zonas o períodos. Este eje no busca explicar la sismicidad, sino verificar si las comparaciones principales podrían estar condicionadas por cobertura instrumental, ajuste de localización, método de magnitud o fuente de reporte. Su inclusión se vincula con la importancia de la homogeneidad y completitud de los catálogos sísmicos *[@cabello_etal_2025; @wiemer_wyss_2000]*.
 
 \newpage
 
 # Referencias
 
+```{=latex}
+\begingroup
+\hypersetup{urlcolor=asesoriaLinkColor}
+```
+
 ::: {#refs}
 :::
 
 ```{=latex}
+\endgroup
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 ```
 
@@ -1584,7 +1596,7 @@ Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `mag
 
 ### Fuente de datos y parámetros de descarga
 
-La fuente principal de información corresponde al catálogo público de terremotos de la USGS, específicamente el sitio [USGS Earthquake Catalog Search](https://earthquake.usgs.gov/earthquakes/search/). La configuración utilizada se documenta en la siguiente bitácora de descarga.
+La fuente principal de información corresponde al catálogo público de terremotos de la USGS, específicamente el sitio \asesoriaExternalLink{https://earthquake.usgs.gov/earthquakes/search/}{USGS Earthquake Catalog Search}. La configuración utilizada se documenta en la siguiente bitácora de descarga.
 
 \begingroup
 \footnotesize
@@ -1604,7 +1616,7 @@ Parámetro & Valor registrado \\
 Parámetro & Valor registrado \\
 \midrule
 \endhead
-Fuente & \href{https://earthquake.usgs.gov/earthquakes/search/}{USGS Earthquake Catalog Search} \\
+Fuente & \asesoriaExternalLink{https://earthquake.usgs.gov/earthquakes/search/}{USGS Earthquake Catalog Search} \\
 Formato de descarga & \texttt{CSV} \\
 Archivo crudo conservado & \texttt{BBDD/query.csv} \\
 Fecha de descarga & 15/06/2026 \\
@@ -1848,15 +1860,15 @@ El equipo declara que todos los análisis, resultados, interpretaciones, conclus
 
 ## Zonas sísmicas globales {#sec-anexo-zonas-sismicas}
 
-Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la página [Where do earthquakes occur?](https://www.usgs.gov/faqs/where-do-earthquakes-occur) de USGS [@usgs_faq_terremotos].
+Este anexo amplía el marco conceptual presentado en la \hyperref[sec-distribucion-sismicidad]{Sección~\ref*{sec-distribucion-sismicidad}} y documenta la descripción de los tres grandes cinturones sísmicos que sustentan la comparación espacial del informe, según la página \asesoriaExternalLink{https://www.usgs.gov/faqs/where-do-earthquakes-occur}{Where do earthquakes occur?} de USGS *[@usgs_faq_terremotos]*.
 
-El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) [@usgs_faq_terremotos].
+El primer cinturón, y el más importante, es el **cinturón sísmico circumpacífico**, que se extiende a lo largo del borde del océano Pacífico y concentra cerca del 81 % de los terremotos más grandes del planeta, razón por la cual se le conoce como "Cinturón de Fuego". Su actividad se asocia a los límites de placas tectónicas, donde placas de corteza mayoritariamente oceánica se hunden o subducen bajo otra placa; en estas zonas de subducción los sismos se originan por el deslizamiento entre placas y por la ruptura en su interior. Entre sus eventos se cuentan el terremoto de Valdivia de 1960 ($M\,9{,}5$) y el terremoto de Alaska de 1964 ($M\,9{,}2$) *[@usgs_faq_terremotos]*.
 
-El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17 % de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes [@usgs_faq_terremotos].
+El segundo es el **cinturón Alpino** o Alpino-Himalayo, que se prolonga desde Java y Sumatra a través del Himalaya y el Mediterráneo hasta el Atlántico, y reúne aproximadamente el 17 % de los grandes terremotos del mundo, incluidos algunos de los más destructivos, como el sismo de Pakistán de 2005 ($M\,7{,}6$), que provocó más de 80.000 víctimas, y el terremoto de Indonesia de 2004 ($M\,9{,}1$), cuyo tsunami causó más de 230.000 muertes *[@usgs_faq_terremotos]*.
 
-El tercer cinturón sigue el trazado sumergido de la **Dorsal Meso-Atlántica**, donde dos placas tectónicas se separan, configurando un límite divergente. Gran parte de esta dorsal se encuentra a gran profundidad bajo el océano y alejada de los centros poblados; no obstante, Islandia, situada directamente sobre ella, ha registrado sismos de hasta $M\,6{,}9$ [@usgs_faq_terremotos].
+El tercer cinturón sigue el trazado sumergido de la **Dorsal Meso-Atlántica**, donde dos placas tectónicas se separan, configurando un límite divergente. Gran parte de esta dorsal se encuentra a gran profundidad bajo el océano y alejada de los centros poblados; no obstante, Islandia, situada directamente sobre ella, ha registrado sismos de hasta $M\,6{,}9$ *[@usgs_faq_terremotos]*.
 
-El resto de los eventos se distribuye de manera dispersa en distintas regiones del planeta. Aunque la sismicidad relevante se concentra en los cinturones descritos, también pueden ocurrir terremotos dañinos fuera de ellos, habitualmente separados por largos períodos de tiempo [@usgs_faq_terremotos]. Esta condición justifica la categoría residual "Resto del mundo" empleada en la comparación espacial.
+El resto de los eventos se distribuye de manera dispersa en distintas regiones del planeta. Aunque la sismicidad relevante se concentra en los cinturones descritos, también pueden ocurrir terremotos dañinos fuera de ellos, habitualmente separados por largos períodos de tiempo *[@usgs_faq_terremotos]*. Esta condición justifica la categoría residual "Resto del mundo" empleada en la comparación espacial.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1872,15 +1884,15 @@ El resto de los eventos se distribuye de manera dispersa en distintas regiones d
 
 Este anexo no reproduce los resultados descriptivos presentados en el cuerpo del informe. Su función es precisar los criterios externos y operativos usados para construir las variables categóricas que luego sostienen las comparaciones temporales y espaciales.
 
-La variable `magnitud_cat` se construye a partir de la magnitud `mag` reportada por USGS. Los puntos de corte se apoyan en la literatura revisada sobre grandes terremotos: magnitudes cercanas o superiores a $M \geq 7{,}0$ se usan como referencia para distinguir terremotos mayores, mientras que valores próximos a $M \geq 7{,}8$ permiten separar eventos grandes o extremos dentro de catálogos globales de alta magnitud [@gutenberg_richter_1944; @kagan_jackson_2016; @ammon_etal_2010]. En el código, esta decisión se operacionaliza como "Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$.
+La variable `magnitud_cat` se construye a partir de la magnitud `mag` reportada por USGS. Los puntos de corte se apoyan en la literatura revisada sobre grandes terremotos: magnitudes cercanas o superiores a $M \geq 7{,}0$ se usan como referencia para distinguir terremotos mayores, mientras que valores próximos a $M \geq 7{,}8$ permiten separar eventos grandes o extremos dentro de catálogos globales de alta magnitud *[@gutenberg_richter_1944; @kagan_jackson_2016; @ammon_etal_2010]*. En el código, esta decisión se operacionaliza como "Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$.
 
 La variable `profundidad_cat` se utiliza para ordenar la profundidad focal en tres niveles interpretables: "Superficial", "Intermedio" y "Profundo". En el código, los eventos se clasifican como "Superficial" entre 0 y 70 km, "Intermedio" entre más de 70 y 300 km, y "Profundo" sobre 300 km. Esta categorización no reemplaza el valor continuo de `depth`, sino que permite comparar de forma sintética la composición del catálogo entre zonas y períodos.
 
-Finalmente, la revisión de `magType` cumple una función de trazabilidad metodológica. La magnitud reportada por USGS puede provenir de distintos métodos o escalas de estimación [@usgs_magnitude_types], por lo que las comparaciones descriptivas se interpretan sobre los valores reportados, sin homogeneizar retrospectivamente las escalas de magnitud. Esta precaución es especialmente relevante para la lectura temporal, donde se analiza la transición en los tipos de magnitud reportados.
+Finalmente, la revisión de `magType` cumple una función de trazabilidad metodológica. La magnitud reportada por USGS puede provenir de distintos métodos o escalas de estimación *[@usgs_magnitude_types]*, por lo que las comparaciones descriptivas se interpretan sobre los valores reportados, sin homogeneizar retrospectivamente las escalas de magnitud. Esta precaución es especialmente relevante para la lectura temporal, donde se analiza la transición en los tipos de magnitud reportados.
 
 ### Definición y tratamiento del RMS {#sec-anexo-rms}
 
-El RMS corresponde a la raíz del promedio ponderado de los residuos cuadrados entre los tiempos de llegada observados y los calculados por el modelo de localización [@usgs_comcat_rms]:
+El RMS corresponde a la raíz del promedio ponderado de los residuos cuadrados entre los tiempos de llegada observados y los calculados por el modelo de localización *[@usgs_comcat_rms]*:
 
 $$
 RMS=\sqrt{\frac{\sum_{i=1}^{n} w_i\left(t_i^{obs}-t_i^{calc}\right)^2}{\sum_{i=1}^{n}w_i}},
@@ -1906,7 +1918,7 @@ La comparación decadal debe leerse mediante tasas anuales promedio, porque el t
 
 La recurrencia temporal reportada corresponde al espaciamiento entre eventos consecutivos dentro del catálogo global. No representa la recurrencia física de una falla, zona de subducción o región específica, por lo que no debe interpretarse como predicción ni como estimación de amenaza sísmica local.
 
-La evolución de `magType` se interpreta considerando la documentación de USGS sobre tipos de magnitud [@usgs_magnitude_types]. Esta referencia permite contextualizar la transición observada hacia `mww`, sin asumir que todo el período fue medido de forma homogénea.
+La evolución de `magType` se interpreta considerando la documentación de USGS sobre tipos de magnitud *[@usgs_magnitude_types]*. Esta referencia permite contextualizar la transición observada hacia `mww`, sin asumir que todo el período fue medido de forma homogénea.
 
 La evolución temporal del RMS se interpreta como una descripción del ajuste de localización reportado en el catálogo. La disminución observada en años recientes indica menor residuo entre tiempos observados y calculados, pero no demuestra por sí sola una mejora instrumental ni una mayor precisión de las coordenadas. Su lectura debe mantenerse como indicador de comparabilidad del registro.
 
