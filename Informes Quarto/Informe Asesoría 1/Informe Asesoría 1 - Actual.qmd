@@ -110,7 +110,12 @@ Este informe caracteriza la distribución espacial y temporal de 1.186 terremoto
 
 En la dimensión temporal, la categoría "Fuerte" concentra la mayoría de los registros. Los 387 eventos de magnitud igual o superior a 7,0 presentan una mediana de 15,6 días entre eventos consecutivos, mientras que para los eventos "Grandes o extremos" esta aumenta a 123 días. Las tasas anuales muestran fluctuaciones entre periodos, pero no una tendencia uniforme en la frecuencia de los eventos. El Cinturón de Fuego mantiene el mayor número de registros durante todo el periodo. Por su parte, la mediana del RMS disminuye de 1,030 segundos en 2000--2009 a 0,745 segundos en 2020--2025, sin que este resultado demuestre por sí solo una mayor precisión de las localizaciones.
 
-En conjunto, los resultados indican que el Cinturón de Fuego se diferencia principalmente por la frecuencia y continuidad de su actividad. Las conclusiones describen el catálogo analizado y no permiten estimar peligro sísmico, establecer causalidad ni representar la recurrencia de una falla específica.
+En conjunto, los resultados indican que el Cinturón de Fuego se diferencia y destaca principalmente por la frecuencia y continuidad de su actividad, sin embargo, en terminos de significancia los mayores 10 puntajes más altos de sig revelan que la mayoría se concentra en el Cinturón Alpino-Himalayo con 8 eventos en el top 10 y en terminos Magnitud el valor máximo registrado es de 9,10 dentro del Cinturón de Fuego. Estas Las conclusiones describen el catálogo analizado y no permiten estimar peligro sísmico, establecer causalidad ni representar la recurrencia de una falla específica.
+
+Se adjuntan los siguientes enlaces como productos derivados del informe.
+
+- Mapa Georreferenciado Interactivo: (enlace)
+- Dashboard Interactivo: (enlace)
 
 # Formulación del problema y pregunta estadística
 
