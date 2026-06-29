@@ -18,6 +18,42 @@ format:
         .value-box .value-box-area { padding: 0.6rem 0.85rem !important; overflow: visible !important; justify-content: center !important; }
         .value-box .value-box-showcase, .value-box .value-box-showcase .bi { color: #c2cad2 !important; opacity: 0.9; }
 
+        /* --- Indicadores principales: grupo compacto y centrado --- */
+        .metricas-principales .value-box-grid {
+          grid-template-columns: auto auto !important;
+          justify-content: center !important;
+          align-items: center !important;
+          column-gap: 1.15rem !important;
+        }
+        .metricas-principales .value-box-showcase {
+          width: auto !important;
+          min-width: 0 !important;
+          padding: 0 !important;
+          justify-content: center !important;
+          align-items: center !important;
+        }
+        .metricas-principales .value-box-showcase .bi {
+          font-size: 3.4rem !important;
+        }
+        .metricas-principales .value-box-area {
+          flex: 0 1 auto !important;
+          min-width: 0 !important;
+          padding: 0 !important;
+          justify-content: center !important;
+          align-items: flex-start !important;
+          text-align: left !important;
+        }
+        .metricas-principales .value-box-title {
+          margin: 0 0 0.2rem !important;
+          font-size: 0.9rem !important;
+          line-height: 1.15 !important;
+        }
+        .metricas-principales .value-box-value {
+          margin: 0 !important;
+          font-size: 2.5rem !important;
+          line-height: 1 !important;
+        }
+
         /* --- Barra de filtros flotante: acompaña el scroll --- */
         .bslib-sidebar-layout > .sidebar {
           position: sticky !important;
@@ -176,7 +212,7 @@ tabla_explorador <- function(sd) {
 
 # Descriptiva
 
-## Row {height="135px"}
+## Row {.metricas-principales height="135px"}
 
 ```{r}
 #| content: valuebox
@@ -352,7 +388,7 @@ tagList(
 
 ## Column
 
-### Row {height="135px"}
+### Row {.metricas-principales height="135px"}
 
 ```{r}
 #| content: valuebox
@@ -545,7 +581,7 @@ tagList(
 
 ## Column
 
-### Row {height="135px"}
+### Row {.metricas-principales height="135px"}
 
 ```{r}
 #| content: valuebox
