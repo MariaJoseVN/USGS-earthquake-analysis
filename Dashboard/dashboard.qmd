@@ -169,6 +169,9 @@ colores_magtype <- c(
   "otros" = "#cdd4da"
 )
 
+# Paleta comun para las barras de los tres resumenes visuales.
+colores_barras_resumen <- c("#24466f", "#416c9f", "#E06B70")
+
 # Etiquetas cortas de zona para los ejes
 etiquetas_zona <- c(
   "Cinturon de Fuego"        = "C. de Fuego",
@@ -363,7 +366,7 @@ panel_resumen(
   ),
   "Eventos según categoría de magnitud",
   Map(barra_resumen, names(porc_mag), as.numeric(porc_mag),
-      unname(colores_magnitud[names(porc_mag)]))
+      colores_barras_resumen)
 )
 ```
 
@@ -382,7 +385,7 @@ panel_resumen(
   ),
   "Eventos según categoría de profundidad",
   Map(barra_resumen, names(porc_prof), as.numeric(porc_prof),
-      unname(colores_profundidad[names(porc_prof)]))
+      colores_barras_resumen)
 )
 ```
 
@@ -392,7 +395,6 @@ sig_valida <- sismos$sig[!is.na(sismos$sig)]
 sig_rango <- cut(sig_valida, breaks = c(-Inf, 749, 999, Inf),
                  labels = c("Hasta 749", "750 a 999", "1.000 o más"))
 porc_sig <- prop.table(table(sig_rango)) * 100
-colores_sig <- c("#24466f", "#416c9f", "#E06B70")
 panel_resumen(
   "Estadísticos de la significancia calculada por USGS.",
   list(
@@ -404,7 +406,8 @@ panel_resumen(
     metrica_resumen(fmt(sd(sig_valida), 2), "Desv. est.")
   ),
   "Eventos según rango de significancia",
-  Map(barra_resumen, names(porc_sig), as.numeric(porc_sig), colores_sig)
+  Map(barra_resumen, names(porc_sig), as.numeric(porc_sig),
+      colores_barras_resumen)
 )
 ```
 
