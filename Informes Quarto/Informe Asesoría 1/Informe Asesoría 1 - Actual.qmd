@@ -122,6 +122,7 @@ En conjunto, los resultados indican que el Cinturón de Fuego se diferencia prin
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
+- Repositorio GitHub: \asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis.git}{MariaJoseVN/USGS-earthquake-analysis.git}
 - Mapa Georreferenciado Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{Abrir mapa interactivo}
 - Dashboard Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{Abrir dashboard interactivo}
 
