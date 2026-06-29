@@ -1752,7 +1752,7 @@ La organización principal del flujo reproducible se resume en la \hyperlink{des
 
 \label{tbl-flujo-scripts} \hypertarget{dest-tbl-flujo-scripts}{}
 
-\begin{longtable}{p{0.33\textwidth}p{0.57\textwidth}}
+\begin{longtable}{p{0.38\textwidth}p{0.52\textwidth}}
 \toprule
 Script & Propósito principal \\
 \midrule
@@ -1761,13 +1761,13 @@ Script & Propósito principal \\
 Script & Propósito principal \\
 \midrule
 \endhead
-\texttt{Código.R} & Ejecuta el flujo principal, importa las bases, une \texttt{sig\_raw} con \texttt{sismos\_raw} y prepara \texttt{sismos}. \\
+\texttt{Código.R} & Ejecuta el flujo principal, carga librerías, importa las bases, une \texttt{sig\_raw} con \texttt{sismos\_raw}, prepara \texttt{sismos} y llama secuencialmente a los scripts posteriores. \\
 \texttt{01\_tratamiento\_NAs.R} & Imputa \texttt{nst} y \texttt{rms} por mediana decadal para construir \texttt{nst\_imp} y \texttt{rms\_imp}. \\
 \texttt{02\_analisis\_descriptivo.R} & Desarrolla la caracterización descriptiva general inicial. \\
-\texttt{02.1\_analisis\_descriptivo\_significancia.R} & Profundiza análisis descriptivos complementarios de \texttt{sig}. \\
-\texttt{02.2\_analisis\_descriptivo\_categoricas.R} & Revisa \texttt{magType}, \texttt{magSource} y sus asociaciones con categorías analíticas. \\
 \texttt{03\_analisis\_temporal.R} & Desarrolla el análisis temporal con catálogo completo, \texttt{magnitud\_cat} y \texttt{magType\_grupo}. \\
 \texttt{04\_analisis\_espacial.R} & Construye \texttt{zona} y reúne la caracterización espacial final usada en el informe. \\
+\begin{tabular}[t]{@{}l@{}}\texttt{02.1\_analisis\_descriptivo}\\\texttt{\_significancia.R}\end{tabular} & Profundiza el análisis descriptivo de \texttt{sig}; se ejecuta después de \texttt{04\_analisis\_espacial.R} porque utiliza \texttt{zona}. \\
+\begin{tabular}[t]{@{}l@{}}\texttt{02.2\_analisis\_descriptivo}\\\texttt{\_categoricas.R}\end{tabular} & Revisa \texttt{magType}, \texttt{magSource} y categorías analíticas; se ejecuta después de \texttt{04\_analisis\_espacial.R} porque utiliza \texttt{zona}. \\
 \texttt{05\_analisis\_asociatividad.R} & Explora asociaciones entre variables numéricas y categóricas. \\
 \bottomrule
 \end{longtable}
