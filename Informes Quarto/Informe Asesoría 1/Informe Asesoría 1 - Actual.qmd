@@ -173,11 +173,11 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 \item \textbf{OE2. Estructurar} la información sísmica en variables derivadas y categorías interpretables que articulen magnitud, profundidad, temporalidad, zona sísmica y condiciones de reporte dentro de una misma base de análisis.
 
-\item \textbf{OE3. Caracterizar} la composición general del catálogo mediante la distribución de eventos por magnitud, profundidad y significancia, estableciendo una lectura inicial de la severidad y estructura de los grandes terremotos observados.
+\item \textbf{OE3. Integrar} la composición general del catálogo mediante la distribución de eventos por magnitud, profundidad y significancia, estableciendo una lectura inicial de la severidad y estructura de los grandes terremotos observados.
 
 \item \textbf{OE4. Evaluar} la dinámica temporal del catálogo mediante conteos, tasas, series, composición por magnitud y recurrencia global, para reconocer cómo cambia la ocurrencia de los eventos en el período 2000--2025 y bajo qué condiciones debe compararse entre décadas.
 
-\item \textbf{OE5. Integrar} la información temporal, espacial y descriptiva para comparar las zonas sísmicas definidas, distinguiendo patrones de ocurrencia, magnitud y profundidad de posibles diferencias asociadas a cobertura o reporte.
+\item \textbf{OE5. Caracterizar} la información descriptiva, temporal y espacial,  para comparar las zonas sísmicas definidas, distinguiendo patrones de ocurrencia, magnitud y profundidad de posibles diferencias asociadas a cobertura o reporte.
 
 \end{itemize}
 ```
