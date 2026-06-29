@@ -358,7 +358,7 @@ plot(
   main = "Serie mensual - Catálogo completo",
   xlab = "Mes observado",
   ylab = "Número de eventos",
-  col = "darkblue",
+  col = "#00a499",  # Conteo observado
   lwd = 1,
   xaxt = "n"
 )
@@ -373,7 +373,7 @@ axis(
 
 abline(
   h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
-  col = "darkblue",
+  col = "#00a499",  # Media
   lty = 2,
   lwd = 1.5
 )
@@ -381,7 +381,7 @@ abline(
 legend(
   "topright",
   legend = c("Conteo observado", "Media"),
-  col = c("darkblue", "darkblue"),
+  col = c("#00a499", "#00a499"),
   lty = c(1, 2),
   lwd = c(1, 1.5),
   bty = "n",
