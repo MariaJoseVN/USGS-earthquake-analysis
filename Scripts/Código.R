@@ -1,10 +1,24 @@
 #Cargar paquetes----
-library(readr)
-library(dplyr)
-library(lubridate)
-library(naniar) #Analizar datos faltantes
-library(skimr) #Analizar datos faltantes y resumen de estadisticas básicas
-library(janitor) #Analizar datos duplicados
+library(readr)     # Lectura de archivos CSV.
+library(dplyr)     # Limpieza, seleccion, union y resumen de datos.
+library(tidyr)     # Completar series temporales y reestructurar tablas.
+library(tibble)    # Construccion de tablas auxiliares.
+library(purrr)     # Iteracion funcional para asociaciones categoricas.
+library(lubridate) # Manejo de fechas y periodos.
+library(naniar)    # Diagnostico de datos faltantes.
+library(skimr)     # Resumen exploratorio de variables.
+library(janitor)   # Apoyo para revision de estructura y duplicados.
+library(ggplot2)   # Graficos del analisis de asociatividad.
+library(GGally)    # Matriz grafica de correlaciones numericas.
+library(corrplot)  # Matrices de correlacion y asociacion.
+library(sf)        # Lectura de zonas sismicas y cruces espaciales.
+
+options(
+  scipen = 999,
+  tibble.width = Inf,
+  tibble.print_max = Inf
+)
+
 #Rutas y Carga de datos----
 ruta_base <- "BBDD/query.csv"
 ruta_sig <- "BBDD/sig.csv"
@@ -14,7 +28,6 @@ sig_raw <- read_csv(ruta_sig, show_col_types = FALSE) #Variable de significancia
 
 #Analisis Preliminar de la estructura de los datos----
 
-#View(sismos_raw)
 summary(sismos_raw)
 dim(sismos_raw) #Observacioes por filas y columnas / 1186 observaciones y 22 variables
 str(sismos_raw) #Naturaleza de la variable
@@ -94,7 +107,6 @@ sismos <- sismos %>%
     rms
 
   )
-View(sismos)
 skim(sismos)
 
 ##Revisión de Duplicados----
@@ -138,10 +150,13 @@ rango_espacial
 #Profundidad válida: >= 0
 
 #Ejecutar scripts posteriores----
-source("Scripts/02_tratamiento_NAs.R")
-source("Scripts/01_analisis_descriptivo.R")
-source("Scripts/04_analisis_temporal_limpio.R")
-source("Scripts/05_analisis_descriptivo.R")
-source("Scripts/05_analisis_descritivo_V.CATEGÓRICAS.R")
-source("Scripts/06_analisis_asociatividad.R")
-source("Scripts/07_analisis_espacial.R")
+source(file.path("Scripts", "01_tratamiento_NAs.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "02_analisis_descriptivo.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "03_analisis_temporal.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "04_analisis_espacial.R"), echo = TRUE, print.eval = TRUE)
+
+# Ramas descriptivas que requieren zona, creada en 04_analisis_espacial.R.
+source(file.path("Scripts", "02.1_analisis_descriptivo_significancia.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "02.2_analisis_descriptivo_categoricas.R"), echo = TRUE, print.eval = TRUE)
+
+source(file.path("Scripts", "05_analisis_asociatividad.R"), echo = TRUE, print.eval = TRUE)

@@ -1762,12 +1762,13 @@ Script & Propósito principal \\
 \midrule
 \endhead
 \texttt{Código.R} & Ejecuta el flujo principal, importa las bases, une \texttt{sig\_raw} con \texttt{sismos\_raw} y prepara \texttt{sismos}. \\
-\texttt{02\_tratamiento\_NAs.R} & Imputa \texttt{nst} y \texttt{rms} por mediana decadal para construir \texttt{nst\_imp} y \texttt{rms\_imp}. \\
-\texttt{01\_analisis\_descriptivo.R} & Desarrolla la caracterización descriptiva y espacial inicial. \\
-\texttt{04\_analisis\_temporal\_limpio.R} & Desarrolla el análisis temporal con catálogo completo, \texttt{magnitud\_cat} y \texttt{magType\_grupo}. \\
-\texttt{05\_analisis\_descriptivo.R} & Profundiza análisis descriptivos complementarios, incluyendo \texttt{sig}. \\
-\texttt{05\_analisis\_magtype.R} & Revisa \texttt{magType}, \texttt{magSource} y sus asociaciones con categorías analíticas. \\
-\texttt{06\_analisis\_asociatividad.R} & Explora asociaciones entre variables numéricas y categóricas. \\
+\texttt{01\_tratamiento\_NAs.R} & Imputa \texttt{nst} y \texttt{rms} por mediana decadal para construir \texttt{nst\_imp} y \texttt{rms\_imp}. \\
+\texttt{02\_analisis\_descriptivo.R} & Desarrolla la caracterización descriptiva general inicial. \\
+\texttt{02.1\_analisis\_descriptivo\_significancia.R} & Profundiza análisis descriptivos complementarios de \texttt{sig}. \\
+\texttt{02.2\_analisis\_descriptivo\_categoricas.R} & Revisa \texttt{magType}, \texttt{magSource} y sus asociaciones con categorías analíticas. \\
+\texttt{03\_analisis\_temporal.R} & Desarrolla el análisis temporal con catálogo completo, \texttt{magnitud\_cat} y \texttt{magType\_grupo}. \\
+\texttt{04\_analisis\_espacial.R} & Construye \texttt{zona} y reúne la caracterización espacial final usada en el informe. \\
+\texttt{05\_analisis\_asociatividad.R} & Explora asociaciones entre variables numéricas y categóricas. \\
 \bottomrule
 \end{longtable}
 \vspace{-3.08em}
