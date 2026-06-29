@@ -608,7 +608,7 @@ Grande o extremo  &  59 & 1303,2 & 1064 & 509,5 & 2910 \\
 \endgroup
 ```
 
-La significancia media y mediana aumentan progresivamente desde la categoría ``Fuerte'' hasta ``Grande o extremo''. Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
+La significancia media y mediana aumentan progresivamente desde la categoría "Fuerte" hasta "Grande o extremo". Este patrón es esperable, dado que la magnitud forma parte de los elementos considerados por USGS para construir `sig`; sin embargo, la variabilidad dentro de cada grupo y la presencia de máximos elevados en más de una categoría confirman que la significancia también incorpora otros componentes de relevancia del evento.
 
 La significancia según la categoría de profundidad describe cómo se distribuye este indicador entre eventos superficiales, intermedios y profundos.
 
