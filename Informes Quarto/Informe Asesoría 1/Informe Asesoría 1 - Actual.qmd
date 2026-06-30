@@ -137,6 +137,8 @@ Esta pregunta surge del encargo de comparar la actividad del Cinturón de Fuego 
 \newpage
 # Antecedentes
 
+Antes de continuar, se sugiere revisar la \asesoriaExternalLink{https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity}{guía conceptual de la USGS}, que explica las diferencias entre magnitud e intensidad y presenta las escalas de Richter, magnitud de momento y Mercalli *[@usgs_magnitud_energia_intensidad]*. Es deseable su lectura previa para distinguir apropiadamente los conceptos que se tratan en el presente informe.
+
 La actividad sísmica constituye un fenómeno geofísico que ocurre a escala mundial. En este contexto, los catálogos abiertos de terremotos permiten acceder a registros sistemáticos de estos eventos sísmicos. Su relevancia radica en su utilidad para la caracterización territorial, la gestión institucional y la comprensión de patrones espaciales y temporales asociados a zonas tectónicamente activas.
 
 La fuente principal de información del presente informe corresponde al catálogo de terremotos de la \asesoriaExternalLink{https://earthquake.usgs.gov/earthquakes/search/}{United States Geological Survey (USGS)}, que se utiliza por su cobertura global, disponibilidad pública y trazabilidad de consulta.
@@ -149,7 +151,6 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/mapa-qgis-zonas-sismicas.png}}
-\vspace{-1.4em}
 \caption{Eventos sísmicos y las zonas utilizadas para la comparación espacial.}
 \label{fig-mapa-qgis-zonas-sismicas}
 \end{figure}
@@ -1937,5 +1938,16 @@ La tercera decisión corresponde a completar con cero las combinaciones sin even
 La cuarta decisión corresponde a incorporar indicadores de comparabilidad del registro. Para ello se resumen `nst_imp`, `rms_imp`, `magType_grupo` y `magSource` por zona. `nst_imp` y `rms_imp` provienen del tratamiento de valores faltantes mediante imputación por mediana decadal. Se usan para revisar cobertura instrumental y ajuste del evento sin excluir registros. `magType_grupo` y `magSource` permiten revisar tipo de magnitud y fuente dominante por zona.
 
 Estos indicadores son apoyo interpretativo. No modifican conteos, tasas, magnitudes ni profundidades por zona; solo documentan condiciones que pueden afectar la comparación espacial.
+
+## Acta de reunión y propuestas no incorporadas {#sec-anexo-reunion-docentes}
+
+El lunes 22 de junio de 2026, a las 16:50 horas, el grupo **Tetrametric** sostuvo una reunión con los profesores responsables del tema. Durante esta instancia se formularon observaciones orientadas a mejorar el informe y se propusieron nuevos tópicos de estudio. La mayoría de estas recomendaciones fue acogida e incorporada al trabajo. Sin embargo, las siguientes propuestas no fueron desarrolladas en esta etapa:
+
+- **Segmentación de eventos no tectónicos:** se propuso distinguir los terremotos de otros eventos, como ensayos nucleares y explosiones. Como referencia complementaria, la USGS presenta una comparación entre la energía liberada por los terremotos y la asociada a otros eventos naturales y de origen humano *[@usgs_comparacion_energia_2025]*. Este análisis no se realizó porque la variable `type`, encargada de identificar el tipo de evento, presenta exclusivamente la categoría `earthquake` en la base estudiada. Por tanto, no existen otras categorías que puedan segmentarse o compararse.
+
+- **Aplicación de la ley de Omori-Utsu:** se sugirió analizar la relación temporal entre los sismos principales y sus réplicas, considerando el tiempo transcurrido y la cantidad de réplicas relevantes. Este análisis quedó fuera del alcance metodológico, dado que el catálogo estudiado considera únicamente eventos de magnitud igual o superior a 6,5. Este umbral excluye gran parte de las réplicas de menor magnitud necesarias para aplicar apropiadamente este enfoque.
+
+- **Influencia de las tormentas solares:** se planteó explorar una posible relación entre la actividad solar y la ocurrencia de terremotos. La propuesta no se incorporó porque no se encuentra alineada con la pregunta de investigación ni con el alcance definido para este informe. Además, la base de datos no contiene variables relativas a la actividad solar, por lo que su desarrollo habría requerido integrar fuentes externas y adoptar un diseño metodológico diferente.
+
 
 
