@@ -199,6 +199,8 @@ El estudio no incluye predicción de terremotos, alerta temprana, estimación pr
 
 El desarrollo se realiza en Positron, como entorno de trabajo para R y en QGIS, para la manipulación y visualización de datos georreferenciados. El flujo computacional se organiza mediante un script principal que ejecuta scripts específicos por etapa, con el fin de favorecer la trazabilidad, reproducibilidad y trabajo colaborativo del equipo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-flujo-trabajo]{anexo de flujo de trabajo e implementación computacional})}.
 
+Las recomendaciones formuladas durante la reunión con los profesores fueron incorporadas cuando resultaron pertinentes para el alcance y los datos disponibles. Las propuestas no desarrolladas y sus fundamentos se documentan en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-reunion-docentes]{acta de reunión y propuestas no incorporadas})}.
+
 ## Declaración y lineamientos para el uso responsable de inteligencia artificial
 
 El equipo declara que sí utilizó herramientas de inteligencia artificial generativa como apoyo técnico, documental y editorial durante el desarrollo de la asesoría. Su uso se mantuvo bajo criterios de trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible. La selección de fuentes, la construcción del análisis, la interpretación de los resultados, las conclusiones y las decisiones finales permanecieron bajo responsabilidad de los integrantes, y ninguna asistencia modificó los datos ni los resultados estadísticos presentados.
