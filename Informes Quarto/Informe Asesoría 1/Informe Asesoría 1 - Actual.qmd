@@ -1808,7 +1808,7 @@ La capa de zonas se guarda en `SIG/area_regiones.geojson` y luego se utiliza en 
 Este flujo conecta la revisión cartográfica de QGIS con el análisis estadístico en R: QGIS permite construir y verificar la delimitación espacial, mientras que R aplica esa delimitación a cada evento del catálogo para generar la variable `zona`. La variable `sig`, en cambio, se incorpora al objeto `sismos` desde `BBDD/sig.csv` durante la preparación en `Código.R`; por ello se documenta como una fuente complementaria de USGS unida por `id`, no como una variable producida por la intersección espacial.
 
 ```{=latex}
-\Needspace{22\baselineskip}
+\Needspace{18\baselineskip}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\textwidth,height=0.30\textheight,keepaspectratio]{\detokenize{../Imágenes y Recursos/implementacion-qgis-zonas.png}}
@@ -1856,7 +1856,7 @@ Extensión de ChatGPT en Positron & junio 2026 & Revisión posterior de ortograf
 \begin{center}\footnotesize\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de herramientas de inteligencia artificial utilizadas durante la asesoría.\end{center}
 \endgroup
 ```
-
+\newpage
 #### Detalle aclaratorio del uso
 
 NotebookLM se empleó como apoyo para la lectura en español de bibliografía en inglés, mientras que la extensión de ChatGPT en Positron se utilizó en tareas de programación, organización documental y revisión formal. La selección de fuentes, la construcción del análisis, la interpretación de los resultados y las decisiones finales permanecieron bajo responsabilidad del equipo.
