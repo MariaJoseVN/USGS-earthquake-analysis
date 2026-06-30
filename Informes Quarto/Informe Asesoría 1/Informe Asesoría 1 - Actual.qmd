@@ -1599,7 +1599,7 @@ Como control, se propone evaluar si `nst_imp`, `rms_imp`, `magType_grupo` y `mag
 \endgroup
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 ```
-
+\newpage
 # Anexos reproducibles
 
 ## Descripción de datos y parámetros de descarga
