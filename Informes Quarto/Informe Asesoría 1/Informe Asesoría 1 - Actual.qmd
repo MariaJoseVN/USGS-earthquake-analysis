@@ -116,7 +116,7 @@ header-includes:
 
 Este informe caracteriza la distribución espacial y temporal de 1.186 terremotos de magnitud $M \geq 6{,}5$ registrados por la United States Geological Survey (USGS) entre 2000 y 2025. El Cinturón de Fuego del Pacífico concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año. Ninguna de las otras zonas presenta una frecuencia comparable: el Cinturón Alpino-Himalayo registra 63 eventos y la Dorsal Meso-Atlántica, 28. Las magnitudes son similares entre el Cinturón de Fuego, el Cinturón Alpino-Himalayo y el resto del mundo, con medias cercanas a 6,9. La Dorsal Meso-Atlántica presenta una media menor de 6,69. Las diferencias espaciales son más evidentes en la profundidad: el Cinturón de Fuego incluye eventos superficiales, intermedios y profundos; el Cinturón Alpino-Himalayo no registra eventos profundos y la Dorsal Meso-Atlántica presenta únicamente eventos superficiales.
 
-En la dimensión temporal, la categoría "Fuerte" concentra la mayoría de los registros. Los 387 eventos de magnitud igual o superior a 7,0 presentan una mediana de 15,6 días entre eventos consecutivos, mientras que para los eventos "Grandes o extremos" esta aumenta a 123 días. Las tasas anuales muestran fluctuaciones entre periodos, pero no una tendencia uniforme en la frecuencia de los eventos. El Cinturón de Fuego mantiene el mayor número de registros durante todo el periodo. Por su parte, la mediana del RMS disminuye de 1,030 segundos en 2000--2009 a 0,745 segundos en 2020--2025, sin que este resultado demuestre por sí solo una mayor precisión de las localizaciones.
+En la dimensión temporal, la categoría "Fuerte" concentra la mayoría de los registros. Los 387 eventos de magnitud igual o superior a 7,0 presentan una mediana de 15,6 días entre eventos consecutivos, mientras que para los eventos "Grandes o extremos" esta aumenta a 123 días. Las tasas anuales muestran fluctuaciones entre periodos, pero no una tendencia uniforme en la frecuencia de los eventos. El Cinturón de Fuego mantiene el mayor número de registros durante todo el periodo. Por su parte, la mediana del RMS disminuye de 1,030 segundos en 2000-2009 a 0,745 segundos en 2020-2025, sin que este resultado demuestre por sí solo una mayor precisión de las localizaciones.
 
 En conjunto, los resultados indican que el Cinturón de Fuego se diferencia principalmente por la frecuencia y continuidad de su actividad. En significancia USGS, en cambio, ocho de los diez eventos con mayor puntaje se ubican en el Cinturón Alpino-Himalayo. En magnitud, el valor máximo del catálogo corresponde a 9,10 y se registra en el Cinturón de Fuego. Estas conclusiones describen el catálogo analizado y no permiten estimar peligro sísmico, establecer causalidad ni representar la recurrencia de una falla específica.
 
@@ -169,7 +169,7 @@ La bibliografía revisada entrega distintos aportes para interpretar la magnitud
 
 ## Objetivo general
 
-Caracterizar, de manera descriptiva, documentada y reproducible, la estructura espacial y temporal de los grandes terremotos ($M \geq 6{,}5$) registrados a nivel mundial en el catálogo de la USGS durante el período 2000--2025, integrando magnitud, profundidad, recurrencia, zonas sísmicas y condiciones de reporte, con el fin de identificar patrones relevantes de ocurrencia y comparabilidad del registro, y de establecer una base metodológica sólida para una eventual etapa de análisis inferencial. El umbral $M \geq 6{,}5$ delimita el foco en terremotos de relevancia según el interés del encargo.
+Caracterizar, de manera descriptiva, documentada y reproducible, la estructura espacial y temporal de los grandes terremotos ($M \geq 6{,}5$) registrados a nivel mundial en el catálogo de la USGS durante el período 2000-2025, integrando magnitud, profundidad, recurrencia, zonas sísmicas y condiciones de reporte, con el fin de identificar patrones relevantes de ocurrencia y comparabilidad del registro, y de establecer una base metodológica sólida para una eventual etapa de análisis inferencial. El umbral $M \geq 6{,}5$ delimita el foco en terremotos de relevancia según el interés del encargo.
 
 ## Objetivos específicos
 
@@ -194,7 +194,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 \newpage
 # Alcance del informe
 
-Este informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
+Este informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000-2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
 
 El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico.
 
@@ -229,23 +229,23 @@ Por último, el ajuste de la localización se caracterizó mediante `rms`. Se cu
 
 ## Caracterización temporal
 
-La caracterización temporal se realizó sobre `sismos_temporal`, objeto derivado de `sismos` mediante la incorporación de `fecha_mes` y la organización de los eventos por mes, año y década. Esta etapa tuvo como propósito describir la frecuencia de ocurrencia, la composición del catálogo y las condiciones de reporte a lo largo de 2000--2025.
+La caracterización temporal se realizó sobre `sismos_temporal`, objeto derivado de `sismos` mediante la incorporación de `fecha_mes` y la organización de los eventos por mes, año y década. Esta etapa tuvo como propósito describir la frecuencia de ocurrencia, la composición del catálogo y las condiciones de reporte a lo largo de 2000-2025.
 
 La frecuencia se resumió mediante conteos mensuales y anuales del catálogo completo. Los meses sin registros se completaron con cero porque representan ausencia observada de eventos que cumplen el criterio de selección y no valores faltantes. A partir de los conteos anuales se calcularon el promedio, el máximo y el mínimo para establecer el nivel general y la amplitud de las variaciones interanuales. Los conteos mensuales y anuales se organizaron, además, como series temporales regulares de frecuencia 12 y 1, respectivamente, con el fin de mantener una secuencia continua del período analizado.
 
-La composición temporal se examinó mediante `magnitud_cat`, conservando las categorías "Fuerte", "Mayor" y "Grande o extremo" definidas en la caracterización descriptiva. Se calcularon conteos anuales y decadales por categoría. Para comparar 2000--2009 y 2010--2019 con el período incompleto 2020--2025, los conteos decadales se transformaron en tasas anuales promedio usando como denominador diez, diez y seis años observados, respectivamente. Esta estandarización permitió comparar la frecuencia relativa de los períodos sin atribuir al último tramo una menor actividad únicamente por su duración.
+La composición temporal se examinó mediante `magnitud_cat`, conservando las categorías "Fuerte", "Mayor" y "Grande o extremo" definidas en la caracterización descriptiva. Se calcularon conteos anuales y decadales por categoría. Para comparar 2000-2009 y 2010-2019 con el período incompleto 2020-2025, los conteos decadales se transformaron en tasas anuales promedio usando como denominador diez, diez y seis años observados, respectivamente. Esta estandarización permitió comparar la frecuencia relativa de los períodos sin atribuir al último tramo una menor actividad únicamente por su duración.
 
 La recurrencia temporal global se calculó ordenando los eventos por `fecha_hora_utc` y obteniendo, para cada registro, los días transcurridos desde el evento anterior. El primer evento de cada grupo no genera un intervalo, por lo que el número de intervalos corresponde al número de eventos menos uno. El cálculo se realizó para el grupo agregado "Mayor o Grande o extremo", equivalente a magnitudes iguales o superiores a 7,0, y para cada categoría de `magnitud_cat`. Los intervalos se resumieron mediante media, mediana, cuartiles 25 y 75, mínimo y máximo. La mediana y los cuartiles permitieron representar el espaciamiento habitual sin que los intervalos excepcionalmente prolongados determinaran por sí solos el resumen. Esta recurrencia corresponde al catálogo mundial y no a una falla o zona tectónica específica.
 
 La evolución de los métodos de magnitud se evaluó mediante `magType_grupo`, conservando `mww`, `mwc` y `mwb` y agrupando los tipos menos frecuentes como "otros". Se calcularon la composición porcentual anual de estos grupos y la participación anual de `mww` para determinar si la estructura metodológica del catálogo se mantuvo constante durante el período. Este análisis se utilizó para contextualizar las comparaciones temporales de magnitud, dado que los métodos reportados no presentan la misma participación en todos los años.
 
-Por último, la evolución del ajuste de la localización se describió mediante `rms_imp`. Para cada año se calcularon la mediana y los cuantiles 25 y 75, y para los períodos 2000--2009, 2010--2019 y 2020--2025 se obtuvo el resumen equivalente. La mediana se utilizó como medida central por su menor sensibilidad a valores atípicos. El uso de la variable imputada permitió conservar todos los eventos y se sustentó en la comparación previa entre `rms` y `rms_imp`, que mostró un efecto prácticamente nulo de la imputación sobre la distribución. \asesoriaStyledRef{(las limitaciones interpretativas de la recurrencia y de las comparaciones entre períodos se documentan en el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
+Por último, la evolución del ajuste de la localización se describió mediante `rms_imp`. Para cada año se calcularon la mediana y los cuantiles 25 y 75, y para los períodos 2000-2009, 2010-2019 y 2020-2025 se obtuvo el resumen equivalente. La mediana se utilizó como medida central por su menor sensibilidad a valores atípicos. El uso de la variable imputada permitió conservar todos los eventos y se sustentó en la comparación previa entre `rms` y `rms_imp`, que mostró un efecto prácticamente nulo de la imputación sobre la distribución. \asesoriaStyledRef{(las limitaciones interpretativas de la recurrencia y de las comparaciones entre períodos se documentan en el \hyperref[sec-anexo-caracterizacion-temporal]{anexo de caracterización temporal})}.
 
 ## Caracterización espacial
 
 La caracterización espacial se realiza sobre `sismos`, a partir de `longitude` y `latitude`, con el fin de transformar la ubicación puntual de cada evento en una variable categórica que permita comparar zonas sísmicas. La variable `zona` se obtiene por intersección espacial entre los eventos y los polígonos de `area_regiones.geojson`, capa que delimita el Cinturón de Fuego, el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica; los eventos que no intersectan ningún polígono se clasifican como "Resto del mundo", categoría que reúne los eventos fuera de las tres zonas sísmicas principales. \asesoriaStyledRef{(véase en más detalle el \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
-Sobre `zona` se calculan la frecuencia de ocurrencia, mediante conteos, porcentajes y tasa anual, y su evolución temporal, mediante la serie anual de eventos por zona con su promedio, mínimo y máximo, para establecer cómo se distribuye la actividad entre zonas y si cada una la sostiene de forma continua o esporádica durante el período 2000--2025.
+Sobre `zona` se calculan la frecuencia de ocurrencia, mediante conteos, porcentajes y tasa anual, y su evolución temporal, mediante la serie anual de eventos por zona con su promedio, mínimo y máximo, para establecer cómo se distribuye la actividad entre zonas y si cada una la sostiene de forma continua o esporádica durante el período 2000-2025.
 
 La magnitud (`mag`) y la profundidad (`depth`) se resumen por zona mediante media, mediana, desviación estándar, máximo y cuantiles, y se representan con diagramas de caja, para comparar el nivel, la dispersión y la cola de cada distribución entre zonas. La media y la mediana se interpretan de forma conjunta por la asimetría de la profundidad, y los cuantiles describen la cola superior que las medidas centrales no reflejan. La composición por `magnitud_cat` y `profundidad_cat` permite observar, de forma resumida, las diferencias estructurales entre zonas.
 
@@ -429,7 +429,7 @@ Grande o extremo & 59 & 5,0 \% \\
 \endgroup
 ```
 
-La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000--2025.
+La distribución por categoría de magnitud muestra que la mayor parte del catálogo corresponde a eventos clasificados como "Fuerte", con 799 registros, equivalentes al 67,4 % del total. La categoría "Mayor" reúne 328 eventos, correspondiente al 27,7 %, mientras que los eventos "Grande o extremo" representan 59 casos, es decir, el 5,0 % del catálogo. Esta composición confirma que, aunque el estudio se concentra en eventos de magnitud elevada, la mayoría se ubica en el tramo inferior del rango analizado, mientras que los eventos de mayor magnitud constituyen un grupo reducido dentro del período 2000-2025.
 
 ### Profundidad
 
@@ -941,7 +941,7 @@ Década & Categoría de magnitud & Eventos & Tasa anual \\
 \end{minipage}
 ```
 
-Dado que el período 2020--2025 contiene solo seis años observados, la comparación decadal debe interpretarse mediante tasas anuales promedio y no a partir de conteos absolutos. Bajo este criterio, la década de 2010 presenta la mayor actividad relativa en las categorías "Fuerte" y "Mayor", con tasas de 32,9 y 13,4 eventos por año, respectivamente. El período 2020--2025 mantiene una tasa de eventos "Mayor" cercana a la observada en 2010, pero muestra una menor tasa anual de eventos "Fuerte" y "Grande o extremo". En conjunto, la comparación decadal evidencia fluctuaciones en la frecuencia de ocurrencia, sin mostrar un aumento o disminución uniforme en todas las categorías de magnitud.
+Dado que el período 2020-2025 contiene solo seis años observados, la comparación decadal debe interpretarse mediante tasas anuales promedio y no a partir de conteos absolutos. Bajo este criterio, la década de 2010 presenta la mayor actividad relativa en las categorías "Fuerte" y "Mayor", con tasas de 32,9 y 13,4 eventos por año, respectivamente. El período 2020-2025 mantiene una tasa de eventos "Mayor" cercana a la observada en 2010, pero muestra una menor tasa anual de eventos "Fuerte" y "Grande o extremo". En conjunto, la comparación decadal evidencia fluctuaciones en la frecuencia de ocurrencia, sin mostrar un aumento o disminución uniforme en todas las categorías de magnitud.
 
 ### Recurrencia temporal
 
@@ -975,7 +975,7 @@ Grande o extremo & 59 & 58 & $159{,}0$ & $123{,}0$ & $36{,}5$ & $216{,}0$ & $0{,
 ```
 
 ```{=latex}
-\vspace{-1.2\baselineskip}
+\vspace{-0.3\baselineskip}
 ```
 
 Desde una perspectiva descriptiva, la recurrencia temporal muestra que los eventos de mayor magnitud presentan intervalos más amplios entre ocurrencias consecutivas dentro del catálogo global. El grupo agregado "Mayor o Grande o extremo", comparable con los eventos desde magnitud 7,0, registra 387 eventos y una mediana de 15,6 días entre eventos consecutivos. Al separar por categorías, los eventos "Mayor" presentan una mediana de 19,6 días, mientras que los eventos "Grande o extremo" muestran una mediana considerablemente mayor, de 123,0 días. Esta diferencia es coherente con la menor frecuencia de los eventos de magnitud más alta dentro del período analizado. Además, la distancia entre media y mediana, especialmente en "Grande o extremo", sugiere una distribución asimétrica, con algunos períodos prolongados sin eventos de esa categoría. En conjunto, estos resultados describen el espaciamiento temporal de los grandes terremotos en el catálogo global, sin implicar regularidad física ni recurrencia de una falla o zona específica.
@@ -998,7 +998,7 @@ La evolución de `magType_grupo` muestra una transición marcada en la composici
 
 ### Evolución temporal del ajuste RMS
 
-La evolución temporal del ajuste de la localización se examinó mediante la mediana anual de `rms_imp` y su rango intercuartílico. La figura presenta las variaciones anuales, mientras que la tabla resume el nivel y la dispersión del indicador para los períodos 2000--2009, 2010--2019 y 2020--2025.
+La evolución temporal del ajuste de la localización se examinó mediante la mediana anual de `rms_imp` y su rango intercuartílico. La figura presenta las variaciones anuales, mientras que la tabla resume el nivel y la dispersión del indicador para los períodos 2000-2009, 2010-2019 y 2020-2025.
 
 ```{=latex}
 \Needspace{9\baselineskip}
@@ -1017,9 +1017,9 @@ La evolución temporal del ajuste de la localización se examinó mediante la me
 \toprule
 Período & Eventos & Mediana (s) & RIC (s) \\
 \midrule
-2000--2009 & 455 & 1,030 & 0,920--1,140 \\
-2010--2019 & 489 & 0,980 & 0,850--1,120 \\
-2020--2025 & 242 & 0,745 & 0,640--0,900 \\
+2000-2009 & 455 & 1,030 & 0,920--1,140 \\
+2010-2019 & 489 & 0,980 & 0,850--1,120 \\
+2020-2025 & 242 & 0,745 & 0,640--0,900 \\
 \bottomrule
 \end{tabular}
 
@@ -1060,7 +1060,7 @@ Año & $n$ & Mediana & RIC \\
 \end{tabular*}
 
 \vspace{-0.35em}
-\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-rms-anual-2019-2025}. RMS imputado anual, 2019--2025 (segundos).\end{center}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-rms-anual-2019-2025}. RMS imputado anual, 2019-2025 (segundos).\end{center}
 \endgroup
 \end{minipage}
 \hfill
@@ -1076,7 +1076,7 @@ Año & $n$ & Mediana & RIC \\
 \end{minipage}
 ```
 
-El RMS presenta una disminución temporal. Entre 2000--2009 y 2010--2019, la mediana disminuye de 1,030 a 0,980 segundos. El cambio es más marcado en 2020--2025, cuando alcanza 0,745 segundos. La evolución anual muestra que esta reducción se concentra desde 2019, con un mínimo de 0,700 segundos en 2022 y valores posteriores entre 0,720 y 0,755 segundos. El rango intercuartílico también se desplaza hacia valores menores. Esto indica una mayor concordancia entre los tiempos observados y calculados en los registros recientes, pero no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas estimadas.
+El RMS presenta una disminución temporal. Entre 2000-2009 y 2010-2019, la mediana disminuye de 1,030 a 0,980 segundos. El cambio es más marcado en 2020-2025, cuando alcanza 0,745 segundos. La evolución anual muestra que esta reducción se concentra desde 2019, con un mínimo de 0,700 segundos en 2022 y valores posteriores entre 0,720 y 0,755 segundos. El rango intercuartílico también se desplaza hacia valores menores. Esto indica una mayor concordancia entre los tiempos observados y calculados en los registros recientes, pero no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas estimadas.
 
 \newpage
 ## Caracterización espacial
@@ -1386,7 +1386,7 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \centering
 \includegraphics[width=0.77\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
 \vspace{-0.8em}
-\caption{Evolución anual del número de eventos por zona sísmica, 2000--2025.}
+\caption{Evolución anual del número de eventos por zona sísmica, 2000-2025.}
 \label{fig-evolucion-anual-eventos-zona}
 \end{figure}
 \vspace{-1.65em}
@@ -1418,7 +1418,7 @@ Dorsal Meso-Atlántica & $1{,}1$ & $0$ & $4$ & $11$ \\
 \end{tabular}
 
 \par\vspace{-0.55em}
-{\centering\footnotesize\itshape Tabla~\ref*{tbl-temporal-zona}. Resumen anual de eventos por zona (2000--2025).\par}
+{\centering\footnotesize\itshape Tabla~\ref*{tbl-temporal-zona}. Resumen anual de eventos por zona (2000-2025).\par}
 \endgroup
 ```
 
@@ -1507,7 +1507,7 @@ Las asociaciones restantes son, en general, débiles. Las variables de fuente pr
 
 El análisis supone que cada registro corresponde a un evento sísmico individual y utiliza como válidos los valores publicados por USGS. Los resultados caracterizan el catálogo analizado, es decir, eventos con magnitud igual o superior a 6,5 registrados entre 2000 y 2025. No representan la totalidad de la actividad sísmica mundial ni permiten establecer causalidad, predicción, peligro o riesgo sísmico.
 
-La comparabilidad temporal y espacial depende de las decisiones de construcción del catálogo: umbral de magnitud, período observado, categorías definidas, delimitación de zonas, fuentes de reporte y métodos de estimación de magnitud. Las magnitudes no fueron homogeneizadas entre `magType`, por lo que parte de las diferencias temporales puede reflejar cambios en la composición del método reportado. Además, el período 2020--2025 contiene solo seis años; por ello, las comparaciones decadales se interpretaron mediante tasas anuales. La recurrencia se calculó como intervalo entre eventos consecutivos del catálogo global y no como recurrencia física de una falla o zona específica.
+La comparabilidad temporal y espacial depende de las decisiones de construcción del catálogo: umbral de magnitud, período observado, categorías definidas, delimitación de zonas, fuentes de reporte y métodos de estimación de magnitud. Las magnitudes no fueron homogeneizadas entre `magType`, por lo que parte de las diferencias temporales puede reflejar cambios en la composición del método reportado. Además, el período 2020-2025 contiene solo seis años; por ello, las comparaciones decadales se interpretaron mediante tasas anuales. La recurrencia se calculó como intervalo entre eventos consecutivos del catálogo global y no como recurrencia física de una falla o zona específica.
 
 No se caracterizó la condición de réplica. El catálogo se construyó según la indicación de analizar sismos con magnitud igual o superior a 6,5, sin clasificar eventos principales y réplicas. Incorporar esa distinción requeriría criterios adicionales de secuencia sísmica, ventana temporal y proximidad espacial, lo que modificaría la unidad de análisis definida para este informe.
 
@@ -1525,7 +1525,7 @@ Respecto de la pregunta estadística, el Cinturón Alpino-Himalayo y la Dorsal M
 
 En términos temporales, la serie presenta fluctuaciones interanuales y diferencias entre períodos, pero no un aumento o disminución uniforme de la ocurrencia durante todo el intervalo. Los eventos de mayor magnitud son menos frecuentes y presentan mayores tiempos entre ocurrencias consecutivas: el grupo de magnitud igual o superior a 7,0 registra una mediana de 15,6 días, mientras que los eventos "Grande o extremo" alcanzan una mediana de 123,0 días. Estos intervalos describen el catálogo global y no deben interpretarse como recurrencia física de una falla o zona tectónica específica.
 
-La caracterización de variables de reporte permitió contextualizar la comparabilidad de los resultados. El tipo de magnitud y la fuente de magnitud no muestran diferencias espaciales que invaliden la comparación principal entre zonas. El RMS presenta una disminución temporal, desde una mediana de 1,030 segundos en 2000--2009 a 0,745 segundos en 2020--2025, lo que indica mayor concordancia entre tiempos observados y calculados en registros recientes. Sin embargo, este resultado no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas. La imputación del RMS tuvo efecto despreciable, mientras que la interpretación de `nst_imp` requiere mayor cautela por la mayor proporción de valores imputados.
+La caracterización de variables de reporte permitió contextualizar la comparabilidad de los resultados. El tipo de magnitud y la fuente de magnitud no muestran diferencias espaciales que invaliden la comparación principal entre zonas. El RMS presenta una disminución temporal, desde una mediana de 1,030 segundos en 2000-2009 a 0,745 segundos en 2020-2025, lo que indica mayor concordancia entre tiempos observados y calculados en registros recientes. Sin embargo, este resultado no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas. La imputación del RMS tuvo efecto despreciable, mientras que la interpretación de `nst_imp` requiere mayor cautela por la mayor proporción de valores imputados.
 
 Las asociaciones exploratorias refuerzan esta lectura descriptiva. La relación más fuerte entre variables numéricas corresponde a magnitud y significancia USGS, coherente con la construcción del indicador `sig`. Entre variables categóricas, las asociaciones más altas corresponden a variables administrativas o de reporte, como fuente y red. Por tanto, los patrones principales del informe se explican por la estructura espacial, temporal y de reporte del catálogo, sin que el análisis permita establecer causalidad, predicción, peligro sísmico ni independencia poblacional.
 
@@ -1575,7 +1575,7 @@ H_0:\ \phi=1
 H_1:\ \phi<1.
 $$
 
-De forma complementaria, podría considerarse KPSS y la independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020--2025 es un período incompleto *[@instructivo_asesoria_2026; @kagan_jackson_2016]*.
+De forma complementaria, podría considerarse KPSS y la independencia temporal podría evaluarse con Ljung-Box. Como extensión bibliográfica, se podrían usar modelos de conteo para comparar períodos o décadas, considerando que 2020-2025 es un período incompleto *[@instructivo_asesoria_2026; @kagan_jackson_2016]*.
 
 5) **Recurrencia temporal según categoría de magnitud.**  
 Como extensión bibliográfica, los tiempos entre eventos consecutivos podrían compararse por categoría o umbral de magnitud y contrastarse frente a una distribución exponencial. Ogata entrega la base general de procesos puntuales en sismología, mientras que la aplicación a tiempos entre eventos, modelos Poisson y umbrales de magnitud se vincula de forma más directa con Lombardi y Marzocchi, Kagan y Jackson, y Siegel et al. *[@ogata_1988; @lombardi_marzocchi_2007; @kagan_jackson_2016; @siegel_etal_2024]*. Esta propuesta debe mantener la interpretación descriptiva del informe: los intervalos pertenecen al catálogo global y no representan recurrencia física de una falla específica.
@@ -1671,7 +1671,7 @@ Además, la base original contiene variables asociadas a la medición instrument
 
 La depuración de la base tiene como propósito evaluar si los registros provenientes de USGS son adecuados para el análisis descriptivo, temporal y espacial del encargo. El control de calidad considera valores faltantes, duplicados, tipo de evento, estado de revisión, consistencia temporal, consistencia espacial, unidades de medida y cumplimiento del umbral definido sobre `mag`.
 
-El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables centrales no presentan problemas que obliguen a excluir registros: no se detectan duplicados por `id`, los eventos corresponden al tipo `earthquake`, las fechas se mantienen dentro del período 2000--2025 y las magnitudes cumplen el umbral de descarga definido.
+El diagnóstico distingue entre variables centrales del análisis y variables auxiliares de `sismos_raw`. Las variables centrales no presentan problemas que obliguen a excluir registros: no se detectan duplicados por `id`, los eventos corresponden al tipo `earthquake`, las fechas se mantienen dentro del período 2000-2025 y las magnitudes cumplen el umbral de descarga definido.
 
 Dentro de las variables auxiliares, `nst` y `rms` se incorporan al flujo actual porque entregan información complementaria sobre cobertura instrumental y calidad del ajuste del evento. `nst` registra el número de estaciones utilizadas o reportadas para localizar el sismo, mientras que `rms` resume el residuo del ajuste de localización. En la base descargada, `nst` presenta 402 valores faltantes de 1.186 registros y `rms` presenta 9 valores faltantes. Por esta razón, ambas variables se conservan en su versión original y, además, se crean `nst_imp` y `rms_imp` mediante imputación por mediana decadal. Esta decisión permite usarlas como indicadores de comparabilidad sin eliminar eventos del catálogo.
 
@@ -1925,7 +1925,7 @@ La mediana se utilizó por su resistencia a valores extremos y la agrupación de
 
 ## Caracterización temporal {#sec-anexo-caracterizacion-temporal}
 
-La comparación decadal debe leerse mediante tasas anuales promedio, porque el tramo 2020--2025 no corresponde a una década completa. Por ello, sus conteos acumulados no son directamente equivalentes a los de 2000--2009 y 2010--2019.
+La comparación decadal debe leerse mediante tasas anuales promedio, porque el tramo 2020-2025 no corresponde a una década completa. Por ello, sus conteos acumulados no son directamente equivalentes a los de 2000-2009 y 2010-2019.
 
 La recurrencia temporal reportada corresponde al espaciamiento entre eventos consecutivos dentro del catálogo global. No representa la recurrencia física de una falla, zona de subducción o región específica, por lo que no debe interpretarse como predicción ni como estimación de amenaza sísmica local.
 
