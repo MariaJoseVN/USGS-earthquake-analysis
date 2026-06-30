@@ -158,6 +158,7 @@ La sismicidad de mayor magnitud no se distribuye de forma homogénea sobre el pl
 
 Los límites entre placas coinciden con los principales cinturones sísmicos del planeta y sirven de referencia para la comparación espacial desarrollada en el informe. La descripción detallada de cada cinturón se documenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-zonas-sismicas]{anexo de zonas sísmicas})}.
 
+\newpage
 ## Categorización de los eventos según magnitud {#sec-categorizacion-magnitud}
 
 La bibliografía revisada entrega distintos aportes para interpretar la magnitud sísmica. Una base clásica permite distinguir terremotos mayores, asociados a magnitudes cercanas o superiores a $M \geq 7{,}0$, y grandes terremotos, próximos a $M \geq 7{,}8$ *[@gutenberg_richter_1944]*. También se respalda la utilidad de trabajar con catálogos globales y umbrales altos de magnitud para estudiar la ocurrencia de grandes terremotos *[@kagan_jackson_2016]*. Finalmente, los eventos $M \geq 8{,}0$ presentan relevancia instrumental y científica dentro del registro global *[@ammon_etal_2010]*. Estos antecedentes sirven como referencia conceptual para la posterior definición metodológica de categorías de magnitud dentro del catálogo analizado.
@@ -190,7 +191,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 \end{itemize}
 ```
-
+\newpage
 # Alcance del informe
 
 Este informe corresponde a una primera etapa del análisis estadístico descriptivo y exploratorio, centrada en la distribución espacial y temporal de eventos sísmicos de gran magnitud a nivel global. La unidad de análisis es cada evento registrado en el catálogo de la USGS durante el período 2000--2025 con magnitud $M \geq 6{,}5$, por lo que las conclusiones se derivan exclusivamente de dicha fuente y deben interpretarse dentro de sus límites, cobertura y características.
@@ -207,6 +208,7 @@ El equipo declara que sí utilizó herramientas de inteligencia artificial gener
 
 La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
 
+\newpage
 # Metodología
 
 ## Caracterización descriptiva
@@ -1076,7 +1078,7 @@ Año & $n$ & Mediana & RIC \\
 
 El RMS presenta una disminución temporal. Entre 2000--2009 y 2010--2019, la mediana disminuye de 1,030 a 0,980 segundos. El cambio es más marcado en 2020--2025, cuando alcanza 0,745 segundos. La evolución anual muestra que esta reducción se concentra desde 2019, con un mínimo de 0,700 segundos en 2022 y valores posteriores entre 0,720 y 0,755 segundos. El rango intercuartílico también se desplaza hacia valores menores. Esto indica una mayor concordancia entre los tiempos observados y calculados en los registros recientes, pero no demuestra por sí solo una mejora instrumental ni una mayor precisión de las coordenadas estimadas.
 
-
+\newpage
 ## Caracterización espacial
 
 La caracterización espacial asigna cada evento a una zona sísmica mediante intersección espacial y compara las zonas en frecuencia de ocurrencia, magnitud, profundidad, significancia y condiciones de reporte.
@@ -1090,14 +1092,14 @@ Entre 2000 y 2025, el Cinturón de Fuego concentra 892 eventos, equivalentes al 
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.50\textwidth}
-\vspace{0pt}
+\vspace{-1.05em}
 \centering
 \includegraphics[width=0.90\linewidth]{\detokenize{../Imágenes y Recursos/eventos-espacial-zona.png}}
 \par\vspace{-0.45em}
 \phantomsection
 \refstepcounter{figure}
 \label{fig-eventos-espacial-zona}
-{\centering\scriptsize\itshape Figura~\ref*{fig-eventos-espacial-zona}. Número de eventos y participación porcentual por zona sísmica.\par}
+{\centering\scriptsize\itshape Figura~\ref*{fig-eventos-espacial-zona}. Nro. de eventos y participación \% por zona sísmica.\par}
 \end{minipage}
 ```
 
@@ -1149,13 +1151,15 @@ Prof. desv. est. (km) & $155{,}2$ & $216{,}9$ & $64{,}2$ & $5{,}0$ \\
 Los valores de la profundidad difieren ampliamente entre zonas, desde una profundidad con una desviación estándar de 155,2 km en el Cinturón de Fuego y una desviación estándar de 5,0 km de la Dorsal Meso-Atlántica.
 
 ```{=latex}
+\vspace{-1.65em}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
-\vspace{-1.35em}
+\includegraphics[width=0.72\textwidth]{\detokenize{../Imágenes y Recursos/magnitud-profundidad-zona.png}}
+\vspace{-1.95em}
 \caption{Distribución de magnitud y de profundidad por zona sísmica.}
 \label{fig-magnitud-profundidad-zona}
 \end{figure}
+\vspace{-1.10em}
 ```
 
 Los diagramas de caja reflejan esta doble situación. En magnitud, las distribuciones de las distintas zonas se superponen, con medianas y rangos intercuartílicos semejantes, mientras que en profundidad se distinguen con claridad: el Cinturón de Fuego presenta numerosos eventos profundos, frente a una Dorsal Meso-Atlántica con una profundidad completamente superficial.
@@ -1188,7 +1192,7 @@ Máx & $9{,}10$ & $8{,}60$ & $7{,}80$ & $7{,}10$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\bottomtablecaption{tbl-cuantiles-magnitud-zona}{Cuantiles y máximo de magnitud por zona.}
+\bottomtablecaption{tbl-cuantiles-magnitud-zona}{Cuantiles y máx. de magnitud por zona.}
 \endgroup
 \end{minipage}
 \hfill
@@ -1217,7 +1221,7 @@ Máx & $676{,}4$ & $664{,}0$ & $231{,}0$ & $35{,}0$ \\
 \end{tabular}
 
 \vspace{-0.2em}
-\bottomtablecaption{tbl-cuantiles-profundidad-zona}{Cuantiles y máximo de profundidad por zona (km).}
+\bottomtablecaption{tbl-cuantiles-profundidad-zona}{Cuantiles y máx. de profundidad por zona (km).}
 \endgroup
 \end{minipage}
 ```
@@ -1362,7 +1366,7 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 \bottomtablecaption{tbl-significancia-zona}{Significancia USGS por zona.}
 \endgroup
 
-\vspace{0.55em}
+\vspace{-1.05em}
 
 \centering
 \includegraphics[width=0.88\linewidth]{\detokenize{../Imágenes y Recursos/significancia-zona.png}}
@@ -1377,13 +1381,15 @@ Magnitud media & $6{,}91$ & $6{,}90$ & $6{,}69$ & $6{,}92$ \\
 ### Zona por Caracterización Temporal
 
 ```{=latex}
+\vspace{-1.85em}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.72\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
+\includegraphics[width=0.77\textwidth]{\detokenize{../Imágenes y Recursos/evolucion-anual-eventos-zona.png}}
 \vspace{-0.8em}
 \caption{Evolución anual del número de eventos por zona sísmica, 2000--2025.}
 \label{fig-evolucion-anual-eventos-zona}
 \end{figure}
+\vspace{-1.65em}
 ```
 
 
@@ -1463,7 +1469,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\makebox[\linewidth][c]{\includegraphics[width=0.75\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}}
+\makebox[\linewidth][c]{\includegraphics[width=0.95\linewidth, trim=0 25 0 15, clip]{\detokenize{../Imágenes y Recursos/matriz-correlacion-numericas.png}}}
 \par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
@@ -1474,7 +1480,7 @@ El análisis exploratorio de asociatividad describe la dirección y la intensida
 \begin{minipage}[t]{0.485\textwidth}
 \vspace{0pt}
 \centering
-\makebox[\linewidth][c]{\includegraphics[width=0.75\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}}
+\makebox[\linewidth][c]{\includegraphics[width=0.95\linewidth, trim=0 25 0 25, clip]{\detokenize{../Imágenes y Recursos/matriz-asociacion-categorica.png}}}
 \par\vspace{0.25em}
 \phantomsection
 \refstepcounter{figure}
