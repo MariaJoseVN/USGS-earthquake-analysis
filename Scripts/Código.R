@@ -13,6 +13,11 @@ library(GGally)    # Matriz grafica de correlaciones numericas.
 library(corrplot)  # Matrices de correlacion y asociacion.
 library(sf)        # Lectura de zonas sismicas y cruces espaciales.
 
+# Paquetes para la etapa inferencial (Informe Asesoria 2).
+# Instalar una vez por maquina; cada script 06-12 carga los que usa.
+# install.packages(c("MVN", "heplots", "psych", "FSA", "rcompanion", "effsize",
+#   "ppcor", "FactoMineR", "nnet", "brglm2", "AER", "MASS", "tseries", "car"))
+
 options(
   scipen = 999,
   tibble.width = Inf,
@@ -160,3 +165,17 @@ source(file.path("Scripts", "02.1_analisis_descriptivo_significancia.R"), echo =
 source(file.path("Scripts", "02.2_analisis_descriptivo_categoricas.R"), echo = TRUE, print.eval = TRUE)
 
 source(file.path("Scripts", "05_analisis_asociatividad.R"), echo = TRUE, print.eval = TRUE)
+
+#Etapa inferencial (Informe Asesoria 2)----
+# Los scripts 06-12 usan la base `sismos` ya preparada (con zona, nst_imp y rms_imp).
+# Cada uno tiene una guarda que carga 00_preparacion_base.R si se ejecuta aislado.
+# Para iterar rapido sin correr todo el Informe 1, usar la ruta rapida:
+#   source(file.path("Scripts", "00_preparacion_base.R"))
+# El script 12 (sensibilidad) se ejecuta al final, cuando 07, 08, 10 y 11 esten cerrados.
+source(file.path("Scripts", "06_inf_comparabilidad.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "07_inf_frecuencia.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "08_inf_magnitud_profundidad.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "09_inf_temporal.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "10_inf_extremos.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "11_inf_clasificacion.R"), echo = TRUE, print.eval = TRUE)
+source(file.path("Scripts", "12_inf_sensibilidad.R"), echo = TRUE, print.eval = TRUE)
