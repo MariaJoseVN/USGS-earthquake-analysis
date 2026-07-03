@@ -145,5 +145,61 @@ puente <- tabla_zona_anio %>%
   arrange(desc(tasa_anual)) %>%
   dplyr::select(zona, eventos, area_Mkm2, tasa_anual, densidad_Mkm2_anual)
 puente
-#Se confirmó el hallazgo: por conteo bruto "Resto del mundo" va 2º, pero por densidad cae al último lugar. 
+#Se confirmó el hallazgo: por conteo bruto "Resto del mundo" va 2º, pero por densidad cae al último lugar.
 # Es activo solo porque es enorme; por km² es el menos activo de todos.
+
+
+#Figura de la seccion: tasa anual vs densidad por zona----
+# Misma paleta y etiquetas del Informe 1 para mantener la identidad visual. Cada panel
+# se ordena por su propia metrica y el color se mantiene por zona, de modo que el
+# reordenamiento sea visible: "Resto del mundo" pasa del 2do lugar (tasa) al ultimo
+# (densidad). Se exporta a la carpeta de imagenes que consume el .qmd del Informe 2.
+
+colores_zona <- c(
+  "Cinturon de Fuego"        = "#e31a1c",
+  "Cinturon Alpino-Himalayo" = "#47cea8",
+  "Dorsal Meso-Atlantica"    = "#dfbf8a",
+  "Resto del mundo"          = "#9e9e9e"
+)
+etiquetas_zona <- c(
+  "Cinturon de Fuego"        = "C. Fuego",
+  "Cinturon Alpino-Himalayo" = "C. Alpino-H.",
+  "Dorsal Meso-Atlantica"    = "Dorsal M.-Atl.",
+  "Resto del mundo"          = "Resto"
+)
+
+ruta_fig <- file.path("Informes Quarto", "Imágenes y Recursos",
+                      "inf2-frecuencia-tasa-densidad.png")
+
+png(ruta_fig, width = 2200, height = 1000, res = 200)
+par(mfrow = c(1, 2), bg = "white", oma = c(0, 0, 3, 0), mar = c(5, 4.5, 3, 1) + 0.1)
+
+# Panel izquierdo: tasa anual bruta
+d1 <- puente[order(-puente$tasa_anual), ]
+b1 <- barplot(d1$tasa_anual,
+              names.arg = etiquetas_zona[as.character(d1$zona)],
+              col = colores_zona[as.character(d1$zona)], border = "gray30",
+              las = 1, ylim = c(0, max(d1$tasa_anual) * 1.15),
+              main = "Tasa anual", ylab = "Eventos por anio")
+text(b1, d1$tasa_anual, labels = format(round(d1$tasa_anual, 1), decimal.mark = ","),
+     pos = 3, cex = 0.85)
+box()
+
+# Panel derecho: densidad por millon de km2
+d2 <- puente[order(-puente$densidad_Mkm2_anual), ]
+b2 <- barplot(d2$densidad_Mkm2_anual,
+              names.arg = etiquetas_zona[as.character(d2$zona)],
+              col = colores_zona[as.character(d2$zona)], border = "gray30",
+              las = 1, ylim = c(0, max(d2$densidad_Mkm2_anual) * 1.15),
+              main = "Densidad por superficie", ylab = "Eventos por millon de km2 y anio")
+text(b2, d2$densidad_Mkm2_anual, labels = format(round(d2$densidad_Mkm2_anual, 3), decimal.mark = ","),
+     pos = 3, cex = 0.85)
+box()
+
+mtext("Frecuencia por zona: el orden cambia al controlar la superficie",
+      side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
+dev.off()
+
+par(mfrow = c(1, 1))
+
+dibujar_frecuencia_zona() #para que el gráfico aparezca en la ventana PLOTS, lo anterior hay que correrlo todo junto 
