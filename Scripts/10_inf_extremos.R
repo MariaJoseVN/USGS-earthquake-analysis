@@ -8,21 +8,176 @@
 # Paquetes: dplyr, rcompanion (cramerV). chisq y glm binomial son base.
 
 
-# Cargar la base si no esta disponible (ruta rapida de desarrollo).
-if (!exists("sismos") || !"zona" %in% names(sismos)) {
-  source(file.path("Scripts", "00_preparacion_base.R"))
-}
+# 1. Cargar la base preparada----
 
-# library(dplyr)
-# library(rcompanion)
+source(file.path("Scripts", "00_preparacion_base.R"))
 
-# Pasos previstos:
-# 5.1 Tabla zona x magnitud_cat con observados y esperados. chisq.test con
-#     simulate.p.value = TRUE, B = 10000. V de Cramer con correccion de sesgo.
-# 5.2 evento_mayor = (mag >= 7.0). glm(evento_mayor ~ zona + depth, family = binomial).
-#     LR por variable (drop1, test = "Chisq"), odds ratios con IC 95 % (exp(confint)).
-# 5.3 Comparar depth continua vs profundidad_cat por AIC; elegir y justificar.
-# 5.4 M >= 7,8: solo conteos por zona y tasa anual, sin modelo (muestra insuficiente
-#     en zonas menores).
 
-message("10_inf_extremos.R: stub pendiente de implementacion (Fase 5 / C6).")
+# 2. Seleccionar las variables de estudio----
+
+base_fase5 <- sismos %>%
+  dplyr::select(
+    zona,
+    mag,
+    depth,
+    magnitud_cat,
+    profundidad_cat
+  )
+
+
+# 3. Definir la variable de agrupacion----
+
+base_fase5 <- base_fase5 %>%
+  mutate(
+    zona = factor(
+      zona,
+      levels = c(
+        "Cinturon de Fuego",
+        "Resto del mundo",
+        "Cinturon Alpino-Himalayo",
+        "Dorsal Meso-Atlantica"
+      )
+    )
+  )
+
+
+# 4. Frecuencias observadas por zona y categoria----
+
+tabla_zona_magnitud <- table(
+  zona = base_fase5$zona,
+  categoria = base_fase5$magnitud_cat
+)
+
+tabla_zona_magnitud
+addmargins(tabla_zona_magnitud)
+
+
+# 5. Distribucion porcentual dentro de cada zona----
+
+porcentaje_zona_magnitud <- prop.table(
+  tabla_zona_magnitud,
+  margin = 1
+) * 100
+
+round(porcentaje_zona_magnitud, 1)
+
+
+# 6. Frecuencias esperadas bajo independencia----
+
+chi_diagnostico <- suppressWarnings(
+  chisq.test(tabla_zona_magnitud)
+)
+
+frecuencias_esperadas <- chi_diagnostico$expected
+
+round(frecuencias_esperadas, 2)
+frecuencias_esperadas < 5
+sum(frecuencias_esperadas < 5)
+
+
+# 7. Chi-cuadrado con simulacion Monte Carlo----
+
+set.seed(2026)
+
+chi_montecarlo <- chisq.test(
+  tabla_zona_magnitud,
+  simulate.p.value = TRUE,
+  B = 10000
+)
+
+chi_montecarlo
+
+
+# 8. Tamanio de asociacion: V de Cramer----
+
+v_cramer_magnitud <- rcompanion::cramerV(
+  tabla_zona_magnitud,
+  bias.correct = TRUE
+)
+
+v_cramer_magnitud
+
+
+# 9. Crear indicador de evento mayor----
+
+base_fase5 <- base_fase5 %>%
+  mutate(
+    evento_mayor = as.integer(mag >= 7.0)
+  )
+
+table(
+  zona = base_fase5$zona,
+  evento_mayor = base_fase5$evento_mayor
+)
+
+
+# 10. Regresion logistica con profundidad continua----
+
+modelo_logit_depth <- glm(
+  evento_mayor ~ zona + depth,
+  family = binomial(link = "logit"),
+  data = base_fase5
+)
+
+summary(modelo_logit_depth)
+
+# 11. Significación por razón de verosimilitud----
+
+lr_logit_depth <- drop1(
+  modelo_logit_depth,
+  test = "Chisq"
+)
+
+lr_logit_depth
+
+# 12. Odds ratios e intervalos de confianza----
+
+or_logit_depth <- exp(
+  cbind(
+    OR = coef(modelo_logit_depth),
+    confint(modelo_logit_depth)
+  )
+)
+
+or_logit_depth
+
+# 13. Regresión logística con profundidad categórica----
+
+modelo_logit_depth_cat <- glm(
+  evento_mayor ~ zona + profundidad_cat,
+  family = binomial(link = "logit"),
+  data = base_fase5
+)
+
+summary(modelo_logit_depth_cat)
+
+# 14. LR del modelo con profundidad categórica----
+
+lr_logit_depth_cat <- drop1(
+  modelo_logit_depth_cat,
+  test = "Chisq"
+)
+
+lr_logit_depth_cat
+
+
+# 15. Comparación de modelos por AIC----
+
+comparacion_aic_depth <- AIC(
+  modelo_logit_depth,
+  modelo_logit_depth_cat
+)
+
+comparacion_aic_depth
+
+# 16. Eventos grandes o extremos por zona----
+
+resumen_extremos <- base_fase5 %>%
+  group_by(zona) %>%
+  summarise(
+    eventos_extremos = sum(mag >= 7.8),
+    tasa_anual = eventos_extremos / 26,
+    .groups = "drop"
+  )
+
+resumen_extremos
