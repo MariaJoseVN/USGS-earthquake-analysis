@@ -10,7 +10,7 @@ source(file.path("Scripts", "00_preparacion_base.R"))
 # 2. Seleccionar las variables de estudio----
 
 base_fase3 <- sismos %>%
-  select(
+  dplyr::select(       # calificado: MASS (cargado por el script 07) tambien exporta select()
     zona,
     mag,
     depth
@@ -122,6 +122,10 @@ invisible(
 par(mfrow = c(1, 1))
 
 # 6. Normalidad univariada y multivariante----
+# Requiere MVN version >= 6 (API con mvn_test / univariate_test). En v5 y anteriores
+# estos argumentos se llaman distinto (mvnTest / univariateTest) y el script romperia:
+# todos los integrantes deben tener la misma version (>= 6) para que el informe se
+# reproduzca en cualquier maquina. Verificado con MVN 6.3.
 
 normalidad_fase3 <- MVN::mvn(
   data = base_fase3,
@@ -174,6 +178,19 @@ matriz_pearson
 bartlett_fase3
 spearman_fase3
 
+
+#Decision de la compuerta C3----
+# Resultados de los supuestos (Bloque A):
+#   - Mardia (asimetria y curtosis): rechaza normalidad en las 4 zonas (p < 0,001).
+#   - Shapiro-Wilk (mag y depth): rechaza normalidad en todas (p < 0,001).
+#   - Box-M: chi2 = 286,5 ; p < 2,2e-16 -> matrices de covarianza heterogeneas (rechaza).
+#   - Bartlett (esfericidad): chi2 = 0,26 ; p = 0,607 -> NO rechaza; mag y depth casi no
+#     correlacionan (dato util para la Fase 6: cada variable aporta informacion distinta).
+#
+# DECISION: normalidad rechazada Y covarianzas heterogeneas, por lo que la ruta
+# parametrica (MANOVA) no se justifica. Se toma la RUTA NO PARAMETRICA (Kruskal-Wallis,
+# Dunn y tamanos de efecto), que es el Bloque B. Este es el punto de quiebre del relato:
+# la etapa inferencial deja de comparar vectores de medias y pasa a comparar distribuciones.
 
 
 #Bloque B del Checklist----

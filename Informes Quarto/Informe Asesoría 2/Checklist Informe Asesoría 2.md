@@ -2,7 +2,7 @@
 
 **Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 3 de julio de 2026
 
-**Avance:** Fases 0, 1 y 2 cerradas (checkpoints C0, C1 y C2). Fase 3 en curso (compañero). Siguiente: Fase 4 (temporal, script 09).
+**Avance:** Fases 0, 1 y 2 cerradas (C0, C1, C2). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica confirmada), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 4 (temporal, script 09).
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -71,7 +71,7 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 **Qué se espera:** rechazo claro de normalidad (la profundidad es extremadamente asimétrica: media 89,6 km contra mediana 29,4 km) y por tanto ruta no paramétrica. Si algo NO rechazara, detenerse y revisar antes de seguir.
 
-**Checkpoint C3 (compuerta dura):** resultados de supuestos (3.1 a 3.4) ANTES de correr el bloque B, para validar la decisión de ruta.
+**Checkpoint C3 (compuerta dura):** ✅ **Cerrado (3 jul 2026), script `08_inf_magnitud_profundidad.R` (revisado y verificado en ejecución con MVN 6.3).** Mardia y Shapiro-Wilk rechazan normalidad en las 4 zonas (p < 0,001); Box-M χ² = 286,5, p < 2,2e-16 (covarianzas heterogéneas); Bartlett χ² = 0,26, p = 0,607 (mag y depth casi no correlacionan). **Decisión: ruta no paramétrica** (MANOVA no se justifica). Decisión documentada en el script. Nota: requiere MVN ≥ 6 en todas las máquinas.
 
 ### Bloque B: contrastes
 
@@ -80,7 +80,7 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 - [x] **3.8** Delta de Cliff (`effsize::cliff.delta()`) para los pares protagonistas: Fuego-Dorsal y Fuego-Alpino en ambas variables.
 - [ ] **3.9** IC bootstrap (percentil o BCa, R = 10.000) para la mediana de `mag` y `depth` por zona. Con n = 28 en la Dorsal el IC saldrá ancho; eso es el resultado, no un problema.
 
-**Checkpoint C4:** tabla completa del bloque B (KW, Dunn, tamaños de efecto, IC por zona).
+**Checkpoint C4:** 🟡 **Sustancialmente cerrado (3 jul 2026); falta el 3.9 (bootstrap).** Magnitud: KW H = 8,32, p = 0,040, pero ε² = 0,007 (significativo pero **despreciable**; solo la Dorsal se separa). Profundidad: KW H = 69,50, p ≈ 0, ε² = 0,059; Cliff Fuego-Dorsal = 0,783 (grande). Lectura: la magnitud casi no separa zonas, la profundidad sí. Ninguna variable sola discrimina bien todas las zonas, lo que arma el terreno para la clasificación de la Fase 6.
 
 ---
 
