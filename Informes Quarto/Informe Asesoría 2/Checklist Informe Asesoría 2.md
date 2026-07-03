@@ -61,11 +61,11 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ### Bloque A: supuestos (propuesta rescatada del Informe 1, alfa = 0,10 + gráficos)
 
-- [ ] **3.1** Normalidad multivariante de Mardia por zona (no global): `MVN::mvn(datos[, c("mag","depth")], subset = "zona", mvnTest = "mardia")`. Reportar asimetría y curtosis con sus p-valores por zona.
-- [ ] **3.2** QQ chi-cuadrado de las distancias de Mahalanobis por zona y QQ univariados de `mag` y `depth`. Guardar las figuras.
-- [ ] **3.3** M-Box: `heplots::boxM(cbind(mag, depth) ~ zona, data = sismos)`. Advertencia para el texto: M-Box es hipersensible a la no normalidad, así que su rechazo se interpreta junto al de Mardia, no aislado.
-- [ ] **3.4** Esfericidad de Bartlett sobre la matriz de correlaciones: `psych::cortest.bartlett()`.
-- [ ] **3.5** Compuerta documentada: con los resultados de 3.1 a 3.4 se declara la ruta paramétrica o no paramétrica.
+- [x] **3.1** Normalidad multivariante de Mardia por zona (no global): `MVN::mvn(datos[, c("mag","depth")], subset = "zona", mvnTest = "mardia")`. Reportar asimetría y curtosis con sus p-valores por zona.
+- [x] **3.2** QQ chi-cuadrado de las distancias de Mahalanobis por zona y QQ univariados de `mag` y `depth`. Guardar las figuras.
+- [x] **3.3** M-Box: `heplots::boxM(cbind(mag, depth) ~ zona, data = sismos)`. Advertencia para el texto: M-Box es hipersensible a la no normalidad, así que su rechazo se interpreta junto al de Mardia, no aislado.
+- [x] **3.4** Esfericidad de Bartlett sobre la matriz de correlaciones: `psych::cortest.bartlett()`.
+- [x] **3.5** Compuerta documentada: con los resultados de 3.1 a 3.4 se declara la ruta paramétrica o no paramétrica.
 
 **Qué se espera:** rechazo claro de normalidad (la profundidad es extremadamente asimétrica: media 89,6 km contra mediana 29,4 km) y por tanto ruta no paramétrica. Si algo NO rechazara, detenerse y revisar antes de seguir.
 
@@ -73,9 +73,9 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ### Bloque B: contrastes
 
-- [ ] **3.6** `kruskal.test(mag ~ zona)` y `kruskal.test(depth ~ zona)`. Reportar H, grados de libertad, p, y epsilon cuadrado (`rcompanion::epsilonSquared()` o a mano: (H - k + 1)/(n - k)).
-- [ ] **3.7** Post-hoc: `FSA::dunnTest(..., method = "holm")` para las 6 comparaciones por variable. Tabla completa de Z, p crudo y p ajustado.
-- [ ] **3.8** Delta de Cliff (`effsize::cliff.delta()`) para los pares protagonistas: Fuego-Dorsal y Fuego-Alpino en ambas variables.
+- [x] **3.6** `kruskal.test(mag ~ zona)` y `kruskal.test(depth ~ zona)`. Reportar H, grados de libertad, p, y epsilon cuadrado (`rcompanion::epsilonSquared()` o a mano: (H - k + 1)/(n - k)).
+- [x] **3.7** Post-hoc: `FSA::dunnTest(..., method = "holm")` para las 6 comparaciones por variable. Tabla completa de Z, p crudo y p ajustado.
+- [x] **3.8** Delta de Cliff (`effsize::cliff.delta()`) para los pares protagonistas: Fuego-Dorsal y Fuego-Alpino en ambas variables.
 - [ ] **3.9** IC bootstrap (percentil o BCa, R = 10.000) para la mediana de `mag` y `depth` por zona. Con n = 28 en la Dorsal el IC saldrá ancho; eso es el resultado, no un problema.
 
 **Checkpoint C4:** tabla completa del bloque B (KW, Dunn, tamaños de efecto, IC por zona).
