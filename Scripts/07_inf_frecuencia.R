@@ -171,7 +171,8 @@ etiquetas_zona <- c(
 ruta_fig <- file.path("Informes Quarto", "Imágenes y Recursos",
                       "inf2-frecuencia-tasa-densidad.png")
 
-png(ruta_fig, width = 2200, height = 1000, res = 200)
+# Se dibuja PRIMERO en pantalla (aparece en el panel PLOTS al correr este bloque) y
+# luego se copia lo mostrado a PNG con dev.copy. Correr el bloque completo de una vez.
 par(mfrow = c(1, 2), bg = "white", oma = c(0, 0, 3, 0), mar = c(5, 4.5, 3, 1) + 0.1)
 
 # Panel izquierdo: tasa anual bruta
@@ -198,8 +199,9 @@ box()
 
 mtext("Frecuencia por zona: el orden cambia al controlar la superficie",
       side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
+
+# Guardar a PNG lo que quedo en el panel (para el .qmd del Informe 2)
+dev.copy(png, filename = ruta_fig, width = 2200, height = 1000, res = 200)
 dev.off()
 
 par(mfrow = c(1, 1))
-
-dibujar_frecuencia_zona() #para que el gráfico aparezca en la ventana PLOTS, lo anterior hay que correrlo todo junto 
