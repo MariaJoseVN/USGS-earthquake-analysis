@@ -353,10 +353,22 @@ para medianas por zona, epsilon cuadrado y delta de Cliff. -->
 
 ## Estructura temporal de la ocurrencia {#sec-res-temporal}
 
-<!-- Análisis mínimo 3 del instructivo. ADF y KPSS en conjunto, Ljung-Box, tasas por
-período, estacionalidad mensual, tiempos entre eventos frente a la exponencial. -->
+<!-- Resultados generados en Scripts/09_inf_temporal.R. -->
 
-*Pendiente: dócimas de estacionariedad e independencia, comparación de tasas entre períodos y ajuste exponencial de los tiempos entre eventos.*
+El análisis temporal se realiza a dos granularidades, anual (26 conteos) y mensual (312 conteos). La serie mensual resulta estacionaria: la dócima de Dickey-Fuller aumentada rechaza la raíz unitaria ($p < 0{,}01$) y la de KPSS no rechaza la estacionariedad ($p > 0{,}10$), de modo que ambas concuerdan. En la serie anual la lectura es coherente aunque menos concluyente por la baja potencia de solo 26 observaciones. La dócima de Ljung-Box no detecta autocorrelación relevante en ninguna de las dos series (anual $p = 0{,}58$; mensual $p = 0{,}15$ a rezago 12). No se observa estacionalidad mensual: el factor mes no resulta significativo ($p = 0{,}050$), consistente con la ausencia de un ciclo anual en la ocurrencia sísmica.
+
+Las tasas medias anuales por período son de 45,5, 48,9 y 40,3 eventos por año. El modelo de conteos, corregido por la sobredispersión observada mediante una especificación quasi-Poisson, no encuentra diferencias significativas entre períodos ($F = 1{,}92$; $p = 0{,}170$). El modelo Poisson sin corregir sugería una diferencia ($p = 0{,}047$), pero ese resultado era un artefacto de subestimar la varianza. La conclusión robusta es que la ocurrencia fluctúa entre años sin una tendencia ni un cambio de tasa sostenido, en línea con la caracterización del Informe Asesoría 1.
+
+Los tiempos entre eventos consecutivos se contrastan frente a una distribución exponencial mediante bootstrap paramétrico. Las medianas reproducen las del Informe Asesoría 1: 15,6 días para el grupo $M \geq 7{,}0$ y 122,8 días para la categoría "Grande o extremo". El ajuste distingue por magnitud: los eventos "Mayor" ($p = 0{,}102$) y "Grande o extremo" ($p = 0{,}531$) resultan compatibles con un proceso de Poisson sin memoria, mientras que los eventos "Fuerte" se apartan de él ($p < 0{,}001$), lo que es coherente con un mayor agrupamiento de los eventos de menor magnitud. El grupo combinado $M \geq 7{,}0$ rechaza la exponencial ($p = 0{,}001$), pero por una razón técnica: reúne dos bandas con tasas distintas, y una mezcla de exponenciales no es exponencial, por lo que ese rechazo no constituye evidencia contra el comportamiento de Poisson dentro de cada banda.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
+\caption{Diagrama cuantil-cuantil de los tiempos entre eventos de magnitud $M \geq 7{,}0$ frente a la distribución exponencial. Los puntos sobre la recta indicarían compatibilidad; la desviación en la cola refleja la mezcla de bandas de magnitud con tasas distintas.}
+\label{fig-inf2-temporal-qq}
+\end{figure}
+```
 
 ## Eventos fuertes y extremos {#sec-res-extremos}
 

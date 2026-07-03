@@ -2,7 +2,7 @@
 
 **Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 3 de julio de 2026
 
-**Avance:** Fases 0, 1 y 2 cerradas (C0, C1, C2). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica confirmada), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 4 (temporal, script 09).
+**Avance:** Fases 0, 1, 2 y 4 cerradas (C0, C1, C2, C5). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 5 (eventos fuertes, script 10) o Fase 6 (clasificación, script 11).
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -86,18 +86,17 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ## Fase 4. Estructura temporal (sección 7.4, análisis mínimo 3)
 
-- [ ] **4.1** Serie anual de conteos (n = 26): `tseries::adf.test()` (unilateral, H0 raíz unitaria) y `tseries::kpss.test(..., null = "Level")` (H0 estacionaria). Se concluye solo si concuerdan; si se contradicen, se reporta la ambigüedad con la advertencia de baja potencia (26 puntos).
-- [ ] **4.2** `Box.test(serie_anual, lag = 5, type = "Ljung-Box")` para independencia serial. Para la serie mensual (n = 312), repetir con lag = 12 y 24.
-- [ ] **4.3** Comparación de tasas entre períodos: agregar `periodo` al GLM de la fase 2 (`n ~ zona + periodo` con el mismo offset) y contrastar el efecto período por razón de verosimilitud (`drop1(..., test = "Chisq")` o `anova`).
-- [ ] **4.4** Estacionalidad mensual: GLM Poisson de conteos mensuales con el mes como factor (offset por días del mes si se quiere finura) y contraste LR global del factor mes. Se espera no significativo; la ausencia de estacionalidad se redacta como verificación superada, no como fracaso.
-- [ ] **4.5** Tiempos entre eventos frente a la exponencial, para el grupo M >= 7,0 y por categoría:
-  - [ ] calcular intervalos en días con `diff()` sobre fechas ordenadas,
-  - [ ] estimar la tasa (1/media) y calcular el estadístico KS observado,
-  - [ ] bootstrap paramétrico (tipo Lilliefors): simular 10.000 muestras exponenciales del mismo n con la tasa estimada, reestimar y recalcular KS en cada una; el p-valor es la proporción de estadísticos simulados mayores o iguales al observado,
-  - [ ] QQ exponencial como figura.
-  Reportar el p sin dicotomizar, según la política declarada en el informe.
+- [x] **4.1** Serie anual (n = 26) y mensual (n = 312): ADF y KPSS. **Resultado:** mensual estacionaria (ADF p < 0,01, KPSS p > 0,10); anual coherente pero baja potencia.
+- [x] **4.2** Ljung-Box anual (lag 5) y mensual (lag 12 y 24). **Resultado:** sin autocorrelación (anual p = 0,58; mensual p = 0,15 / 0,091).
+- [x] **4.3** Comparación de tasas entre períodos. **Resultado:** 45,5 / 48,9 / 40,3; corregida la sobredispersión (quasi-Poisson F = 1,92, p = 0,170) no difieren. *Nota: se hizo con conteos anuales totales (`n ~ periodo`), no con el `n ~ zona + periodo` de la Fase 2; equivalente para el efecto período global.*
+- [x] **4.4** Estacionalidad mensual (GLM Poisson `n ~ factor(mes)`, LR). **Resultado:** p = 0,050, no significativo (sin ciclo anual, verificación superada).
+- [x] **4.5** Tiempos entre eventos vs exponencial (bootstrap paramétrico), M ≥ 7,0 y por categoría. **Resultado:** Mayor (p = 0,102) y Grande o extremo (p = 0,531) compatibles; Fuerte se aparta (p < 0,001); combinado M ≥ 7,0 rechaza por mezcla de bandas. QQ exponencial exportado.
+  - [x] intervalos con `diff()` sobre fechas ordenadas,
+  - [x] estadístico KS observado con tasa estimada,
+  - [x] bootstrap paramétrico (10.000 simulaciones, semilla fija),
+  - [x] QQ exponencial como figura (`inf2-temporal-qq-exponencial.png`).
 
-**Checkpoint C5:** ADF + KPSS + Ljung-Box, el efecto período del GLM, el contraste de estacionalidad y el resultado del bootstrap exponencial.
+**Checkpoint C5:** ✅ **Cerrado (3 jul 2026), script `09_inf_temporal.R`.** Serie mensual estacionaria (ADF p < 0,01 y KPSS p > 0,10 concuerdan); anual coherente pero baja potencia. Sin autocorrelación (Ljung-Box anual p = 0,58; mensual p = 0,15). Sin estacionalidad (factor mes p = 0,050). Tasas por período: 45,5 / 48,9 / 40,3; corregida la sobredispersión (quasi-Poisson F = 1,92, p = 0,170) NO difieren (el Poisson daba p = 0,047, artefacto). Tiempos entre eventos: Mayor (p = 0,102) y Grande o extremo (p = 0,531) compatibles con exponencial; Fuerte se aparta (p < 0,001); el combinado M ≥ 7,0 rechaza por mezcla de bandas. Frase ejecutiva y figura `inf2-temporal-qq-exponencial.png` en la sección 7.4 del `.qmd`.
 
 ---
 
