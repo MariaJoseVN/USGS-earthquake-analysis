@@ -310,14 +310,28 @@ completas van al anexo de especificación; aquí solo lo interpretable.
 evolución del RMS por período. Cierra con el veredicto de si las comparaciones
 siguientes están condicionadas por la estructura de reporte. -->
 
-*Pendiente: contrastes de `magType_grupo` y `magSource` por zona y período bajo control FDR, con veredicto de comparabilidad previo a las secciones confirmatorias.*
+<!-- Resultados generados en Scripts/06_inf_comparabilidad.R. -->
+
+El bloque de comparabilidad verifica, antes de interpretar cualquier comparación, si las diferencias entre zonas podrían estar condicionadas por la estructura de reporte. Los cinco contrastes se ajustan en conjunto mediante la tasa de falsos descubrimientos de Benjamini-Hochberg. Ni el tipo de magnitud (zona por `magType`, $p = 0{,}671$; V de Cramér de 0,044) ni la fuente institucional (zona por `magSource`, $p = 0{,}351$; V de 0,055) presentan asociación con la zona. El ajuste de localización RMS difiere entre zonas de forma estadísticamente detectable ($p = 0{,}026$), pero con un tamaño de efecto despreciable (epsilon cuadrado de 0,009), por lo que no compromete la comparación espacial. Este resultado ilustra la política de decisión declarada: con 1.186 eventos la significación estadística no implica relevancia, y el tamaño de efecto es el que decide.
+
+En cambio, la dimensión temporal sí refleja las condiciones de reporte del catálogo a lo largo del tiempo. La composición del método de magnitud cambia de forma marcada entre períodos (período por `magType`, V de Cramér de 0,610), de manera coherente con la transición hacia `mww`, y el RMS mejora con los años (epsilon cuadrado de 0,221). En consecuencia, las comparaciones espaciales entre zonas se interpretan sin reservas de comparabilidad, mientras que las comparaciones temporales de magnitud se leen con la cautela de que parte de su variación puede reflejar el método de estimación y no la sismicidad.
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
 
-<!-- Análisis mínimo 1 del instructivo. Tasas por año y por superficie, GLM con offset,
-dócima de sobredispersión, razones de tasa con IC 95 %. -->
+<!-- Análisis mínimo 1 del instructivo. Resultados generados en Scripts/07_inf_frecuencia.R. -->
 
-*Pendiente: tasas normalizadas por superficie, modelo de conteos y razones de tasa entre zonas con intervalos de confianza al 95 %.*
+El modelo de conteo confirma formalmente la concentración descrita en el Informe Asesoría 1. Tras ajustar una binomial negativa para acomodar la sobredispersión leve detectada (dispersión de 1,36; $p = 0{,}016$), la tasa anual del Cinturón de Fuego es de 34,3 eventos por año, y las razones de tasa respecto a esta zona son de 0,228 para Resto del mundo (IC 95 % [0,191; 0,270]), 0,071 para el Cinturón Alpino-Himalayo ([0,053; 0,092]) y 0,031 para la Dorsal Meso-Atlántica ([0,021; 0,045]). En los tres casos el intervalo excluye el valor 1, por lo que las diferencias son estadísticamente significativas.
+
+Al normalizar por superficie, el orden se modifica. La densidad del Cinturón de Fuego, de 0,720 eventos por millón de km² y año, sigue siendo la mayor, pero Resto del mundo cae al último lugar con 0,018, por debajo del Cinturón Alpino-Himalayo (0,167) y de la Dorsal Meso-Atlántica (0,057). Resto del mundo aparece activo por conteo únicamente por su gran extensión, de 429 millones de km²; por unidad de superficie es la zona menos activa. En consecuencia, el Cinturón de Fuego se distingue por su frecuencia de ocurrencia tanto en términos absolutos como por densidad, mientras que la categoría residual no constituye una zona de alta actividad, sino un agregado disperso sobre una superficie muy amplia.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
+\caption{Frecuencia de eventos por zona sísmica. El orden de las zonas cambia entre la tasa anual bruta y la densidad por superficie: Resto del mundo pasa del segundo al último lugar al controlar por su extensión.}
+\label{fig-inf2-frecuencia}
+\end{figure}
+```
 
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
