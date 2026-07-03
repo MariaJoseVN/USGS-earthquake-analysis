@@ -24,7 +24,11 @@ if (!exists("sismos") || !"zona" %in% names(sismos)) {
   source(file.path("Scripts", "00_preparacion_base.R"))
 }
 
-# Semilla fija: los p-valores por simulacion Monte Carlo deben ser reproducibles.
+# Semilla fija para reproducibilidad. Las docimas de mas abajo calculan el p-valor por
+# simulacion Monte Carlo (miles de tablas generadas al azar), y ese azar es
+# pseudoaleatorio: con la misma semilla R produce siempre la misma secuencia y, por
+# tanto, los mismos p-valores. Sin ella cambiarian levemente en cada corrida. El valor
+# 2026 es arbitrario; lo relevante es que quede fijo para que el informe se replique.
 set.seed(2026)
 
 
@@ -60,46 +64,82 @@ sismos <- sismos %>%
 
 #1.1 Asociacion zona x magType_grupo----
 # Con que metodo se estimo la magnitud se reparte de forma homogenea entre zonas?
-# Se usa p-valor por simulacion Monte Carlo porque hay casillas con esperados < 5
-# (la aproximacion chi-cuadrado no seria valida con esas frecuencias).
+# Hay casillas con esperados < 5 (p.ej. la Dorsal), donde la aproximacion chi-cuadrado
+# teorica no es valida. Por eso el p-valor se obtiene por simulacion Monte Carlo
+# (simulate.p.value = TRUE): R genera B = 10000 tablas al azar con los mismos totales de
+# fila y columna pero sin asociacion, y calcula en que fraccion el estadistico simulado
+# iguala o supera al observado. Ese conteo aleatorio es el que fija la semilla de arriba.
 tabla_zt <- table(sismos$zona, sismos$magType_grupo)
 tabla_zt
-suppressWarnings(chisq.test(tabla_zt)$expected)      # revisar celdas esperadas < 5
+# La tabla de esperados confirma la necesidad del Monte Carlo: varias casillas quedan
+# bajo 5 (Alpino x otros = 1,75 ; Dorsal x mwb = 2,74 ; Dorsal x otros = 0,78).
+suppressWarnings(chisq.test(tabla_zt)$expected)
 chi_zt <- chisq.test(tabla_zt, simulate.p.value = TRUE, B = 10000)
 v_zt   <- v_cramer(tabla_zt)
+# En chi_zt, df = NA es esperado: con Monte Carlo el p-valor no viene de una distribucion
+# chi-cuadrado con grados de libertad, sino de las 10000 simulaciones. X-squared es el
+# estadistico observado (el mismo que usa v_cramer por dentro).
 chi_zt
 v_zt
+# Resultado: p = 0,67 (no significativo) y V = 0,044 (fuerza despreciable). Aqui p-valor
+# y efecto coinciden en "nada": el metodo de magnitud se reparte de forma homogenea entre
+# zonas, por lo que no condiciona la comparacion espacial de magnitud (Fase 3). Es el
+# primer "check verde" del portero.
 
 
 #1.2 Asociacion zona x magSource_grupo----
 # La fuente institucional de la magnitud se reparte de forma homogenea entre zonas?
+# Todas las zonas estan dominadas por "us" (USGS), con gcmt y hrv como secundarias, y de
+# nuevo hay casillas chicas (Dorsal x gcmt = 2, dos ceros en "otros") que justifican el
+# Monte Carlo.
 tabla_zs <- table(sismos$zona, sismos$magSource_grupo)
 tabla_zs
 chi_zs <- chisq.test(tabla_zs, simulate.p.value = TRUE, B = 10000)
 v_zs   <- v_cramer(tabla_zs)
 chi_zs
 v_zs
+# Resultado: p = 0,28 (no significativo) y V = 0,055 (fuerza despreciable). Segundo
+# "check verde": la fuente de la magnitud tampoco condiciona la comparacion espacial.
 
 
 #1.3 Ajuste RMS por zona y por periodo (Kruskal-Wallis)----
 # El RMS es asimetrico, por lo que se compara con una docima no parametrica de
 # medianas. Interesa si el ajuste de localizacion difiere entre zonas o entre periodos.
+# Nota: aqui df SI aparece (df = grupos - 1), porque Kruskal-Wallis usa la chi-cuadrado
+# teorica; en los chi-cuadrado de arriba salia df = NA por ser Monte Carlo.
 kw_rms_zona    <- kruskal.test(rms_imp ~ factor(zona), data = sismos)
 kw_rms_periodo <- kruskal.test(rms_imp ~ factor(periodo), data = sismos)
 eps_rms_zona    <- eps_cuadrado(kw_rms_zona, nrow(sismos))
 eps_rms_periodo <- eps_cuadrado(kw_rms_periodo, nrow(sismos))
 kw_rms_zona
 kw_rms_periodo
+# Este es el caso donde p-valor y efecto SE SEPARAN, y por eso se calculan ambos:
+#   - Por zona   : p = 0,016 (significativo) pero epsilon2 = 0,009 (despreciable). Con
+#     n = 1186 la prueba detecta una diferencia real pero minuscula; el efecto avisa que
+#     es irrelevante. Tercer "check verde": el RMS no difiere de forma relevante por zona.
+#   - Por periodo: p < 0,0001 y epsilon2 = 0,221 (moderado). Aqui ambas coinciden: el RMS
+#     si mejora con el tiempo. Confirma la advertencia temporal (condiciones de reporte
+#     que cambian a lo largo de los anios, relevante para la Fase 4).
 
 
 #1.4 Asociacion periodo x magType_grupo----
-# Formaliza la transicion metodologica hacia mww ya descrita en el Informe 1.
+# Formaliza la transicion metodologica hacia mww ya descrita en el Informe 1. La tabla
+# lo muestra por columnas: 2000-2009 dominado por mwc/mwb, 2010-2019 y 2020-2025 por mww.
 tabla_tp <- table(sismos$periodo, sismos$magType_grupo)
 tabla_tp
 chi_tp <- chisq.test(tabla_tp, simulate.p.value = TRUE, B = 10000)
 v_tp   <- v_cramer(tabla_tp)
 chi_tp
 v_tp
+# Contracara de los contrastes espaciales: aqui p-valor Y efecto son fuertes.
+#   - X-squared = 882 (enorme frente a los ~7-11 anteriores).
+#   - p = 0,00009999 es el PISO del Monte Carlo (~1/(10000+1)): ninguna tabla simulada
+#     alcanzo un chi-cuadrado tan extremo, o sea la asociacion es mas fuerte de lo que la
+#     simulacion puede resolver.
+#   - V = 0,610: efecto fuerte, muy lejos de los 0,044/0,055 espaciales.
+# Clave que junta el bloque: el metodo cambio mucho EN EL TIEMPO (V = 0,610) pero es
+# homogeneo ENTRE ZONAS (1.1, V = 0,044). Por eso la comparacion espacial queda limpia y
+# la temporal queda con su advertencia documentada.
 
 
 #1.5 Ajuste por multiplicidad (FDR de Benjamini-Hochberg)----
