@@ -1,6 +1,8 @@
 # Checklist de trabajo: Informe Asesoría 2
 
-**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 2 de julio de 2026
+**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 3 de julio de 2026
+
+**Avance:** Fases 0, 1 y 2 cerradas (checkpoints C0, C1 y C2). Fase 3 en curso (compañero). Siguiente: Fase 4 (temporal, script 09).
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -15,45 +17,45 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ## Fase 0. Preparación de datos y exposición
 
-- [ ] **0.1** Cargar la base `sismos` del Informe 1 y verificar que reproduce las cifras de control: 1.186 eventos, 892 / 203 / 63 / 28 por zona, categorías `magnitud_cat` y `profundidad_cat` con los cortes documentados. Si algún conteo no calza, detenerse aquí.
-- [ ] **0.2** Calcular la superficie de cada polígono de `area_regiones.geojson`. Detalle crítico: el área debe calcularse en una proyección de igual área (por ejemplo EPSG:6933) o con `sf::st_area()` sobre geometría esférica (s2 activado, default de `sf` moderno con CRS 4326). Nunca calcular área en grados. Reportar en km². "Resto del mundo" no tiene polígono: su superficie es la superficie total de referencia menos la suma de las tres zonas (aprox. 510,1 millones de km² como total terrestre; declarar y documentar la definición adoptada).
-- [ ] **0.3** Generar la tabla zona-año con `tidyr::complete()`: 26 años x 4 zonas = 104 filas, rellenando con 0 los años sin eventos. La Dorsal tendrá muchos ceros; eso es correcto y esperado, no un error de datos.
-- [ ] **0.4** Fijar `set.seed()` global para bootstrap y simulaciones Monte Carlo, y anotarlo (reproducibilidad).
-- [ ] **0.5** Crear el script de esta etapa en `Scripts/` siguiendo la convención numerada del proyecto, exportando figuras a `Informes Quarto/Imágenes y Recursos/`.
+- [x] **0.1** Cargar la base `sismos` del Informe 1 y verificar que reproduce las cifras de control. **Verificado:** 1.186 eventos y 892 / 203 / 63 / 28 por zona, vía `Scripts/00_preparacion_base.R`.
+- [x] **0.2** Calcular la superficie de cada polígono. **Hecho** en `MAPA_HTML/zonas_inf2.geojson` (campo `Area` ya en km²): 47,64 / 14,48 / 18,90 / 429,05 millones de km². "Resto del mundo" quedó como complemento real de los tres cinturones (suma total ≈ 510,1 M km² = superficie terrestre), por lo que su área sí corresponde a sus eventos.
+- [x] **0.3** Generar la tabla zona-año con `tidyr::complete()`. **Verificado:** 104 filas, suma 1.186, sin `NA` en área (en `07_inf_frecuencia.R`).
+- [x] **0.4** Fijar `set.seed()` para simulaciones Monte Carlo. **Hecho:** `set.seed(2026)` en `06_inf_comparabilidad.R`. Pendiente replicarlo en 08/09 cuando usen bootstrap.
+- [x] **0.5** Crear los scripts en `Scripts/`. **Hecho:** `00_preparacion_base.R` (ruta rápida de base), `06` y `07`; figura exportada a `Imágenes y Recursos/`.
 
-**Checkpoint C0:** compartir las superficies por zona en km² y la tabla resumen de conteos anuales por zona (media, mínimo, máximo por zona), para validar que el offset tenga sentido antes de modelar.
+**Checkpoint C0:** ✅ **Cerrado (3 jul 2026).** Superficies por zona confirmadas y tabla zona-año validada (104 filas, 1.186 eventos).
 
 ---
 
 ## Fase 1. Comparabilidad del registro (sección 7.1)
 
-- [ ] **1.1** Tabla de contingencia `zona x magType_grupo` y chi-cuadrado. Si hay casillas con esperados < 5 (probable en Dorsal), usar `chisq.test(..., simulate.p.value = TRUE, B = 10000)`.
-- [ ] **1.2** Tabla `zona x magSource` (agrupando fuentes minoritarias si fragmenta mucho) y su contraste, mismo criterio.
-- [ ] **1.3** Kruskal-Wallis de `rms_imp` entre zonas y entre períodos (2000-2009, 2010-2019, 2020-2025).
-- [ ] **1.4** Contraste de `magType_grupo` por período (la transición hacia `mww` ya se conoce del Informe 1; aquí se formaliza).
-- [ ] **1.5** Reunir todos los p-valores del bloque y ajustarlos con Benjamini-Hochberg: `p.adjust(p, method = "BH")`. Reportar crudos y ajustados.
-- [ ] **1.6** Redactar el veredicto: ¿las comparaciones siguientes están o no condicionadas por la estructura de reporte?
+- [x] **1.1** Tabla `zona x magType_grupo` y chi-cuadrado Monte Carlo. **Resultado:** p = 0,671; V = 0,044 (sin asociación).
+- [x] **1.2** Tabla `zona x magSource` y su contraste. **Resultado:** p = 0,351; V = 0,055 (sin asociación).
+- [x] **1.3** Kruskal-Wallis de `rms_imp` por zona y por período. **Resultado:** por zona p = 0,026 pero ε² = 0,009 (significativo pero trivial); por período p < 0,0001, ε² = 0,221.
+- [x] **1.4** Contraste `magType_grupo` por período. **Resultado:** V = 0,610 (transición fuerte hacia `mww`).
+- [x] **1.5** Ajuste Benjamini-Hochberg de los cinco p-valores. **Hecho:** ninguna conclusión cambió tras el ajuste (robustas).
+- [x] **1.6** Veredicto redactado (en el script y en la sección 7.1 del `.qmd`).
 
 **Qué se espera:** asociación fuerte de `magType`/`magSource` con el período y débil o moderada con la zona. Si `magType_grupo` resultara fuertemente asociado a zona, detenerse: obligaría a agregar el control en los modelos de las fases 5 y 6.
 
-**Checkpoint C1:** tabla con cada contraste, estadístico, p crudo y p ajustado BH.
+**Checkpoint C1:** ✅ **Cerrado (3 jul 2026), script `06_inf_comparabilidad.R`.** Separación nítida: contrastes espaciales limpios (zona no condiciona el reporte); contrastes temporales fuertes (cambio de método y mejora del RMS en el tiempo). Veredicto: comparaciones espaciales válidas; comparaciones temporales de magnitud con advertencia para la Fase 4. Frase ejecutiva en la sección 7.1 del `.qmd`.
 
 ---
 
 ## Fase 2. Frecuencia entre zonas: GLM de conteos (sección 7.2, análisis mínimo 1)
 
-- [ ] **2.1** Ajustar `m_pois <- glm(n ~ zona, family = poisson, offset = log(area_km2), data = tabla_zona_anio)`, con Cinturón de Fuego como referencia.
-- [ ] **2.2** Diagnóstico de sobredispersión, tres vías y las tres se reportan:
-  - [ ] dispersión de Pearson: `sum(residuals(m_pois, "pearson")^2) / df.residual(m_pois)` (valores cerca de 1 = sin sobredispersión),
-  - [ ] `AER::dispersiontest(m_pois)` (unilateral, alfa = 0,05),
-  - [ ] razón de verosimilitud contra `MASS::glm.nb()` recordando dividir el p-valor por dos (parámetro en la frontera del espacio paramétrico).
-- [ ] **2.3** Compuerta: si hay sobredispersión, el modelo final es binomial negativa; si no, Poisson. Documentar la decisión con los tres diagnósticos.
-- [ ] **2.4** Del modelo final: razones de tasa `exp(coef())` con IC 95 % vía `confint()`, para cada zona contra el Cinturón de Fuego.
-- [ ] **2.5** Tabla puente con el Informe 1: tasa anual bruta (34,3 / 7,8 / 2,4 / 1,1) junto a la tasa por millón de km² y año, para mostrar cuánto cambia la lectura al normalizar por superficie.
+- [x] **2.1** Modelo de conteos con Cinturón de Fuego como referencia. **Hecho:** Poisson de tasa anual (`m_tasa`) como principal, más versión con `offset = log(area_km2)` para densidad.
+- [x] **2.2** Diagnóstico de sobredispersión por las tres vías:
+  - [x] dispersión de Pearson: **1,41**.
+  - [x] `AER::dispersiontest`: **z = 2,149; p = 0,016; dispersión 1,36**.
+  - [x] razón de verosimilitud vs `glm.nb` (p ÷ 2): **LR = 5,63; p = 0,009**.
+- [x] **2.3** Compuerta. **Decisión: binomial negativa** (sobredispersión leve pero consistente en las tres vías).
+- [x] **2.4** Razones de tasa con IC 95 % vs Cinturón de Fuego. **Resultado:** Resto 0,228 [0,191; 0,270]; Alpino 0,071 [0,053; 0,092]; Dorsal 0,031 [0,021; 0,045] (los tres excluyen 1).
+- [x] **2.5** Tabla puente. **Hallazgo:** por densidad el orden se reordena a Fuego 0,720 > Alpino 0,167 > Dorsal 0,057 > Resto 0,018; "Resto del mundo" cae al último por su enorme superficie.
 
 **Qué se espera:** sobredispersión leve o moderada (los conteos anuales globales de grandes sismos suelen ser aproximadamente Poisson); razones de tasa muy grandes y significativas contra la Dorsal. Lo interesante es si el orden de las zonas cambia al normalizar por área.
 
-**Checkpoint C2 (compuerta dura):** los tres diagnósticos de sobredispersión, el modelo elegido y la tabla de razones de tasa con IC. Aquí se decide la frase ejecutiva de la sección.
+**Checkpoint C2 (compuerta dura):** ✅ **Cerrado (3 jul 2026), script `07_inf_frecuencia.R`.** Modelo binomial negativa elegido. Figura `inf2-frecuencia-tasa-densidad.png` y frase ejecutiva en la sección 7.2 del `.qmd`.
 
 ---
 
