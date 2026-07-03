@@ -1,0 +1,20 @@
+# Artefactos de render HTML de Quarto en los informes.
+# Los informes de "Informes Quarto/" tienen como salida el PDF; el HTML y su
+# carpeta "_files" se generan solo al renderizar por error un .qmd/.md a HTML.
+# El dashboard SÍ publica HTML a propósito (GitHub Pages), por eso la regla se
+# limita a "Informes Quarto/" y no afecta la carpeta "Dashboard/".
+Informes Quarto/**/*.html
+Informes Quarto/**/*_files/
+
+# Cache y directorio interno de Quarto
+**/.quarto/
+**/*_cache/
+
+# Archivos temporales de R y RStudio/Positron
+.Rhistory
+.RData
+.Rproj.user/
+
+# Temporales del sistema operativo
+.DS_Store
+Thumbs.db
