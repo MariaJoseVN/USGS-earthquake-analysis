@@ -68,7 +68,7 @@ sismos <- sismos_raw %>%
       levels = c("mww", "mwc", "mwb", "otros")
     )
   ) %>%
-  select(
+  dplyr::select(
     id, fecha_hora_utc, fecha, año, mes, decada,
     latitude, longitude, depth, profundidad_cat,
     mag, sig, magnitud_cat, magType, magType_grupo,
@@ -93,7 +93,7 @@ sismos <- sismos %>%
 area_regiones <- st_read("SIG/area_regiones.geojson", quiet = TRUE)
 
 puntos_sismos <- st_as_sf(
-  sismos %>% select(-any_of("zona")),
+  sismos %>% dplyr::select(-any_of("zona")),
   coords = c("longitude", "latitude"),
   crs = 4326,
   remove = FALSE
@@ -104,7 +104,7 @@ sf_use_s2(FALSE)
 
 puntos_sismos <- puntos_sismos %>%
   st_join(
-    area_regiones %>% select(Region),
+    area_regiones %>% dplyr::select(Region),
     join = st_intersects,
     left = TRUE
   )
@@ -118,7 +118,7 @@ sismos <- puntos_sismos %>%
     )
   ) %>%
   st_drop_geometry() %>%
-  select(-Region)
+  dplyr::select(-Region)
 
 sf_use_s2(TRUE)
 
