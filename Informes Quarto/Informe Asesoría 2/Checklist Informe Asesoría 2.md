@@ -1,8 +1,8 @@
 # Checklist de trabajo: Informe Asesoría 2
 
-**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 3 de julio de 2026
+**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 4 de julio de 2026
 
-**Avance:** Fases 0, 1, 2, 4 y 5 cerradas (C0, C1, C2, C5, C6). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 6 (clasificación, script 11, la culminación) y luego Fase 7 (sensibilidad).
+**Avance:** Fases 0, 1, 2, 4 y 5 cerradas (C0, C1, C2, C5, C6). Fase 3: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Fase 6: C7 sustancialmente cerrado (resultados calculados y verificados en el script 11; falta exportar los biplots del 6.2 y la frase ejecutiva 7.6; el 6.1 se excluyó por decisión del grupo). Siguiente: Fase 7 (sensibilidad, script 12) y redacción final.
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -115,15 +115,15 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ## Fase 6. Síntesis: clasificación de zonas (sección 7.6)
 
-- [ ] **6.1** Correlaciones parciales de Spearman entre `mag`, `depth` y `sig`: `ppcor::pcor(..., method = "spearman")`. Lectura protagonista: profundidad con significancia controlando magnitud (porque `sig` deriva de `mag`).
-- [ ] **6.2** Análisis de correspondencia simple: `FactoMineR::CA()` o `ca::ca()` sobre `zona x magnitud_cat` y `zona x profundidad_cat`. Reportar inercia total, porcentaje por dimensión y el biplot como figura.
-- [ ] **6.3** Multinomial: `nnet::multinom(zona ~ mag + depth, data = sismos)`, Cinturón de Fuego como referencia. Significación por variable con `car::Anova()` (razón de verosimilitud, no Wald).
-- [ ] **6.4** Revisión de separación: si algún coeficiente o error estándar sale desproporcionado (por ejemplo |coef| > 10 o EE gigantes), hay separación cuasi perfecta; reajustar con `brglm2::brmultinom()` (corrección tipo Firth) y declararlo. Se espera que esto pase con la Dorsal; si pasa, es un hallazgo para redactar, no un fracaso.
-- [ ] **6.5** Matriz de confusión (predicho x observado), y calcular: exactitud global, exactitud balanceada (promedio de las sensibilidades por clase) y sensibilidad de cada zona. Comparar SIEMPRE contra la base trivial del 75,21 %.
-- [ ] **6.6** Opcional si hay tiempo: validación cruzada de 10 pliegues para las métricas; el ajuste dentro de muestra es aceptable para el alcance, pero la CV blinda la conclusión.
-- [ ] **6.7** Probar `zona ~ mag + depth` contra `zona ~ mag` y `zona ~ depth` (AIC y razón de verosimilitud): cuantifica el argumento del profesor sobre el aporte conjunto de las variables.
+- [ ] **6.1** Correlaciones parciales de Spearman entre `mag`, `depth` y `sig`: `ppcor::pcor(..., method = "spearman")`. Lectura protagonista: profundidad con significancia controlando magnitud (porque `sig` deriva de `mag`). **EXCLUIDO (4 jul 2026) por decisión del grupo:** C7 se evalúa sin las parciales.
+- [x] **6.2** Análisis de correspondencia simple. **Hecho** con `FactoMineR::CA()` en `11_inf_clasificacion.R`, con frecuencias esperadas y perfiles fila/columna como apoyo (4 celdas con esperados < 5, coherente con la Fase 5). **Resultado:** inercia total 0,0060 en magnitud (dim 1 = 92,9 %) y 0,0321 en profundidad (dim 1 = 81,9 %): la tabla de profundidad tiene 5,3 veces más asociación que explicar. La Dorsal aporta el 95,1 % de la dimensión 1 de magnitud; la categoría "Profundo" aporta el 87,8 % de la dimensión 1 de profundidad. *Pendiente: exportar los biplots como PNG a `Imágenes y Recursos` (hoy solo se dibujan en pantalla).*
+- [x] **6.3** Multinomial `zona ~ mag + depth` con Cinturón de Fuego como referencia. **Resultado** (`car::Anova`, razón de verosimilitud, sobre el modelo estandarizado; los LR son idénticos en la escala cruda): depth LR = 64,906 (p < 0,001); mag LR = 5,102 (p = 0,1645). Solo la profundidad aporta.
+- [x] **6.4** Revisión de separación. **Detectada en la Dorsal** (28 eventos, todos superficiales), visible al estandarizar: depth_z = -27,66 con EE 7,21 (dispara el criterio |coef| > 10; en la escala cruda quedaba camuflada por las unidades) y probabilidades ajustadas numéricamente en 0. **Corregida y declarada con `brglm2::brmultinom` (AS_mean):** depth_z Dorsal -26,19, EE 6,74 (equivale a -0,160 por km); estimaciones finitas y EE utilizables. Toda inferencia de la Dorsal se reporta con esta corrección.
+- [x] **6.5** Matriz de confusión (predicho x observado) y métricas, sobre el modelo corregido. **Resultado:** predice Cinturón de Fuego para los 1.186 eventos; exactitud global 0,7521 = base trivial; exactitud balanceada 0,25 = base trivial balanceada; sensibilidad 1 / 0 / 0 / 0.
+- [ ] **6.6** Opcional si hay tiempo: validación cruzada de 10 pliegues para las métricas. **Sin hacer;** el ajuste dentro de muestra ya coincide con la base trivial y una corrida previa de referencia dio la CV idéntica (0,7521 / 0,25), por lo que no alteraría la conclusión.
+- [x] **6.7** Comparación de modelos anidados (AIC y razón de verosimilitud). **Resultado:** AIC solo mag 1805,66; solo depth 1745,86; conjunto 1746,76 (la profundidad sola es el mejor modelo). LR depth dado mag = 64,91 (p < 0,001); LR mag dado depth = 5,10 (p = 0,164). El aporte conjunto se reduce al aporte de la profundidad.
 
-**Checkpoint C7 (compuerta dura, el más importante):** compartir parciales, inercia de correspondencia, coeficientes multinomiales con EE, resultado de `Anova`, matriz de confusión con métricas por clase, y la comparación 6.7. Con esto se define la conclusión central del informe.
+**Checkpoint C7 (compuerta dura, el más importante):** 🟡 **Sustancialmente cerrado (4 jul 2026), script `11_inf_clasificacion.R` (revisado contra el checklist y verificado en ejecución completa).** Veredicto: magnitud y profundidad, incluso en conjunto, NO permiten clasificar la zona sísmica de un evento: el Cinturón de Fuego cubre todo el espacio de clasificación con prior 75,21 % y el modelo no supera la base trivial. La profundidad sí desplaza las probabilidades (LR = 64,9; información distribucional real, con la inferencia de la Dorsal reportada vía Firth), pero no alcanza para reasignar clases. Conclusión ejecutiva: el Cinturón de Fuego se distingue por cuánto y dónde ocurre su actividad, no por la fisonomía de sus eventos. *Falta para cerrar del todo: exportar los biplots del 6.2 y la frase ejecutiva de la sección 7.6 del `.qmd`.*
 
 ---
 
