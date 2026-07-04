@@ -25,3 +25,54 @@ if (!exists("sismos") || !"zona" %in% names(sismos)) {
 # 7.4 Veredicto de robustez: que conclusiones se mantienen y cuales se debilitan.
 
 message("12_inf_sensibilidad.R: stub pendiente de implementacion (Fase 7 / C8).")
+
+# 1. Preparar los dos escenarios----
+source(file.path("Scripts", "00_preparacion_base.R"))
+
+set.seed(2026)
+
+# Escenario A: umbral mas exigente, solo eventos con magnitud 7,0 o superior
+sismos_A <- sismos %>%
+  dplyr::filter(mag >= 7.0)
+nrow(sismos_A)
+count(sismos_A, zona, name = "numero_eventos")
+
+# Escenario B: sin la zona residual "Resto del mundo"
+sismos_B <- sismos %>%
+  dplyr::filter(zona != "Resto del mundo")
+nrow(sismos_B)
+count(sismos_B, zona, name = "numero_eventos")
+
+table(sismos_A$magnitud_cat)
+
+
+# 2. Escenario A: frecuencia entre zonas----
+conteos_anuales_A <- sismos_A %>%
+  count(zona, año, name = "n") %>%                                        # cuenta cuántos eventos hubo en cada combinación zona-año observada. Problema: solo genera filas para combinaciones que existieron; si la Dorsal no tuvo eventos en 2004, esa fila simplemente no aparece.
+  tidyr::complete(zona, año = 2000:2025, fill = list(n = 0)) %>%          # repara justo eso, agregando las combinaciones faltantes con n = 0. El "ese año no hubo ninguno" es un dato, no un hueco: sin esta línea, la tasa anual de la Dorsal se calcularía solo sobre sus años activos y saldría inflada.
+  dplyr::mutate(zona = relevel(factor(zona), ref = "Cinturon de Fuego"))  # relevel(factor(zona), ref = "Cinturon de Fuego"): fija al Cinturón de Fuego como categoría de referencia. Es lo que hace que cada coeficiente del modelo se lea como "esta zona comparada con el Fuego", el mismo criterio de todo el informe.
+# Verificaciones nrow y sum:
+nrow(conteos_anuales_A)         # =104: son 4 zonas x 26 años, la grilla completa. Confirma que complete() generó todas las celdas.
+sum(conteos_anuales_A$n)        # =387: los ceros se agregaron sin inventar ni perder eventos. La tabla reorganiza los mismos 387; contabilidad cerrada.
+
+modelo_tasa_A <- glm(n ~ zona, family = poisson, data = conteos_anuales_A)
+
+summary(modelo_tasa_A)
+
+dispersion_pearson_A <- sum(residuals(modelo_tasa_A, type = "pearson")^2) /
+  modelo_tasa_A$df.residual
+
+dispersion_pearson_A
+
+
+# 3. Escenario A: binomial negativa y razones de tasa----
+modelo_nb_A <- MASS::glm.nb(n ~ zona, data = conteos_anuales_A)
+
+summary(modelo_nb_A)
+
+razones_tasa_A <- exp(cbind(
+  razon_tasa = coef(modelo_nb_A),
+  confint(modelo_nb_A)
+))
+
+round(razones_tasa_A, 4)
