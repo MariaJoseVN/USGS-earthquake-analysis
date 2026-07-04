@@ -89,7 +89,7 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 - [x] **4.1** Serie anual (n = 26) y mensual (n = 312): ADF y KPSS. **Resultado:** mensual estacionaria (ADF p < 0,01, KPSS p > 0,10); anual coherente pero baja potencia.
 - [x] **4.2** Ljung-Box anual (lag 5) y mensual (lag 12 y 24). **Resultado:** sin autocorrelación (anual p = 0,58; mensual p = 0,15 / 0,091).
 - [x] **4.3** Comparación de tasas entre períodos. **Resultado:** 45,5 / 48,9 / 40,3; corregida la sobredispersión (quasi-Poisson F = 1,92, p = 0,170) no difieren. *Nota: se hizo con conteos anuales totales (`n ~ periodo`), no con el `n ~ zona + periodo` de la Fase 2; equivalente para el efecto período global.*
-- [x] **4.4** Estacionalidad mensual (GLM Poisson `n ~ factor(mes)`, LR). **Resultado:** p = 0,050, no significativo (sin ciclo anual, verificación superada).
+- [x] **4.4** Estacionalidad mensual (GLM `n ~ factor(mes)`). **Resultado:** Poisson daba p = 0,050 (borde); corregida la sobredispersión (quasi-Poisson F = 1,03, p = 0,416) claramente no significativo. Sin ciclo anual, verificación superada.
 - [x] **4.5** Tiempos entre eventos vs exponencial (bootstrap paramétrico), M ≥ 7,0 y por categoría. **Resultado:** Mayor (p = 0,102) y Grande o extremo (p = 0,531) compatibles; Fuerte se aparta (p < 0,001); combinado M ≥ 7,0 rechaza por mezcla de bandas. QQ exponencial exportado.
   - [x] intervalos con `diff()` sobre fechas ordenadas,
   - [x] estadístico KS observado con tasa estimada,
