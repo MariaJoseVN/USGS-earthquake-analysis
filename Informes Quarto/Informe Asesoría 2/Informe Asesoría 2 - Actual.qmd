@@ -243,25 +243,9 @@ Dos decisiones de datos quedan declaradas desde el inicio. Primero, `nst_imp` no
 
 ::: {.content-hidden when-format="pdf"}
 
-Los niveles de significación no se fijan de manera uniforme: cada familia de dócimas declara su rol dentro del análisis, su nivel, su lateralidad y su corrección por multiplicidad, con la justificación correspondiente. Esta política se define antes de observar los resultados y se resume en la @tbl-politica-decision.
+Como criterio general, las pruebas confirmatorias se evaluaron con $\alpha=0{,}05$ y sus estimaciones se acompañaron con intervalos de confianza al 95 % y tamaños de efecto. Para el diagnóstico de supuestos multivariantes se utilizó $\alpha=0{,}10$, junto con evidencia gráfica, porque su función es detectar condiciones que podrían invalidar la ruta paramétrica. Las correcciones por multiplicidad se aplicaron dentro de cada familia de contrastes: Holm en las comparaciones post-hoc y Benjamini-Hochberg en el bloque exploratorio de comparabilidad.
 
-Dos principios transversales complementan la tabla. Primero, con 1.186 eventos, la significación estadística no equivale a relevancia práctica: casi cualquier diferencia produce p-valores bajos en las comparaciones globales, por lo que toda dócima confirmatoria se reporta junto a su tamaño de efecto e intervalo de confianza (epsilon cuadrado para Kruskal-Wallis, delta de Cliff para comparaciones por pares, V de Cramér con corrección de sesgo para tablas, razones de tasa y odds ratios para los modelos). Una conclusión se declara solo cuando el p-valor queda bajo el nivel definido y el efecto presenta una magnitud apreciable. Segundo, el problema simétrico ocurre en los grupos pequeños: con 28 eventos en la Dorsal Meso-Atlántica, la ausencia de significación es esperable aunque el efecto exista, por lo que toda comparación que involucre a la Dorsal Meso-Atlántica o al Cinturón Alpino-Himalayo se lee mediante su intervalo de confianza y no mediante el veredicto binario de la dócima.
-
-| Familia de dócimas | Rol | Criterio de decisión | Justificación |
-|--------------------|-----|----------------------|---------------|
-| Supuestos multivariantes: Mardia, M-Box, Bartlett | Diagnóstico | $\alpha = 0{,}10$ junto a diagnóstico gráfico | El error grave es adoptar una ruta paramétrica inválida; un nivel mayor facilita detectar la violación. Con n = 1.186 estas dócimas rechazan ante desviaciones triviales, por lo que el diagnóstico gráfico acompaña siempre |
-| Kruskal-Wallis para `mag` y `depth` | Confirmatorio | $\alpha = 0{,}05$ por variable | Cada variable responde una pregunta sustantiva distinta y define su propia familia; la multiplicidad se controla dentro de cada una, en los post-hoc |
-| Post-hoc de Dunn (6 pares por variable) | Confirmatorio | Error de familia 0,05 con corrección de Holm | Sin corrección, la probabilidad de al menos un falso positivo por familia se aproxima a 0,26; Holm garantiza el mismo control que Bonferroni con mayor potencia |
-| Efectos de zona en el GLM de conteos | Confirmatorio | $\alpha = 0{,}05$ con IC 95 % de las razones de tasa | La conclusión ejecutiva es la magnitud del efecto; el intervalo comunica más que el p-valor |
-| Sobredispersión (Poisson frente a binomial negativa) | Diagnóstico de especificación | $\alpha = 0{,}05$ unilateral; en la razón de verosimilitud, el p-valor se divide por dos | La alternativa es varianza mayor que la media y el parámetro de dispersión está en la frontera del espacio paramétrico, con distribución nula de mezcla chi-cuadrado |
-| ADF y KPSS | Diagnóstico | $\alpha = 0{,}05$; ADF es unilateral por definición; se concluye solo si ambas concuerdan | Son dócimas con hipótesis nulas opuestas; la evidencia es la concordancia. Con 26 puntos anuales la potencia es baja y se declara |
-| Ajuste exponencial de los tiempos entre eventos | Diagnóstico descriptivo | p-valor por bootstrap paramétrico, reportado sin dicotomizar, junto a diagnóstico QQ | El parámetro se estima de los mismos datos, lo que invalida el p-valor estándar de Kolmogorov-Smirnov; con cientos de intervalos la dócima rechaza ante desviaciones mínimas |
-| Chi-cuadrado zona por categorías | Confirmatorio | $\alpha = 0{,}05$ verificando frecuencias esperadas; con casillas bajo 5, p-valor mediante 10.000 simulaciones de Monte Carlo | Las frecuencias esperadas reducidas pueden volver imprecisa la aproximación teórica del valor p; la simulación evita depender de ella |
-| Modelos logístico y multinomial | Confirmatorio | Razón de verosimilitud por variable con $\alpha = 0{,}05$; IC 95 % de los odds ratios | Ante posible separación cuasi perfecta, las dócimas de Wald por coeficiente son poco fiables; la razón de verosimilitud por bloque es la dócima adecuada |
-| Bloque exploratorio de comparabilidad del registro | Exploratorio | FDR al 5 % (Benjamini-Hochberg) | Son dócimas de cribado sin hipótesis sustantiva individual; controlar la tasa de falsos descubrimientos es más apropiado que el error por dócima |
-| Análisis de sensibilidad | Robustez | Sin nivel de significación: se compara dirección y magnitud de los efectos entre escenarios | La sensibilidad no es una dócima; su resultado es la estabilidad de las conclusiones ante la decisión metodológica modificada |
-
-: Política de decisión estadística declarada para la etapa inferencial. {#tbl-politica-decision tbl-colwidths="[22,13,27,38]"}
+La significación estadística no se interpretó por sí sola. Con 1.186 eventos pueden detectarse diferencias pequeñas, mientras que los grupos con 63 y 28 observaciones presentan mayor incertidumbre. Por ello, las conclusiones consideran conjuntamente el valor p, el tamaño de efecto y su intervalo de confianza. Las hipótesis, la lateralidad y las reglas particulares de decisión de cada procedimiento se documentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
 :::
 
@@ -281,21 +265,19 @@ La heterogeneidad del catálogo se aborda mediante mecanismos explícitos en tre
 
 ## Comparabilidad de los procedimientos de reporte {#sec-met-comparabilidad}
 
-Antes de comparar las zonas, como equipo evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la asociación de la zona con el tipo y la fuente de magnitud mediante pruebas chi-cuadrado de independencia. Estas pruebas comparan las frecuencias observadas con las que se esperarían si las variables no estuvieran relacionadas.
+Antes de comparar las zonas, como equipo evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de la localización.
 
-Antes del contraste agrupamos en “otros” los métodos de magnitud secundarios y las fuentes con menos de 20 registros. Este umbral exige que una fuente disponga, como mínimo, de un promedio potencial de cinco registros por cada una de las cuatro zonas si se distribuyera uniformemente. Su propósito fue evitar categorías sin respaldo suficiente para una interpretación individual, no garantizar que todas las frecuencias esperadas superaran cinco, porque los tamaños de las zonas son desiguales. No agrupamos las categorías principales, ya que representan métodos de estimación o fuentes institucionales diferentes; fusionarlas únicamente para satisfacer una condición estadística habría modificado la pregunta y podría ocultar diferencias de reporte.
+Se conservaron las categorías `mww`, `mwc`, `mwb` y “otros” de `magType_grupo`; además, las fuentes con menos de 20 registros se reunieron en `magSource_grupo`. La dimensión temporal se organizó en 2000-2009, 2010-2019 y 2020-2025. La construcción y justificación de estas agrupaciones se presenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
-Incluso después de esa agrupación, algunas casillas presentaron frecuencias esperadas inferiores a cinco. En estas condiciones, la aproximación teórica del valor p puede ser imprecisa. Consideramos la enumeración exacta de todas las tablas posibles, pero su costo aumenta rápidamente en tablas de varias filas y columnas. Por ello, decidimos utilizar 10.000 simulaciones de Monte Carlo: este procedimiento conserva las categorías relevantes, genera tablas compatibles con la hipótesis de independencia y con los mismos totales observados, y aproxima el valor p sin depender de la distribución chi-cuadrado asintótica [@hope_1968; @patefield_1981]. La cantidad de simulaciones se definió según la precisión necesaria para tomar decisiones con un nivel de significación de 0,05. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
+Las asociaciones zona por tipo de magnitud, zona por fuente y período por tipo de magnitud se evaluaron mediante chi-cuadrado de independencia. Esta prueba contrasta si las frecuencias observadas difieren de las esperadas cuando las variables no están relacionadas. Algunas tablas contenían frecuencias esperadas inferiores a cinco, especialmente en las categorías correspondientes a las zonas con menor número de eventos. En esas condiciones, la distribución chi-cuadrado teórica puede aproximar de forma imprecisa el valor p.
 
-El valor p informa sobre la evidencia de asociación, pero no sobre su intensidad. Por esta razón, complementamos las pruebas con la V de Cramér. Como equipo, decidimos utilizar su versión corregida por sesgo porque la medida convencional puede sobreestimar la asociación en tablas con varias categorías o frecuencias reducidas. La corrección entrega una estimación más conservadora de su importancia práctica [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
+Como equipo, consideramos dos alternativas. La primera era fusionar categorías hasta aumentar las frecuencias esperadas, pero se descartó porque habría unido métodos o fuentes de reporte diferentes y modificado la pregunta que se buscaba responder. La segunda era calcular una prueba exacta mediante la enumeración de todas las tablas posibles, cuyo costo crece considerablemente en tablas con varias filas y columnas. Por estas razones, mantuvimos las categorías relevantes y obtuvimos los valores p mediante 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. El procedimiento genera tablas bajo la hipótesis de independencia, conserva los totales marginales observados y calcula qué proporción presenta una discrepancia igual o mayor que la tabla real. De este modo, el valor p no depende de la aproximación chi-cuadrado asintótica. Aunque la tabla de período por tipo de magnitud no presentó frecuencias esperadas inferiores a cinco, se mantuvo la simulación para aplicar un procedimiento uniforme a los tres contrastes categóricos. La cantidad de simulaciones permite una resolución mínima cercana a 0,0001 y un error de simulación aproximado de 0,0022 cuando el valor p se encuentra alrededor de 0,05, precisión suficiente para la regla de decisión establecida. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
-La comparabilidad del ajuste de localización se evaluó mediante `rms_imp`, versión completada del RMS que conserva los 1.186 eventos del catálogo. Esta variable incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. El Informe Asesoría 1 mostró que este procedimiento no modificó sustancialmente la media, mediana, dispersión ni cuantiles del indicador, por lo que se mantuvo para los análisis que requerían registros completos. El RMS resume el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye una medida completa de precisión instrumental o espacial.
+La simulación Monte Carlo resuelve la estimación del valor p, pero no mide la intensidad de la asociación. Para este segundo propósito se utilizó la V de Cramér. Su versión convencional puede entregar valores positivos aun cuando las variables sean independientes, porque la variabilidad muestral produce discrepancias entre frecuencias observadas y esperadas. Esta sobreestimación puede ser mayor en tablas con varias categorías, grupos pequeños o frecuencias reducidas, condiciones presentes en este análisis. Por ello, como equipo utilizamos la V de Cramér corregida por sesgo propuesta por @bergsma_2013, que descuenta la asociación atribuible al tamaño y a las dimensiones de la tabla. La corrección permite evitar que una asociación pequeña sea presentada como sustantiva únicamente por la estructura muestral. Sus valores se interpretaron directamente: resultados próximos a cero indican escasa asociación y valores más alejados de cero representan relaciones de mayor intensidad, sin aplicar puntos de corte rígidos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
 
-Como equipo, decidimos comparar `rms_imp` mediante Kruskal-Wallis para mantener un criterio no paramétrico común en las comparaciones de variables continuas entre zonas. Aunque su distribución global es aproximadamente simétrica, el Informe Asesoría 1 identificó valores atípicos en ambos extremos y tamaños muestrales muy desiguales entre zonas. Además, el propósito de este contraste no es estimar diferencias entre medias, sino verificar si alguna zona presenta valores de RMS sistemáticamente mayores o menores. Kruskal-Wallis responde a este objetivo mediante la comparación de rangos, sin exigir normalidad y reduciendo la influencia de las observaciones extremas. El contraste se complementó con epsilon cuadrado ($\varepsilon^2$) para evaluar si la diferencia detectada tenía relevancia práctica.
+El ajuste residual de la localización, representado por `rms_imp`, se comparó por zona y período mediante Kruskal-Wallis. Se escogió esta prueba no paramétrica por la presencia de valores atípicos y por la marcada desigualdad de los tamaños grupales. El procedimiento compara los rangos de las observaciones entre grupos sin exigir normalidad y permite establecer si existe una diferencia global, aunque no identifica por sí solo qué grupos difieren. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$), que aproxima la proporción de variabilidad de los rangos asociada con la zona o el período y permite distinguir la significación estadística de la importancia práctica. Conceptualmente, esta medida equivale al $R^2$ de un ANOVA aplicado a los rangos de la variable, no a sus valores originales [@mangiafico_rcompanion_2026]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}. La variable conserva los 1.186 eventos mediante la imputación de nueve valores ausentes, procedimiento heredado del Informe Asesoría 1. \asesoriaStyledRef{(véase \hyperref[sec-anexo-continuidad]{anexo de continuidad de datos y variables})}.
 
-La evaluación formal de los supuestos de normalidad y homogeneidad para las comparaciones principales de magnitud y profundidad se presenta en una sección posterior; en este bloque diagnóstico se adoptó previamente un criterio no paramétrico y robusto para el RMS.
-
-Finalmente, tratamos como una misma familia exploratoria los cinco contrastes de comparabilidad: tipo de magnitud por zona, fuente de magnitud por zona, RMS por zona, RMS por período y tipo de magnitud por período. Como equipo, decidimos ajustar sus valores p mediante Benjamini-Hochberg para controlar en 5 % la proporción esperada de falsos descubrimientos entre los resultados declarados como significativos. Este criterio permite examinar conjuntamente posibles problemas de comparabilidad sin aumentar innecesariamente la probabilidad de pasar por alto una diferencia real.
+Los cinco contrastes se trataron como una familia exploratoria. Si cada valor p se evaluara por separado, aumentaría la posibilidad de cometer al menos un error tipo I, es decir, declarar una diferencia inexistente. Por ello, decidimos ajustar conjuntamente los valores p mediante Benjamini-Hochberg para controlar en 5 % la proporción esperada de falsos descubrimientos entre los resultados declarados significativos. Se prefirió este procedimiento porque es menos restrictivo que un control orientado a impedir cualquier falso positivo y, por tanto, reduce en menor medida la capacidad para detectar diferencias reales. Este equilibrio es relevante porque una corrección excesivamente estricta puede aumentar el error tipo II, que consiste en no detectar una diferencia existente. El ajuste modifica los valores p, pero no los estadísticos ni los tamaños de efecto. \asesoriaStyledRef{(véase \hyperref[sec-anexo-ajuste-p]{anexo de ajuste de valores p por multiplicidad})}.
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
@@ -372,9 +354,9 @@ Esta subsección evalúa si las comparaciones entre zonas y periodos pueden esta
 
 ### Comparabilidad entre zonas
 
-Para evaluar si las comparaciones espaciales podían estar condicionadas por los procedimientos de reporte, la asociación de la zona con el tipo y la fuente de magnitud se examinó mediante pruebas chi-cuadrado de Pearson con valores p obtenidos a partir de 10.000 simulaciones de Monte Carlo. Estas pruebas comparan las frecuencias observadas en cada combinación de categorías con las que se esperarían si las variables no estuvieran asociadas. Adicionalmente, el RMS de localización se comparó entre las cuatro zonas mediante la prueba no paramétrica de Kruskal-Wallis, que determina si sus distribuciones presentan diferencias globales.
+Para evaluar si las comparaciones espaciales podían estar condicionadas por los procedimientos de reporte, la asociación de la zona con el tipo y la fuente de magnitud se examinó mediante pruebas chi-cuadrado de Pearson con valores p obtenidos a partir de 10.000 simulaciones de Monte Carlo. Estas pruebas comparan las frecuencias observadas en cada combinación de categorías con las que se esperarían si las variables no estuvieran asociadas. El diagnóstico previo identificó frecuencias esperadas inferiores a cinco en 3 de las 16 celdas de la tabla zona por tipo de magnitud y en 4 de las 16 celdas de la tabla zona por fuente, lo que fundamentó el uso de la simulación. \asesoriaStyledRef{(véase \hyperref[tbl-diagnostico-esperadas]{tabla de diagnóstico de frecuencias esperadas})}. Adicionalmente, el RMS de localización se comparó entre las cuatro zonas mediante la prueba no paramétrica de Kruskal-Wallis, que determina si sus distribuciones presentan diferencias globales.
 
-En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado: cuanto mayor es la discrepancia entre las frecuencias observadas y esperadas, mayor es su valor. El símbolo $H(3)$ corresponde al estadístico de Kruskal-Wallis y el número entre paréntesis indica sus tres grados de libertad, obtenidos al comparar cuatro zonas. Como los cinco contrastes de este bloque se evaluaron conjuntamente, los valores p se ajustaron mediante Benjamini-Hochberg (BH), procedimiento que limita la proporción esperada de falsos descubrimientos. Finalmente, la V de Cramér corregida por sesgo cuantifica la magnitud de la asociación entre variables categóricas, mientras que $\varepsilon^2$ aproxima la proporción de variabilidad de los rangos del RMS atribuible a la zona. Los valores cercanos a cero representan efectos despreciables, incluso cuando el contraste resulte estadísticamente significativo.
+En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado: cuanto mayor es la discrepancia entre las frecuencias observadas y esperadas, mayor es su valor. El símbolo $H(3)$ corresponde al estadístico de Kruskal-Wallis y el número entre paréntesis indica sus tres grados de libertad, obtenidos al comparar cuatro zonas. Los valores p presentados incorporan el ajuste conjunto de los cinco contrastes de comparabilidad. Finalmente, la V de Cramér corregida por sesgo cuantifica la magnitud de la asociación entre variables categóricas, mientras que $\varepsilon^2$ aproxima la proporción de variabilidad de los rangos del RMS atribuible a la zona. Ambos tamaños de efecto se interpretan directamente a partir de su valor numérico, sin asignarles categorías mediante puntos de corte rígidos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}.
 
 ```{=latex}
 \begingroup
@@ -392,11 +374,11 @@ En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado: cuanto 
                 >{\centering\arraybackslash}p{0.15\textwidth}
                 >{\raggedright\arraybackslash}p{0.23\textwidth}}
 \toprule
-Contraste & Estadístico & p ajustado BH & Tamaño de efecto & Resultado \\
+Contraste & Estadístico & Valor p & Tamaño de efecto & Resultado \\
 \midrule
-Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Sin asociación apreciable \\
-Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación despreciable \\
-RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Diferencia estadística, pero trivial \\
+Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Asociación estimada nula \\
+Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación cercana a cero \\
+RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Menos del 1 \% de variabilidad de los rangos \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -404,11 +386,11 @@ RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Diferencia es
 \endgroup
 ```
 
-El tipo y la fuente de magnitud no presentaron asociaciones relevantes con la zona sísmica. Aunque el RMS mostró una diferencia estadísticamente detectable, su tamaño de efecto fue despreciable, por lo que carece de relevancia práctica. En conjunto, no se identificó evidencia de que las comparaciones entre zonas estén materialmente condicionadas por diferencias en los procedimientos de reporte o en la precisión de localización.
+El tipo y la fuente de magnitud no presentaron asociaciones relevantes con la zona sísmica: sus valores de V de Cramér corregida fueron 0,000 y 0,022, respectivamente. Aunque el RMS mostró una diferencia estadísticamente detectable, $\varepsilon^2=0{,}009$ indica que la zona se asocia con menos del 1 % de la variabilidad de sus rangos. En conjunto, no se identificó evidencia de que las comparaciones entre zonas estén materialmente condicionadas por diferencias en los procedimientos de reporte o en el ajuste residual de la localización.
 
 ### Cambios temporales en los procedimientos de reporte
 
-Los dos contrastes temporales completan la familia de cinco pruebas ajustadas conjuntamente mediante Benjamini-Hochberg. El RMS se comparó entre los períodos 2000-2009, 2010-2019 y 2020-2025 mediante Kruskal-Wallis. Por su parte, la relación entre el período y el tipo de magnitud se evaluó mediante chi-cuadrado con simulación Monte Carlo. En ambos casos, los tamaños de efecto permiten determinar si las diferencias detectadas tienen importancia práctica.
+Los dos contrastes temporales completan la familia de cinco pruebas ajustadas conjuntamente. El RMS se comparó entre los períodos 2000-2009, 2010-2019 y 2020-2025 mediante Kruskal-Wallis. Por su parte, la relación entre el período y el tipo de magnitud se evaluó mediante chi-cuadrado con simulación Monte Carlo. Esta tabla no presentó frecuencias esperadas inferiores a cinco; sin embargo, se mantuvo la simulación para aplicar el mismo procedimiento a los tres contrastes categóricos. \asesoriaStyledRef{(véase \hyperref[tbl-diagnostico-esperadas]{tabla de diagnóstico de frecuencias esperadas})}. En ambos casos, los tamaños de efecto permiten determinar si las diferencias detectadas tienen importancia práctica.
 
 ```{=latex}
 \begingroup
@@ -426,10 +408,10 @@ Los dos contrastes temporales completan la familia de cinco pruebas ajustadas co
                 >{\centering\arraybackslash}p{0.16\textwidth}
                 >{\raggedright\arraybackslash}p{0.22\textwidth}}
 \toprule
-Contraste & Estadístico & p ajustado BH & Tamaño de efecto & Resultado \\
+Contraste & Estadístico & Valor p & Tamaño de efecto & Resultado \\
 \midrule
-RMS por período & $H(2)=261{,}930$ & $<0{,}001$ & $\varepsilon^2=0{,}221$ & Diferencia temporal apreciable \\
-Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608$ & Asociación temporal fuerte \\
+RMS por período & $H(2)=261{,}930$ & $<0{,}001$ & $\varepsilon^2=0{,}221$ & 22,1 \% de variabilidad de los rangos \\
+Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608$ & Asociación marcadamente alejada de cero \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -437,7 +419,9 @@ Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608
 \endgroup
 ```
 
-Los procedimientos de reporte no permanecen constantes durante todo el período. El RMS presenta diferencias temporales de magnitud apreciable y la composición del tipo de magnitud cambia fuertemente, de manera coherente con la transición hacia `mww`. Por ello, las comparaciones espaciales pueden interpretarse sin una restricción importante asociada con la fuente o el método, mientras que las comparaciones temporales de magnitud requieren cautela, porque parte de su variación puede reflejar cambios en el procedimiento de estimación y no en la sismicidad.
+La dirección de esta asociación se observa en la participación de `mww`, que aumentó desde 1,3 % en 2000-2009 hasta 83,0 % en 2010-2019 y 97,1 % en 2020-2025. En sentido contrario, `mwc`, que representaba 72,1 % de los registros durante el primer período, disminuyó hasta 0,4 % en el último. Estos cambios respaldan la transición temporal hacia `mww` descrita en el Informe Asesoría 1.
+
+Los procedimientos de reporte no permanecen constantes durante todo el período. En el RMS, $\varepsilon^2=0{,}221$ indica que el período se asocia con aproximadamente el 22,1 % de la variabilidad de sus rangos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}. Para el tipo de magnitud, $V_c=0{,}608$ se encuentra marcadamente alejado de cero y es coherente con la transición hacia `mww`. Por ello, las comparaciones espaciales pueden interpretarse sin una restricción importante asociada con la fuente o el método, mientras que las comparaciones temporales de magnitud requieren cautela, porque parte de su variación puede reflejar cambios en el procedimiento de estimación y no en la sismicidad.
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
 
@@ -522,7 +506,7 @@ con Monte Carlo, logística binaria P(M >= 7,0), conteos descriptivos para M >= 
 
 <!-- Resultados generados en Scripts/10_inf_extremos.R. -->
 
-El análisis de los eventos fuertes utiliza las categorías definidas en el Informe Asesoría 1. La composición de categorías de magnitud no difiere entre zonas: la prueba de chi-cuadrado con p-valor por simulación de Monte Carlo, empleada por la presencia de casillas con frecuencias esperadas bajas, no resulta significativa ($p = 0{,}307$) y la V de Cramér es de 0,022, un grado de asociación despreciable. Este resultado es consistente con la comparación de magnitud de la sección anterior.
+El análisis de los eventos fuertes utiliza las categorías definidas en el Informe Asesoría 1. La composición de categorías de magnitud no difiere entre zonas: la prueba de chi-cuadrado con p-valor por simulación de Monte Carlo, empleada por la presencia de casillas con frecuencias esperadas bajas, no resulta significativa ($p = 0{,}307$) y la V de Cramér es de 0,022, un valor cercano a cero. Este resultado es consistente con la comparación de magnitud de la sección anterior.
 
 La probabilidad de que un evento alcance la categoría "Mayor" o superior ($M \geq 7{,}0$) se modela mediante regresión logística en función de la zona y la profundidad. La profundidad no aporta capacidad predictiva sobre la magnitud del evento (razón de momios de 1,0002; $p = 0{,}577$), resultado coherente con la escasa correlación entre magnitud y profundidad detectada en la sección anterior. El efecto de la zona es limítrofe en conjunto ($p = 0{,}061$) y se concentra por completo en la Dorsal Meso-Atlántica, cuya razón de momios de 0,25 (IC 95 % [0,058; 0,712]) excluye el valor 1 e indica una probabilidad cerca de cuatro veces menor de eventos de magnitud igual o superior a 7,0 respecto del Cinturón de Fuego. El resto del mundo y el Cinturón Alpino-Himalayo no se distinguen del Cinturón de Fuego. La comparación por criterio de Akaike favorece la profundidad en su forma continua sobre la categórica.
 
@@ -596,7 +580,9 @@ resultados y con el alcance declarado (sin predicción, causalidad ni amenaza).
 
 ## Continuidad de datos y variables {#sec-anexo-continuidad}
 
-Este anexo documenta la herencia de la base `sismos` y de sus variables derivadas desde el Informe Asesoría 1, junto a los elementos nuevos de esta etapa: la incorporación de las superficies de zona y la preparación de los objetos de modelamiento. *Pendiente: detalle de scripts y objetos utilizados.*
+El análisis conserva la base `sismos` del Informe Asesoría 1, integrada por 1.186 eventos, junto con sus variables derivadas. Entre ellas se encuentra `rms_imp`, versión completada del RMS que incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. La comparación descriptiva realizada en el informe anterior mostró que esta imputación no modificó sustancialmente la media, mediana, dispersión ni cuantiles. El RMS representa el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye por sí solo una medida completa de precisión instrumental o espacial.
+
+También se mantienen `magnitud_cat`, `profundidad_cat`, `zona` y `magType_grupo`. La única información nueva es la superficie de los polígonos de zona, incorporada como exposición en los modelos de conteo. El detalle de los objetos generados y de su correspondencia con los scripts se completará una vez cerrados los modelos finales.
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
@@ -604,7 +590,27 @@ Este anexo presenta el cálculo de la superficie de cada polígono de `area_regi
 
 ## Especificación de dócimas y modelos {#sec-anexo-especificacion}
 
-Este anexo reúne la especificación completa de cada dócima y modelo del informe (hipótesis, estadístico, distribución de referencia y salida íntegra), de las cuales el cuerpo principal presenta solo los elementos interpretables. *Pendiente: salidas completas por análisis.*
+Este anexo reúne las reglas de decisión que sustentan los procedimientos descritos de forma resumida en la metodología.
+
+| Familia de procedimientos | Rol | Criterio de decisión | Justificación |
+|---------------------------|-----|----------------------|---------------|
+| Mardia, M de Box y Bartlett | Diagnóstico | $\alpha=0{,}10$ junto con diagnóstico gráfico | Se prioriza detectar condiciones que podrían invalidar la ruta paramétrica; con una muestra grande, el resultado se interpreta junto con los gráficos |
+| Kruskal-Wallis para `mag` y `depth` | Confirmatorio | $\alpha=0{,}05$ por variable | Cada variable responde una pregunta sustantiva diferente; la multiplicidad posterior se controla dentro de cada familia de comparaciones por pares |
+| Dunn, seis pares por variable | Confirmatorio | Error familiar de 0,05 con corrección de Holm | La corrección limita la probabilidad de falsos positivos producidos por las seis comparaciones simultáneas |
+| GLM de conteos | Confirmatorio | $\alpha=0{,}05$ e IC 95 % de las razones de tasa | La conclusión considera la magnitud y la incertidumbre de las diferencias entre tasas |
+| Sobredispersión | Diagnóstico de especificación | $\alpha=0{,}05$ unilateral | La alternativa relevante es que la varianza supere la prevista por el modelo Poisson |
+| ADF y KPSS | Diagnóstico | $\alpha=0{,}05$ e interpretación conjunta | Sus hipótesis nulas son opuestas y la conclusión se apoya en su concordancia; con 26 observaciones anuales se reconoce una potencia limitada |
+| Ajuste exponencial | Diagnóstico descriptivo | Bootstrap paramétrico y gráfico QQ | El parámetro se estima con los mismos datos, por lo que no se utiliza el valor p convencional de Kolmogorov-Smirnov |
+| Chi-cuadrado entre categorías | Confirmatorio | $\alpha=0{,}05$; Monte Carlo cuando existen esperados inferiores a cinco | La simulación evita depender de una aproximación asintótica imprecisa |
+| Modelos logístico y multinomial | Confirmatorio | Razón de verosimilitud por variable, $\alpha=0{,}05$, e IC 95 % | La evaluación por bloques es más estable que las pruebas de Wald individuales ante posibles problemas de separación |
+| Comparabilidad del registro | Exploratorio | FDR de 5 % mediante Benjamini-Hochberg | El ajuste limita la proporción esperada de falsos descubrimientos dentro de los cinco contrastes |
+| Sensibilidad | Robustez | Comparación de dirección y magnitud, sin nueva prueba de significación | El objetivo es establecer si las conclusiones cambian al modificar una decisión metodológica |
+
+: Especificación de los criterios de decisión estadística. {#tbl-politica-decision tbl-colwidths="[24,14,25,37]"}
+
+Para la comparabilidad del registro se mantuvo `magType_grupo`, definida mediante `mww`, `mwc`, `mwb` y “otros”. En `magSource_grupo`, las fuentes con menos de 20 registros se reunieron en una categoría residual. Este umbral representa un promedio potencial mínimo de cinco registros por zona si la distribución fuera uniforme. Su propósito es evitar interpretaciones individuales de fuentes con respaldo insuficiente, no asegurar que todas las frecuencias esperadas superen cinco, porque los tamaños de las zonas son desiguales. Las fuentes principales se conservaron separadas para no ocultar diferencias en los procedimientos de reporte. Los períodos se definieron como 2000-2009, 2010-2019 y 2020-2025.
+
+Las hipótesis formales, las distribuciones de referencia y las salidas completas de cada procedimiento se incorporarán a este anexo una vez cerrados todos los modelos.
 
 ## Precisión de la simulación Monte Carlo {#sec-anexo-montecarlo}
 
@@ -613,6 +619,18 @@ En cada prueba se generaron $B=10.000$ tablas bajo la hipótesis de independenci
 $$
 \widehat p=\frac{K+1}{B+1}.
 $$
+
+El diagnóstico de las frecuencias esperadas fue el siguiente:
+
+| Contraste | Mínima esperada | Celdas bajo 5 | Total de celdas |
+|---|---:|---:|---:|
+| Zona por tipo de magnitud | 0,779 | 3 | 16 |
+| Zona por fuente de magnitud | 0,732 | 4 | 16 |
+| Período por tipo de magnitud | 6,734 | 0 | 12 |
+
+: Diagnóstico de frecuencias esperadas para los contrastes de comparabilidad. {#tbl-diagnostico-esperadas}
+
+Las dos tablas espaciales justificaron el uso de simulación por sus frecuencias esperadas reducidas. En la tabla temporal no se presentó esta condición; no obstante, se mantuvo el mismo procedimiento para obtener los tres valores p categóricos bajo una estrategia común.
 
 La corrección evita informar $p=0$ cuando ninguna simulación produce un resultado más extremo, pues ese resultado solo indica que el evento no apareció dentro del número finito de réplicas. En consecuencia, la resolución mínima con 10.000 simulaciones es:
 
@@ -677,6 +695,73 @@ V_{\mathrm{corregida}}
 $$
 
 Esta corrección descuenta la asociación positiva que puede aparecer únicamente por variabilidad muestral. Por ello, la medida corregida se utilizó para valorar la importancia práctica de las asociaciones detectadas.
+
+## Cálculo de epsilon cuadrado {#sec-anexo-epsilon}
+
+Epsilon cuadrado ($\varepsilon^2$) se utilizó como tamaño de efecto de Kruskal-Wallis. La medida expresa qué proporción de la variabilidad de los rangos se asocia con el factor de agrupación. Su interpretación es equivalente al $R^2$ de un ANOVA aplicado a los rangos, por lo que no representa varianza explicada de los valores originales del RMS [@mangiafico_rcompanion_2026].
+
+La fórmula aplicada por el script y por la función `epsilonSquared()` de `rcompanion` es:
+
+$$
+\varepsilon^2=\frac{H}{n-1},
+$$
+
+donde $H$ es el estadístico de Kruskal-Wallis, con la corrección por empates incorporada por R, y $n$ es el número total de observaciones. Para la comparación espacial se obtuvo:
+
+$$
+\varepsilon^2_{\text{zona}}=
+\frac{10{,}348}{1186-1}=0{,}0087\approx0{,}009.
+$$
+
+Por tanto, la zona se asocia con menos del 1 % de la variabilidad de los rangos del RMS. Para la comparación temporal:
+
+$$
+\varepsilon^2_{\text{período}}=
+\frac{261{,}930}{1186-1}=0{,}221.
+$$
+
+En este caso, el período se asocia aproximadamente con el 22,1 % de la variabilidad de los rangos. Ambos resultados se interpretaron mediante sus valores numéricos y no mediante puntos de corte rígidos.
+
+## Ajuste de valores p por multiplicidad {#sec-anexo-ajuste-p}
+
+En una prueba individual con $\alpha=0{,}05$, el riesgo aceptado de error tipo I es 5 %. Cuando se realizan cinco pruebas independientes, la probabilidad de obtener al menos un falso positivo puede aproximarse mediante:
+
+$$
+1-(1-0{,}05)^5=0{,}226.
+$$
+
+Por tanto, bajo ese supuesto ilustrativo, el riesgo de encontrar al menos una diferencia por azar puede alcanzar aproximadamente 22,6 %. Para reducir este problema se utilizó el procedimiento de Benjamini-Hochberg, que controla la proporción esperada de errores tipo I entre los resultados declarados como significativos [@benjamini_hochberg_1995].
+
+La reducción del error tipo I tiene como contrapartida un posible aumento del error tipo II. Un ajuste demasiado estricto puede hacer que una diferencia real deje de ser detectada. Benjamini-Hochberg se escogió porque controla la tasa de falsos descubrimientos y es menos restrictivo que los procedimientos orientados a evitar cualquier error dentro de la familia de pruebas. La documentación oficial de R señala que esta condición es menos estricta que el control del error familiar y que, por ello, suele conservar mayor potencia estadística [@r_p_adjust].
+
+El procedimiento ordena los $m=5$ valores p originales de menor a mayor:
+
+$$
+p_{(1)}\leq p_{(2)}\leq\cdots\leq p_{(5)}.
+$$
+
+Para cada posición $i$, el valor ajustado se obtiene mediante:
+
+$$
+\widetilde p_{(i)}
+=
+\min_{j\geq i}
+\left(
+\frac{m}{j}p_{(j)},1
+\right).
+$$
+
+La implementación se realizó mediante `p.adjust(..., method = "BH")` del paquete `stats` de R. Los valores obtenidos fueron:
+
+| Contraste | Valor p original | Valor p ajustado |
+|---|---:|---:|
+| RMS por período | $<0{,}0001$ | $<0{,}0001$ |
+| Período por tipo de magnitud | 0,00010 | 0,00025 |
+| RMS por zona | 0,01583 | 0,02638 |
+| Zona por fuente de magnitud | 0,28047 | 0,35059 |
+| Zona por tipo de magnitud | 0,67073 | 0,67073 |
+
+Los valores ajustados se compararon con el nivel de 0,05. El RMS por zona, el RMS por período y la asociación entre período y tipo de magnitud permanecieron estadísticamente detectables después del ajuste. En consecuencia, la corrección redujo el riesgo de falsos descubrimientos sin modificar las decisiones obtenidas en este bloque.
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 

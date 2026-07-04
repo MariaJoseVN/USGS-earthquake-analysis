@@ -72,7 +72,8 @@ tabla_zt <- table(sismos$zona, sismos$magType_grupo)
 tabla_zt
 # La tabla de esperados confirma la necesidad del Monte Carlo: varias casillas quedan
 # bajo 5 (Alpino x otros = 1,75 ; Dorsal x mwb = 2,74 ; Dorsal x otros = 0,78).
-suppressWarnings(chisq.test(tabla_zt)$expected)
+esperadas_zt <- suppressWarnings(chisq.test(tabla_zt)$expected)
+esperadas_zt
 chi_zt <- chisq.test(tabla_zt, simulate.p.value = TRUE, B = 10000)
 v_zt   <- v_cramer(tabla_zt)
 # En chi_zt, df = NA es esperado: con Monte Carlo el p-valor no viene de una distribucion
@@ -80,8 +81,8 @@ v_zt   <- v_cramer(tabla_zt)
 # estadistico observado (el mismo que usa v_cramer por dentro).
 chi_zt
 v_zt
-# Resultado: p = 0,67 (no significativo) y V corregida = 0,000 (sin asociacion). Aqui p-valor
-# y efecto coinciden en "nada": el metodo de magnitud se reparte de forma homogenea entre
+# Resultado: p = 0,67 (no significativo) y V corregida = 0,000 (asociacion estimada nula).
+# El metodo de magnitud se reparte de forma homogenea entre
 # zonas, por lo que no condiciona la comparacion espacial de magnitud (Fase 3). Es el
 # primer "check verde" del portero.
 
@@ -93,17 +94,26 @@ v_zt
 # Monte Carlo.
 tabla_zs <- table(sismos$zona, sismos$magSource_grupo)
 tabla_zs
+esperadas_zs <- suppressWarnings(chisq.test(tabla_zs)$expected)
+esperadas_zs
 chi_zs <- chisq.test(tabla_zs, simulate.p.value = TRUE, B = 10000)
 v_zs   <- v_cramer(tabla_zs)
 chi_zs
 v_zs
-# Resultado: p = 0,28 (no significativo) y V corregida = 0,022 (fuerza despreciable). Segundo
+# Resultado: p = 0,28 (no significativo) y V corregida = 0,022 (cercana a cero). Segundo
 # "check verde": la fuente de la magnitud tampoco condiciona la comparacion espacial.
 
 
 #1.3 Ajuste RMS por zona y por periodo (Kruskal-Wallis)----
-# El RMS es asimetrico, por lo que se compara con una docima no parametrica de
-# medianas. Interesa si el ajuste de localizacion difiere entre zonas o entre periodos.
+# Comparacion de rms_imp por zona y periodo mediante Kruskal-Wallis. Se adopta un
+# criterio no parametrico y robusto, coherente con las comparaciones de variables
+# continuas entre grupos. El Informe Asesoria 1 mostro una distribucion global
+# aproximadamente simetrica, pero con valores atipicos en ambos extremos y tamanios
+# muestrales muy desiguales entre zonas.
+#
+# La prueba evalua si los rangos de rms_imp presentan diferencias globales entre los
+# grupos. No compara medias y no debe interpretarse estrictamente como una prueba de
+# medianas sin asumir formas de distribucion semejantes.
 # Nota: aqui df SI aparece (df = grupos - 1), porque Kruskal-Wallis usa la chi-cuadrado
 # teorica; en los chi-cuadrado de arriba salia df = NA por ser Monte Carlo.
 kw_rms_zona    <- kruskal.test(rms_imp ~ factor(zona), data = sismos)
@@ -113,12 +123,14 @@ eps_rms_periodo <- eps_cuadrado(kw_rms_periodo, nrow(sismos))
 kw_rms_zona
 kw_rms_periodo
 # Este es el caso donde p-valor y efecto SE SEPARAN, y por eso se calculan ambos:
-#   - Por zona   : p = 0,016 (significativo) pero epsilon2 = 0,009 (despreciable). Con
-#     n = 1186 la prueba detecta una diferencia real pero minuscula; el efecto avisa que
-#     es irrelevante. Tercer "check verde": el RMS no difiere de forma relevante por zona.
-#   - Por periodo: p < 0,0001 y epsilon2 = 0,221 (moderado). Aqui ambas coinciden: el RMS
-#     si mejora con el tiempo. Confirma la advertencia temporal (condiciones de reporte
-#     que cambian a lo largo de los anios, relevante para la Fase 4).
+#   - Por zona   : p = 0,016 (significativo) pero epsilon2 = 0,009. Con
+#     n = 1186 la prueba detecta una diferencia estadistica en los rangos, pero epsilon2
+#     indica que la zona se asocia con menos del 1 % de la variabilidad de los rangos. El RMS no
+#     difiere de forma relevante por zona.
+#   - Por periodo: p < 0,0001 y epsilon2 = 0,221. El periodo se asocia con aproximadamente
+#     el 22,1 % de la variabilidad de los rangos del RMS.
+#     Confirma la advertencia temporal: las condiciones de reporte cambian a lo largo
+#     de los anios, lo que resulta relevante para la Fase 4.
 
 
 #1.4 Asociacion periodo x magType_grupo----
@@ -126,26 +138,49 @@ kw_rms_periodo
 # lo muestra por columnas: 2000-2009 dominado por mwc/mwb, 2010-2019 y 2020-2025 por mww.
 tabla_tp <- table(sismos$periodo, sismos$magType_grupo)
 tabla_tp
+esperadas_tp <- suppressWarnings(chisq.test(tabla_tp)$expected)
+esperadas_tp
 chi_tp <- chisq.test(tabla_tp, simulate.p.value = TRUE, B = 10000)
 v_tp   <- v_cramer(tabla_tp)
 chi_tp
 v_tp
-# Contracara de los contrastes espaciales: aqui p-valor Y efecto son fuertes.
+# Contracara de los contrastes espaciales: aqui el p-valor es bajo y el efecto se aleja de cero.
 #   - X-squared = 882 (enorme frente a los ~7-11 anteriores).
 #   - p = 0,00009999 es el PISO del Monte Carlo (~1/(10000+1)): ninguna tabla simulada
 #     alcanzo un chi-cuadrado tan extremo, o sea la asociacion es mas fuerte de lo que la
 #     simulacion puede resolver.
-#   - V corregida = 0,608: efecto fuerte, muy lejos de los valores espaciales.
+#   - V corregida = 0,608: asociacion marcadamente alejada de cero y de los valores espaciales.
 # Clave que junta el bloque: el metodo cambio mucho EN EL TIEMPO (V = 0,608) pero es
 # homogeneo ENTRE ZONAS (1.1, V = 0,000). Por eso la comparacion espacial queda limpia y
 # la temporal queda con su advertencia documentada.
 
 
+#1.4.1 Diagnostico de frecuencias esperadas----
+# Resume la condicion que fundamento el uso de Monte Carlo. La tabla temporal no tiene
+# esperados bajo 5, pero se conserva el mismo procedimiento para los tres contrastes.
+resumen_esperadas <- function(esperadas, contraste) {
+  data.frame(
+    contraste = contraste,
+    minima_esperada = min(esperadas),
+    celdas_bajo_5 = sum(esperadas < 5),
+    total_celdas = length(esperadas)
+  )
+}
+
+diagnostico_esperadas <- bind_rows(
+  resumen_esperadas(esperadas_zt, "Zona por tipo de magnitud"),
+  resumen_esperadas(esperadas_zs, "Zona por fuente de magnitud"),
+  resumen_esperadas(esperadas_tp, "Periodo por tipo de magnitud")
+)
+
+diagnostico_esperadas
+
+
 #1.5 Ajuste por multiplicidad (FDR de Benjamini-Hochberg)----
 # Se reunen los cinco contrastes con su p-valor y su tamanio de efecto, y se ajustan
 # los p-valores en conjunto. El efecto (V de Cramer o epsilon cuadrado) es tan
-# importante como el p-valor: con n = 1186 casi todo resulta significativo, por lo que
-# la fuerza de asociacion decide si el reporte condiciona o no las comparaciones.
+# importante como el p-valor: con n = 1186 pueden detectarse diferencias pequenas, por lo
+# que el valor numerico del efecto permite evaluar si el reporte condiciona las comparaciones.
 comparabilidad <- data.frame(
   contraste = c("zona x magType", "zona x magSource",
                 "rms por zona", "rms por periodo", "periodo x magType"),
@@ -171,14 +206,14 @@ comparabilidad_print
 # Resultado (C1): separacion nitida entre asociaciones espaciales y temporales.
 #
 # ESPACIALES (no condicionan la comparacion entre zonas):
-#   - zona x magType : p_BH = 0,66 ; V corregida = 0,000 -> sin asociacion.
-#   - zona x magSource: p_BH = 0,35 ; V corregida = 0,022 -> asociacion despreciable.
-#   - rms por zona   : p_BH = 0,026 (significativo) pero epsilon2 = 0,009, efecto
-#     despreciable. Con n = 1186 la significancia no implica relevancia: manda el efecto.
+#   - zona x magType : p_BH = 0,67 ; V corregida = 0,000 -> asociacion estimada nula.
+#   - zona x magSource: p_BH = 0,35 ; V corregida = 0,022 -> asociacion cercana a cero.
+#   - rms por zona   : p_BH = 0,026 (significativo) pero epsilon2 = 0,009, equivalente
+#     a menos del 1 % de la variabilidad de los rangos.
 #
 # TEMPORALES (condicionan solo las comparaciones entre periodos, Fase 4):
-#   - periodo x magType: V corregida = 0,608 -> transicion metodologica hacia mww (fuerte).
-#   - rms por periodo  : epsilon2 = 0,221 -> mejora del ajuste con el tiempo.
+#   - periodo x magType: V corregida = 0,608 -> asociacion marcadamente alejada de cero.
+#   - rms por periodo  : epsilon2 = 0,221 -> 22,1 % de variabilidad de los rangos.
 #
 # Veredicto: las comparaciones ESPACIALES entre zonas (Fases 2, 3 y 6) no estan
 # condicionadas por la estructura de reporte y son validas. Las comparaciones
