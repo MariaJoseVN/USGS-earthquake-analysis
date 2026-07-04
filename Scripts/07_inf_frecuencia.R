@@ -30,11 +30,11 @@ if (!exists("sismos") || !"zona" %in% names(sismos)) {
 
 
 #Superficie por zona (paso 0.2)----
-# Se lee de MAPA_HTML/zonas_inf2.geojson, donde el campo `Area` ya viene en km2.
-# Las cuatro zonas tilean el planeta (suma ~510,1 millones km2 = superficie terrestre
-# total), por lo que "Resto del mundo" (429 M km2) es el complemento real de los tres
-# cinturones: su area SI corresponde a los eventos etiquetados asi, y por eso puede
-# entrar tambien en el modelo de densidad. Los nombres de Region coinciden con
+# Se lee de MAPA_HTML/zonas_inf2.geojson, capa derivada de los tres cinturones de
+# SIG/area_regiones.geojson y de su complemento espacial. El campo `Area` ya viene
+# expresado en km2. Las cuatro categorias cubren en conjunto la superficie global
+# representada por la capa (~510,1 millones de km2); "Resto del mundo" (429 M km2)
+# es el complemento de los tres cinturones. Los nombres de Region coinciden con
 # sismos$zona, de modo que el join posterior es directo.
 
 superficie_zona <- st_read(file.path("MAPA_HTML", "zonas_inf2.geojson"), quiet = TRUE) %>%
@@ -114,7 +114,31 @@ summary(m_tasa)
 m_nb_dens <- glm.nb(n ~ zona + offset(log(area_km2)), data = tabla_zona_anio)
 
 
-#Razones de tasa con IC 95 % (paso 2.4)----
+#Contrastes globales de zona (paso 2.4)----
+# Cada modelo final se compara con su modelo nulo. En el modelo de densidad se
+# conserva el offset en ambos ajustes, de modo que la docima evalua exclusivamente
+# si la zona aporta informacion adicional. El estadistico es una razon de
+# verosimilitudes con 3 grados de libertad.
+m_nb_nulo <- glm.nb(n ~ 1, data = tabla_zona_anio)
+m_nb_dens_nulo <- glm.nb(
+  n ~ offset(log(area_km2)),
+  data = tabla_zona_anio
+)
+
+prueba_global <- tibble(
+  modelo = c("Tasa anual bruta", "Densidad por superficie"),
+  estadistico_LR = c(
+    2 * (as.numeric(logLik(m_nb)) - as.numeric(logLik(m_nb_nulo))),
+    2 * (as.numeric(logLik(m_nb_dens)) - as.numeric(logLik(m_nb_dens_nulo)))
+  ),
+  gl = 3L
+) %>%
+  mutate(valor_p = pchisq(estadistico_LR, df = gl, lower.tail = FALSE))
+
+prueba_global
+
+
+#Razones de tasa con IC 95 % (paso 2.5)----
 # exp() lleva los coeficientes a la escala de razones de tasa. Cada fila compara una
 # zona con el Cinturon de Fuego (referencia). El intercepto es la tasa base de Fuego.
 rr_tasa <- exp(cbind(RR = coef(m_nb), confint(m_nb)))
@@ -124,11 +148,57 @@ rr_dens <- exp(cbind(RR = coef(m_nb_dens), confint(m_nb_dens)))
 rr_dens
 
 
-#Tabla puente con el Informe 1 (paso 2.5)----
+#Comparaciones por pares con ajuste de Holm (paso 2.6)----
+# Se comparan las seis parejas posibles. La razon de tasa es el tamanio de efecto:
+# 1 indica igualdad; valores mayores que 1 favorecen a la primera zona del rotulo y
+# valores menores que 1, a la segunda. Los valores p de Wald se ajustan por separado
+# dentro de cada familia de seis contrastes mediante Holm, con error familiar 0,05.
+contrastes_pares_nb <- function(modelo, datos) {
+  zonas <- levels(datos$zona)
+  diseno <- model.matrix(
+    ~ zona,
+    data = data.frame(zona = factor(zonas, levels = zonas))
+  )
+  rownames(diseno) <- zonas
+
+  pares <- combn(zonas, 2, simplify = FALSE)
+
+  resultados <- lapply(pares, function(par) {
+    contraste <- diseno[par[1], ] - diseno[par[2], ]
+    estimacion <- sum(contraste * coef(modelo))
+    error_estandar <- sqrt(
+      drop(t(contraste) %*% vcov(modelo) %*% contraste)
+    )
+    estadistico_z <- estimacion / error_estandar
+
+    tibble(
+      zona_1 = par[1],
+      zona_2 = par[2],
+      razon_tasa = exp(estimacion),
+      ic_95_inferior = exp(estimacion - qnorm(0.975) * error_estandar),
+      ic_95_superior = exp(estimacion + qnorm(0.975) * error_estandar),
+      estadistico_z = estadistico_z,
+      valor_p = 2 * pnorm(-abs(estadistico_z))
+    )
+  })
+
+  bind_rows(resultados) %>%
+    mutate(valor_p_ajustado_holm = p.adjust(valor_p, method = "holm"))
+}
+
+pares_tasa <- contrastes_pares_nb(m_nb, tabla_zona_anio)
+pares_dens <- contrastes_pares_nb(m_nb_dens, tabla_zona_anio)
+
+pares_tasa
+pares_dens
+
+
+#Tabla puente con el Informe 1 (paso 2.7)----
 # Muestra lado a lado la tasa anual bruta (reproduce 34,3/7,8/2,4/1,1) y la densidad
 # por millon de km2. El contraste es el hallazgo de la seccion: por conteo bruto el
 # orden es Fuego > Resto > Alpino > Dorsal, pero por densidad "Resto del mundo" cae al
-# ultimo lugar (parece activo solo por su enorme superficie). Responde de frente la
+# ultimo lugar. La normalizacion evita interpretar el segundo lugar de esta categoria
+# residual como una actividad alta por unidad de superficie. Responde de frente la
 # heterogeneidad de tamanios de zona senalada en la revision docente.
 puente <- tabla_zona_anio %>%
   group_by(zona) %>%
@@ -145,8 +215,8 @@ puente <- tabla_zona_anio %>%
   arrange(desc(tasa_anual)) %>%
   dplyr::select(zona, eventos, area_Mkm2, tasa_anual, densidad_Mkm2_anual)
 puente
-#Se confirmó el hallazgo: por conteo bruto "Resto del mundo" va 2º, pero por densidad cae al último lugar.
-# Es activo solo porque es enorme; por km² es el menos activo de todos.
+# Por conteo bruto "Resto del mundo" ocupa el segundo lugar, pero por densidad cae
+# al ultimo. La interpretacion queda condicionada a la delimitacion adoptada.
 
 
 #Figura de la seccion: tasa anual vs densidad por zona----
@@ -171,28 +241,37 @@ etiquetas_zona <- c(
 ruta_fig <- file.path("Informes Quarto", "Imágenes y Recursos",
                       "inf2-frecuencia-tasa-densidad.png")
 
-# Se dibuja PRIMERO en pantalla (aparece en el panel PLOTS al correr este bloque) y
-# luego se copia lo mostrado a PNG con dev.copy. Correr el bloque completo de una vez.
-par(mfrow = c(1, 2), bg = "white", oma = c(0, 0, 3, 0), mar = c(5, 4.5, 3, 1) + 0.1)
+# La figura se abre directamente en un dispositivo PNG para que la ejecucion por
+# Rscript sea reproducible y no cree archivos graficos auxiliares.
+png(filename = ruta_fig, width = 2200, height = 1000, res = 200, bg = "white")
+par(mfrow = c(1, 2), bg = "white", oma = c(0, 0, 3, 0),
+    mar = c(6.2, 4.5, 3, 1.5) + 0.1)
 
 # Panel izquierdo: tasa anual bruta
 d1 <- puente[order(-puente$tasa_anual), ]
+rotulos_d1 <- unname(etiquetas_zona[match(as.character(d1$zona), names(etiquetas_zona))])
+stopifnot(!anyNA(rotulos_d1))
 b1 <- barplot(d1$tasa_anual,
-              names.arg = etiquetas_zona[as.character(d1$zona)],
+              names.arg = rotulos_d1,
               col = colores_zona[as.character(d1$zona)], border = "gray30",
               las = 1, ylim = c(0, max(d1$tasa_anual) * 1.15),
-              main = "Tasa anual", ylab = "Eventos por anio")
+              cex.names = 0.78,
+              main = "Tasa anual", ylab = "Eventos por año")
 text(b1, d1$tasa_anual, labels = format(round(d1$tasa_anual, 1), decimal.mark = ","),
      pos = 3, cex = 0.85)
 box()
 
 # Panel derecho: densidad por millon de km2
 d2 <- puente[order(-puente$densidad_Mkm2_anual), ]
+rotulos_d2 <- unname(etiquetas_zona[match(as.character(d2$zona), names(etiquetas_zona))])
+stopifnot(!anyNA(rotulos_d2))
 b2 <- barplot(d2$densidad_Mkm2_anual,
-              names.arg = etiquetas_zona[as.character(d2$zona)],
+              names.arg = rotulos_d2,
               col = colores_zona[as.character(d2$zona)], border = "gray30",
               las = 1, ylim = c(0, max(d2$densidad_Mkm2_anual) * 1.15),
-              main = "Densidad por superficie", ylab = "Eventos por millon de km2 y anio")
+              cex.names = 0.78,
+              main = "Densidad por superficie",
+              ylab = "Eventos por millón de km2 y año")
 text(b2, d2$densidad_Mkm2_anual, labels = format(round(d2$densidad_Mkm2_anual, 3), decimal.mark = ","),
      pos = 3, cex = 0.85)
 box()
@@ -200,8 +279,4 @@ box()
 mtext("Frecuencia por zona: el orden cambia al controlar la superficie",
       side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
 
-# Guardar a PNG lo que quedo en el panel (para el .qmd del Informe 2)
-dev.copy(png, filename = ruta_fig, width = 2200, height = 1000, res = 200)
 dev.off()
-
-par(mfrow = c(1, 1))

@@ -2,7 +2,7 @@
 lang: es
 bibliography: ../referencias.bib
 link-citations: true
-output-file: "Informe Asesoría 2 - Actual.pdf"
+output-file: "Informe Asesoría 2 - VERSIÓN 2.pdf"
 crossref:
   fig-title: "Figura"
   tbl-title: "Tabla"
@@ -233,7 +233,7 @@ La declaración detallada de herramientas, fechas, propósitos, productos asocia
 
 El análisis se realiza sobre la base `sismos` del Informe Asesoría 1, con sus 1.186 eventos y sus variables derivadas sin modificaciones: `magnitud_cat` ("Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$), `profundidad_cat` ("Superficial" hasta 70 km, "Intermedio" entre más de 70 y 300 km y "Profundo" sobre 300 km), `zona`, `magType_grupo` y `rms_imp`. Los criterios de estas variables se documentan en los anexos del informe anterior y aquí se heredan por referencia.
 
-Se incorpora una única información nueva: la superficie de cada polígono de zona, calculada en QGIS sobre la capa `area_regiones.geojson`, que se utiliza como denominador de exposición en los modelos de conteo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas})}.
+Se incorpora una única información nueva: la superficie de las cuatro categorías espaciales, leída desde el campo `Area` de la capa `MAPA_HTML/zonas_inf2.geojson`. Esta capa contiene los tres cinturones de `SIG/area_regiones.geojson` y la categoría complementaria "Resto del mundo"; sus superficies se utilizan como denominador de exposición en el modelo de densidad. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas})}.
 
 Dos decisiones de datos quedan declaradas desde el inicio. Primero, `nst_imp` no se utiliza como covariable en ningún modelo, porque 402 de sus valores fueron imputados; se mantiene solo como descriptor con la cautela ya establecida. Segundo, los 1.186 eventos del catálogo presentan estado de revisión `reviewed`, por lo que el estado de revisión no ofrece variación analizable y se descarta como eje de sensibilidad; esta verificación fundamenta la elección de los ejes definidos en la @sec-diseno-sensibilidad.
 
@@ -252,7 +252,7 @@ Dos principios transversales complementan la tabla. Primero, con 1.186 eventos, 
 | Supuestos multivariantes: Mardia, M-Box, Bartlett | Diagnóstico | $\alpha = 0{,}10$ junto a diagnóstico gráfico | El error grave es adoptar una ruta paramétrica inválida; un nivel mayor facilita detectar la violación. Con n = 1.186 estas dócimas rechazan ante desviaciones triviales, por lo que el diagnóstico gráfico acompaña siempre |
 | Kruskal-Wallis para `mag` y `depth` | Confirmatorio | $\alpha = 0{,}05$ por variable | Cada variable responde una pregunta sustantiva distinta y define su propia familia; la multiplicidad se controla dentro de cada una, en los post-hoc |
 | Post-hoc de Dunn (6 pares por variable) | Confirmatorio | Error de familia 0,05 con corrección de Holm | Sin corrección, la probabilidad de al menos un falso positivo por familia se aproxima a 0,26; Holm garantiza el mismo control que Bonferroni con mayor potencia |
-| Efectos de zona en el GLM de conteos | Confirmatorio | $\alpha = 0{,}05$ con IC 95 % de las razones de tasa | La conclusión ejecutiva es la magnitud del efecto; el intervalo comunica más que el p-valor |
+| Efectos de zona en el GLM de conteos | Confirmatorio | Contraste global con $\alpha = 0{,}05$; seis comparaciones por pares con Holm e IC 95 % de las razones de tasa | Holm controla el error familiar de las comparaciones; la conclusión ejecutiva prioriza la magnitud y la incertidumbre del efecto |
 | Sobredispersión (Poisson frente a binomial negativa) | Diagnóstico de especificación | $\alpha = 0{,}05$ unilateral; en la razón de verosimilitud, el p-valor se divide por dos | La alternativa es varianza mayor que la media y el parámetro de dispersión está en la frontera del espacio paramétrico, con distribución nula de mezcla chi-cuadrado |
 | ADF y KPSS | Diagnóstico | $\alpha = 0{,}05$; ADF es unilateral por definición; se concluye solo si ambas concuerdan | Son dócimas con hipótesis nulas opuestas; la evidencia es la concordancia. Con 26 puntos anuales la potencia es baja y se declara |
 | Ajuste exponencial de los tiempos entre eventos | Diagnóstico descriptivo | p-valor por bootstrap paramétrico, reportado sin dicotomizar, junto a diagnóstico QQ | El parámetro se estima de los mismos datos, lo que invalida el p-valor estándar de Kolmogorov-Smirnov; con cientos de intervalos la dócima rechaza ante desviaciones mínimas |
@@ -297,11 +297,13 @@ Finalmente, tratamos como una misma familia exploratoria los cinco contrastes de
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
-::: {.content-hidden when-format="pdf"}
+Para comparar la frecuencia se construyó una tabla con los conteos de cada zona en cada año del período 2000-2025. La unidad de análisis fue, por tanto, una combinación zona-año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos modelos complementarios: uno para la tasa anual bruta, comparable con el Informe Asesoría 1, y otro para la densidad de eventos. En este último, la superficie se incorporó como offset, es decir, como una exposición conocida cuyo coeficiente se mantiene fijo, para expresar la frecuencia por unidad de superficie y año.
 
-Los conteos anuales por zona (26 años y 4 zonas, 104 observaciones) se modelan mediante un GLM Poisson con enlace logarítmico y offset igual al logaritmo de la superficie de la zona, de modo que los efectos se interpreten como razones de tasa por unidad de superficie y año. La sobredispersión se evalúa según la política declarada; de confirmarse, el modelo se reemplaza por una binomial negativa. Los resultados principales son las razones de tasa entre zonas con sus intervalos de confianza al 95 %, junto a las tasas brutas por año que permiten la comparación directa con el Informe Asesoría 1.
+El punto de partida fue un modelo Poisson con enlace logarítmico. Este modelo es apropiado para conteos, pero supone que la media y la varianza condicional son iguales. La sobredispersión, que ocurre cuando la variabilidad supera ese supuesto, se evaluó mediante la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. También se consideró la alternativa quasi-Poisson; se escogió la binomial negativa porque incorpora un parámetro adicional de variabilidad, conserva una verosimilitud explícita para comparar modelos y permite obtener razones de tasa con intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@r_mass_glm_nb; @venables_ripley_2002].
 
-:::
+La presencia de un efecto global de zona se evaluó mediante una razón de verosimilitudes con tres grados de libertad. Luego se examinaron las seis comparaciones posibles entre zonas. Sus valores p se ajustaron mediante el procedimiento de Holm, que controla en 5 % la probabilidad de obtener al menos un falso positivo dentro de cada familia de seis contrastes [@holm_1979]. El tamaño del efecto se expresó como razón de tasa: un valor de 1 representa igualdad, un valor mayor que 1 indica mayor frecuencia en la primera zona y un valor menor que 1 indica menor frecuencia. Cada razón se acompañó de un intervalo de confianza del 95 %. La decisión consideró conjuntamente el valor p ajustado, la magnitud de la razón y la amplitud del intervalo, con especial cautela para el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica por sus menores conteos.
+
+La interpretación supone que los conteos zona-año son condicionalmente independientes, que cada fila representa el mismo tiempo de observación, que la delimitación y las superficies son las adoptadas para todo el período y que la estructura de varianza binomial negativa describe adecuadamente la variabilidad residual. La categoría "Resto del mundo" se mantiene como cierre heterogéneo del catálogo y no se interpreta como un cinturón tectónico. Los desarrollos y diagnósticos completos se presentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
 
 ## Comparación de magnitud y profundidad entre zonas {#sec-met-magnitud-profundidad}
 
@@ -420,13 +422,48 @@ En cambio, la dimensión temporal sí refleja las condiciones de reporte del cat
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
 
-::: {.content-hidden when-format="pdf"}
-
 <!-- Análisis mínimo 1 del instructivo. Resultados generados en Scripts/07_inf_frecuencia.R. -->
 
-El modelo de conteo confirma formalmente la concentración descrita en el Informe Asesoría 1. Tras ajustar una binomial negativa para acomodar la sobredispersión leve detectada (dispersión de 1,36; $p = 0{,}016$), la tasa anual del Cinturón de Fuego es de 34,3 eventos por año, y las razones de tasa respecto a esta zona son de 0,228 para Resto del mundo (IC 95 % [0,191; 0,270]), 0,071 para el Cinturón Alpino-Himalayo ([0,053; 0,092]) y 0,031 para la Dorsal Meso-Atlántica ([0,021; 0,045]). En los tres casos el intervalo excluye el valor 1, por lo que las diferencias son estadísticamente significativas.
+Este análisis evaluó si la frecuencia de terremotos difiere entre las zonas definidas en el catálogo. Para separar la cantidad de eventos de la extensión espacial considerada, se compararon la tasa anual bruta, expresada como eventos por año, y la densidad de ocurrencia, expresada como eventos por millón de kilómetros cuadrados y año.
 
-Al normalizar por superficie, el orden se modifica. La densidad del Cinturón de Fuego, de 0,720 eventos por millón de km² y año, sigue siendo la mayor, pero Resto del mundo cae al último lugar con 0,018, por debajo del Cinturón Alpino-Himalayo (0,167) y de la Dorsal Meso-Atlántica (0,057). Resto del mundo aparece activo por conteo únicamente por su gran extensión, de 429 millones de km²; por unidad de superficie es la zona menos activa. En consecuencia, el Cinturón de Fuego se distingue por su frecuencia de ocurrencia tanto en términos absolutos como por densidad, mientras que la categoría residual no constituye una zona de alta actividad, sino un agregado disperso sobre una superficie muy amplia.
+El modelo Poisson inicial presentó sobredispersión. La dispersión de Pearson fue 1,410 y la prueba de Cameron-Trivedi obtuvo $z=2{,}149$ y $p=0{,}0158$. Además, la comparación entre Poisson y binomial negativa produjo $LR=5{,}628$ y $p=0{,}0088$. La dispersión superior a 1 indica que los conteos variaron más de lo admitido por la Poisson. Por esta razón, las tasas, los tamaños de efecto y sus intervalos se estimaron mediante modelos binomiales negativos.
+
+En la `Tabla~\ref{tbl-frecuencia-zonas}`{=latex}, la razón de tasa es el tamaño del efecto y compara cada zona con el Cinturón de Fuego. El valor 1 representa igualdad; un valor inferior a 1 indica que la zona presenta una frecuencia menor que la categoría de referencia. El intervalo de confianza del 95 % muestra el rango de valores compatibles con el modelo para esa razón.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.3pt}
+\renewcommand{\arraystretch}{0.90}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-zonas}
+\hypertarget{dest-tbl-frecuencia-zonas}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.21\textwidth}
+                r r
+                >{\centering\arraybackslash}p{0.19\textwidth}
+                r
+                >{\centering\arraybackslash}p{0.19\textwidth}}
+\toprule
+Zona & Eventos & Tasa anual & Razón de tasa (IC 95 \%) & Densidad & Razón de densidades (IC 95 \%) \\
+\midrule
+Cinturón de Fuego        & 892 & 34,31 & 1,000 (referencia)      & 0,720 & 1,000 (referencia) \\
+Resto del mundo          & 203 &  7,81 & 0,228 [0,191; 0,270]   & 0,018 & 0,025 [0,021; 0,030] \\
+Cinturón Alpino-Himalayo &  63 &  2,42 & 0,071 [0,053; 0,092]   & 0,167 & 0,232 [0,176; 0,302] \\
+Dorsal Meso-Atlántica    &  28 &  1,08 & 0,031 [0,021; 0,045]   & 0,057 & 0,079 [0,053; 0,114] \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.7em}
+\bottomtablecaption{tbl-frecuencia-zonas}{Frecuencia anual bruta y densidad de eventos por zona. La densidad se expresa como eventos por millón de km\textsuperscript{2} y año; las razones utilizan el Cinturón de Fuego como referencia.}
+\endgroup
+```
+
+El contraste global encontró diferencias entre zonas tanto en la tasa anual bruta, $LR(3)=220{,}37$, como en la densidad, $LR(3)=225{,}85$, ambos con $p<0{,}001$. El símbolo $LR$ corresponde al estadístico de razón de verosimilitudes y el número entre paréntesis indica sus grados de libertad. En las seis comparaciones por pares de cada modelo, todos los valores p ajustados mediante Holm fueron inferiores a 0,001. Un valor p ajustado cuantifica la evidencia contra la igualdad después de controlar la realización simultánea de las seis comparaciones; no mide la importancia de las diferencias.
+
+La magnitud de los efectos fue considerable. La tasa anual del Cinturón de Fuego fue 4,39 veces la de Resto del mundo, 14,16 veces la del Cinturón Alpino-Himalayo y 31,86 veces la de la Dorsal Meso-Atlántica. Al controlar la superficie, su densidad fue 39,57 veces la de Resto del mundo, 4,30 veces la del Cinturón Alpino-Himalayo y 12,64 veces la de la Dorsal. Aunque los conteos son muy desiguales, con 892 eventos en el Cinturón de Fuego y 28 en la Dorsal, los intervalos de confianza permanecieron alejados de 1. Por ello, la conclusión no depende únicamente de los valores p: las razones de tasa también indican diferencias grandes, mientras que los intervalos cuantifican la mayor incertidumbre de las zonas con menos eventos.
+
+La normalización por superficie modificó el orden de las categorías. Resto del mundo ocupó el segundo lugar en tasa anual bruta, con 7,81 eventos por año, pero pasó al último en densidad, con 0,018 eventos por millón de kilómetros cuadrados y año. Este resultado indica que su posición en el conteo bruto no representa una frecuencia alta por unidad de la superficie delimitada.
 
 ```{=latex}
 \begin{figure}[H]
@@ -437,7 +474,7 @@ Al normalizar por superficie, el orden se modifica. La densidad del Cinturón de
 \end{figure}
 ```
 
-:::
+Para los terremotos de magnitud $M\geq6{,}5$ registrados por USGS entre 2000 y 2025, existe evidencia de que la frecuencia de ocurrencia difiere entre las zonas adoptadas. El Cinturón de Fuego presenta la mayor frecuencia tanto por año como por unidad de superficie. Esta conclusión se limita al catálogo, el período, el umbral de magnitud y la delimitación espacial analizados; no constituye una comparación de amenaza sísmica ni una explicación causal.
 
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
@@ -579,7 +616,16 @@ Este anexo documenta la herencia de la base `sismos` y de sus variables derivada
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
-Este anexo presenta el cálculo de la superficie de cada polígono de `area_regiones.geojson` en QGIS, el sistema de referencia utilizado y la definición del offset logarítmico de los modelos de conteo. *Pendiente: valores de superficie por zona y procedimiento de cálculo.*
+El análisis utiliza el campo `Area`, expresado en kilómetros cuadrados, de `MAPA_HTML/zonas_inf2.geojson`. Esta capa reúne los tres cinturones delimitados en `SIG/area_regiones.geojson` y su complemento espacial, identificado como "Resto del mundo". El script no recalcula las superficies: verifica que todas las categorías tengan un valor y utiliza los siguientes datos almacenados en la capa.
+
+| Zona | Superficie (km²) | Superficie (millones de km²) |
+|---|---:|---:|
+| Cinturón de Fuego | 47.639.416,91 | 47,64 |
+| Cinturón Alpino-Himalayo | 14.475.681,16 | 14,48 |
+| Dorsal Meso-Atlántica | 18.900.688,75 | 18,90 |
+| Resto del mundo | 429.049.834,90 | 429,05 |
+
+Para cada observación zona-año, el modelo de densidad incorpora el logaritmo de la superficie como offset. Esto fija la exposición espacial y permite interpretar los coeficientes como comparaciones de eventos por kilómetro cuadrado y año. En el cuerpo del informe, las densidades se multiplican por un millón para facilitar su lectura. La interpretación depende de la geometría y de las superficies almacenadas en esta capa, por lo que no se extrapola a otras delimitaciones.
 
 ## Especificación de dócimas y modelos {#sec-anexo-especificacion}
 
@@ -659,7 +705,11 @@ Esta corrección descuenta la asociación positiva que puede aparecer únicament
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 
-Este anexo documenta los diagnósticos de especificación: sobredispersión del modelo de conteos, bondad de ajuste, indicios de separación en el modelo multinomial y verificaciones gráficas asociadas. *Pendiente: diagnósticos según los modelos finales.*
+Para el modelo de frecuencia, la dispersión de Pearson del ajuste Poisson fue 1,4096. La prueba unilateral de Cameron-Trivedi estimó una dispersión de 1,3554, con $z=2{,}149$ y $p=0{,}0158$. La comparación de verosimilitudes entre Poisson y binomial negativa obtuvo $LR=5{,}6276$ y $p=0{,}0088$. Las tres comprobaciones apuntaron a una sobredispersión leve, pero consistente, por lo que se utilizó la binomial negativa.
+
+El parámetro adicional de dispersión de la binomial negativa fue $\theta=42{,}35$. Los modelos finales de tasa anual y densidad produjeron los mismos valores ajustados y la misma log-verosimilitud, $-243{,}416$, porque la superficie es constante dentro de cada zona y el efecto de zona reparametriza las cuatro medias. El offset cambia la interpretación de los coeficientes, no el ajuste de las medias por zona. Los contrastes globales fueron $LR(3)=220{,}37$ para la tasa anual y $LR(3)=225{,}85$ para la densidad.
+
+Los demás diagnósticos de especificación, incluidos los correspondientes al modelo multinomial, se incorporarán junto con sus resultados finales.
 
 ## Resultados completos del análisis de sensibilidad {#sec-anexo-sensibilidad}
 
