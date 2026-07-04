@@ -2,7 +2,7 @@
 
 **Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 3 de julio de 2026
 
-**Avance:** Fases 0, 1, 2 y 4 cerradas (C0, C1, C2, C5). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 5 (eventos fuertes, script 10) o Fase 6 (clasificación, script 11).
+**Avance:** Fases 0, 1, 2, 4 y 5 cerradas (C0, C1, C2, C5, C6). Fase 3 revisada y verificada: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Siguiente: Fase 6 (clasificación, script 11, la culminación) y luego Fase 7 (sensibilidad).
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -102,14 +102,14 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ## Fase 5. Eventos fuertes y extremos (sección 7.5, análisis mínimo 4)
 
-- [ ] **5.1** Tabla `zona x magnitud_cat` con frecuencias observadas y esperadas (verificar cuáles quedan bajo 5). Chi-cuadrado con `simulate.p.value = TRUE, B = 10000`. V de Cramér con corrección de sesgo (`rcompanion::cramerV(..., bias.correct = TRUE)`).
-- [ ] **5.2** Variable indicadora `evento_mayor = (mag >= 7.0)` y regresión logística: `glm(evento_mayor ~ zona + depth, family = binomial)`. Significación por razón de verosimilitud por variable (`drop1(..., test = "Chisq")`), odds ratios con IC 95 % (`exp(confint())`).
-- [ ] **5.3** Revisar si conviene `depth` continua o `profundidad_cat` en el modelo (probar ambas, comparar por AIC, quedarse con una y justificar).
-- [ ] **5.4** Para M >= 7,8: solo conteos por zona y tasa anual, sin modelo. Verificar cuántos hay por zona (se espera casi todos en el Cinturón de Fuego y cero o casi cero en la Dorsal).
+- [x] **5.1** Tabla `zona x magnitud_cat` + chi-cuadrado Monte Carlo + V de Cramér. **Resultado:** p = 0,307 (no significativo), V = 0,022 (despreciable); 2 casillas con esperados < 5. La categoría de magnitud no difiere por zona.
+- [x] **5.2** `evento_mayor = (mag >= 7.0)` + logística `glm(evento_mayor ~ zona + depth)`, LR por variable, OR con IC. **Resultado:** depth OR = 1,0002 (p = 0,577, no predice); zona borderline (p = 0,061), solo la Dorsal difiere (OR 0,25 [0,058; 0,712]).
+- [x] **5.3** `depth` continua vs `profundidad_cat` por AIC. **Resultado:** AIC 1500,01 vs 1500,26; se elige la continua (menor y más simple).
+- [x] **5.4** M >= 7,8 solo conteos por zona. **Resultado:** Fuego 47, Resto 10, Alpino 2, Dorsal 0.
 
 **Qué se espera:** en la logística, la zona Dorsal con odds ratio bajo (su máximo de magnitud es bajo) pero con IC amplio; el efecto de `depth` es la incógnita interesante y conecta con el comentario del profesor sobre variables que ganan relevancia en modelos múltiples.
 
-**Checkpoint C6:** tabla de contingencia con esperados, p Monte Carlo, V de Cramér, y la salida completa de la logística (coeficientes, OR, IC, LR por variable, AIC de las dos versiones de profundidad).
+**Checkpoint C6:** ✅ **Cerrado (3 jul 2026), script `10_inf_extremos.R` (revisado y verificado en ejecución).** La categoría de magnitud no difiere por zona; la profundidad no predice que un evento sea grande (OR ~ 1, coherente con el Bartlett de la Fase 3); solo la Dorsal tiene menor probabilidad de eventos M ≥ 7,0. Contraste clave para la Fase 6: la profundidad no dice qué tan grande es un evento, pero sí ayudará a decir en qué zona ocurre. Frase ejecutiva en la sección 7.5 del `.qmd`.
 
 ---
 

@@ -375,7 +375,13 @@ Los tiempos entre eventos consecutivos se contrastan frente a una distribución 
 <!-- Análisis mínimo 4 del instructivo, con las categorías del Informe 1. Chi-cuadrado
 con Monte Carlo, logística binaria P(M >= 7,0), conteos descriptivos para M >= 7,8. -->
 
-*Pendiente: composición de categorías de magnitud por zona, modelo logístico para la categoría "Mayor" o superior y conteos de eventos $M \geq 7{,}8$.*
+<!-- Resultados generados en Scripts/10_inf_extremos.R. -->
+
+El análisis de los eventos fuertes utiliza las categorías definidas en el Informe Asesoría 1. La composición de categorías de magnitud no difiere entre zonas: la prueba de chi-cuadrado con p-valor por simulación de Monte Carlo, empleada por la presencia de casillas con frecuencias esperadas bajas, no resulta significativa ($p = 0{,}307$) y la V de Cramér es de 0,022, un grado de asociación despreciable. Este resultado es consistente con la comparación de magnitud de la sección anterior.
+
+La probabilidad de que un evento alcance la categoría "Mayor" o superior ($M \geq 7{,}0$) se modela mediante regresión logística en función de la zona y la profundidad. La profundidad no aporta capacidad predictiva sobre la magnitud del evento (razón de momios de 1,0002; $p = 0{,}577$), resultado coherente con la escasa correlación entre magnitud y profundidad detectada en la sección anterior. El efecto de la zona es limítrofe en conjunto ($p = 0{,}061$) y se concentra por completo en la Dorsal Meso-Atlántica, cuya razón de momios de 0,25 (IC 95 % [0,058; 0,712]) excluye el valor 1 e indica una probabilidad cerca de cuatro veces menor de eventos de magnitud igual o superior a 7,0 respecto del Cinturón de Fuego. El resto del mundo y el Cinturón Alpino-Himalayo no se distinguen del Cinturón de Fuego. La comparación por criterio de Akaike favorece la profundidad en su forma continua sobre la categórica.
+
+Los eventos de magnitud igual o superior a 7,8 se concentran en el Cinturón de Fuego, con 47 registros, seguidos por el resto del mundo con 10, el Cinturón Alpino-Himalayo con 2 y la Dorsal Meso-Atlántica con ninguno. Su escaso número en las zonas menores desaconseja un modelo, por lo que se reportan solo como conteos. En conjunto, la profundidad no informa sobre la magnitud de un evento, un contraste que anticipa el rol distinto que esa variable adquiere al clasificar la zona en la sección siguiente.
 
 ## Síntesis inferencial: clasificación de zonas {#sec-res-clasificacion}
 

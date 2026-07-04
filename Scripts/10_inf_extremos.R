@@ -96,6 +96,10 @@ v_cramer_magnitud <- rcompanion::cramerV(
 )
 
 v_cramer_magnitud
+# Resultado: chi MC p = 0,307 (no significativo) y V = 0,022 (efecto despreciable). La
+# composicion de categorias de magnitud NO difiere entre zonas, coherente con la Fase 3
+# (la magnitud casi no separa zonas). El Monte Carlo se justifica por 2 casillas con
+# esperados < 5 (Dorsal x Grande = 1,39 ; Alpino x Grande = 3,13).
 
 
 # 9. Crear indicador de evento mayor----
@@ -140,6 +144,14 @@ or_logit_depth <- exp(
 )
 
 or_logit_depth
+# Resultado de la logistica P(M >= 7,0) ~ zona + depth:
+#   - depth: OR = 1,0002 [0,9995; 1,0009], p = 0,577 -> la profundidad NO predice que un
+#     evento sea grande (coherente con el Bartlett de la Fase 3: mag y depth casi no
+#     correlacionan).
+#   - zona (global): LR p = 0,061, borderline. Resto (OR 1,03) y Alpino (OR 0,95) no se
+#     distinguen de Fuego (sus IC incluyen 1). El unico efecto real es la DORSAL:
+#     OR 0,25 [0,058; 0,712], IC que excluye 1 -> ~4 veces menos probabilidad de eventos
+#     M >= 7,0 (solo 3 de 28). El borderline de zona lo arrastra unicamente la Dorsal.
 
 # 13. Regresión logística con profundidad categórica----
 
@@ -169,6 +181,8 @@ comparacion_aic_depth <- AIC(
 )
 
 comparacion_aic_depth
+# Resultado: AIC 1500,01 (depth continua) vs 1500,26 (categorica). Se elige depth CONTINUA:
+# menor AIC y mas simple (5 gl vs 6). En ambas versiones la profundidad no es significativa.
 
 # 16. Eventos grandes o extremos por zona----
 
@@ -181,3 +195,11 @@ resumen_extremos <- base_fase5 %>%
   )
 
 resumen_extremos
+# Resultado: M >= 7,8 concentrados en el Cinturon de Fuego (47), luego Resto (10),
+# Alpino (2) y Dorsal (0). Solo conteos, sin modelo, por el tamano muestral de las zonas
+# menores.
+#
+# VEREDICTO C6: la categoria de magnitud no difiere por zona (chi p = 0,31, V = 0,02); la
+# profundidad no predice que un evento sea grande (OR ~ 1); la unica zona con menor
+# probabilidad de eventos M >= 7,0 es la Dorsal. Contraste que arma la Fase 6: la
+# profundidad no dice que tan GRANDE es un evento, pero si ayudara a decir en que ZONA ocurre.
