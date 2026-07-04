@@ -11,8 +11,8 @@
 # (FDR), que controla la tasa de falsos descubrimientos, apropiado para un cribado de
 # varias docimas sin hipotesis sustantiva individual.
 #
-# Sin dependencias externas: V de Cramer manual (como en 04_analisis_espacial.R) y
-# epsilon cuadrado por su formula directa.
+# V de Cramer corregida por sesgo mediante rcompanion y epsilon cuadrado calculado
+# con su formula directa.
 
 
 #Paquetes----
@@ -33,11 +33,10 @@ set.seed(2026)
 
 
 #Funciones de tamanio de efecto----
-# V de Cramer con el estadistico chi-cuadrado de Pearson (mismo criterio que el
-# Informe 1). Mide la fuerza de asociacion entre dos categoricas, entre 0 y 1.
+# V de Cramer corregida por sesgo. Evita sobreestimar asociaciones en tablas con
+# varias categorias o frecuencias reducidas.
 v_cramer <- function(tab) {
-  chi <- suppressWarnings(chisq.test(tab)$statistic)
-  as.numeric(sqrt(chi / (sum(tab) * (min(dim(tab)) - 1))))
+  as.numeric(rcompanion::cramerV(tab, bias.correct = TRUE))
 }
 # Epsilon cuadrado para Kruskal-Wallis: E2 = H / (n - 1). Fraccion de variabilidad de
 # rangos explicada por el grupo; 0 = sin efecto.
@@ -81,7 +80,7 @@ v_zt   <- v_cramer(tabla_zt)
 # estadistico observado (el mismo que usa v_cramer por dentro).
 chi_zt
 v_zt
-# Resultado: p = 0,67 (no significativo) y V = 0,044 (fuerza despreciable). Aqui p-valor
+# Resultado: p = 0,67 (no significativo) y V corregida = 0,000 (sin asociacion). Aqui p-valor
 # y efecto coinciden en "nada": el metodo de magnitud se reparte de forma homogenea entre
 # zonas, por lo que no condiciona la comparacion espacial de magnitud (Fase 3). Es el
 # primer "check verde" del portero.
@@ -98,7 +97,7 @@ chi_zs <- chisq.test(tabla_zs, simulate.p.value = TRUE, B = 10000)
 v_zs   <- v_cramer(tabla_zs)
 chi_zs
 v_zs
-# Resultado: p = 0,28 (no significativo) y V = 0,055 (fuerza despreciable). Segundo
+# Resultado: p = 0,28 (no significativo) y V corregida = 0,022 (fuerza despreciable). Segundo
 # "check verde": la fuente de la magnitud tampoco condiciona la comparacion espacial.
 
 
@@ -136,9 +135,9 @@ v_tp
 #   - p = 0,00009999 es el PISO del Monte Carlo (~1/(10000+1)): ninguna tabla simulada
 #     alcanzo un chi-cuadrado tan extremo, o sea la asociacion es mas fuerte de lo que la
 #     simulacion puede resolver.
-#   - V = 0,610: efecto fuerte, muy lejos de los 0,044/0,055 espaciales.
-# Clave que junta el bloque: el metodo cambio mucho EN EL TIEMPO (V = 0,610) pero es
-# homogeneo ENTRE ZONAS (1.1, V = 0,044). Por eso la comparacion espacial queda limpia y
+#   - V corregida = 0,608: efecto fuerte, muy lejos de los valores espaciales.
+# Clave que junta el bloque: el metodo cambio mucho EN EL TIEMPO (V = 0,608) pero es
+# homogeneo ENTRE ZONAS (1.1, V = 0,000). Por eso la comparacion espacial queda limpia y
 # la temporal queda con su advertencia documentada.
 
 
@@ -153,7 +152,8 @@ comparabilidad <- data.frame(
   p_valor   = c(chi_zt$p.value, chi_zs$p.value,
                 kw_rms_zona$p.value, kw_rms_periodo$p.value, chi_tp$p.value),
   efecto    = c(v_zt, v_zs, eps_rms_zona, eps_rms_periodo, v_tp),
-  tipo_efecto = c("V Cramer", "V Cramer", "epsilon2", "epsilon2", "V Cramer")
+  tipo_efecto = c("V Cramer corregida", "V Cramer corregida", "epsilon2", "epsilon2",
+                  "V Cramer corregida")
 )
 comparabilidad$p_ajustado_BH <- p.adjust(comparabilidad$p_valor, method = "BH")
 
@@ -171,13 +171,13 @@ comparabilidad_print
 # Resultado (C1): separacion nitida entre asociaciones espaciales y temporales.
 #
 # ESPACIALES (no condicionan la comparacion entre zonas):
-#   - zona x magType : p_BH = 0,66 ; V = 0,044 -> sin asociacion.
-#   - zona x magSource: p_BH = 0,35 ; V = 0,055 -> sin asociacion.
+#   - zona x magType : p_BH = 0,66 ; V corregida = 0,000 -> sin asociacion.
+#   - zona x magSource: p_BH = 0,35 ; V corregida = 0,022 -> asociacion despreciable.
 #   - rms por zona   : p_BH = 0,026 (significativo) pero epsilon2 = 0,009, efecto
 #     despreciable. Con n = 1186 la significancia no implica relevancia: manda el efecto.
 #
 # TEMPORALES (condicionan solo las comparaciones entre periodos, Fase 4):
-#   - periodo x magType: V = 0,610 -> transicion metodologica hacia mww (fuerte).
+#   - periodo x magType: V corregida = 0,608 -> transicion metodologica hacia mww (fuerte).
 #   - rms por periodo  : epsilon2 = 0,221 -> mejora del ajuste con el tiempo.
 #
 # Veredicto: las comparaciones ESPACIALES entre zonas (Fases 2, 3 y 6) no estan
