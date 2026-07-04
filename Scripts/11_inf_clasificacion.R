@@ -1,252 +1,353 @@
-# 11 - Sintesis: clasificacion de zonas (Informe Asesoria 2)----
-#
-# Fase 6 del checklist | Seccion 7.6 del informe | Checkpoint C7 (COMPUERTA DURA, la central)
-#
-# Responde la segunda componente de la pregunta estadistica: magnitud y profundidad,
-# evaluadas EN CONJUNTO, permiten clasificar la zona sismica de un evento?
-# El terreno viene armado por las fases anteriores: la magnitud casi no separa zonas
-# (Fases 3 y 5), la profundidad si discrimina (Fase 3), la profundidad no predice la
-# magnitud (Fase 5) y ambas estan casi descorrelacionadas (Bartlett, Fase 3), de modo que
-# cada una aporta informacion DISTINTA a un clasificador.
-#
-# Paquetes: dplyr, ppcor (parciales), ca (correspondencia), nnet (multinomial),
-#           car (Anova por razon de verosimilitud), brglm2 (Firth si hay separacion).
+
+# 11 - Clasificacion de zonas (Informe Asesoria 2)----
+# Fase 6 del checklist | Seccion 7.6 del informe | Checkpoint C7
 
 
-#Paquetes----
-library(dplyr)   # Manipulacion de datos (select, mutate, pipes).
-library(ppcor)   # Correlaciones PARCIALES (R base solo trae las simples).
-library(ca)      # Analisis de correspondencia simple.
-library(nnet)    # multinom(): logistica multinomial (internamente una red sin capa oculta,
-                 # pero el modelo es la multinomial clasica).
-library(car)     # Anova(): docima cada variable por razon de verosimilitud (no Wald).
-library(brglm2)  # brmultinom(): correccion de Firth para la separacion (la Dorsal).
+# 1. Cargar la base preparada----
+
+source(file.path("Scripts", "00_preparacion_base.R"))
 
 
-#Cargar la base si no esta disponible (ruta rapida de desarrollo)----
-if (!exists("sismos") || !"zona" %in% names(sismos)) {
-  source(file.path("Scripts", "00_preparacion_base.R"))
-}
+# 2. Seleccionar las variables de estudio----
 
-# Semilla fija: la validacion cruzada del 6.6 sortea pliegues al azar.
-set.seed(2026)
-
-
-#Base de trabajo----
-# relevel() fija a Cinturon de Fuego como referencia: el multinomial estima una ecuacion
-# por cada otra zona y cada una se lee como "esta zona frente al Cinturon de Fuego"
-# (mismo criterio que el GLM de conteos de la Fase 2).
-# dplyr::select calificado: car arrastra a MASS, que tambien exporta select().
 base_fase6 <- sismos %>%
-  dplyr::select(zona, mag, depth, sig, magnitud_cat, profundidad_cat) %>%
-  mutate(zona = relevel(factor(zona), ref = "Cinturon de Fuego"))
-
-# Verificacion de datos completos. Importa por dos razones: ppcor::pcor() exige datos sin
-# NA (con uno solo fallaria o descartaria filas en silencio), y asegura que TODOS los
-# analisis de la fase usen los mismos 1186 eventos, sin exclusiones invisibles.
-# Resultado: 0 NAs en las seis variables.
-colSums(is.na(base_fase6))
-
-
-#6.1 Correlaciones parciales de Spearman (mag, depth, sig)----
-# La parcial mide la asociacion entre dos variables DESCONTANDO la tercera. Como `sig`
-# deriva de la magnitud (construccion USGS), la lectura protagonista es depth-sig
-# CONTROLANDO mag: si queda asociacion, la profundidad aporta a la relevancia del evento
-# mas alla de su magnitud. Spearman por la asimetria de depth y sig (Fase 3).
-parciales <- ppcor::pcor(base_fase6[, c("mag", "depth", "sig")], method = "spearman")
-round(parciales$estimate, 4)   # matriz de correlaciones parciales
-round(parciales$p.value, 4)    # sus p-valores
-# Resultado (cada celda = correlacion fila-columna DESCONTANDO la tercera variable):
-#   - mag-sig | depth = 0,8156 (p ~ 0): enorme y esperado, sig se calcula a partir de la
-#     magnitud (relacion por diseno del indicador, no un hallazgo).
-#   - mag-depth | sig = 0,1153 (p = 0,0001): significativo pero DEBIL (n = 1186 vuelve
-#     significativo casi todo); coherente con Bartlett (Fase 3): casi descorrelacionadas,
-#     por lo que cada una puede aportar informacion distinta a un modelo conjunto.
-#   - depth-sig | mag = -0,0493 (p = 0,0896): NO significativa. Descontada la magnitud, la
-#     profundidad no agrega nada a la relevancia USGS del evento.
-# Asimetria que anticipa el multinomial: la magnitud domina la RELEVANCIA del evento pero
-# no distingue zonas (Fases 3 y 5); la profundidad no aporta a la relevancia pero SI
-# distingue zonas (Fase 3). Cada variable manda en una pregunta distinta.
-
-#Figura: red de correlaciones parciales (triangulo)----
-# Cada variable es un nodo y cada arista una correlacion parcial: el GROSOR es la fuerza,
-# linea continua = significativa (alfa 0,05), punteada gris = no significativa. Con tres
-# variables este diagrama comunica la asimetria mejor que la matriz: el lado mag-sig
-# domina (0,82) y los otros dos son debiles o nulos.
-dibujar_parciales <- function() {
-  op <- par(bg = "white", mar = c(1, 1, 3, 1))
-  plot(NA, xlim = c(0, 1), ylim = c(0, 1), axes = FALSE, xlab = "", ylab = "",
-       main = "Correlaciones parciales de Spearman (mag, depth, sig)")
-  # coordenadas de los nodos
-  xy <- rbind(mag = c(0.50, 0.82), depth = c(0.15, 0.18), sig = c(0.85, 0.18))
-  # aristas: pares, valor parcial y p-valor
-  aristas <- data.frame(
-    a = c("mag", "mag", "depth"), b = c("sig", "depth", "sig"),
-    r = c(parciales$estimate["mag", "sig"],
-          parciales$estimate["mag", "depth"],
-          parciales$estimate["depth", "sig"]),
-    p = c(parciales$p.value["mag", "sig"],
-          parciales$p.value["mag", "depth"],
-          parciales$p.value["depth", "sig"])
+  dplyr::select(
+    zona,
+    mag,
+    depth,
+    magnitud_cat,
+    profundidad_cat
+  ) %>%
+  dplyr::mutate(
+    zona = factor(
+      zona,
+      levels = c(
+        "Cinturon de Fuego",
+        "Resto del mundo",
+        "Cinturon Alpino-Himalayo",
+        "Dorsal Meso-Atlantica"
+      )
+    )
   )
-  for (i in seq_len(nrow(aristas))) {
-    sig_ok <- aristas$p[i] < 0.05
-    segments(xy[aristas$a[i], 1], xy[aristas$a[i], 2],
-             xy[aristas$b[i], 1], xy[aristas$b[i], 2],
-             lwd = 1 + 10 * abs(aristas$r[i]),
-             lty = if (sig_ok) 1 else 2,
-             col = if (sig_ok) "#00A499" else "gray60")
-    # etiqueta en el punto medio, con el valor (y "ns" si no es significativa)
-    xm <- mean(xy[c(aristas$a[i], aristas$b[i]), 1])
-    ym <- mean(xy[c(aristas$a[i], aristas$b[i]), 2])
-    text(xm, ym + 0.05,
-         paste0(format(round(aristas$r[i], 2), decimal.mark = ","),
-                if (!sig_ok) " (ns)" else ""),
-         cex = 0.95, font = 2, col = "gray20")
-  }
-  # nodos encima de las aristas
-  points(xy, pch = 21, bg = "#001632", col = "#001632", cex = 6)
-  text(xy, labels = rownames(xy), col = "white", cex = 0.85, font = 2)
-  par(op)
-}
-
-if (interactive()) dibujar_parciales()
-
-ruta_par <- file.path("Informes Quarto", "Imágenes y Recursos",
-                      "inf2-clasificacion-parciales.png")
-png(ruta_par, width = 1500, height = 1200, res = 200)
-dibujar_parciales()
-dev.off()
-# Lectura del grafico: el triangulo queda "cojo" a proposito. El lado mag-sig es grueso y
-# solido (0,82: la relevancia USGS la determina la magnitud); mag-depth es delgado (0,12:
-# casi independientes); depth-sig es punteado (ns: la profundidad no suma relevancia una
-# vez descontada la magnitud).
 
 
-#6.2 Analisis de correspondencia simple----
-# Representa las asociaciones de las tablas zona x categoria en un plano. La inercia
-# total es proporcional al chi-cuadrado de la tabla: cuanta asociacion hay que explicar.
-# Con tablas 4 x 3 hay a lo mas min(4,3) - 1 = 2 dimensiones, asi que el plano recoge el
-# 100 % de la inercia y el biplot es una representacion exacta, no una aproximacion.
-tabla_ca_mag  <- table(base_fase6$zona, base_fase6$magnitud_cat)
-tabla_ca_prof <- table(base_fase6$zona, base_fase6$profundidad_cat)
+# 3. Tablas para el analisis de correspondencia----
 
-ca_mag  <- ca::ca(tabla_ca_mag)
-ca_prof <- ca::ca(tabla_ca_prof)
-summary(ca_mag)
-summary(ca_prof)
-
-# Figura: biplots lado a lado. Patron para PLOTS: funcion + llamada interactiva + PNG.
-dibujar_correspondencia <- function() {
-  op <- par(mfrow = c(1, 2), bg = "white", mar = c(4.5, 4.5, 3, 1) + 0.1)
-  plot(ca_mag,  main = "Zona x categoria de magnitud")
-  plot(ca_prof, main = "Zona x categoria de profundidad")
-  par(op)
-}
-
-if (interactive()) dibujar_correspondencia()
-
-ruta_ca <- file.path("Informes Quarto", "Imágenes y Recursos",
-                     "inf2-clasificacion-correspondencia.png")
-png(ruta_ca, width = 2200, height = 1100, res = 200)
-dibujar_correspondencia()
-dev.off()
-
-
-#Figura: espacio de clasificacion (mag vs depth por zona)----
-# El grafico muestra el "espacio" en el que trabaja el clasificador: cada punto es un
-# evento ubicado por su profundidad (x) y magnitud (y), coloreado por zona.
-colores_zona <- c(
-  "Cinturon de Fuego"        = "#e31a1c",
-  "Cinturon Alpino-Himalayo" = "#47cea8",
-  "Dorsal Meso-Atlantica"    = "#8a5a00",
-  "Resto del mundo"          = "#9e9e9e"
+tabla_ca_magnitud <- table(
+  zona = base_fase6$zona,
+  categoria = base_fase6$magnitud_cat
 )
 
-dibujar_espacio_clasificacion <- function() {
-  op <- par(bg = "white", mar = c(4.5, 4.5, 3, 1) + 0.1)
-  plot(base_fase6$depth, base_fase6$mag,
-       col = adjustcolor(colores_zona[as.character(base_fase6$zona)], alpha.f = 0.55),
-       pch = 19, cex = 0.7,
-       main = "Espacio de clasificacion: magnitud y profundidad por zona",
-       xlab = "Profundidad (km)", ylab = "Magnitud")
-  legend("topright", legend = names(colores_zona), col = colores_zona,
-         pch = 19, bty = "n", cex = 0.8)
-  box()
-  par(op)
+tabla_ca_profundidad <- table(
+  zona = base_fase6$zona,
+  categoria = base_fase6$profundidad_cat
+)
+
+tabla_ca_magnitud
+tabla_ca_profundidad
+
+
+# 4. Frecuencias esperadas----
+
+esperadas_ca_magnitud <- suppressWarnings(
+  chisq.test(tabla_ca_magnitud)$expected
+)
+
+esperadas_ca_profundidad <- suppressWarnings(
+  chisq.test(tabla_ca_profundidad)$expected
+)
+
+round(esperadas_ca_magnitud, 2)
+round(esperadas_ca_profundidad, 2)
+esperadas_ca_magnitud < 5
+esperadas_ca_profundidad < 5
+
+
+# 5. Perfiles fila----
+
+perfil_fila_magnitud <- prop.table(tabla_ca_magnitud, margin = 1)
+perfil_fila_profundidad <- prop.table(tabla_ca_profundidad, margin = 1)
+
+round(perfil_fila_magnitud, 3)
+round(perfil_fila_profundidad, 3)
+
+
+# 6. Perfiles columna----
+
+perfil_columna_magnitud <- prop.table(tabla_ca_magnitud, margin = 2)
+perfil_columna_profundidad <- prop.table(tabla_ca_profundidad, margin = 2)
+
+round(perfil_columna_magnitud, 3)
+round(perfil_columna_profundidad, 3)
+
+
+# 7. Analisis de correspondencia----
+
+ac_magnitud <- FactoMineR::CA(
+  as.data.frame.matrix(tabla_ca_magnitud),
+  graph = FALSE
+)
+
+ac_profundidad <- FactoMineR::CA(
+  as.data.frame.matrix(tabla_ca_profundidad),
+  graph = FALSE
+)
+
+ac_magnitud$eig
+ac_profundidad$eig
+
+
+# 8. Coordenadas y contribuciones----
+
+round(ac_magnitud$row$coord, 3)
+round(ac_magnitud$row$contrib, 2)
+round(ac_magnitud$col$coord, 3)
+round(ac_magnitud$col$contrib, 2)
+
+round(ac_profundidad$row$coord, 3)
+round(ac_profundidad$row$contrib, 2)
+round(ac_profundidad$col$coord, 3)
+round(ac_profundidad$col$contrib, 2)
+
+
+# 9. Mapas de correspondencia----
+
+graficar_ca <- function(modelo, titulo, color_zona) {
+  filas <- modelo$row$coord[, 1:2]
+  columnas <- modelo$col$coord[, 1:2]
+
+  graphics::plot(
+    NA,
+    xlim = grDevices::extendrange(c(filas[, 1], columnas[, 1]), f = 0.25),
+    ylim = grDevices::extendrange(c(filas[, 2], columnas[, 2]), f = 0.25),
+    xlab = sprintf("Dimension 1 (%.1f %%)", modelo$eig[1, 2]),
+    ylab = sprintf("Dimension 2 (%.1f %%)", modelo$eig[2, 2]),
+    main = titulo
+  )
+
+  graphics::abline(h = 0, v = 0, lty = 2, col = "grey70")
+  graphics::points(filas, col = color_zona, pch = 16)
+  graphics::text(
+    filas,
+    labels = rownames(filas),
+    col = color_zona,
+    pos = 3,
+    cex = 0.75
+  )
+  graphics::points(columnas, col = "#2c3e50", pch = 17)
+  graphics::text(
+    columnas,
+    labels = rownames(columnas),
+    col = "#2c3e50",
+    pos = 3,
+    cex = 0.75
+  )
+  graphics::legend(
+    "topright",
+    legend = c("Zonas", "Categorias"),
+    col = c(color_zona, "#2c3e50"),
+    pch = c(16, 17),
+    bty = "n"
+  )
 }
 
-if (interactive()) dibujar_espacio_clasificacion()
+graficar_ca(
+  ac_magnitud,
+  "Correspondencia entre zona y categoria de magnitud",
+  "#e31a1c"
+)
 
-ruta_esp <- file.path("Informes Quarto", "Imágenes y Recursos",
-                      "inf2-clasificacion-espacio.png")
-png(ruta_esp, width = 1800, height = 1200, res = 200)
-dibujar_espacio_clasificacion()
-dev.off()
-
-
-#6.3 Regresion logistica multinomial----
-# Generaliza la logistica a una respuesta con 4 clases: estima 3 ecuaciones (una por zona
-# frente a la referencia Cinturon de Fuego), cada una con intercepto, mag y depth.
-# La significacion por variable se evalua con car::Anova (razon de verosimilitud), no con
-# los Wald por coeficiente, que son poco fiables si hay separacion.
-m_full <- nnet::multinom(zona ~ mag + depth, data = base_fase6, trace = FALSE)
-summary(m_full)
-car::Anova(m_full)
+graficar_ca(
+  ac_profundidad,
+  "Correspondencia entre zona y categoria de profundidad",
+  "#47cea8"
+)
 
 
-#6.4 Revision de separacion----
-# Separacion cuasi perfecta = una combinacion de predictores identifica una clase casi sin
-# error; los coeficientes divergen y sus EE se inflan. Criterio de alerta: |coef| > 10 o
-# EE desproporcionados. Riesgo esperado: la Dorsal (n = 28, toda superficial y de magnitud
-# baja). Si aparece, se reajusta con brglm2::brmultinom (correccion tipo Firth).
-round(coef(m_full), 4)
-round(summary(m_full)$standard.errors, 4)
+# 10. Modelo multinomial conjunto----
+
+modelo_multinomial <- nnet::multinom(
+  zona ~ mag + depth,
+  data = base_fase6,
+  trace = FALSE
+)
+
+summary(modelo_multinomial)
 
 
-#6.5 Matriz de confusion y metricas por clase----
-# La exactitud global se compara SIEMPRE contra la base trivial: predecir "Cinturon de
-# Fuego" para todo ya acierta el 75,21 % (892/1186). Las metricas honestas con clases
-# desbalanceadas son la sensibilidad por clase (que fraccion de cada zona real se
-# recupera) y la exactitud balanceada (promedio de esas sensibilidades; base trivial 25 %).
-pred_clase <- predict(m_full)
+# 11. Reajuste con predictores estandarizados----
 
-matriz_confusion <- table(observado = base_fase6$zona, predicho = pred_clase)
-matriz_confusion
+base_fase6 <- base_fase6 %>%
+  dplyr::mutate(
+    mag_z = as.numeric(scale(mag)),
+    depth_z = as.numeric(scale(depth))
+  )
 
-exactitud_global <- mean(pred_clase == base_fase6$zona)
-sensibilidad_clase <- diag(matriz_confusion) / rowSums(matriz_confusion)
-exactitud_balanceada <- mean(sensibilidad_clase)
+modelo_multinomial_z <- nnet::multinom(
+  zona ~ mag_z + depth_z,
+  data = base_fase6,
+  trace = FALSE,
+  Hess = TRUE,
+  maxit = 1000
+)
 
-exactitud_global        # comparar con 0,7521 (base trivial)
-round(sensibilidad_clase, 4)
-exactitud_balanceada    # comparar con 0,25 (base trivial balanceada)
-
-
-#6.6 Validacion cruzada de 10 pliegues----
-# Blinda las metricas contra el sobreajuste: cada evento se predice con un modelo ajustado
-# SIN el (su pliegue queda fuera del ajuste). Con un modelo de solo 9 parametros y n = 1186
-# el sobreajuste esperable es minimo, pero la verificacion cierra la duda.
-pliegue <- sample(rep(1:10, length.out = nrow(base_fase6)))
-pred_cv <- factor(rep(NA_character_, nrow(base_fase6)), levels = levels(base_fase6$zona))
-for (k in 1:10) {
-  m_k <- nnet::multinom(zona ~ mag + depth, data = base_fase6[pliegue != k, ], trace = FALSE)
-  pred_cv[pliegue == k] <- predict(m_k, newdata = base_fase6[pliegue == k, ])
-}
-mc_cv <- table(observado = base_fase6$zona, predicho = pred_cv)
-sens_cv <- diag(mc_cv) / rowSums(mc_cv)
-c(exactitud_cv = mean(pred_cv == base_fase6$zona), balanceada_cv = mean(sens_cv))
+summary(modelo_multinomial_z)
+modelo_multinomial_z$convergence
 
 
-#6.7 Aporte conjunto de las variables----
-# Cuantifica el argumento docente: variables poco relevantes por separado pueden aportar
-# en conjunto. Se comparan los modelos anidados por AIC y por razon de verosimilitud:
-#   anova(m_mag, m_full)  -> aporte de depth DADO mag
-#   anova(m_depth, m_full) -> aporte de mag DADO depth
-m_null  <- nnet::multinom(zona ~ 1,     data = base_fase6, trace = FALSE)
-m_mag   <- nnet::multinom(zona ~ mag,   data = base_fase6, trace = FALSE)
-m_depth <- nnet::multinom(zona ~ depth, data = base_fase6, trace = FALSE)
+# 12. Multinomial con reduccion de sesgo----
 
-AIC(m_null, m_mag, m_depth, m_full)
-anova(m_mag, m_full)
-anova(m_depth, m_full)
+modelo_multinomial_br <- brglm2::brmultinom(
+  zona ~ mag_z + depth_z,
+  data = base_fase6,
+  type = "AS_mean"
+)
+
+summary(modelo_multinomial_br)
+
+
+# 13. Probabilidades del modelo corregido----
+
+probabilidades_br <- predict(
+  modelo_multinomial_br,
+  type = "probs"
+)
+
+apply(probabilidades_br, 2, range)
+colSums(probabilidades_br == 0)
+
+# 14. Significacion global por variable----
+
+lr_multinomial <- car::Anova(
+  modelo_multinomial_z,
+  type = 2,
+  test.statistic = "LR"
+)
+
+lr_multinomial
+
+
+# 15. Matriz de confusion----
+
+clase_predicha_br <- factor(
+  colnames(probabilidades_br)[
+    max.col(probabilidades_br, ties.method = "first")
+  ],
+  levels = levels(base_fase6$zona)
+)
+
+matriz_confusion_br <- table(
+  Predicho = clase_predicha_br,
+  Observado = base_fase6$zona
+)
+
+matriz_confusion_br
+
+
+# 16. Metricas de clasificacion----
+
+exactitud_global <- sum(diag(matriz_confusion_br)) /
+  sum(matriz_confusion_br)
+
+sensibilidad_zona <- diag(matriz_confusion_br) /
+  colSums(matriz_confusion_br)
+
+exactitud_balanceada <- mean(sensibilidad_zona)
+
+base_trivial <- max(
+  prop.table(table(base_fase6$zona))
+)
+
+metricas_clasificacion <- tibble::tibble(
+  metrica = c(
+    "Exactitud global",
+    "Exactitud balanceada",
+    "Base trivial"
+  ),
+  valor = c(
+    exactitud_global,
+    exactitud_balanceada,
+    base_trivial
+  )
+)
+
+sensibilidad_zona
+metricas_clasificacion
+
+
+# 17. Comparacion de modelos----
+
+modelo_solo_mag <- nnet::multinom(
+  zona ~ mag_z,
+  data = base_fase6,
+  trace = FALSE
+)
+
+modelo_solo_depth <- nnet::multinom(
+  zona ~ depth_z,
+  data = base_fase6,
+  trace = FALSE
+)
+
+comparacion_aic <- AIC(
+  modelo_solo_mag,
+  modelo_solo_depth,
+  modelo_multinomial_z
+)
+
+lr_depth_dado_mag <- anova(
+  modelo_solo_mag,
+  modelo_multinomial_z,
+  test = "Chisq"
+)
+
+lr_mag_dado_depth <- anova(
+  modelo_solo_depth,
+  modelo_multinomial_z,
+  test = "Chisq"
+)
+
+comparacion_aic
+lr_depth_dado_mag
+lr_mag_dado_depth
+
+
+# 18. Odds ratios del modelo corregido----
+
+resumen_br <- summary(modelo_multinomial_br)
+coef_br <- resumen_br$coefficients
+ee_br <- resumen_br$standard.errors
+
+tabla_or_br <- tibble::tibble(
+  zona = rep(rownames(coef_br), each = ncol(coef_br)),
+  predictor = rep(colnames(coef_br), times = nrow(coef_br)),
+  beta = as.vector(t(coef_br)),
+  error_estandar = as.vector(t(ee_br))
+) %>%
+  dplyr::filter(predictor != "(Intercept)") %>%
+  dplyr::mutate(
+    OR = exp(beta),
+    limite_inferior = exp(beta - 1.96 * error_estandar),
+    limite_superior = exp(beta + 1.96 * error_estandar)
+  )
+
+tabla_or_br %>%
+  dplyr::mutate(
+    dplyr::across(
+      c(
+        beta,
+        error_estandar,
+        OR,
+        limite_inferior,
+        limite_superior
+      ),
+      round,
+      4
+    )
+  )
+
+
+# 19. Equivalencia de los predictores estandarizados----
+
+sd(base_fase6$mag)
+sd(base_fase6$depth)
