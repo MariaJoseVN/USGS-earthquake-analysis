@@ -289,7 +289,9 @@ Incluso después de esa agrupación, algunas casillas presentaron frecuencias es
 
 El valor p informa sobre la evidencia de asociación, pero no sobre su intensidad. Por esta razón, complementamos las pruebas con la V de Cramér. Como equipo, decidimos utilizar su versión corregida por sesgo porque la medida convencional puede sobreestimar la asociación en tablas con varias categorías o frecuencias reducidas. La corrección entrega una estimación más conservadora de su importancia práctica [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
 
-La comparabilidad de la precisión de localización se evaluó mediante el RMS, indicador que resume el ajuste entre los tiempos de llegada observados y los estimados para localizar cada evento. Como equipo, decidimos compararlo mediante Kruskal-Wallis para mantener un criterio no paramétrico común en las comparaciones de variables continuas entre zonas. Aunque la distribución global del RMS es aproximadamente simétrica, el Informe Asesoría 1 identificó valores atípicos en ambos extremos y tamaños muestrales muy desiguales entre zonas. Además, el propósito de este contraste no es estimar diferencias entre medias, sino verificar si alguna zona presenta valores de RMS sistemáticamente mayores o menores. Kruskal-Wallis responde a este objetivo mediante la comparación de rangos, sin exigir normalidad y reduciendo la influencia de las observaciones extremas. El contraste se complementó con epsilon cuadrado ($\varepsilon^2$) para evaluar si la diferencia detectada tenía relevancia práctica.
+La comparabilidad del ajuste de localización se evaluó mediante `rms_imp`, versión completada del RMS que conserva los 1.186 eventos del catálogo. Esta variable incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. El Informe Asesoría 1 mostró que este procedimiento no modificó sustancialmente la media, mediana, dispersión ni cuantiles del indicador, por lo que se mantuvo para los análisis que requerían registros completos. El RMS resume el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye una medida completa de precisión instrumental o espacial.
+
+Como equipo, decidimos comparar `rms_imp` mediante Kruskal-Wallis para mantener un criterio no paramétrico común en las comparaciones de variables continuas entre zonas. Aunque su distribución global es aproximadamente simétrica, el Informe Asesoría 1 identificó valores atípicos en ambos extremos y tamaños muestrales muy desiguales entre zonas. Además, el propósito de este contraste no es estimar diferencias entre medias, sino verificar si alguna zona presenta valores de RMS sistemáticamente mayores o menores. Kruskal-Wallis responde a este objetivo mediante la comparación de rangos, sin exigir normalidad y reduciendo la influencia de las observaciones extremas. El contraste se complementó con epsilon cuadrado ($\varepsilon^2$) para evaluar si la diferencia detectada tenía relevancia práctica.
 
 La evaluación formal de los supuestos de normalidad y homogeneidad para las comparaciones principales de magnitud y profundidad se presenta en una sección posterior; en este bloque diagnóstico se adoptó previamente un criterio no paramétrico y robusto para el RMS.
 
@@ -366,7 +368,7 @@ completas van al anexo de especificación; aquí solo lo interpretable.
 
 ## Comparabilidad del registro {#sec-res-comparabilidad}
 
-Esta subsección evalúa si las comparaciones entre zonas y periodos pueden estar condicionadas por diferencias en las fuentes y procedimientos de reporte del catálogo. Esta verificación es necesaria porque la magnitud informada depende del método y de la institución que la estima, mientras que el RMS refleja la precisión del ajuste de localización. Si estas condiciones variaran de forma importante entre zonas, las diferencias observadas podrían atribuirse parcialmente al proceso de medición y no al comportamiento sísmico; asimismo, sus cambios temporales podrían generar tendencias aparentes. Para examinar este riesgo, se analiza la distribución del tipo y la fuente de magnitud, junto con el RMS de localización. Los resultados permiten decidir si las comparaciones posteriores pueden interpretarse directamente o requieren ajustes, restricciones o advertencias adicionales.
+Esta subsección evalúa si las comparaciones entre zonas y periodos pueden estar condicionadas por diferencias en las fuentes y procedimientos de reporte del catálogo. Esta verificación es necesaria porque la magnitud informada depende del método y de la institución que la estima, mientras que el RMS resume el ajuste residual de la localización. Si estas condiciones variaran de forma importante entre zonas, las diferencias observadas podrían atribuirse parcialmente al proceso de medición y no al comportamiento sísmico; asimismo, sus cambios temporales podrían generar tendencias aparentes. Para examinar este riesgo, se analiza la distribución del tipo y la fuente de magnitud, junto con `rms_imp`. Esta versión completada incorpora nueve valores imputados y permite conservar los 1.186 eventos; el Informe Asesoría 1 mostró que la imputación tuvo un efecto descriptivo prácticamente nulo. Los resultados permiten decidir si las comparaciones posteriores pueden interpretarse directamente o requieren ajustes, restricciones o advertencias adicionales.
 
 ### Comparabilidad entre zonas
 
@@ -404,19 +406,38 @@ RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Diferencia es
 
 El tipo y la fuente de magnitud no presentaron asociaciones relevantes con la zona sísmica. Aunque el RMS mostró una diferencia estadísticamente detectable, su tamaño de efecto fue despreciable, por lo que carece de relevancia práctica. En conjunto, no se identificó evidencia de que las comparaciones entre zonas estén materialmente condicionadas por diferencias en los procedimientos de reporte o en la precisión de localización.
 
-::: {.content-hidden when-format="pdf"}
+### Cambios temporales en los procedimientos de reporte
 
-<!-- Bloque exploratorio con FDR al 5 %: magType_grupo por zona, magSource por zona,
-evolución del RMS por período. Cierra con el veredicto de si las comparaciones
-siguientes están condicionadas por la estructura de reporte. -->
+Los dos contrastes temporales completan la familia de cinco pruebas ajustadas conjuntamente mediante Benjamini-Hochberg. El RMS se comparó entre los períodos 2000-2009, 2010-2019 y 2020-2025 mediante Kruskal-Wallis. Por su parte, la relación entre el período y el tipo de magnitud se evaluó mediante chi-cuadrado con simulación Monte Carlo. En ambos casos, los tamaños de efecto permiten determinar si las diferencias detectadas tienen importancia práctica.
 
-<!-- Resultados generados en Scripts/06_inf_comparabilidad.R. -->
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-comparabilidad-temporal}
+\hypertarget{dest-tbl-comparabilidad-temporal}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.25\textwidth}
+                >{\centering\arraybackslash}p{0.16\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\centering\arraybackslash}p{0.16\textwidth}
+                >{\raggedright\arraybackslash}p{0.22\textwidth}}
+\toprule
+Contraste & Estadístico & p ajustado BH & Tamaño de efecto & Resultado \\
+\midrule
+RMS por período & $H(2)=261{,}930$ & $<0{,}001$ & $\varepsilon^2=0{,}221$ & Diferencia temporal apreciable \\
+Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608$ & Asociación temporal fuerte \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-comparabilidad-temporal}{Cambios temporales en los procedimientos de reporte del catálogo.}
+\endgroup
+```
 
-El bloque de comparabilidad verifica, antes de interpretar cualquier comparación, si las diferencias entre zonas podrían estar condicionadas por la estructura de reporte. Los cinco contrastes se ajustan en conjunto mediante la tasa de falsos descubrimientos de Benjamini-Hochberg. Ni el tipo de magnitud (zona por `magType`, $p = 0{,}671$; V de Cramér corregida de 0,000) ni la fuente institucional (zona por `magSource`, $p = 0{,}351$; V corregida de 0,022) presentan una asociación apreciable con la zona. El ajuste de localización RMS difiere entre zonas de forma estadísticamente detectable ($p = 0{,}026$), pero con un tamaño de efecto despreciable (epsilon cuadrado de 0,009), por lo que no compromete la comparación espacial. Este resultado ilustra la política de decisión declarada: con 1.186 eventos la significación estadística no implica relevancia, y el tamaño de efecto es el que decide.
-
-En cambio, la dimensión temporal sí refleja las condiciones de reporte del catálogo a lo largo del tiempo. La composición del método de magnitud cambia de forma marcada entre períodos (período por `magType`, V de Cramér corregida de 0,608), de manera coherente con la transición hacia `mww`, y el RMS mejora con los años (epsilon cuadrado de 0,221). En consecuencia, las comparaciones espaciales entre zonas se interpretan sin reservas de comparabilidad, mientras que las comparaciones temporales de magnitud se leen con la cautela de que parte de su variación puede reflejar el método de estimación y no la sismicidad.
-
-:::
+Los procedimientos de reporte no permanecen constantes durante todo el período. El RMS presenta diferencias temporales de magnitud apreciable y la composición del tipo de magnitud cambia fuertemente, de manera coherente con la transición hacia `mww`. Por ello, las comparaciones espaciales pueden interpretarse sin una restricción importante asociada con la fuente o el método, mientras que las comparaciones temporales de magnitud requieren cautela, porque parte de su variación puede reflejar cambios en el procedimiento de estimación y no en la sismicidad.
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
 
