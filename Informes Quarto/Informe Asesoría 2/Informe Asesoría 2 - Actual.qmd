@@ -267,6 +267,24 @@ La heterogeneidad del catálogo se aborda mediante mecanismos explícitos en tre
 
 Antes de comparar las zonas, evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de localización. Las categorías de baja frecuencia se agruparon solo cuando no alteraban la pregunta sustantiva; el detalle de esas decisiones se documenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
+En esta sección, las dócimas se formularon como contrastes de independencia para las variables categóricas de reporte y como contrastes de igualdad distribucional para el ajuste residual de localización. Por ejemplo, para el tipo de magnitud entre zonas:
+
+$$
+H_0: F_{\text{tipo},\,\text{zona}_1}=F_{\text{tipo},\,\text{zona}_2}=\cdots=F_{\text{tipo},\,\text{zona}_k}
+\quad \text{v/s} \quad
+H_1: F_{\text{tipo},\,\text{zona}_h}\neq F_{\text{tipo},\,\text{zona}_{h'}} \mid h \neq h'
+$$
+
+El mismo criterio se aplicó a las asociaciones entre zona y fuente de magnitud, y entre período y tipo de magnitud. Para las comparaciones del ajuste residual de localización, la hipótesis se expresa en términos de igualdad de distribuciones; por ejemplo, entre zonas:
+
+$$
+H_0: F_{\text{RMS},\,\text{zona}_1}=F_{\text{RMS},\,\text{zona}_2}=\cdots=F_{\text{RMS},\,\text{zona}_k}
+\quad \text{v/s} \quad
+H_1: F_{\text{RMS},\,\text{zona}_h}\neq F_{\text{RMS},\,\text{zona}_{h'}} \mid h \neq h'
+$$
+
+La comparación del RMS entre períodos se formuló de forma análoga.
+
 Las asociaciones categóricas se evaluaron mediante chi-cuadrado de independencia. Como algunas tablas tenían frecuencias esperadas bajas, especialmente en zonas con pocos eventos, descartamos fusionar categorías relevantes y usamos valores p obtenidos con 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. Esta decisión permite mantener la estructura original de reporte y evita depender de una aproximación chi-cuadrado poco estable en celdas escasas. La precisión de la simulación se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
 Para medir la intensidad de esas asociaciones se utilizó la V de Cramér corregida por sesgo. La corrección es relevante porque las tablas tienen tamaños de grupo desiguales y categorías poco frecuentes, condiciones que pueden inflar la asociación aparente aun cuando la relación real sea débil. Por ello, la versión corregida permite distinguir una asociación sustantiva de una discrepancia producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
@@ -289,7 +307,62 @@ La comparación de magnitud y profundidad se realizó sobre `zona`, `mag` y `dep
 
 La evaluación combinó diagnóstico gráfico y pruebas formales: QQ-plots univariados, QQ multivariante con distancias de Mahalanobis, Mardia para normalidad multivariada [@mardia_1970], Shapiro-Wilk para normalidad marginal [@shapiro_wilk_1965] y M de Box para homogeneidad de matrices de varianza-covarianza [@box_1949]. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad, no como criterios de normalidad [@bartlett_1950]. Las hipótesis formales se presentan en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0.35em}
+\setlength{\belowdisplayskip}{0.35em}
+\setlength{\abovedisplayshortskip}{0.2em}
+\setlength{\belowdisplayshortskip}{0.2em}
+```
+
+La decisión de ruta se organizó mediante las siguientes dócimas principales. Para la normalidad multivariada del vector formado por magnitud y profundidad:
+
+```{=latex}
+\vspace{-0.85em}
+\[
+H_0: \mathbf{X}_{\text{zona}_h}\sim N_2(\boldsymbol{\mu}_h,\boldsymbol{\Sigma}_h)
+\quad \text{v/s} \quad
+H_1: \mathbf{X}_{\text{zona}_h}\not\sim N_2(\boldsymbol{\mu}_h,\boldsymbol{\Sigma}_h) \mid h=1,\ldots,k
+\]
+\vspace{-0.85em}
+```
+
+Para la homogeneidad de matrices de varianza-covarianza entre zonas:
+
+```{=latex}
+\vspace{-0.85em}
+\[
+H_0: \boldsymbol{\Sigma}_{\text{zona}_1}
+=\boldsymbol{\Sigma}_{\text{zona}_2}
+=\cdots
+=\boldsymbol{\Sigma}_{\text{zona}_k}
+\quad \text{v/s} \quad
+H_1: \boldsymbol{\Sigma}_{\text{zona}_h}
+\neq
+\boldsymbol{\Sigma}_{\text{zona}_{h'}} \mid h \neq h'
+\]
+\vspace{-0.85em}
+```
+
 Como los supuestos no se sostuvieron, no se utilizó MANOVA como procedimiento principal. En su lugar, comparamos las distribuciones de magnitud y profundidad mediante Kruskal-Wallis [@kruskal_wallis_1952], prueba basada en rangos que no exige normalidad y mantiene la pregunta central de comparación entre zonas. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$) para evaluar relevancia práctica [@mangiafico_rcompanion_2026].
+
+Para esta comparación no paramétrica de magnitud y profundidad, la dócima se formuló como:
+
+```{=latex}
+\vspace{-0.85em}
+\[
+H_0: F_{Y,\,\text{zona}_1}=F_{Y,\,\text{zona}_2}=\cdots=F_{Y,\,\text{zona}_k}
+\quad \text{v/s} \quad
+H_1: F_{Y,\,\text{zona}_h}\neq F_{Y,\,\text{zona}_{h'}} \mid h \neq h'
+\]
+\vspace{-0.85em}
+```
+
+donde $Y \in \{\text{magnitud},\text{profundidad}\}$.
+
+```{=latex}
+\endgroup
+```
 
 Se consideró PERMANOVA como alternativa no paramétrica multivariante, pero se descartó en favor de Kruskal-Wallis porque la pregunta requería interpretar magnitud y profundidad por separado. Además, PERMANOVA puede confundirse con diferencias de dispersión entre grupos, precisamente una de las heterogeneidades observadas en el catálogo.
 
@@ -628,17 +701,17 @@ Como la prueba global no identifica qué pares de zonas difieren, el análisis c
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.0pt}
+\setlength{\tabcolsep}{1.5pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-dunn-resumen-mag-depth}
 \hypertarget{dest-tbl-dunn-resumen-mag-depth}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\textwidth}
-                >{\raggedright\arraybackslash}p{0.28\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\raggedright\arraybackslash}p{0.18\textwidth}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.12\textwidth}
+                >{\raggedright\arraybackslash}p{0.34\textwidth}
+                >{\centering\arraybackslash}p{0.07\textwidth}
+                >{\centering\arraybackslash}p{0.08\textwidth}
+                >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
 \toprule
 Variable & Comparación relevante & $Z$ & $p_{aj}$ & Lectura \\
 \midrule
