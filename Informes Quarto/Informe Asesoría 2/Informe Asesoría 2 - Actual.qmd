@@ -265,19 +265,15 @@ La heterogeneidad del catálogo se aborda mediante mecanismos explícitos en tre
 
 ## Comparabilidad de los procedimientos de reporte {#sec-met-comparabilidad}
 
-Antes de comparar las zonas, como equipo evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de la localización.
+Antes de comparar las zonas, evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de localización. Las categorías de baja frecuencia se agruparon solo cuando no alteraban la pregunta sustantiva; el detalle de esas decisiones se documenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
-Se conservaron las categorías `mww`, `mwc`, `mwb` y “otros” de `magType_grupo`; además, las fuentes con menos de 20 registros se reunieron en `magSource_grupo`. La dimensión temporal se organizó en 2000-2009, 2010-2019 y 2020-2025. La construcción y justificación de estas agrupaciones se presenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
+Las asociaciones categóricas se evaluaron mediante chi-cuadrado de independencia. Como algunas tablas tenían frecuencias esperadas bajas, especialmente en zonas con pocos eventos, descartamos fusionar categorías relevantes y usamos valores p obtenidos con 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. Esta decisión permite mantener la estructura original de reporte y evita depender de una aproximación chi-cuadrado poco estable en celdas escasas. La precisión de la simulación se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
-Las asociaciones zona por tipo de magnitud, zona por fuente y período por tipo de magnitud se evaluaron mediante chi-cuadrado de independencia. Esta prueba contrasta si las frecuencias observadas difieren de las esperadas cuando las variables no están relacionadas. Algunas tablas contenían frecuencias esperadas inferiores a cinco, especialmente en las categorías correspondientes a las zonas con menor número de eventos. En esas condiciones, la distribución chi-cuadrado teórica puede aproximar de forma imprecisa el valor p.
+Para medir la intensidad de esas asociaciones se utilizó la V de Cramér corregida por sesgo. La corrección es relevante porque las tablas tienen tamaños de grupo desiguales y categorías poco frecuentes, condiciones que pueden inflar la asociación aparente aun cuando la relación real sea débil. Por ello, la versión corregida permite distinguir una asociación sustantiva de una discrepancia producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
 
-Como equipo, consideramos dos alternativas. La primera era fusionar categorías hasta aumentar las frecuencias esperadas, pero se descartó porque habría unido métodos o fuentes de reporte diferentes y modificado la pregunta que se buscaba responder. La segunda era calcular una prueba exacta mediante la enumeración de todas las tablas posibles, cuyo costo crece considerablemente en tablas con varias filas y columnas. Por estas razones, mantuvimos las categorías relevantes y obtuvimos los valores p mediante 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. El procedimiento genera tablas bajo la hipótesis de independencia, conserva los totales marginales observados y calcula qué proporción presenta una discrepancia igual o mayor que la tabla real. De este modo, el valor p no depende de la aproximación chi-cuadrado asintótica. Aunque la tabla de período por tipo de magnitud no presentó frecuencias esperadas inferiores a cinco, se mantuvo la simulación para aplicar un procedimiento uniforme a los tres contrastes categóricos. La cantidad de simulaciones permite una resolución mínima cercana a 0,0001 y un error de simulación aproximado de 0,0022 cuando el valor p se encuentra alrededor de 0,05, precisión suficiente para la regla de decisión establecida. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
+El ajuste residual de localización (`rms_imp`) se comparó por zona y período mediante Kruskal-Wallis, manteniendo el criterio no paramétrico usado para variables continuas con valores atípicos y tamaños grupales desiguales. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$), entendido como un análogo del $R^2$ aplicado a rangos, para separar significación estadística de importancia práctica [@mangiafico_rcompanion_2026]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}.
 
-La simulación Monte Carlo resuelve la estimación del valor p, pero no mide la intensidad de la asociación. Para este segundo propósito se utilizó la V de Cramér. Su versión convencional puede entregar valores positivos aun cuando las variables sean independientes, porque la variabilidad muestral produce discrepancias entre frecuencias observadas y esperadas. Esta sobreestimación puede ser mayor en tablas con varias categorías, grupos pequeños o frecuencias reducidas, condiciones presentes en este análisis. Por ello, como equipo utilizamos la V de Cramér corregida por sesgo propuesta por @bergsma_2013, que descuenta la asociación atribuible al tamaño y a las dimensiones de la tabla. La corrección permite evitar que una asociación pequeña sea presentada como sustantiva únicamente por la estructura muestral. Sus valores se interpretaron directamente: resultados próximos a cero indican escasa asociación y valores más alejados de cero representan relaciones de mayor intensidad, sin aplicar puntos de corte rígidos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
-
-El ajuste residual de la localización, representado por `rms_imp`, se comparó por zona y período mediante Kruskal-Wallis. Se escogió esta prueba no paramétrica por la presencia de valores atípicos y por la marcada desigualdad de los tamaños grupales. El procedimiento compara los rangos de las observaciones entre grupos sin exigir normalidad y permite establecer si existe una diferencia global, aunque no identifica por sí solo qué grupos difieren. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$), que aproxima la proporción de variabilidad de los rangos asociada con la zona o el período y permite distinguir la significación estadística de la importancia práctica. Conceptualmente, esta medida equivale al $R^2$ de un ANOVA aplicado a los rangos de la variable, no a sus valores originales [@mangiafico_rcompanion_2026]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}. La variable conserva los 1.186 eventos mediante la imputación de nueve valores ausentes, procedimiento heredado del Informe Asesoría 1. \asesoriaStyledRef{(véase \hyperref[sec-anexo-continuidad]{anexo de continuidad de datos y variables})}.
-
-Los cinco contrastes se trataron como una familia exploratoria. Si cada valor p se evaluara por separado, aumentaría la posibilidad de cometer al menos un error tipo I, es decir, declarar una diferencia inexistente. Por ello, decidimos ajustar conjuntamente los valores p mediante Benjamini-Hochberg para controlar en 5 % la proporción esperada de falsos descubrimientos entre los resultados declarados significativos. Se prefirió este procedimiento porque es menos restrictivo que un control orientado a impedir cualquier falso positivo y, por tanto, reduce en menor medida la capacidad para detectar diferencias reales. Este equilibrio es relevante porque una corrección excesivamente estricta puede aumentar el error tipo II, que consiste en no detectar una diferencia existente. El ajuste modifica los valores p, pero no los estadísticos ni los tamaños de efecto. \asesoriaStyledRef{(véase \hyperref[sec-anexo-ajuste-p]{anexo de ajuste de valores p por multiplicidad})}.
+Los cinco contrastes de comparabilidad se trataron como una familia exploratoria. Para no aumentar artificialmente el riesgo de falsos positivos, ajustamos sus valores p mediante Benjamini-Hochberg, que controla la proporción esperada de falsos descubrimientos y conserva más capacidad de detección que una corrección orientada a evitar cualquier error tipo I [@benjamini_hochberg_1995]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-ajuste-p]{anexo de ajuste de valores p por multiplicidad})}.
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
@@ -289,11 +285,13 @@ Los conteos anuales por zona (26 años y 4 zonas, 104 observaciones) se modelan 
 
 ## Comparación de magnitud y profundidad entre zonas {#sec-met-magnitud-profundidad}
 
-::: {.content-hidden when-format="pdf"}
+La comparación de magnitud y profundidad se realizó sobre `zona`, `mag` y `depth`, manteniendo la zonificación del Informe Asesoría 1. Antes de contrastar diferencias, evaluamos si era defendible usar una ruta paramétrica multivariante. Esta revisión era necesaria porque MANOVA supone un comportamiento conjunto aproximadamente normal y matrices de dispersión comparables; si esas condiciones no se cumplen, los valores p pueden reflejar colas, empates, valores extremos o heterogeneidad de varianzas más que diferencias reales entre zonas.
 
-La comparación se inicia con la evaluación de supuestos multivariantes propuesta en el Informe Asesoría 1: normalidad multivariante de Mardia, homogeneidad de matrices de varianza-covarianza de M-Box y esfericidad de Bartlett, con el criterio de la @sec-politica-decision y diagnóstico gráfico. El resultado de esta evaluación define la ruta: si los supuestos se sostienen, corresponde MANOVA sobre el vector de magnitud y profundidad; en caso contrario, se aplica la ruta no paramétrica con Kruskal-Wallis por variable, comparaciones post-hoc de Dunn con corrección de Holm, intervalos de confianza bootstrap para las medianas por zona y tamaños de efecto.
+La evaluación combinó diagnóstico gráfico y pruebas formales: QQ-plots univariados, QQ multivariante con distancias de Mahalanobis, Mardia para normalidad multivariada [@mardia_1970], Shapiro-Wilk para normalidad marginal [@shapiro_wilk_1965] y M de Box para homogeneidad de matrices de varianza-covarianza [@box_1949]. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad, no como criterios de normalidad [@bartlett_1950]. Las hipótesis formales se presentan en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
-:::
+Como los supuestos no se sostuvieron, no se utilizó MANOVA como procedimiento principal. En su lugar, comparamos las distribuciones de magnitud y profundidad mediante Kruskal-Wallis [@kruskal_wallis_1952], prueba basada en rangos que no exige normalidad y mantiene la pregunta central de comparación entre zonas. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$) para evaluar relevancia práctica [@mangiafico_rcompanion_2026].
+
+Cuando el contraste global indicó diferencias, aplicamos comparaciones post-hoc de Dunn con ajuste de Holm [@dunn_1964; @holm_1979]. El ajuste controla el error tipo I acumulado al realizar seis comparaciones por pares dentro de cada variable. La tabla completa se presenta en el \asesoriaStyledRef{(véase \hyperref[sec-anexo-dunn]{anexo de comparaciones Dunn-Holm})}. Además, se calculó delta de Cliff en pares sustantivamente relevantes para describir dirección y magnitud práctica de la separación entre distribuciones [@cliff_1993].
 
 ## Estructura temporal de la ocurrencia {#sec-met-temporal}
 
@@ -446,33 +444,250 @@ Al normalizar por superficie, el orden se modifica. La densidad del Cinturón de
 
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
+El Informe Asesoría 1 mostró que las zonas presentan magnitudes similares, mientras que la profundidad exhibe diferencias más claras en su distribución. Esta subsección formaliza ambos hallazgos y evalúa si la magnitud y la profundidad permiten distinguir estadísticamente a las zonas sísmicas. Antes de realizar las comparaciones se examinan la normalidad conjunta de ambas variables y la homogeneidad de sus matrices de covarianza. Esta evaluación funciona como una compuerta metodológica: si los supuestos se sostienen, sería posible utilizar una comparación multivariante paramétrica; si se incumplen, corresponde adoptar una ruta no paramétrica basada en rangos. De esta forma, el procedimiento inferencial se selecciona a partir de las características observadas en los datos y no únicamente por preferencia metodológica.
+
 ::: {.content-hidden when-format="pdf"}
 
 <!-- Análisis mínimo 2 del instructivo. -->
 
 :::
 
-### Evaluación de supuestos multivariantes
+### Evaluación de supuestos y decisión de ruta
 
-::: {.content-hidden when-format="pdf"}
+Para abreviar la lectura, en esta subsección se utiliza la nomenclatura abreviada del Informe Asesoría 1: C. Fuego, Resto, C. Alp.-Him. y Dorsal M.-Atl.
 
-<!-- Mardia, M-Box y Bartlett con alfa 0,10 y QQ multivariante. Este es el punto de
-quiebre del relato: su resultado define la ruta paramétrica o no paramétrica. -->
+#### Diagnóstico gráfico de la magnitud
 
-*Pendiente: resultados de Mardia, M-Box y Bartlett con diagnóstico gráfico y decisión de ruta.*
+El primer diagnóstico revisó si la magnitud de cada zona se aproxima a una distribución normal. En un QQ-plot, una normalidad razonable se observa cuando los puntos siguen la línea punteada sin curvaturas sistemáticas.
 
-:::
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 1.png}}
+\caption{QQ-plots de magnitud por zona sísmica.}
+\label{fig-qq-magnitud-zona}
+\end{figure}
+```
+
+Los QQ-plots de magnitud muestran desviaciones sistemáticas en las cuatro zonas. En C. Fuego y Resto se observa acumulación en $M=6{,}5$ y curvatura ascendente en la cola superior, patrón coherente con el truncamiento del catálogo, los valores repetidos y la presencia de eventos de mayor magnitud.
+
+En C. Alp.-Him. y Dorsal M.-Atl. la desviación es menos extrema, pero persisten empates y separaciones en los extremos. Por tanto, la magnitud no muestra un comportamiento compatible con normalidad dentro de las zonas.
+
+#### Diagnóstico gráfico de la profundidad
+
+El segundo diagnóstico evaluó la profundidad. Esta variable presenta mayor rango y heterogeneidad entre zonas, por lo que el QQ-plot permite revisar si su distribución mantiene una forma aproximadamente normal.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 2.png}}
+\caption{QQ-plots de profundidad por zona sísmica.}
+\label{fig-qq-profundidad-zona}
+\end{figure}
+```
+
+Los QQ-plots de profundidad presentan desviaciones más marcadas que los de magnitud. En C. Fuego y Resto aparece una fuerte curvatura ascendente, asociada con eventos intermedios y profundos que generan colas derechas extensas.
+
+En C. Alp.-Him. también se observa cola derecha, aunque menos extrema. En Dorsal M.-Atl. predomina la concentración en torno a 10 km, lo que produce una línea de referencia casi horizontal y revela escasa variabilidad, empates y algunos valores superiores aislados.
+
+En conjunto, la profundidad no presenta normalidad gráfica en ninguna zona. Este resultado refuerza la necesidad de evitar una comparación paramétrica multivariada.
+
+#### Diagnóstico gráfico multivariante
+
+El diagnóstico multivariante se realizó con distancias de Mahalanobis. Esta distancia mide qué tan alejado está cada evento del centro conjunto de magnitud y profundidad, considerando la dispersión y covariación de ambas variables. Bajo normalidad multivariada, las distancias ordenadas deberían aproximarse a los cuantiles teóricos de una distribución chi-cuadrado con dos grados de libertad.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 3.png}}
+\caption{QQ-plots multivariantes de Mahalanobis por zona sísmica.}
+\label{fig-qq-mahalanobis-zona}
+\end{figure}
+```
+
+Los QQ-plots multivariantes también se separan de la línea de referencia. En C. Fuego la desviación es marcada en los cuantiles superiores; Resto se ajusta parcialmente en la zona central, pero se separa en la cola; C. Alp.-Him. muestra desviaciones crecientes hacia valores altos; y Dorsal M.-Atl. queda dominada por baja variabilidad y pocos eventos alejados.
+
+Por tanto, el diagnóstico multivariante tampoco respalda la normalidad conjunta de magnitud y profundidad, resultado coherente con los QQ-plots univariados.
+
+#### Pruebas formales de normalidad
+
+Los diagnósticos gráficos se complementaron con pruebas formales de normalidad. Mardia evalúa la normalidad conjunta de magnitud y profundidad; Shapiro-Wilk evalúa la normalidad de cada variable por separado. La \hyperref[tbl-normalidad-mag-depth]{tabla de normalidad} resume ambos resultados por zona.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{1.8pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-normalidad-mag-depth}
+\hypertarget{dest-tbl-normalidad-mag-depth}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}
+                >{\centering\arraybackslash}p{0.105\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}
+                >{\centering\arraybackslash}p{0.105\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}
+                >{\centering\arraybackslash}p{0.09\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}
+                >{\centering\arraybackslash}p{0.09\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}}
+\toprule
+Zona & Mardia asim. & $p$ & Mardia curt. & $p$ & SW mag. & $p$ & SW prof. & $p$ \\
+\midrule
+Cinturón de Fuego & 1.356,483 & $<0{,}001$ & 30,724 & $<0{,}001$ & 0,835 & $<0{,}001$ & 0,537 & $<0{,}001$ \\
+Resto del mundo & 130,684 & $<0{,}001$ & 3,435 & $<0{,}001$ & 0,854 & $<0{,}001$ & 0,602 & $<0{,}001$ \\
+Cinturón Alpino-Himalayo & 49,331 & $<0{,}001$ & 2,059 & 0,039 & 0,840 & $<0{,}001$ & 0,617 & $<0{,}001$ \\
+Dorsal Meso-Atlántica & 86,180 & $<0{,}001$ & 10,549 & $<0{,}001$ & 0,849 & $<0{,}001$ & 0,431 & $<0{,}001$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-normalidad-mag-depth}{Diagnóstico de normalidad univariada y multivariada de magnitud y profundidad por zona.}
+\endgroup
+```
+
+Mardia rechaza la normalidad multivariada en las cuatro zonas. La única excepción parcial es la curtosis de C. Alp.-Him. ($p=0{,}039$), que igualmente rechaza normalidad con $\alpha=0{,}05$. Shapiro-Wilk también rechaza la normalidad de magnitud y profundidad en todas las zonas ($p<0{,}001$). Por tanto, la evidencia formal confirma lo observado en los QQ-plots.
+
+#### Homogeneidad de covarianzas y relación entre variables
+
+Después de evaluar normalidad, se revisó la homogeneidad de matrices de varianza-covarianza mediante M de Box. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-diagnosticos-complementarios-mag-depth}
+\hypertarget{dest-tbl-diagnosticos-complementarios-mag-depth}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.36\textwidth}
+                >{\centering\arraybackslash}p{0.26\textwidth}
+                >{\centering\arraybackslash}p{0.18\textwidth}}
+\toprule
+Diagnóstico & Estadístico & Valor p \\
+\midrule
+M de Box & $\chi^2(9)=286{,}503$ & $<0{,}001$ \\
+Bartlett & $\chi^2(1)=0{,}265$ & 0,607 \\
+Spearman & $\rho=0{,}130$ & $<0{,}001$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-diagnosticos-complementarios-mag-depth}{Diagnósticos complementarios para magnitud y profundidad.}
+\endgroup
+```
+
+La M de Box rechazó la igualdad de matrices de varianza-covarianza entre zonas ($p<0{,}001$). Aunque esta prueba es sensible al incumplimiento de normalidad y al desbalance muestral, el resultado es coherente con la heterogeneidad descriptiva observada en profundidad y dispersión. Por tanto, MANOVA no se justifica como procedimiento principal.
+
+Bartlett no detectó asociación lineal relevante entre magnitud y profundidad ($p=0{,}607$). Spearman sí detectó una asociación monotónica positiva, pero débil ($\rho=0{,}130$). Así, las variables no parecen redundantes y pueden aportar información distinta en análisis posteriores.
+
+Con base en estos resultados, la comparación formal entre zonas continúa mediante procedimientos no paramétricos basados en rangos.
 
 ### Contrastes de distribución
 
-::: {.content-hidden when-format="pdf"}
+Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas no se sostienen, la comparación global entre zonas se realizó mediante Kruskal-Wallis. Esta prueba compara los rangos de la variable entre grupos, no sus medias, por lo que es adecuada para distribuciones asimétricas, con empates y tamaños muestrales desiguales. Se aplicó por separado a magnitud y profundidad.
 
-<!-- Kruskal-Wallis por variable con corrección por empates, Dunn con Holm, IC bootstrap
-para medianas por zona, epsilon cuadrado y delta de Cliff. -->
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-kruskal-mag-depth}
+\hypertarget{dest-tbl-kruskal-mag-depth}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\centering\arraybackslash}p{0.08\textwidth}
+                >{\centering\arraybackslash}p{0.14\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\raggedright\arraybackslash}p{0.22\textwidth}}
+\toprule
+Variable & $H$ & gl & Valor p & $\varepsilon^2$ & Lectura del efecto \\
+\midrule
+Magnitud & 8,324 & 3 & 0,0398 & 0,007 & Prácticamente nulo \\
+Profundidad & 69,498 & 3 & $<0{,}001$ & 0,059 & Pequeño \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-kruskal-mag-depth}{Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.}
+\endgroup
+```
 
-*Pendiente: contrastes no paramétricos con tamaños de efecto e intervalos por zona.*
+Kruskal-Wallis detectó diferencias globales entre zonas tanto en magnitud como en profundidad. Sin embargo, los tamaños de efecto muestran que estas diferencias no tienen la misma relevancia práctica. En magnitud, la evidencia es estadísticamente detectable ($p=0{,}0398$), pero el efecto global es prácticamente nulo ($\varepsilon^2=0{,}007$). En profundidad, la evidencia es más clara ($p<0{,}001$) y el efecto global es mayor, aunque todavía pequeño ($\varepsilon^2=0{,}059$). Este patrón coincide con el Informe Asesoría 1: las magnitudes eran similares entre zonas, mientras que la profundidad mostraba diferencias más marcadas.
 
-:::
+Como la prueba global no identifica qué pares de zonas difieren, el análisis continúa con comparaciones post-hoc de Dunn-Holm.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-dunn-resumen-mag-depth}
+\hypertarget{dest-tbl-dunn-resumen-mag-depth}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\textwidth}
+                >{\raggedright\arraybackslash}p{0.28\textwidth}
+                >{\centering\arraybackslash}p{0.12\textwidth}
+                >{\centering\arraybackslash}p{0.16\textwidth}
+                >{\raggedright\arraybackslash}p{0.18\textwidth}}
+\toprule
+Variable & Comparación relevante & $Z$ & $p_{aj}$ & Lectura \\
+\midrule
+Magnitud & C. Fuego - Dorsal M.-Atl. & 2,713 & 0,033 & Dorsal con rangos menores \\
+Magnitud & Resto - Dorsal M.-Atl. & 2,877 & 0,024 & Dorsal con rangos menores \\
+Profundidad & C. Fuego - Resto & 3,965 & $<0{,}001$ & C. Fuego con rangos mayores \\
+Profundidad & C. Fuego - C. Alp.-Him. & 3,552 & $<0{,}001$ & C. Fuego con rangos mayores \\
+Profundidad & C. Fuego - Dorsal M.-Atl. & 7,020 & $<0{,}001$ & C. Fuego con rangos mayores \\
+Profundidad & Resto - Dorsal M.-Atl. & 5,154 & $<0{,}001$ & Dorsal con rangos menores \\
+Profundidad & C. Alp.-Him. - Dorsal M.-Atl. & 3,893 & $<0{,}001$ & Dorsal con rangos menores \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-dunn-resumen-mag-depth}{Comparaciones post-hoc relevantes mediante Dunn-Holm.}
+\endgroup
+```
+
+En magnitud, las únicas diferencias significativas involucran a Dorsal M.-Atl. frente a C. Fuego y Resto. Las comparaciones entre C. Fuego, Resto y C. Alp.-Him. no presentan diferencias, y C. Alp.-Him. frente a Dorsal M.-Atl. queda bajo el umbral convencional ($p_{aj}=0{,}070$). En profundidad, Dorsal M.-Atl. difiere de todas las demás zonas, y C. Fuego también difiere de Resto y C. Alp.-Him. La única comparación no significativa es Resto frente a C. Alp.-Him. ($p_{aj}=0{,}283$). La tabla completa se presenta en el \hyperref[sec-anexo-dunn]{anexo de comparaciones Dunn-Holm}.
+
+Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los pares principales definidos para contrastar C. Fuego con zonas de referencia. Este tamaño de efecto no paramétrico mide la dirección y magnitud práctica de la separación entre dos distribuciones. Valores positivos indican que C. Fuego tiende a presentar valores mayores que la zona comparada; valores cercanos a cero indican escasa separación.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-cliff-mag-depth}
+\hypertarget{dest-tbl-cliff-mag-depth}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\textwidth}
+                >{\raggedright\arraybackslash}p{0.25\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\centering\arraybackslash}p{0.22\textwidth}
+                >{\raggedright\arraybackslash}p{0.15\textwidth}}
+\toprule
+Variable & Comparación & $\delta$ & IC 95 \% & Lectura \\
+\midrule
+Magnitud & C. Fuego - Dorsal M.-Atl. & 0,298 & [0,114; 0,463] & Pequeña \\
+Magnitud & C. Fuego - C. Alp.-Him. & -0,011 & [-0,159; 0,137] & Despreciable \\
+Profundidad & C. Fuego - Dorsal M.-Atl. & 0,783 & [0,679; 0,856] & Grande \\
+Profundidad & C. Fuego - C. Alp.-Him. & 0,269 & [0,109; 0,416] & Pequeña \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-cliff-mag-depth}{Tamaños de efecto por pares mediante delta de Cliff.}
+\endgroup
+```
+
+En magnitud, C. Fuego presenta valores algo mayores que Dorsal M.-Atl., pero el efecto es pequeño ($\delta=0{,}298$). Frente a C. Alp.-Him., la diferencia es despreciable ($\delta=-0{,}011$), coherente con la ausencia de diferencia post-hoc. En profundidad, la separación entre C. Fuego y Dorsal M.-Atl. es grande ($\delta=0{,}783$), mientras que frente a C. Alp.-Him. es pequeña ($\delta=0{,}269$).
+
+En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad muestra una capacidad de diferenciación más clara, especialmente entre C. Fuego y Dorsal M.-Atl. Esta conclusión es consistente con el análisis descriptivo del Informe Asesoría 1 y con los contrastes globales de esta fase.
 
 ## Estructura temporal de la ocurrencia {#sec-res-temporal}
 
@@ -594,7 +809,7 @@ Este anexo reúne las reglas de decisión que sustentan los procedimientos descr
 
 | Familia de procedimientos | Rol | Criterio de decisión | Justificación |
 |---------------------------|-----|----------------------|---------------|
-| Mardia, M de Box y Bartlett | Diagnóstico | $\alpha=0{,}10$ junto con diagnóstico gráfico | Se prioriza detectar condiciones que podrían invalidar la ruta paramétrica; con una muestra grande, el resultado se interpreta junto con los gráficos |
+| Mardia, Shapiro-Wilk, M de Box y Bartlett | Diagnóstico | $\alpha=0{,}10$ junto con diagnóstico gráfico | Se prioriza detectar condiciones que podrían invalidar la ruta paramétrica; con una muestra grande, el resultado se interpreta junto con los gráficos |
 | Kruskal-Wallis para `mag` y `depth` | Confirmatorio | $\alpha=0{,}05$ por variable | Cada variable responde una pregunta sustantiva diferente; la multiplicidad posterior se controla dentro de cada familia de comparaciones por pares |
 | Dunn, seis pares por variable | Confirmatorio | Error familiar de 0,05 con corrección de Holm | La corrección limita la probabilidad de falsos positivos producidos por las seis comparaciones simultáneas |
 | GLM de conteos | Confirmatorio | $\alpha=0{,}05$ e IC 95 % de las razones de tasa | La conclusión considera la magnitud y la incertidumbre de las diferencias entre tasas |
@@ -610,7 +825,13 @@ Este anexo reúne las reglas de decisión que sustentan los procedimientos descr
 
 Para la comparabilidad del registro se mantuvo `magType_grupo`, definida mediante `mww`, `mwc`, `mwb` y “otros”. En `magSource_grupo`, las fuentes con menos de 20 registros se reunieron en una categoría residual. Este umbral representa un promedio potencial mínimo de cinco registros por zona si la distribución fuera uniforme. Su propósito es evitar interpretaciones individuales de fuentes con respaldo insuficiente, no asegurar que todas las frecuencias esperadas superen cinco, porque los tamaños de las zonas son desiguales. Las fuentes principales se conservaron separadas para no ocultar diferencias en los procedimientos de reporte. Los períodos se definieron como 2000-2009, 2010-2019 y 2020-2025.
 
-Las hipótesis formales, las distribuciones de referencia y las salidas completas de cada procedimiento se incorporarán a este anexo una vez cerrados todos los modelos.
+Para la comparación de magnitud y profundidad, las hipótesis se organizaron en dos bloques. El primer bloque define la ruta metodológica. En Shapiro-Wilk, la hipótesis nula plantea que la variable evaluada sigue una distribución normal dentro de cada zona, mientras que la alternativa indica desviación de normalidad. En Mardia, la hipótesis nula plantea normalidad multivariante del vector formado por magnitud y profundidad dentro de cada zona; la alternativa indica desviación por asimetría o curtosis multivariante. En la M de Box, la hipótesis nula plantea igualdad de matrices de varianza-covarianza entre zonas; la alternativa indica que al menos una zona tiene una matriz distinta. Estas dócimas no se usan para concluir diferencias sustantivas entre zonas, sino para decidir si la ruta paramétrica multivariante es metodológicamente defendible. Si se rechazan de forma consistente, MANOVA deja de ser el procedimiento principal porque sus valores p pueden quedar afectados por la forma de las distribuciones, la heterogeneidad de dispersión y el fuerte desbalance entre tamaños muestrales.
+
+Bartlett y Spearman se trataron como diagnósticos complementarios de relación entre variables. En Bartlett, la hipótesis nula plantea que la matriz de correlaciones es equivalente a una matriz identidad; con dos variables, esto equivale a evaluar ausencia de correlación lineal entre magnitud y profundidad. En Spearman, la hipótesis nula plantea ausencia de asociación monotónica. Estas pruebas permiten revisar si magnitud y profundidad aportan información conjunta o si una de ellas resulta prácticamente redundante. No reemplazan las pruebas de normalidad ni justifican por sí solas una ruta paramétrica.
+
+El segundo bloque corresponde a las comparaciones no paramétricas. En Kruskal-Wallis, la hipótesis nula plantea igualdad de distribuciones, expresada operacionalmente como igualdad de rangos entre zonas; la alternativa indica que al menos una zona presenta rangos sistemáticamente distintos. La prueba identifica una diferencia global, pero no señala qué pares de zonas explican esa diferencia. Por eso, cuando el contraste global fue significativo, se aplicó Dunn-Holm. En cada comparación de Dunn, la hipótesis nula plantea igualdad de rangos entre dos zonas; la alternativa indica diferencia entre ese par. El ajuste de Holm controla el error familiar de las seis comparaciones por variable.
+
+Los tamaños de efecto se incluyeron para evitar conclusiones basadas solo en significación estadística. Epsilon cuadrado resume la magnitud global del efecto de zona en Kruskal-Wallis y se interpreta como un análogo no paramétrico del $R^2$ aplicado a rangos. Delta de Cliff compara dos zonas y se define como la diferencia entre la probabilidad de que una observación de la primera zona sea mayor que una de la segunda y la probabilidad inversa. Valores cercanos a cero indican fuerte superposición entre distribuciones; valores alejados de cero indican mayor separación práctica.
 
 ## Precisión de la simulación Monte Carlo {#sec-anexo-montecarlo}
 
@@ -762,6 +983,27 @@ La implementación se realizó mediante `p.adjust(..., method = "BH")` del paque
 | Zona por tipo de magnitud | 0,67073 | 0,67073 |
 
 Los valores ajustados se compararon con el nivel de 0,05. El RMS por zona, el RMS por período y la asociación entre período y tipo de magnitud permanecieron estadísticamente detectables después del ajuste. En consecuencia, la corrección redujo el riesgo de falsos descubrimientos sin modificar las decisiones obtenidas en este bloque.
+
+## Comparaciones completas Dunn-Holm {#sec-anexo-dunn}
+
+La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después de Kruskal-Wallis. Los valores p ajustados mediante Holm son los que se utilizan para la decisión inferencial.
+
+| Variable | Comparación | $Z$ | $p$ sin ajustar | $p$ ajustado |
+|---|---|---:|---:|---:|
+| Magnitud | C. Fuego - Resto | -0,761 | 0,4466 | 1,0000 |
+| Magnitud | C. Fuego - C. Alp.-Him. | -0,141 | 0,8880 | 0,8880 |
+| Magnitud | Resto - C. Alp.-Him. | 0,283 | 0,7771 | 1,0000 |
+| Magnitud | C. Fuego - Dorsal M.-Atl. | 2,713 | 0,0067 | 0,0333 |
+| Magnitud | Resto - Dorsal M.-Atl. | 2,877 | 0,0040 | 0,0241 |
+| Magnitud | C. Alp.-Him. - Dorsal M.-Atl. | 2,374 | 0,0176 | 0,0705 |
+| Profundidad | C. Fuego - Resto | 3,965 | 0,00007 | 0,00029 |
+| Profundidad | C. Fuego - C. Alp.-Him. | 3,552 | 0,00038 | 0,00076 |
+| Profundidad | Resto - C. Alp.-Him. | 1,073 | 0,2833 | 0,2833 |
+| Profundidad | C. Fuego - Dorsal M.-Atl. | 7,020 | $<0{,}0001$ | $<0{,}0001$ |
+| Profundidad | Resto - Dorsal M.-Atl. | 5,154 | $<0{,}0001$ | $<0{,}0001$ |
+| Profundidad | C. Alp.-Him. - Dorsal M.-Atl. | 3,893 | 0,00010 | 0,00030 |
+
+: Comparaciones completas de Dunn-Holm para magnitud y profundidad. {#tbl-dunn-completo}
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 
