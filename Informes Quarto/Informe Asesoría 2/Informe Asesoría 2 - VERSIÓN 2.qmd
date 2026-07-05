@@ -299,7 +299,7 @@ Finalmente, tratamos como una misma familia exploratoria los cinco contrastes de
 
 Para comparar la frecuencia se construyó una tabla con los conteos de cada zona en cada año del período 2000-2025. La unidad de análisis fue, por tanto, una combinación zona-año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos modelos complementarios: uno para la tasa anual bruta, comparable con el Informe Asesoría 1, y otro para la densidad de eventos. En este último, la superficie se incorporó como offset, es decir, como una exposición conocida cuyo coeficiente se mantiene fijo, para expresar la frecuencia por unidad de superficie y año.
 
-El punto de partida fue un modelo Poisson con enlace logarítmico. Este modelo es apropiado para conteos, pero supone que la media y la varianza condicional son iguales. La sobredispersión, que ocurre cuando la variabilidad supera ese supuesto, se evaluó mediante la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. También se consideró la alternativa quasi-Poisson; se escogió la binomial negativa porque incorpora un parámetro adicional de variabilidad, conserva una verosimilitud explícita para comparar modelos y permite obtener razones de tasa con intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@r_mass_glm_nb; @venables_ripley_2002].
+El punto de partida fue un modelo Poisson con enlace logarítmico. Este modelo es apropiado para conteos, pero supone que la media y la varianza condicional son iguales. La sobredispersión, que ocurre cuando la variabilidad supera ese supuesto, se evaluó mediante la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. También se consideró la alternativa quasi-Poisson; se escogió la binomial negativa porque incorpora un parámetro adicional de variabilidad, conserva una verosimilitud explícita para comparar modelos y permite obtener razones de tasa con intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@venables_ripley_2002].
 
 La presencia de un efecto global de zona se evaluó mediante una razón de verosimilitudes con tres grados de libertad. Luego se examinaron las seis comparaciones posibles entre zonas. Sus valores p se ajustaron mediante el procedimiento de Holm, que controla en 5 % la probabilidad de obtener al menos un falso positivo dentro de cada familia de seis contrastes [@holm_1979]. El tamaño del efecto se expresó como razón de tasa: un valor de 1 representa igualdad, un valor mayor que 1 indica mayor frecuencia en la primera zona y un valor menor que 1 indica menor frecuencia. Cada razón se acompañó de un intervalo de confianza del 95 %. La decisión consideró conjuntamente el valor p ajustado, la magnitud de la razón y la amplitud del intervalo, con especial cautela para el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica por sus menores conteos.
 
@@ -424,7 +424,7 @@ En cambio, la dimensión temporal sí refleja las condiciones de reporte del cat
 
 <!-- Análisis mínimo 1 del instructivo. Resultados generados en Scripts/07_inf_frecuencia.R. -->
 
-Este análisis evaluó si la frecuencia de terremotos difiere entre las zonas definidas en el catálogo. Para separar la cantidad de eventos de la extensión espacial considerada, se compararon la tasa anual bruta, expresada como eventos por año, y la densidad de ocurrencia, expresada como eventos por millón de kilómetros cuadrados y año.
+Esta sección contrasta la primera componente de la pregunta estadística: si la frecuencia de terremotos difiere entre las zonas definidas en el catálogo. Para separar la cantidad de eventos de la extensión espacial considerada, se compararon la tasa anual bruta, expresada como eventos por año, y la densidad de ocurrencia, expresada como eventos por millón de kilómetros cuadrados y año.
 
 El modelo Poisson inicial presentó sobredispersión. La dispersión de Pearson fue 1,410 y la prueba de Cameron-Trivedi obtuvo $z=2{,}149$ y $p=0{,}0158$. Además, la comparación entre Poisson y binomial negativa produjo $LR=5{,}628$ y $p=0{,}0088$. La dispersión superior a 1 indica que los conteos variaron más de lo admitido por la Poisson. Por esta razón, las tasas, los tamaños de efecto y sus intervalos se estimaron mediante modelos binomiales negativos.
 
@@ -462,6 +462,37 @@ Dorsal Meso-Atlántica    &  28 &  1,08 & 0,031 [0,021; 0,045]   & 0,057 & 0,079
 El contraste global encontró diferencias entre zonas tanto en la tasa anual bruta, $LR(3)=220{,}37$, como en la densidad, $LR(3)=225{,}85$, ambos con $p<0{,}001$. El símbolo $LR$ corresponde al estadístico de razón de verosimilitudes y el número entre paréntesis indica sus grados de libertad. En las seis comparaciones por pares de cada modelo, todos los valores p ajustados mediante Holm fueron inferiores a 0,001. Un valor p ajustado cuantifica la evidencia contra la igualdad después de controlar la realización simultánea de las seis comparaciones; no mide la importancia de las diferencias.
 
 La magnitud de los efectos fue considerable. La tasa anual del Cinturón de Fuego fue 4,39 veces la de Resto del mundo, 14,16 veces la del Cinturón Alpino-Himalayo y 31,86 veces la de la Dorsal Meso-Atlántica. Al controlar la superficie, su densidad fue 39,57 veces la de Resto del mundo, 4,30 veces la del Cinturón Alpino-Himalayo y 12,64 veces la de la Dorsal. Aunque los conteos son muy desiguales, con 892 eventos en el Cinturón de Fuego y 28 en la Dorsal, los intervalos de confianza permanecieron alejados de 1. Por ello, la conclusión no depende únicamente de los valores p: las razones de tasa también indican diferencias grandes, mientras que los intervalos cuantifican la mayor incertidumbre de las zonas con menos eventos.
+
+La `Tabla~\ref{tbl-frecuencia-pares}`{=latex} detalla las seis comparaciones por pares en ambas métricas, con las etiquetas abreviadas C. Fuego, Resto, C. Alp.-Him. y Dorsal M.-Atl. La razón compara la primera zona del par con la segunda: un valor mayor que 1 indica que la primera presenta mayor frecuencia. El cambio de posición de Resto del mundo se observa en sus dos últimas filas, donde la razón pasa de menor que 1 en tasa anual a mayor que 1 en densidad.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.3pt}
+\renewcommand{\arraystretch}{0.90}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-pares}
+\hypertarget{dest-tbl-frecuencia-pares}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\textwidth}
+                >{\centering\arraybackslash}p{0.28\textwidth}
+                >{\centering\arraybackslash}p{0.28\textwidth}}
+\toprule
+Comparación (zona 1 / zona 2) & Razón de tasa (IC 95 \%) & Razón de densidad (IC 95 \%) \\
+\midrule
+C. Fuego / C. Alp.-Him.       & 14,16 [10,82; 18,53] & 4,30 [3,29; 5,63] \\
+C. Fuego / Dorsal M.-Atl.     & 31,86 [21,67; 46,83] & 12,64 [8,60; 18,58] \\
+C. Fuego / Resto              & 4,39 [3,69; 5,23]    & 39,57 [33,26; 47,09] \\
+C. Alp.-Him. / Dorsal M.-Atl. & 2,25 [1,43; 3,54]    & 2,94 [1,87; 4,62] \\
+C. Alp.-Him. / Resto          & 0,31 [0,23; 0,42]    & 9,20 [6,85; 12,35] \\
+Dorsal M.-Atl. / Resto        & 0,14 [0,09; 0,21]    & 3,13 [2,09; 4,69] \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.7em}
+\bottomtablecaption{tbl-frecuencia-pares}{Comparaciones por pares entre zonas en tasa anual y densidad. La razón compara la primera zona del par con la segunda; un valor mayor que 1 indica mayor frecuencia en la primera. Todos los valores p ajustados por Holm son inferiores a 0,001; el mayor es 0,00045, correspondiente al par C. Alp.-Him. frente a Dorsal M.-Atl. en tasa anual.}
+\endgroup
+```
 
 La normalización por superficie modificó el orden de las categorías. Resto del mundo ocupó el segundo lugar en tasa anual bruta, con 7,81 eventos por año, pero pasó al último en densidad, con 0,018 eventos por millón de kilómetros cuadrados y año. Este resultado indica que su posición en el conteo bruto no representa una frecuencia alta por unidad de la superficie delimitada.
 
@@ -616,7 +647,7 @@ Este anexo documenta la herencia de la base `sismos` y de sus variables derivada
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
-El análisis utiliza el campo `Area`, expresado en kilómetros cuadrados, de `MAPA_HTML/zonas_inf2.geojson`. Esta capa reúne los tres cinturones delimitados en `SIG/area_regiones.geojson` y su complemento espacial, identificado como "Resto del mundo". El script no recalcula las superficies: verifica que todas las categorías tengan un valor y utiliza los siguientes datos almacenados en la capa.
+El análisis utiliza el campo `Area`, exprésado en kilómetros cuadrados, de `\texttt{MAPA\_HTML/\allowbreak zonas\_inf2.geojson}`{=latex}. Esta capa reúne los tres cinturones delimitados en `\texttt{SIG/\allowbreak area\_regiones.geojson}`{=latex} y su complemento espacial, identificado como "Resto del mundo". El script no recalcula las superficies: verifica que todas las categorías tengan un valor y utiliza los siguientes datos almacenados en la capa.
 
 | Zona | Superficie (km²) | Superficie (millones de km²) |
 |---|---:|---:|
@@ -707,7 +738,11 @@ Esta corrección descuenta la asociación positiva que puede aparecer únicament
 
 Para el modelo de frecuencia, la dispersión de Pearson del ajuste Poisson fue 1,4096. La prueba unilateral de Cameron-Trivedi estimó una dispersión de 1,3554, con $z=2{,}149$ y $p=0{,}0158$. La comparación de verosimilitudes entre Poisson y binomial negativa obtuvo $LR=5{,}6276$ y $p=0{,}0088$. Las tres comprobaciones apuntaron a una sobredispersión leve, pero consistente, por lo que se utilizó la binomial negativa.
 
+La comparación entre Poisson y binomial negativa evalúa si el parámetro de dispersión adicional es nulo. Como ese parámetro no puede ser negativo, su valor bajo la hipótesis nula queda en el borde del espacio admisible; en esa condición, la distribución de referencia del estadístico no es la $\chi^2_1$ ordinaria, sino una mezcla en partes iguales entre esa distribución y una masa en cero. Por ese motivo, el valor p se obtiene dividiendo por dos la probabilidad de cola de la $\chi^2_1$, lo que entrega 0,0088 en lugar de 0,0177 [@self_liang_1987]. La corrección reduce la evidencia declarada y no modifica la conclusión de sobredispersión.
+
 El parámetro adicional de dispersión de la binomial negativa fue $\theta=42{,}35$. Los modelos finales de tasa anual y densidad produjeron los mismos valores ajustados y la misma log-verosimilitud, $-243{,}416$, porque la superficie es constante dentro de cada zona y el efecto de zona reparametriza las cuatro medias. El offset cambia la interpretación de los coeficientes, no el ajuste de las medias por zona. Los contrastes globales fueron $LR(3)=220{,}37$ para la tasa anual y $LR(3)=225{,}85$ para la densidad.
+
+Esos contrastes globales comparan cada modelo con su versión sin el factor de zona. Los coeficientes evaluados son parámetros interiores del modelo, de modo que la distribución de referencia es la $\chi^2_3$ ordinaria y no corresponde la corrección por borde descrita antes. Las seis comparaciones por pares de la `Tabla~\ref{tbl-frecuencia-pares}`{=latex} se obtuvieron como contrastes de Wald sobre los coeficientes del modelo binomial negativo, en su versión de tasa anual, sin offset, y de densidad, con el logaritmo de la superficie como offset. Cada contraste toma la diferencia entre dos zonas y su error estándar a partir de la matriz de covarianzas de los coeficientes, y sus valores p se ajustaron mediante Holm dentro de cada familia de seis comparaciones.
 
 Los demás diagnósticos de especificación, incluidos los correspondientes al modelo multinomial, se incorporarán junto con sus resultados finales.
 
