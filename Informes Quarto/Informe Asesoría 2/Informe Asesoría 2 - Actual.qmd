@@ -227,42 +227,6 @@ La declaración detallada de herramientas, fechas, propósitos, productos asocia
 \newpage
 # Metodología
 
-## Datos y continuidad del catálogo {#sec-datos-continuidad}
-
-::: {.content-hidden when-format="pdf"}
-
-El análisis se realiza sobre la base `sismos` del Informe Asesoría 1, con sus 1.186 eventos y sus variables derivadas sin modificaciones: `magnitud_cat` ("Fuerte" para $6{,}5 \leq M < 7{,}0$, "Mayor" para $7{,}0 \leq M < 7{,}8$ y "Grande o extremo" para $M \geq 7{,}8$), `profundidad_cat` ("Superficial" hasta 70 km, "Intermedio" entre más de 70 y 300 km y "Profundo" sobre 300 km), `zona`, `magType_grupo` y `rms_imp`. Los criterios de estas variables se documentan en los anexos del informe anterior y aquí se heredan por referencia.
-
-Se incorpora una única información nueva: la superficie de cada polígono de zona, calculada en QGIS sobre la capa `area_regiones.geojson`, que se utiliza como denominador de exposición en los modelos de conteo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas})}.
-
-Dos decisiones de datos quedan declaradas desde el inicio. Primero, `nst_imp` no se utiliza como covariable en ningún modelo, porque 402 de sus valores fueron imputados; se mantiene solo como descriptor con la cautela ya establecida. Segundo, los 1.186 eventos del catálogo presentan estado de revisión `reviewed`, por lo que el estado de revisión no ofrece variación analizable y se descarta como eje de sensibilidad; esta verificación fundamenta la elección de los ejes definidos en la @sec-diseno-sensibilidad.
-
-:::
-
-## Política de decisión estadística {#sec-politica-decision}
-
-::: {.content-hidden when-format="pdf"}
-
-Como criterio general, las pruebas confirmatorias se evaluaron con $\alpha=0{,}05$ y sus estimaciones se acompañaron con intervalos de confianza al 95 % y tamaños de efecto. Para el diagnóstico de supuestos multivariantes se utilizó $\alpha=0{,}10$, junto con evidencia gráfica, porque su función es detectar condiciones que podrían invalidar la ruta paramétrica. Las correcciones por multiplicidad se aplicaron dentro de cada familia de contrastes: Holm en las comparaciones post-hoc y Benjamini-Hochberg en el bloque exploratorio de comparabilidad.
-
-La significación estadística no se interpretó por sí sola. Con 1.186 eventos pueden detectarse diferencias pequeñas, mientras que los grupos con 63 y 28 observaciones presentan mayor incertidumbre. Por ello, las conclusiones consideran conjuntamente el valor p, el tamaño de efecto y su intervalo de confianza. Las hipótesis, la lateralidad y las reglas particulares de decisión de cada procedimiento se documentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
-
-:::
-
-## Tratamiento de la heterogeneidad {#sec-heterogeneidad}
-
-::: {.content-hidden when-format="pdf"}
-
-La heterogeneidad del catálogo se aborda mediante mecanismos explícitos en tres ejes, de modo que cada análisis declare cómo la neutraliza o acota.
-
-**Heterogeneidad de zonas.** Los tamaños muestrales son muy desiguales (892, 203, 63 y 28 eventos) y las superficies de las zonas también lo son. Los mecanismos son: la normalización de los conteos mediante el offset de área en el GLM, que separa actividad de extensión; la lectura por intervalos de confianza en toda comparación que involucre a los grupos pequeños; las métricas por clase en el modelo de clasificación, dado que la clase mayoritaria ya entrega un 75,21 % de acierto trivial; y el tratamiento de "Resto del mundo" como categoría de cierre del catálogo y no como zona tectónica, con una sensibilidad que la excluye.
-
-**Heterogeneidad de magnitudes.** El truncamiento en $M \geq 6{,}5$ orienta las comparaciones hacia la distribución completa y no hacia las medias. La magnitud se reporta con un decimal, lo que genera empates masivos: Kruskal-Wallis se aplica con corrección por empates y Kolmogorov-Smirnov se usa solo como complemento gráfico. La composición del método de estimación no es homogénea en el tiempo (647 eventos `mww`, 390 `mwc`, 116 `mwb` y 33 en otros tipos), por lo que las comparaciones temporales de magnitud se verifican mediante una revisión restringida a eventos `mww`, y la comparación espacial se habilita con el contraste previo de independencia entre `zona` y `magType_grupo`.
-
-**Heterogeneidad de fuentes de reporte.** Las condiciones de reporte (`magSource`, `magType_grupo`, `rms_imp`) se examinan en un bloque de comparabilidad previo a los resultados inferenciales, bajo control FDR, para establecer si las comparaciones principales podrían estar condicionadas por la estructura del registro. Este bloque retoma el eje de control propuesto en el Informe Asesoría 1 y su resultado se declara antes de interpretar las secciones confirmatorias *[@cabello_etal_2025; @wiemer_wyss_2000]*.
-
-:::
-
 ## Comparabilidad de los procedimientos de reporte {#sec-met-comparabilidad}
 
 Antes de comparar las zonas, evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de localización. Las categorías de baja frecuencia se agruparon solo cuando no alteraban la pregunta sustantiva; el detalle de esas decisiones se documenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
@@ -295,11 +259,7 @@ Los cinco contrastes de comparabilidad se trataron como una familia exploratoria
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
-::: {.content-hidden when-format="pdf"}
 
-Los conteos anuales por zona (26 años y 4 zonas, 104 observaciones) se modelan mediante un GLM Poisson con enlace logarítmico y offset igual al logaritmo de la superficie de la zona, de modo que los efectos se interpreten como razones de tasa por unidad de superficie y año. La sobredispersión se evalúa según la política declarada; de confirmarse, el modelo se reemplaza por una binomial negativa. Los resultados principales son las razones de tasa entre zonas con sus intervalos de confianza al 95 %, junto a las tasas brutas por año que permiten la comparación directa con el Informe Asesoría 1.
-
-:::
 
 ## Comparación de magnitud y profundidad entre zonas {#sec-met-magnitud-profundidad}
 
@@ -372,56 +332,79 @@ Para complementar esas comparaciones, se calculó delta de Cliff en pares sustan
 
 ## Estructura temporal de la ocurrencia {#sec-met-temporal}
 
-::: {.content-hidden when-format="pdf"}
+El análisis temporal busca formalizar el hallazgo descriptivo del Informe Asesoría 1: la ocurrencia anual fluctúa entre años, pero no muestra una tendencia visual uniforme. Para evaluar si esa lectura se sostiene inferencialmente, se construyeron dos series de conteos a partir del mismo catálogo: una serie anual, útil para comparar con la descripción previa y con los períodos de análisis, y una serie mensual, que entrega mayor número de observaciones para diagnosticar estabilidad temporal, autocorrelación y estacionalidad.
 
-Sobre la serie anual de conteos se aplican las dócimas de Dickey-Fuller aumentada y KPSS, interpretadas en conjunto, y Ljung-Box para la independencia serial. Las tasas anuales promedio por período (2000-2009, 2010-2019 y 2020-2025, este último con seis años observados) se comparan dentro del GLM de conteos mediante efectos de período. La estacionalidad mensual se examina como verificación: su ausencia es el resultado esperable para un fenómeno sin ciclo anual y se reporta como tal. Los tiempos entre eventos consecutivos se contrastan frente a la distribución exponencial mediante bootstrap paramétrico y diagnóstico QQ, manteniendo la interpretación de catálogo global establecida en el Informe Asesoría 1 *[@ogata_1988; @lombardi_marzocchi_2007; @siegel_etal_2024]*.
+La estacionariedad se evaluó mediante Dickey-Fuller aumentada (ADF) y KPSS, interpretadas en conjunto porque sus hipótesis nulas son opuestas. La dócima ADF se aplicó con `adfTest()` del paquete `fUnitRoots`, usando la especificación sin constante ni tendencia (`type = "nc"`), ya que esta forma parte desde el contraste más parsimonioso y evita imponer componentes determinísticos adicionales antes de verificar si son necesarios. Se usó un rezago para la serie anual y doce rezagos para la serie mensual. ADF parte desde la hipótesis de raíz unitaria, por lo que rechazarla entrega evidencia a favor de estacionariedad. KPSS parte desde la hipótesis de estacionariedad en nivel, por lo que no rechazarla respalda que la serie no presenta una desviación sistemática respecto de un nivel estable. Usar ambas evita depender de una sola prueba y permite distinguir conclusiones concordantes de situaciones ambiguas, especialmente en la serie anual, donde solo hay 26 observaciones.
 
-:::
+Las dócimas se expresaron como:
+
+$$
+H_0^{ADF}: \text{raíz unitaria}
+\quad \text{v/s} \quad
+H_1^{ADF}: \text{estacionariedad}
+$$
+
+$$
+H_0^{KPSS}: \text{estacionariedad en nivel}
+\quad \text{v/s} \quad
+H_1^{KPSS}: \text{no estacionariedad}
+$$
+
+La independencia serial se revisó mediante Ljung-Box, porque una serie puede ser estacionaria y aun así presentar autocorrelación. Esta prueba evalúa si las autocorrelaciones hasta un rezago definido son conjuntamente nulas. Como diagnóstico gráfico complementario, se examinaron la ACF y la PACF de la serie mensual; se priorizó la escala mensual porque entrega más observaciones que la serie anual y permite observar rezagos específicos con mayor estabilidad.
+
+$$
+H_0^{LB}: \rho_1=\rho_2=\cdots=\rho_m=0
+\quad \text{v/s} \quad
+H_1^{LB}: \rho_j\neq 0 \mid j \leq m
+$$
+
+Además de estas pruebas, se comparó la tasa media anual de eventos entre tres tramos del período observado: 2000-2009, 2010-2019 y 2020-2025. Esta comparación complementa la lectura descriptiva del Informe Asesoría 1: el gráfico permite observar fluctuaciones en los conteos, mientras que el modelo evalúa si las diferencias entre períodos superan la variabilidad esperable del catálogo. Como la variable de respuesta corresponde a conteos anuales de eventos, se utilizó un GLM Poisson. Posteriormente se evaluó si los conteos variaban más de lo esperado bajo Poisson; cuando esto ocurrió, la decisión inferencial se basó en quasi-Poisson, que mantiene la comparación de tasas pero corrige la varianza estimada.
+
+Para la comparación entre períodos, la dócima se formuló como:
+
+$$
+H_0: \lambda_{\text{2000-2009}}=\lambda_{\text{2010-2019}}=\lambda_{\text{2020-2025}}
+\quad \text{v/s} \quad
+H_1: \lambda_a\neq\lambda_b \mid a \neq b
+$$
+
+Con el mismo criterio, se evaluó la estacionalidad mensual mediante un GLM Poisson aplicado a los conteos mensuales, usando el mes calendario como factor. Este contraste revisa si algún mes concentra sistemáticamente más eventos que otros dentro del período del catálogo. La inferencia también se verificó con quasi-Poisson cuando la variabilidad observada superó la esperada bajo Poisson.
+
+Para la estacionalidad mensual, la dócima se expresó como:
+
+$$
+H_0: \lambda_1=\lambda_2=\cdots=\lambda_{12}
+\quad \text{v/s} \quad
+H_1: \lambda_m\neq\lambda_{m'} \mid m \neq m'
+$$
+
+Por último, se analizaron los tiempos transcurridos entre eventos consecutivos para el grupo $M \geq 7{,}0$ y para cada categoría de magnitud. Esta revisión complementa los modelos de conteo: mientras Poisson evalúa cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Si la ocurrencia fuera compatible con una tasa constante, los tiempos de espera deberían aproximarse a una distribución exponencial. El ajuste se contrastó mediante Kolmogorov-Smirnov con bootstrap paramétrico, porque la tasa de la distribución se estimó con los mismos datos.
+
+La dócima de ajuste se formuló como:
+
+$$
+H_0: T \sim \text{Exponencial}(\lambda)
+\quad \text{v/s} \quad
+H_1: T \not\sim \text{Exponencial}(\lambda)
+$$
 
 ## Eventos fuertes y extremos {#sec-met-extremos}
 
-::: {.content-hidden when-format="pdf"}
 
-El análisis utiliza las categorías definidas en el Informe Asesoría 1: "Mayor" ($M \geq 7{,}0$) y "Grande o extremo" ($M \geq 7{,}8$). La composición de categorías por zona se contrasta mediante chi-cuadrado con p-valor por simulación Monte Carlo, dada la presencia asegurada de casillas con frecuencias esperadas bajas. La probabilidad de que un evento alcance la categoría "Mayor" o superior se modela mediante regresión logística binaria con la zona y la profundidad como variables explicativas. Para $M \geq 7{,}8$ se reportan únicamente conteos descriptivos por zona, porque el tamaño muestral no sostiene un modelo en las zonas menores.
-
-:::
 
 ## Clasificación de zonas a partir de magnitud y profundidad {#sec-met-clasificacion}
 
-::: {.content-hidden when-format="pdf"}
 
-La síntesis inferencial integra tres componentes. Primero, correlaciones parciales entre magnitud, profundidad y significancia USGS, considerando que `sig` deriva de la magnitud, por lo que la correlación parcial informativa es la de profundidad con significancia controlando la magnitud. Segundo, análisis de correspondencia simple sobre las tablas de zona por `magnitud_cat` y zona por `profundidad_cat`, como representación de las asociaciones nominales. Tercero, regresión logística multinomial con la zona como respuesta, el Cinturón de Fuego como categoría de referencia y la magnitud y la profundidad como variables explicativas. La significación se evalúa mediante razones de verosimilitud por variable y la capacidad de discriminación mediante matriz de confusión, exactitud balanceada y sensibilidad por clase, comparadas contra la base trivial del 75,21 % que entrega la clase mayoritaria. Ante indicios de separación cuasi perfecta asociados a la Dorsal Meso-Atlántica (28 eventos, todos superficiales), se contempla la corrección de Firth o la lectura prudente de los coeficientes, con la limitación declarada.
-
-:::
 
 ## Diseño del análisis de sensibilidad {#sec-diseno-sensibilidad}
 
-::: {.content-hidden when-format="pdf"}
 
-La sensibilidad se evalúa ante dos decisiones metodológicas. El escenario principal repite las comparaciones centrales (tasas por zona, contrastes de magnitud y profundidad, modelo multinomial) con el umbral $M \geq 7{,}0$ en lugar de $M \geq 6{,}5$, decisión vinculada a la completitud del catálogo y a la transición del método de magnitud *[@wiemer_wyss_2000]*. El escenario secundario excluye la categoría "Resto del mundo" y repite los mismos contrastes solo entre los tres cinturones definidos, en atención a la naturaleza residual y heterogénea de esa categoría. En ambos escenarios el criterio es la estabilidad de la dirección y la magnitud de los efectos, no la comparación de p-valores. El estado de revisión no se utiliza como eje porque el catálogo completo presenta estado `reviewed`, según se declaró en la @sec-datos-continuidad.
-
-:::
 
 ## Criterios de interpretación estadística
 
-::: {.content-hidden when-format="pdf"}
-
 Los resultados se interpretan como inferencia sobre el catálogo definido: eventos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, bajo la zonificación adoptada. Ninguna dócima o modelo de este informe representa estimación causal, predicción operacional ni evaluación probabilística de amenaza sísmica.
 
-:::
-
 # Resultados y discusión
-
-::: {.content-hidden when-format="pdf"}
-
-<!--
-Cada subsección abre recordando el hallazgo descriptivo exacto del Informe 1, plantea la
-hipótesis formal, presenta el resultado (tabla o figura exportada por el pipeline de
-Scripts/ a "../Imágenes y Recursos/") y cierra con una frase ejecutiva. Las salidas
-completas van al anexo de especificación; aquí solo lo interpretable.
--->
-
-:::
 
 ## Comparabilidad del registro {#sec-res-comparabilidad}
 
@@ -500,40 +483,12 @@ Los procedimientos de reporte no permanecen constantes durante todo el período.
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
 
-::: {.content-hidden when-format="pdf"}
-
-<!-- Análisis mínimo 1 del instructivo. Resultados generados en Scripts/07_inf_frecuencia.R. -->
-
-El modelo de conteo confirma formalmente la concentración descrita en el Informe Asesoría 1. Tras ajustar una binomial negativa para acomodar la sobredispersión leve detectada (dispersión de 1,36; $p = 0{,}016$), la tasa anual del Cinturón de Fuego es de 34,3 eventos por año, y las razones de tasa respecto a esta zona son de 0,228 para Resto del mundo (IC 95 % [0,191; 0,270]), 0,071 para el Cinturón Alpino-Himalayo ([0,053; 0,092]) y 0,031 para la Dorsal Meso-Atlántica ([0,021; 0,045]). En los tres casos el intervalo excluye el valor 1, por lo que las diferencias son estadísticamente significativas.
-
-Al normalizar por superficie, el orden se modifica. La densidad del Cinturón de Fuego, de 0,720 eventos por millón de km² y año, sigue siendo la mayor, pero Resto del mundo cae al último lugar con 0,018, por debajo del Cinturón Alpino-Himalayo (0,167) y de la Dorsal Meso-Atlántica (0,057). Resto del mundo aparece activo por conteo únicamente por su gran extensión, de 429 millones de km²; por unidad de superficie es la zona menos activa. En consecuencia, el Cinturón de Fuego se distingue por su frecuencia de ocurrencia tanto en términos absolutos como por densidad, mientras que la categoría residual no constituye una zona de alta actividad, sino un agregado disperso sobre una superficie muy amplia.
-
-```{=latex}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
-\caption{Frecuencia de eventos por zona sísmica. El orden de las zonas cambia entre la tasa anual bruta y la densidad por superficie: Resto del mundo pasa del segundo al último lugar al controlar por su extensión.}
-\label{fig-inf2-frecuencia}
-\end{figure}
-```
-
-:::
-
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
 El Informe Asesoría 1 mostró que las zonas presentan magnitudes similares, mientras que la profundidad exhibe diferencias más claras en su distribución. Esta subsección formaliza ambos hallazgos y evalúa si la magnitud y la profundidad permiten distinguir estadísticamente a las zonas sísmicas. Antes de realizar las comparaciones se examinan la normalidad conjunta de ambas variables y la homogeneidad de sus matrices de covarianza. Esta evaluación funciona como una compuerta metodológica: si los supuestos se sostienen, sería posible utilizar una comparación multivariante paramétrica; si se incumplen, corresponde adoptar una ruta no paramétrica basada en rangos. De esta forma, el procedimiento inferencial se selecciona a partir de las características observadas en los datos y no únicamente por preferencia metodológica.
 
-::: {.content-hidden when-format="pdf"}
 
-<!-- Análisis mínimo 2 del instructivo. -->
-
-:::
-
-### Evaluación de supuestos y decisión de ruta
-
-Para abreviar la lectura, en esta subsección se utiliza la nomenclatura abreviada del Informe Asesoría 1: C. Fuego, Resto, C. Alp.-Him. y Dorsal M.-Atl.
-
-#### Diagnóstico gráfico de la magnitud
+### Diagnóstico gráfico de la magnitud
 
 El primer diagnóstico revisó si la magnitud de cada zona se aproxima a una distribución normal. En un QQ-plot, una normalidad razonable se observa cuando los puntos siguen la línea punteada sin curvaturas sistemáticas.
 
@@ -550,7 +505,7 @@ Los QQ-plots de magnitud muestran desviaciones sistemáticas en las cuatro zonas
 
 En C. Alp.-Him. y Dorsal M.-Atl. la desviación es menos extrema, pero persisten empates y separaciones en los extremos. Por tanto, la magnitud no muestra un comportamiento compatible con normalidad dentro de las zonas.
 
-#### Diagnóstico gráfico de la profundidad
+### Diagnóstico gráfico de la profundidad
 
 El segundo diagnóstico evaluó la profundidad. Esta variable presenta mayor rango y heterogeneidad entre zonas, por lo que el QQ-plot permite revisar si su distribución mantiene una forma aproximadamente normal.
 
@@ -569,7 +524,7 @@ En C. Alp.-Him. también se observa cola derecha, aunque menos extrema. En Dorsa
 
 En conjunto, la profundidad no presenta normalidad gráfica en ninguna zona. Este resultado refuerza la necesidad de evitar una comparación paramétrica multivariada.
 
-#### Diagnóstico gráfico multivariante
+### Diagnóstico gráfico multivariante
 
 El diagnóstico multivariante se realizó con distancias de Mahalanobis. Esta distancia mide qué tan alejado está cada evento del centro conjunto de magnitud y profundidad, considerando la dispersión y covariación de ambas variables. Bajo normalidad multivariada, las distancias ordenadas deberían aproximarse a los cuantiles teóricos de una distribución chi-cuadrado con dos grados de libertad.
 
@@ -586,7 +541,7 @@ Los QQ-plots multivariantes también se separan de la línea de referencia. En C
 
 Por tanto, el diagnóstico multivariante tampoco respalda la normalidad conjunta de magnitud y profundidad, resultado coherente con los QQ-plots univariados.
 
-#### Pruebas formales de normalidad
+### Pruebas formales de normalidad
 
 Los diagnósticos gráficos se complementaron con pruebas formales de normalidad. Mardia evalúa la normalidad conjunta de magnitud y profundidad; Shapiro-Wilk evalúa la normalidad de cada variable por separado. La \hyperref[tbl-normalidad-mag-depth]{tabla de normalidad} resume ambos resultados por zona.
 
@@ -625,7 +580,7 @@ Dorsal Meso-Atlántica & 86,180 & $<0{,}001$ & 10,549 & $<0{,}001$ & 0,849 & $<0
 
 Mardia rechaza la normalidad multivariada en las cuatro zonas. La única excepción parcial es la curtosis de C. Alp.-Him. ($p=0{,}039$), que igualmente rechaza normalidad con $\alpha=0{,}05$. Shapiro-Wilk también rechaza la normalidad de magnitud y profundidad en todas las zonas ($p<0{,}001$). Por tanto, la evidencia formal confirma lo observado en los QQ-plots.
 
-#### Homogeneidad de covarianzas y relación entre variables
+### Homogeneidad de covarianzas y relación entre variables
 
 Después de evaluar normalidad, se revisó la homogeneidad de matrices de varianza-covarianza mediante M de Box. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad.
 
@@ -768,78 +723,178 @@ En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad mu
 
 ## Estructura temporal de la ocurrencia {#sec-res-temporal}
 
-::: {.content-hidden when-format="pdf"}
-
-<!-- Resultados generados en Scripts/09_inf_temporal.R. -->
-
-El análisis temporal se realiza a dos granularidades, anual (26 conteos) y mensual (312 conteos). La serie mensual resulta estacionaria: la dócima de Dickey-Fuller aumentada rechaza la raíz unitaria ($p < 0{,}01$) y la de KPSS no rechaza la estacionariedad ($p > 0{,}10$), de modo que ambas concuerdan. En la serie anual la lectura es coherente aunque menos concluyente por la baja potencia de solo 26 observaciones. La dócima de Ljung-Box no detecta autocorrelación relevante en ninguna de las dos series (anual $p = 0{,}58$; mensual $p = 0{,}15$ a rezago 12). No se observa estacionalidad mensual: corregido por la sobredispersión mediante una especificación quasi-Poisson, el factor mes no resulta significativo ($p = 0{,}42$; el modelo Poisson sin corregir quedaba en el límite, con $p = 0{,}050$), consistente con la ausencia de un ciclo anual en la ocurrencia sísmica.
-
-Las tasas medias anuales por período son de 45,5, 48,9 y 40,3 eventos por año. El modelo de conteos, corregido por la sobredispersión observada mediante una especificación quasi-Poisson, no encuentra diferencias significativas entre períodos ($F = 1{,}92$; $p = 0{,}170$). El modelo Poisson sin corregir sugería una diferencia ($p = 0{,}047$), pero ese resultado era un artefacto de subestimar la varianza. La conclusión robusta es que la ocurrencia fluctúa entre años sin una tendencia ni un cambio de tasa sostenido, en línea con la caracterización del Informe Asesoría 1.
-
-Los tiempos entre eventos consecutivos se contrastan frente a una distribución exponencial mediante bootstrap paramétrico. Las medianas reproducen las del Informe Asesoría 1: 15,6 días para el grupo $M \geq 7{,}0$ y 122,8 días para la categoría "Grande o extremo". El ajuste distingue por magnitud: los eventos "Mayor" ($p = 0{,}102$) y "Grande o extremo" ($p = 0{,}531$) resultan compatibles con un proceso de Poisson sin memoria, mientras que los eventos "Fuerte" se apartan de él ($p < 0{,}001$), lo que es coherente con un mayor agrupamiento de los eventos de menor magnitud. El grupo combinado $M \geq 7{,}0$ rechaza la exponencial ($p = 0{,}001$), pero por una razón técnica: reúne dos bandas con tasas distintas, y una mezcla de exponenciales no es exponencial, por lo que ese rechazo no constituye evidencia contra el comportamiento de Poisson dentro de cada banda.
+El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos $M \geq 6{,}5$, la serie presenta oscilaciones alrededor de la media, sin una tendencia sostenida claramente identificable a partir del gráfico. La \hyperref[fig-serie-mensual-catalogo]{Figura~\ref*{fig-serie-mensual-catalogo}} retoma esa lectura en escala mensual.
 
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.55\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
-\caption{Diagrama cuantil-cuantil de los tiempos entre eventos de magnitud $M \geq 7{,}0$ frente a la distribución exponencial. Los puntos sobre la recta indicarían compatibilidad; la desviación en la cola refleja la mezcla de bandas de magnitud con tasas distintas.}
-\label{fig-inf2-temporal-qq}
+\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/serie-mensual-catalogo.png}}
+\caption{Serie mensual de eventos del catálogo completo.}
+\label{fig-serie-mensual-catalogo}
 \end{figure}
 ```
 
-:::
+Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, estacionariedad e independencia serial. En este contexto, evaluar estacionariedad significa revisar si los conteos fluctúan alrededor de un nivel relativamente estable durante el período del catálogo, o si existen señales de un cambio persistente en la ocurrencia. La \hyperref[tbl-temporal-adf-kpss]{Tabla~\ref*{tbl-temporal-adf-kpss}} resume los resultados de ADF, KPSS y Ljung-Box para las escalas anual y mensual.
 
-## Eventos fuertes y extremos {#sec-res-extremos}
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{3.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-adf-kpss}
+\hypertarget{dest-tbl-temporal-adf-kpss}{}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Escala & Prueba & Rezagos & Estadístico & Valor p \\
+\midrule
+Anual & ADF & 1 & -0,466 & 0,460 \\
+Anual & KPSS & 2 & 0,250 & $>0{,}10$ \\
+Anual & Ljung-Box & 5 & 3,815 & 0,576 \\
+Mensual & ADF & 12 & -0,969 & 0,308 \\
+Mensual & KPSS & 5 & 0,270 & $>0{,}10$ \\
+Mensual & Ljung-Box & 12 & 16,883 & 0,154 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-temporal-adf-kpss}{Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.}
+\endgroup
+```
 
-::: {.content-hidden when-format="pdf"}
+En ambas escalas, KPSS no entrega evidencia de que los conteos se alejen de un nivel estable. ADF, en cambio, no permite descartar formalmente un comportamiento no estacionario al 5 %. En conjunto, los resultados no muestran una ruptura clara de estabilidad temporal en el período 2000-2025, pero la conclusión debe leerse con cautela porque las dos pruebas no entregan una señal completamente concordante.
 
-<!-- Análisis mínimo 4 del instructivo, con las categorías del Informe 1. Chi-cuadrado
-con Monte Carlo, logística binaria P(M >= 7,0), conteos descriptivos para M >= 7,8. -->
+La independencia serial se revisó de forma conjunta mediante Ljung-Box y el gráfico ACF/PACF mensual. Esto permite contrastar formalmente la presencia de autocorrelación y, al mismo tiempo, observar si existen rezagos específicos con señales relevantes.
 
-<!-- Resultados generados en Scripts/10_inf_extremos.R. -->
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-acf-pacf-mensual.png}}
+\caption{ACF y PACF de la serie mensual de conteos del catálogo.}
+\label{fig-temporal-acf-pacf-mensual}
+\end{figure}
+```
 
-El análisis de los eventos fuertes utiliza las categorías definidas en el Informe Asesoría 1. La composición de categorías de magnitud no difiere entre zonas: la prueba de chi-cuadrado con p-valor por simulación de Monte Carlo, empleada por la presencia de casillas con frecuencias esperadas bajas, no resulta significativa ($p = 0{,}307$) y la V de Cramér es de 0,022, un valor cercano a cero. Este resultado es consistente con la comparación de magnitud de la sección anterior.
+En conjunto, Ljung-Box no detectó autocorrelación relevante en la serie anual ($p=0{,}58$) ni en la mensual ($p=0{,}15$ a rezago 12). La ACF y la PACF mensual refuerzan esta lectura, ya que no muestran un patrón persistente entre rezagos. En términos del catálogo, esto sugiere que un año o mes con más eventos no queda seguido sistemáticamente por otro período también alto, ni uno bajo por otro igualmente bajo.
 
-La probabilidad de que un evento alcance la categoría "Mayor" o superior ($M \geq 7{,}0$) se modela mediante regresión logística en función de la zona y la profundidad. La profundidad no aporta capacidad predictiva sobre la magnitud del evento (razón de momios de 1,0002; $p = 0{,}577$), resultado coherente con la escasa correlación entre magnitud y profundidad detectada en la sección anterior. El efecto de la zona es limítrofe en conjunto ($p = 0{,}061$) y se concentra por completo en la Dorsal Meso-Atlántica, cuya razón de momios de 0,25 (IC 95 % [0,058; 0,712]) excluye el valor 1 e indica una probabilidad cerca de cuatro veces menor de eventos de magnitud igual o superior a 7,0 respecto del Cinturón de Fuego. El resto del mundo y el Cinturón Alpino-Himalayo no se distinguen del Cinturón de Fuego. La comparación por criterio de Akaike favorece la profundidad en su forma continua sobre la categórica.
+Una vez revisada la estabilidad general de la serie, se evaluó si el nivel de ocurrencia anual cambió entre tramos del catálogo. Esta pregunta no se resuelve solo con una comparación descriptiva, porque dos períodos pueden tener promedios distintos y aun así diferir únicamente por fluctuaciones propias del registro. Se utilizó un modelo Poisson porque la variable analizada corresponde a un conteo de eventos por año; este tipo de modelo se emplea habitualmente para contrastar tasas de ocurrencia en intervalos definidos de tiempo. Así, permite evaluar si las diferencias descriptivas entre períodos reflejan un cambio formal en la tasa anual de eventos o solo variaciones propias del catálogo. Luego se revisó si la variabilidad de los datos era compatible con ese modelo o si requería la corrección quasi-Poisson.
 
-Los eventos de magnitud igual o superior a 7,8 se concentran en el Cinturón de Fuego, con 47 registros, seguidos por el resto del mundo con 10, el Cinturón Alpino-Himalayo con 2 y la Dorsal Meso-Atlántica con ninguno. Su escaso número en las zonas menores desaconseja un modelo, por lo que se reportan solo como conteos. En conjunto, la profundidad no informa sobre la magnitud de un evento, un contraste que anticipa el rol distinto que esa variable adquiere al clasificar la zona en la sección siguiente.
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-tasas-periodo}
+\hypertarget{dest-tbl-temporal-tasas-periodo}{}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Período & Media anual & Mín. & Máx. \\
+\midrule
+2000-2009 & 45,5 & 36 & 58 \\
+2010-2019 & 48,9 & 33 & 61 \\
+2020-2025 & 40,3 & 28 & 53 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-temporal-tasas-periodo}{Conteos anuales por período del catálogo.}
+\endgroup
+```
 
-:::
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-modelo-periodo}
+\hypertarget{dest-tbl-temporal-modelo-periodo}{}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Evaluación & Estadístico & Valor & Valor p \\
+\midrule
+Poisson inicial & LRT & 6,13 & 0,047 \\
+Dispersión & $\phi$ & 1,57 & -- \\
+Quasi-Poisson & $F$ & 1,91 & 0,170 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-temporal-modelo-periodo}{Contraste del efecto período en los conteos anuales.}
+\endgroup
+```
 
-## Síntesis inferencial: clasificación de zonas {#sec-res-clasificacion}
+Las medias muestran un aumento leve entre 2000-2009 y 2010-2019, seguido de una disminución en 2020-2025. El modelo Poisson inicial sugería diferencias entre períodos, pero el diagnóstico de dispersión indicó que los conteos anuales variaban más de lo esperado bajo ese modelo. Por ello, la decisión se basó en quasi-Poisson. Al considerar esta mayor variabilidad entre años, la diferencia entre períodos ya no resulta suficientemente clara como para afirmar que la tasa anual de eventos haya cambiado. En otras palabras, el catálogo muestra años con más y menos eventos, pero no entrega evidencia suficiente para concluir que un período tenga una tasa anual de ocurrencia distinta a los demás.
 
-::: {.content-hidden when-format="pdf"}
+De forma complementaria, se evaluó si la ocurrencia mensual presentaba una señal de estacionalidad, es decir, si ciertos meses del calendario concentraban sistemáticamente más eventos que otros.
 
-<!-- Culminación del informe: correlaciones parciales, correspondencia, multinomial con
-matriz de confusión, exactitud balanceada y sensibilidad por clase contra la base de
-75,21 %. Responde la segunda componente de la pregunta estadística. -->
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-estacionalidad-mensual}
+\hypertarget{dest-tbl-temporal-estacionalidad-mensual}{}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Evaluación & Estadístico & Valor & Valor p \\
+\midrule
+Poisson inicial & LRT & 19,65 & 0,050 \\
+Dispersión & $\phi$ & 1,79 & -- \\
+Quasi-Poisson & $F$ & 1,03 & 0,416 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-temporal-estacionalidad-mensual}{Contraste de estacionalidad mensual en los conteos del catálogo.}
+\endgroup
+```
 
-*Pendiente: correlaciones parciales, análisis de correspondencia y modelo multinomial con su evaluación de discriminación por clase.*
+El contraste Poisson inicial fue limítrofe, pero los conteos mensuales variaron más de lo esperado bajo ese modelo. Al corregir esta variabilidad mediante quasi-Poisson, no se observa evidencia suficiente para afirmar que la tasa de ocurrencia difiera entre meses calendario. En términos del catálogo, los eventos no muestran un patrón mensual claro; las diferencias entre meses pueden explicarse por fluctuaciones propias del registro observado.
 
-:::
+Como cierre de la revisión temporal, se retomaron los tiempos transcurridos entre eventos consecutivos descritos en el Informe Asesoría 1. Esta mirada complementa el análisis de conteos: mientras los modelos Poisson evalúan cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
 
-## Análisis de sensibilidad {#sec-res-sensibilidad}
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{3.0pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-temporal-exponencial}
+\hypertarget{dest-tbl-temporal-exponencial}{}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Grupo & $n$ & Tasa diaria & Mediana días & $D$ & Valor p \\
+\midrule
+$M \geq 7{,}0$ & 386 & 0,0408 & 15,6 & 0,0778 & 0,001 \\
+Fuerte & 798 & 0,0841 & 7,3 & 0,0636 & $<0{,}001$ \\
+Mayor & 327 & 0,0345 & 19,6 & 0,0543 & 0,102 \\
+Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-temporal-exponencial}{Ajuste exponencial de los tiempos entre eventos consecutivos.}
+\endgroup
+```
 
-::: {.content-hidden when-format="pdf"}
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
+\caption{QQ exponencial de los tiempos entre eventos para $M \geq 7{,}0$.}
+\label{fig-temporal-qq-exponencial}
+\end{figure}
+```
 
-<!-- Análisis mínimo 5 del instructivo. Escenario umbral M >= 7,0 y escenario sin
-"Resto del mundo": tablas espejo con dirección y magnitud de los efectos. -->
-
-*Pendiente: comparación de los efectos principales entre el escenario base, el umbral $M \geq 7{,}0$ y la exclusión de "Resto del mundo".*
-
-:::
-
-## Supuestos, limitaciones y alcance de las conclusiones {#sec-res-limitaciones}
-
-::: {.content-hidden when-format="pdf"}
-
-<!-- Espejo de la subsección homónima del Informe 1, actualizada: decisiones sin
-sensibilizar, límites de la multinomial con la Dorsal (n = 28), no predicción ni
-amenaza, lectura por intervalos en grupos pequeños. -->
-
-*Pendiente: actualización de supuestos y limitaciones según los resultados obtenidos.*
-
-:::
+Los resultados muestran que el grupo combinado $M \geq 7{,}0$ no es compatible con un único ajuste exponencial. Sin embargo, al separar por categoría de magnitud, los eventos "Mayor" y "Grande o extremo" sí resultan compatibles con este comportamiento, mientras que los eventos "Fuerte" lo rechazan. Esto sugiere que la mezcla de eventos con ritmos de ocurrencia distintos puede ocultar patrones más específicos: los eventos de mayor magnitud son menos frecuentes y presentan intervalos más largos, por lo que no deberían interpretarse junto con eventos más habituales como si compartieran una misma tasa temporal.
 
 # Conclusiones y recomendaciones
 
@@ -891,7 +946,7 @@ Este anexo reúne las reglas de decisión que sustentan los procedimientos descr
 | Dunn, seis pares por variable | Confirmatorio | Error familiar de 0,05 con corrección de Holm | La corrección limita la probabilidad de falsos positivos producidos por las seis comparaciones simultáneas |
 | GLM de conteos | Confirmatorio | $\alpha=0{,}05$ e IC 95 % de las razones de tasa | La conclusión considera la magnitud y la incertidumbre de las diferencias entre tasas |
 | Sobredispersión | Diagnóstico de especificación | $\alpha=0{,}05$ unilateral | La alternativa relevante es que la varianza supere la prevista por el modelo Poisson |
-| ADF y KPSS | Diagnóstico | $\alpha=0{,}05$ e interpretación conjunta | Sus hipótesis nulas son opuestas y la conclusión se apoya en su concordancia; con 26 observaciones anuales se reconoce una potencia limitada |
+| ADF (`type="nc"`) y KPSS | Diagnóstico | $\alpha=0{,}05$ e interpretación conjunta | Sus hipótesis nulas son opuestas y la conclusión se apoya en su concordancia; ADF se aplica sin constante ni tendencia como especificación inicial, y con 26 observaciones anuales se reconoce una potencia limitada |
 | Ajuste exponencial | Diagnóstico descriptivo | Bootstrap paramétrico y gráfico QQ | El parámetro se estima con los mismos datos, por lo que no se utiliza el valor p convencional de Kolmogorov-Smirnov |
 | Chi-cuadrado entre categorías | Confirmatorio | $\alpha=0{,}05$; Monte Carlo cuando existen esperados inferiores a cinco | La simulación evita depender de una aproximación asintótica imprecisa |
 | Modelos logístico y multinomial | Confirmatorio | Razón de verosimilitud por variable, $\alpha=0{,}05$, e IC 95 % | La evaluación por bloques es más estable que las pruebas de Wald individuales ante posibles problemas de separación |

@@ -9,12 +9,14 @@
 # Enlaza con la advertencia de la Fase 1: el metodo de magnitud cambio en el tiempo, por
 # lo que los cambios temporales de composicion deben leerse con esa cautela.
 #
-# Paquetes: dplyr, tidyr, tseries (adf.test, kpss.test). Box.test y glm son base.
+# Paquetes: dplyr, tidyr, fUnitRoots (adfTest), tseries (kpss.test).
+# Box.test y glm son base.
 
 
 #Paquetes----
 library(dplyr)
 library(tidyr)
+library(fUnitRoots)
 library(tseries)
 
 
@@ -56,20 +58,23 @@ sum(serie_mensual)     # 1186
 #   - KPSS: H0 = estacionaria en nivel. NO rechazar (p alto) apoya estacionariedad.
 # Se concluye "estacionaria" solo si AMBAS concuerdan. Con 26 puntos anuales la potencia
 # es baja y hay que declararlo; la serie mensual (312) es mas informativa.
-adf_anual    <- adf.test(serie_anual)
+# ADF se aplica con fUnitRoots::adfTest(type = "nc") para partir desde la
+# especificacion mas parsimoniosa, sin imponer constante ni tendencia antes de verificar
+# si esos componentes deterministicos son necesarios.
+adf_anual    <- adfTest(serie_anual, lags = 1, type = "nc")
 kpss_anual   <- kpss.test(serie_anual, null = "Level") #Warning message: el p-valor real es mayor que el máximo de la tabla (0,10). R imprimió 0,10, pero el verdadero es aún más alto.
-adf_mensual  <- adf.test(serie_mensual)
+adf_mensual  <- adfTest(serie_mensual, lags = 12, type = "nc")
 kpss_mensual <- kpss.test(serie_mensual, null = "Level")
-adf_anual                                              # ADF simplemente no tiene fuerza para decidir con tan pocos datos; no se contradicen, la anual queda "coherente pero no concluyente".
+adf_anual                                              # DF=-0,466 / p=0,460 / No rechaza a alpha=0,05
 kpss_anual                                             # Estadístico=0,250	/ p>0,10	/Apoya estacionaria
-adf_mensual                                            # Estadístico=−6,12	/ p=0,01	/Rechaza raíz unitaria (estacionaria)
+adf_mensual                                            # DF=-0,969 / p=0,308 / No rechaza a alpha=0,05
 kpss_mensual                                           # Estadístico=0,270	/ p>0,10	/Apoya estacionaria
-#En la serie mensual las dos coinciden con claridad → estacionaria.
 
-# Resultado: anual ADF p = 0,48 (no concluye) y KPSS p > 0,10 (apoya estacionaria):
-# ambigua por la baja potencia con 26 puntos. Mensual ADF p < 0,01 y KPSS p > 0,10: AMBAS
-# concuerdan -> serie estacionaria, sin tendencia (coherente con el Informe 1). Los avisos
-# "p menor/mayor que el impreso" son normales: el p real queda fuera del rango de la tabla.
+# Resultado: anual ADF p = 0,460 y KPSS p > 0,10: lectura no concluyente,
+# pero sin evidencia contra estacionariedad por KPSS. Mensual ADF p = 0,308
+# y KPSS p > 0,10: compatible con estabilidad, aunque ADF bajo especificacion
+# "nc" no permite rechazar raiz unitaria al 5 %. Los avisos de KPSS son normales:
+# el p real queda fuera del rango superior de la tabla.
 
 
 #4.2 Independencia serial: Ljung-Box (anual y mensual)----
@@ -85,44 +90,42 @@ lb_mensual24
 # no rechaza a 0,05). No hay autocorrelacion relevante: los conteos de un periodo no
 # predicen los del siguiente.
 
-#Figura: ACF y PACF (correlogramas), apoyo visual del 4.2----
+#Figura: ACF y PACF mensuales (correlogramas), apoyo visual del 4.2----
 # ACF = autocorrelacion total en cada rezago; PACF = autocorrelacion parcial (descuenta
-# los rezagos intermedios), usada para identificar el orden de un AR. Barras DENTRO de las
-# bandas azules = sin dependencia significativa. Como aqui la ACF es plana (ruido blanco),
-# la PACF tambien lo es: se incluye como par diagnostico estandar, confirma lo mismo.
-# Apoya tambien la ausencia de estacionalidad: un ciclo anual apareceria como un pico en
-# el rezago 12 (y 24) del panel mensual, que aqui no se observa. En la ACF la barra del
-# rezago 0 vale siempre 1 (la serie consigo misma); la PACF empieza en el rezago 1.
+# los rezagos intermedios). Se muestra solo la serie mensual porque la serie anual tiene
+# 26 observaciones y resulta poco informativa para una lectura grafica de rezagos.
+# Barras dentro de las bandas azules = sin dependencia significativa. Un ciclo anual
+# apareceria como un pico en el rezago 12 (y 24), que aqui no se observa.
 # as.numeric() quita la frecuencia 12 del ts mensual para que el eje quede en MESES (0-24).
 #
 # El dibujo se encapsula en una funcion para usarla dos veces con el mismo codigo: una en
 # pantalla (aparece en PLOTS) y otra hacia el PNG. Correr la definicion completa como bloque.
-dibujar_acf_pacf <- function() {
-  op <- par(mfrow = c(2, 2), bg = "white", mar = c(4.5, 4.5, 3, 1) + 0.1)
-  acf(serie_anual,  lag.max = 10, main = "ACF serie anual",  xlab = "Rezago (anios)")
-  pacf(serie_anual, lag.max = 10, main = "PACF serie anual", xlab = "Rezago (anios)")
-  acf(as.numeric(serie_mensual),  lag.max = 24, main = "ACF serie mensual",  xlab = "Rezago (meses)")
-  pacf(as.numeric(serie_mensual), lag.max = 24, main = "PACF serie mensual", xlab = "Rezago (meses)")
+dibujar_acf_pacf_mensual <- function() {
+  op <- par(mfrow = c(1, 2), bg = "white", mar = c(3.4, 4.0, 2.4, 0.8) + 0.1)
+  acf(as.numeric(serie_mensual), lag.max = 24,
+      main = "ACF serie mensual", xlab = "Rezago (meses)",
+      ylim = c(-0.25, 1))
+  pacf(as.numeric(serie_mensual), lag.max = 24,
+       main = "PACF serie mensual", xlab = "Rezago (meses)",
+       ylim = c(-0.25, 0.25))
   par(op)
 }
 
-# (1) En pantalla: se muestra en el panel PLOTS (correr esta linea, o dibujar_acf_pacf()).
-if (interactive()) dibujar_acf_pacf()
+# (1) En pantalla: se muestra en el panel PLOTS.
+if (interactive()) dibujar_acf_pacf_mensual()
 
 # (2) A archivo PNG para el .qmd.
 ruta_acf <- file.path("Informes Quarto", "Imágenes y Recursos",
-                     "inf2-temporal-acf-pacf.png")
-png(ruta_acf, width = 2000, height = 1800, res = 200)
-dibujar_acf_pacf()
+                     "inf2-temporal-acf-pacf-mensual.png")
+png(ruta_acf, width = 2400, height = 760, res = 200)
+dibujar_acf_pacf_mensual()
 dev.off()
 # Lectura del grafico:
-#   - ACF y PACF anuales: casi todas las barras DENTRO de las bandas; solo el rezago 9 las
-#     roza en ambos paneles (uno de diez, ruido esperable al 95 %).
-#   - ACF y PACF mensuales: todas dentro de las bandas; nada en el rezago 12 ni 24 (donde
-#     estaria un ciclo anual). Solo el rezago 24 de la PACF toca apenas la banda: uno de 24,
-#     la tasa de falsos positivos esperada.
-# Conclusion: ruido blanco. Confirma visualmente el Ljung-Box (sin autocorrelacion) y el
-# 4.4 (sin estacionalidad). La PACF no aporta estructura nueva; cierra el par diagnostico.
+#   - ACF mensual: las barras se mantienen dentro de las bandas.
+#   - PACF mensual: no se observa una estructura persistente; el rezago 24 toca apenas
+#     la banda, lectura compatible con fluctuacion puntual.
+# Conclusion: no hay patron claro de dependencia mensual. Confirma visualmente el
+# Ljung-Box (sin autocorrelacion marcada) y no muestra evidencia grafica de ciclo anual.
 
 
 #4.3 Comparacion de tasas entre periodos----
@@ -167,8 +170,15 @@ serie_mensual_df <- serie_mensual_df %>%
   mutate(mes_f = factor(mes))
 m_mes <- glm(n ~ mes_f, family = poisson, data = serie_mensual_df)
 drop1(m_mes, test = "Chisq")
-# Resultado: LR = 19,65 (11 gl), p = 0,0503 -> NO significativo. Sin ciclo anual, que es
-# lo esperado (los terremotos no tienen estacion). Verificacion superada, no un fallo.
+# Igual que en la comparacion por periodos, se revisa dispersion antes de cerrar la
+# inferencia. Si hay variabilidad mayor que la esperada por Poisson, se usa quasi-Poisson.
+disp_mes <- sum(residuals(m_mes, "pearson")^2) / df.residual(m_mes)
+disp_mes
+m_mes_quasi <- glm(n ~ mes_f, family = quasipoisson, data = serie_mensual_df)
+drop1(m_mes_quasi, test = "F")
+# Resultado Poisson: LR = 19,65 (11 gl), p = 0,0503 -> limítrofe y no significativo
+# al 5 %. Como hay dispersion (phi = 1,79), la decision final se basa en quasi-Poisson:
+# F = 1,03, p = 0,416. No hay evidencia de estacionalidad mensual.
 
 
 #4.5 Tiempos entre eventos frente a la exponencial----
