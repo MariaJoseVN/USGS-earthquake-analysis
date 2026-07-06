@@ -647,7 +647,7 @@ Este anexo documenta la herencia de la base `sismos` y de sus variables derivada
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
-El análisis utiliza el campo `Area`, exprésado en kilómetros cuadrados, de `\texttt{MAPA\_HTML/\allowbreak zonas\_inf2.geojson}`{=latex}. Esta capa reúne los tres cinturones delimitados en `\texttt{SIG/\allowbreak area\_regiones.geojson}`{=latex} y su complemento espacial, identificado como "Resto del mundo". El script no recalcula las superficies: verifica que todas las categorías tengan un valor y utiliza los siguientes datos almacenados en la capa.
+El análisis utiliza el campo `Area`, expresado en kilómetros cuadrados, de `\texttt{MAPA\_HTML/\allowbreak zonas\_inf2.geojson}`{=latex}. Esta capa reúne los tres cinturones delimitados en `\texttt{SIG/\allowbreak area\_regiones.geojson}`{=latex} y su complemento espacial, identificado como "Resto del mundo". El script no recalcula las superficies: verifica que todas las categorías tengan un valor y utiliza los siguientes datos almacenados en la capa.
 
 | Zona | Superficie (km²) | Superficie (millones de km²) |
 |---|---:|---:|
