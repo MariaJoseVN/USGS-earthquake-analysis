@@ -94,20 +94,25 @@ lb_mensual24
 # ACF = autocorrelacion total en cada rezago; PACF = autocorrelacion parcial (descuenta
 # los rezagos intermedios). Se muestra solo la serie mensual porque la serie anual tiene
 # 26 observaciones y resulta poco informativa para una lectura grafica de rezagos.
-# Barras dentro de las bandas azules = sin dependencia significativa. Un ciclo anual
+# Barras dentro de las bandas turquesa = sin dependencia significativa. Un ciclo anual
 # apareceria como un pico en el rezago 12 (y 24), que aqui no se observa.
 # as.numeric() quita la frecuencia 12 del ts mensual para que el eje quede en MESES (0-24).
 #
 # El dibujo se encapsula en una funcion para usarla dos veces con el mismo codigo: una en
 # pantalla (aparece en PLOTS) y otra hacia el PNG. Correr la definicion completa como bloque.
 dibujar_acf_pacf_mensual <- function() {
-  op <- par(mfrow = c(1, 2), bg = "white", mar = c(3.4, 4.0, 2.4, 0.8) + 0.1)
+  op <- par(
+    mfrow = c(1, 2),
+    bg = "white",
+    mar = c(4.8, 4.2, 3.0, 1.0) + 0.1,
+    mgp = c(2.6, 0.8, 0)
+  )
   acf(as.numeric(serie_mensual), lag.max = 24,
       main = "ACF serie mensual", xlab = "Rezago (meses)",
-      ylim = c(-0.25, 1))
+      ylim = c(-0.25, 1), ci.col = "#00a499")
   pacf(as.numeric(serie_mensual), lag.max = 24,
        main = "PACF serie mensual", xlab = "Rezago (meses)",
-       ylim = c(-0.25, 0.25))
+       ylim = c(-0.25, 0.25), ci.col = "#00a499")
   par(op)
 }
 
@@ -117,7 +122,7 @@ if (interactive()) dibujar_acf_pacf_mensual()
 # (2) A archivo PNG para el .qmd.
 ruta_acf <- file.path("Informes Quarto", "Imágenes y Recursos",
                      "inf2-temporal-acf-pacf-mensual.png")
-png(ruta_acf, width = 2400, height = 760, res = 200)
+png(ruta_acf, width = 2400, height = 900, res = 200, bg = "white")
 dibujar_acf_pacf_mensual()
 dev.off()
 # Lectura del grafico:

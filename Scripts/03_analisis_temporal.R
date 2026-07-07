@@ -298,6 +298,48 @@ resumen_rms_decadal <- sismos_temporal %>%
 
 indice_mensual <- 1:nrow(conteo_mensual)
 marcas_mensuales <- seq(12, nrow(conteo_mensual), by = 24)
+color_serie_mensual <- "#00a499"
+
+dibujar_serie_mensual_catalogo <- function() {
+  plot(
+    indice_mensual,
+    conteo_mensual$n_catalogo_completo,
+    type = "l",
+    main = "Serie mensual - Catálogo completo",
+    xlab = "Mes observado",
+    ylab = "Número de eventos",
+    col = color_serie_mensual,
+    lwd = 1,
+    xaxt = "n"
+  )
+
+  axis(
+    side = 1,
+    at = marcas_mensuales,
+    labels = marcas_mensuales,
+    las = 2,
+    cex.axis = 0.7
+  )
+
+  abline(
+    h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
+    col = color_serie_mensual,
+    lty = 2,
+    lwd = 1.5
+  )
+
+  legend(
+    "topright",
+    legend = c("Conteo observado", "Media"),
+    col = rep(color_serie_mensual, 2),
+    lty = c(1, 2),
+    lwd = c(1, 1.5),
+    bty = "n",
+    cex = 0.8
+  )
+
+  box()
+}
 
 par(mfrow = c(1, 2), bg = "white", mar = c(6, 4, 4, 2) + 0.1)
 
@@ -351,46 +393,18 @@ legend(
 
 box()
 
-plot(
-  indice_mensual,
-  conteo_mensual$n_catalogo_completo,
-  type = "l",
-  main = "Serie mensual - Catálogo completo",
-  xlab = "Mes observado",
-  ylab = "Número de eventos",
-  col = "#00a499",  # Conteo observado
-  lwd = 1,
-  xaxt = "n"
-)
-
-axis(
-  side = 1,
-  at = marcas_mensuales,
-  labels = marcas_mensuales,
-  las = 2,
-  cex.axis = 0.7
-)
-
-abline(
-  h = mean(conteo_mensual$n_catalogo_completo, na.rm = TRUE),
-  col = "#00a499",  # Media
-  lty = 2,
-  lwd = 1.5
-)
-
-legend(
-  "topright",
-  legend = c("Conteo observado", "Media"),
-  col = c("#00a499", "#00a499"),
-  lty = c(1, 2),
-  lwd = c(1, 1.5),
-  bty = "n",
-  cex = 0.8
-)
-
-box()
+dibujar_serie_mensual_catalogo()
 
 par(mfrow = c(1, 1))
+
+# Recurso utilizado directamente por los informes Quarto.
+ruta_serie_mensual <- file.path(
+  "Informes Quarto", "Imágenes y Recursos", "serie-mensual-catalogo.png"
+)
+png(ruta_serie_mensual, width = 1600, height = 900, res = 200, bg = "white")
+par(bg = "white", mar = c(5, 4, 4, 2) + 0.1)
+dibujar_serie_mensual_catalogo()
+dev.off()
 
 
 ## Figura temporal 2: composicion decadal por magnitud_cat----

@@ -628,6 +628,7 @@ La `Figura~\ref{fig-inf2-frecuencia}`{=latex} muestra ambas medidas lado a lado 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
+\vspace{-2.0em}
 \caption{Frecuencia de eventos por zona: tasa anual y densidad por superficie.}
 \label{fig-inf2-frecuencia}
 \end{figure}
