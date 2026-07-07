@@ -260,7 +260,45 @@ Los cinco contrastes de comparabilidad se trataron como una familia exploratoria
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
+La frecuencia de terremotos es un conteo de eventos por zona y año, por lo que la comparación se realizó con un modelo lineal generalizado de conteos y no con una comparación de medias. La unidad de análisis fue una combinación de zona y año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos medidas complementarias: la tasa anual, comparable con el Informe Asesoría 1, y la densidad por superficie. Las zonas tienen tamaños muy distintos, de modo que comparar solo los conteos favorecería a las más extensas; la densidad corrige esto al expresar los eventos por unidad de superficie. Para ello, la superficie de cada zona se incorpora al modelo como un offset: un término conocido que se suma con un coeficiente fijo, no estimado, y que traslada la comparación de conteos absolutos a conteos por kilómetro cuadrado. El propósito fue convertir la diferencia descriptiva del Informe Asesoría 1 en una afirmación inferencial que, además de establecer si las zonas difieren, cuantifique cuánto difieren y con qué precisión. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas y definición del offset})}.
 
+El punto de partida fue un modelo Poisson con enlace logarítmico, apropiado para conteos, pero que supone que la varianza condicional iguala a la media. Los datos mostraron sobredispersión, condición que subestima los errores estándar e infla la significación si no se corrige. Se evaluó por tres vías concordantes: la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. Las tres vías evalúan la misma condición, la igualdad entre la varianza y la media frente a una varianza mayor:
+
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0.35em}
+\setlength{\belowdisplayskip}{0.35em}
+\vspace{-0.6em}
+\[
+H_0:\ \operatorname{Var}(Y)=\mathbb{E}(Y)
+\quad \text{v/s} \quad
+H_1:\ \operatorname{Var}(Y)>\mathbb{E}(Y)
+\]
+\vspace{-0.6em}
+\endgroup
+```
+
+Se consideró también la especificación quasi-Poisson, que mantiene la media del modelo Poisson y corrige los errores estándar multiplicándolos por un factor de escala [@mccullagh_nelder_1989]. Esta especificación, sin embargo, no define una distribución de probabilidad completa, sino solo la media y la varianza, por lo que carece de una verosimilitud que permita comparar modelos de forma formal. Se escogió la binomial negativa porque sí es una distribución completa, con verosimilitud explícita, necesaria tanto para el contraste global de zona mediante razón de verosimilitudes como para obtener las razones de tasa con sus intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@venables_ripley_2002]. El detalle de los tres diagnósticos, con sus definiciones, valores y la corrección por frontera del contraste, se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
+
+El efecto global de zona se evaluó mediante una razón de verosimilitudes con tres grados de libertad, que compara el modelo con zonas frente a un modelo sin zonas. Su hipótesis contrasta la igualdad de las cuatro tasas frente a la existencia de al menos una diferencia:
+
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0.35em}
+\setlength{\belowdisplayskip}{0.35em}
+\vspace{-0.6em}
+\[
+H_0:\ \lambda_{1}=\lambda_{2}=\lambda_{3}=\lambda_{4}
+\quad \text{v/s} \quad
+H_1:\ \lambda_{h}\neq\lambda_{h'} \ \text{para algún } h\neq h'
+\]
+\vspace{-0.6em}
+\endgroup
+```
+
+Una vez establecido el efecto global, se examinaron las seis comparaciones posibles entre zonas. Sus valores p se ajustaron mediante el procedimiento de Holm, que controla en 5 % la probabilidad de obtener al menos un falso positivo dentro de cada familia de seis contrastes [@holm_1979]. El tamaño del efecto (cuán grande es la diferencia entre zonas, no solo si existe) se expresó como razón de tasa y de densidad: un valor de 1 representa igualdad, un valor mayor que 1 indica mayor frecuencia en la primera zona y un valor menor que 1 indica menor frecuencia. Cada razón se acompañó de un intervalo de confianza del 95 %, obtenido por verosimilitud perfilada en las comparaciones con la zona de referencia, que no supone simetría y es preferible en zonas con pocos eventos, y por el método de Wald en las comparaciones por pares. La decisión combinó el valor p ajustado, la magnitud de la razón y la amplitud del intervalo, con cautela adicional para las zonas de menor conteo. Los desarrollos formales de estas comparaciones se presentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
+
+La validez de estas conclusiones descansa en cuatro supuestos. Primero, que los conteos de cada zona y año son independientes entre sí una vez descontado el efecto de zona. Segundo, que cada fila cubre el mismo tiempo de observación, un año, lo que permite compararlos como tasas anuales. Tercero, que la superficie de cada zona se mantiene constante durante todo el período. Cuarto, que la forma de varianza de la binomial negativa describe adecuadamente la variabilidad de los conteos. Por último, la categoría "Resto del mundo" se trata como un cierre residual y heterogéneo del catálogo, no como un cinturón tectónico, por lo que sus resultados no se interpretan como los de una zona sísmica coherente.
 
 ## Comparación de magnitud y profundidad entre zonas {#sec-met-magnitud-profundidad}
 
@@ -483,6 +521,119 @@ La dirección de esta asociación se observa en la participación de `mww`, que 
 Los procedimientos de reporte no permanecen constantes durante todo el período. En el RMS, $\varepsilon^2=0{,}221$ indica que el período se asocia con aproximadamente el 22,1 % de la variabilidad de sus rangos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}. Para el tipo de magnitud, $V_c=0{,}608$ se encuentra marcadamente alejado de cero y es coherente con la transición hacia `mww`. Por ello, las comparaciones espaciales pueden interpretarse sin una restricción importante asociada con la fuente o el método, mientras que las comparaciones temporales de magnitud requieren cautela, porque parte de su variación puede reflejar cambios en el procedimiento de estimación y no en la sismicidad.
 
 ## Frecuencia de eventos entre zonas {#sec-res-frecuencia}
+
+El Informe Asesoría 1 mostró que el Cinturón de Fuego concentra la mayor cantidad de eventos, con tasas descriptivas de 34,3, 7,8, 2,4 y 1,1 eventos por año. Esta subsección evalúa si esa diferencia es estadísticamente defendible y no un rasgo del conteo bruto. Para separar la cantidad de eventos de la extensión de cada zona, se comparan dos medidas: la tasa anual, expresada como eventos por año, y la densidad, expresada como eventos por millón de kilómetros cuadrados y año.
+
+El análisis se realizó con un modelo de conteos. El modelo Poisson inicial presentó sobredispersión, es decir, los conteos variaron más de lo que ese modelo admite, por lo que las estimaciones se obtuvieron con un modelo binomial negativo, que agrega un parámetro de variabilidad y devuelve intervalos a su tamaño correcto. El detalle del diagnóstico se presenta fuera del cuerpo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}. La primera pregunta, previa a cualquier comparación individual, es si la zona modifica la frecuencia. Se respondió con el estadístico de razón de verosimilitudes ($LR$), que compara el ajuste de un modelo con zonas frente a uno sin zonas: un valor alto, poco probable si las zonas compartieran la misma frecuencia, se traduce en un valor p pequeño. Sus grados de libertad, en la columna `gl`, son tres, uno por cada zona comparada con la referencia.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-global}
+\hypertarget{dest-tbl-frecuencia-global}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\centering\arraybackslash}p{0.07\textwidth}
+                >{\centering\arraybackslash}p{0.13\textwidth}
+                >{\raggedright\arraybackslash}p{0.33\textwidth}}
+\toprule
+Modelo & $LR$ & gl & Valor p & Lectura \\
+\midrule
+Tasa anual & 220,37 & 3 & $<0{,}001$ & La zona modifica la tasa de ocurrencia \\
+Densidad por superficie & 225,85 & 3 & $<0{,}001$ & La zona modifica la densidad por km\textsuperscript{2} \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-frecuencia-global}{Contraste global del efecto de zona sobre la frecuencia.}
+\endgroup
+```
+
+Ambos contrastes resultaron significativos ($p<0{,}001$), de modo que las cuatro zonas no comparten una misma tasa de ocurrencia ni una misma densidad por superficie. Establecida esa diferencia, la `Tabla~\ref{tbl-frecuencia-zonas}`{=latex} cuantifica su magnitud. La razón de tasa mide cuánto difiere cada zona del Cinturón de Fuego, tomado como referencia: un valor de 1 indica igual frecuencia y un valor menor que 1, una frecuencia menor. El intervalo de confianza del 95 % indica con qué precisión se conoce esa razón, es decir, el rango de valores compatibles con los datos.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.3pt}
+\renewcommand{\arraystretch}{0.90}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-zonas}
+\hypertarget{dest-tbl-frecuencia-zonas}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.21\textwidth}
+                r r
+                >{\centering\arraybackslash}p{0.19\textwidth}
+                r
+                >{\centering\arraybackslash}p{0.19\textwidth}}
+\toprule
+Zona & Eventos & Tasa anual & Razón de tasa (IC 95 \%) & Densidad & Razón de densidad (IC 95 \%) \\
+\midrule
+Cinturón de Fuego        & 892 & 34,31 & 1,000 (referencia)      & 0,720 & 1,000 (referencia) \\
+Resto del mundo          & 203 &  7,81 & 0,228 [0,191; 0,270]   & 0,018 & 0,025 [0,021; 0,030] \\
+Cinturón Alpino-Himalayo &  63 &  2,42 & 0,071 [0,053; 0,092]   & 0,167 & 0,232 [0,176; 0,302] \\
+Dorsal Meso-Atlántica    &  28 &  1,08 & 0,031 [0,021; 0,045]   & 0,057 & 0,079 [0,053; 0,114] \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.7em}
+\bottomtablecaption{tbl-frecuencia-zonas}{Frecuencia anual bruta y densidad de eventos por zona.}
+\endgroup
+```
+
+El Cinturón de Fuego presentó la mayor frecuencia en ambas medidas. Frente a él, las razones de tasa de las demás zonas son 0,228 (Resto del mundo), 0,071 (Cinturón Alpino-Himalayo) y 0,031 (Dorsal Meso-Atlántica), todas menores que 1: el Cinturón de Fuego las supera 4,39, 14,16 y 31,86 veces. Por densidad, el orden se altera: Resto del mundo cae del segundo al último lugar, con razón 0,025, y el Cinturón Alpino-Himalayo pasa al segundo, con 0,232, porque abarca casi toda la superficie considerada. Los seis intervalos de confianza excluyen el 1, de modo que ninguna zona iguala al Cinturón de Fuego. El catálogo es desigual: 892 eventos en el Cinturón de Fuego y 28 en la Dorsal Meso-Atlántica.
+
+La `Tabla~\ref{tbl-frecuencia-pares}`{=latex} detalla las seis comparaciones por pares en ambas métricas. La razón compara la primera zona del par con la segunda: un valor mayor que 1 indica que la primera presenta mayor frecuencia. Como se compararon seis pares a la vez, cada valor p se ajustó mediante el procedimiento de Holm, que mantiene en 5 % la probabilidad de declarar alguna diferencia falsa dentro de la familia. Un valor p ajustado bajo indica que la diferencia entre dos zonas difícilmente se debe al azar, pero no dice cuán grande es: eso lo indican la razón y su intervalo de confianza.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.0pt}
+\renewcommand{\arraystretch}{0.90}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-pares}
+\hypertarget{dest-tbl-frecuencia-pares}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}
+                >{\centering\arraybackslash}p{0.22\textwidth}
+                >{\centering\arraybackslash}p{0.22\textwidth}
+                >{\raggedright\arraybackslash}p{0.20\textwidth}}
+\toprule
+Comparación (zona 1 / zona 2) & Razón de tasa (IC 95 \%) & Razón de densidad (IC 95 \%) & Lectura \\
+\midrule
+C. Fuego / C. Alp.-Him.       & 14,16 [10,82; 18,53] & 4,30 [3,29; 5,63]    & Fuego mayor en ambas \\
+C. Fuego / Dorsal M.-Atl.     & 31,86 [21,67; 46,83] & 12,64 [8,60; 18,58]  & Fuego mayor en ambas \\
+C. Fuego / Resto              & 4,39 [3,69; 5,23]    & 39,57 [33,26; 47,09] & Fuego mayor en ambas \\
+C. Alp.-Him. / Dorsal M.-Atl. & 2,25 [1,43; 3,54]    & 2,94 [1,87; 4,62]    & Alpino mayor en ambas \\
+C. Alp.-Him. / Resto          & 0,31 [0,23; 0,42]    & 9,20 [6,85; 12,35]   & Resto mayor en tasa, menor en densidad \\
+Dorsal M.-Atl. / Resto        & 0,14 [0,09; 0,21]    & 3,13 [2,09; 4,69]    & Resto mayor en tasa, menor en densidad \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.7em}
+\bottomtablecaption{tbl-frecuencia-pares}{Comparaciones por pares entre zonas en tasa anual y densidad.}
+\endgroup
+```
+
+El hallazgo principal es que el orden de las zonas depende de la medida utilizada, la tasa anual o la densidad por superficie, y el cambio se concentra en Resto del mundo: presenta más eventos por año que el Cinturón Alpino-Himalayo y la Dorsal Meso-Atlántica, pero una densidad menor que ambos. Las demás comparaciones son consistentes en ambas medidas: el Cinturón de Fuego supera a las tres zonas y el Cinturón Alpino-Himalayo supera a la Dorsal.
+
+Las seis comparaciones se mantuvieron significativas tras el ajuste de Holm en ambas métricas: todos los valores p ajustados quedaron por debajo de 0,001, con un máximo de 0,00045. Los valores exactos, junto con el estadístico de cada contraste, se presentan fuera del cuerpo. \asesoriaStyledRef{(véase \hyperref[sec-anexo-pares-frecuencia]{anexo de comparaciones por pares de frecuencia})}.
+
+La `Figura~\ref{fig-inf2-frecuencia}`{=latex} muestra ambas medidas lado a lado y hace visible el reordenamiento de Resto del mundo.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
+\caption{Frecuencia de eventos por zona: tasa anual y densidad por superficie.}
+\label{fig-inf2-frecuencia}
+\end{figure}
+```
+
+Para los terremotos de magnitud $M\geq6{,}5$ registrados por USGS entre 2000 y 2025, existe evidencia de que la frecuencia de ocurrencia difiere entre las zonas adoptadas. El Cinturón de Fuego presenta la mayor frecuencia tanto por año como por unidad de superficie. La posición de Resto del mundo depende de la medida utilizada: es segundo por conteo bruto, pero último por densidad. Esta conclusión se limita al catálogo, el período, el umbral de magnitud y la delimitación espacial analizados; no constituye una comparación de amenaza sísmica ni una explicación causal.
 
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
@@ -934,7 +1085,50 @@ También se mantienen `magnitud_cat`, `profundidad_cat`, `zona` y `magType_grupo
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
-Este anexo presenta el cálculo de la superficie de cada polígono de `area_regiones.geojson` en QGIS, el sistema de referencia utilizado y la definición del offset logarítmico de los modelos de conteo. *Pendiente: valores de superficie por zona y procedimiento de cálculo.*
+Este anexo presenta las superficies de cada zona y la definición del offset logarítmico de los modelos de conteo. El área de cada zona se calculó en el software QGIS y quedó registrada en el campo `Area` de la capa `MAPA_HTML/zonas_inf2.geojson`, derivada de los tres cinturones definidos en `area_regiones.geojson` y de su complemento espacial. Las superficies se expresan en kilómetros cuadrados y, para facilitar su lectura, también en millones de kilómetros cuadrados.
+
+```{=latex}
+\begingroup
+\centering
+\renewcommand{\arraystretch}{1.05}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-areas-zonas}
+\hypertarget{dest-tbl-areas-zonas}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\textwidth}
+                >{\centering\arraybackslash}p{0.24\textwidth}
+                >{\centering\arraybackslash}p{0.28\textwidth}}
+\toprule
+Zona & Superficie (km\textsuperscript{2}) & Superficie (millones de km\textsuperscript{2}) \\
+\midrule
+Cinturón de Fuego        & 47.639.417  & 47,64 \\
+Cinturón Alpino-Himalayo & 14.475.681  & 14,48 \\
+Dorsal Meso-Atlántica    & 18.900.689  & 18,90 \\
+Resto del mundo          & 429.049.835 & 429,05 \\
+\midrule
+Total                    & 510.065.622 & 510,07 \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.3em}
+\bottomtablecaption{tbl-areas-zonas}{Superficie de cada zona sísmica utilizada como exposición en los modelos de conteo.}
+\endgroup
+```
+
+El modelo emplea un enlace logarítmico, por lo que modelar la densidad, es decir, los eventos por unidad de superficie, equivale a restar el logaritmo del área al logaritmo del conteo esperado. Ese logaritmo del área es el offset: entra con un coeficiente fijo en 1, no estimado. De esta forma, los coeficientes de zona se interpretan como razones de densidad, en eventos por unidad de superficie y año, en lugar de razones de tasa, en eventos por año. Como la superficie es constante dentro de cada zona, el modelo de tasa y el de densidad producen el mismo ajuste de las medias por zona y difieren solo en la interpretación de sus coeficientes.
+
+Formalmente, sea $Y_{jt}$ el número de eventos en la zona $j$ durante el año $t$, $\mu_{jt}=\mathbb{E}(Y_{jt})$ su valor esperado y $A_j$ la superficie de la zona. El modelo de densidad es:
+
+$$
+\log(\mu_{jt}) = \beta_0 + \sum_{k=1}^{3}\beta_k\, z_{jk} + \log(A_j),
+$$
+
+donde $z_{jk}$ son las tres variables indicadoras de zona, con el Cinturón de Fuego como categoría de referencia, y $\log(A_j)$ es el offset, un término conocido con coeficiente fijo en 1. Al pasar ese término al lado izquierdo:
+
+$$
+\log\!\left(\frac{\mu_{jt}}{A_j}\right) = \beta_0 + \sum_{k=1}^{3}\beta_k\, z_{jk},
+$$
+
+de modo que el modelo describe directamente la densidad $\mu_{jt}/A_j$, es decir, los eventos por unidad de superficie. El modelo de tasa anual es idéntico pero sin el término $\log(A_j)$, y sus coeficientes se leen sobre el conteo $\mu_{jt}$.
 
 ## Especificación de dócimas y modelos {#sec-anexo-especificacion}
 
@@ -1117,6 +1311,21 @@ La implementación se realizó mediante `p.adjust(..., method = "BH")` del paque
 
 Los valores ajustados se compararon con el nivel de 0,05. El RMS por zona, el RMS por período y la asociación entre período y tipo de magnitud permanecieron estadísticamente detectables después del ajuste. En consecuencia, la corrección redujo el riesgo de falsos descubrimientos sin modificar las decisiones obtenidas en este bloque.
 
+Mientras que Benjamini-Hochberg se aplicó al bloque exploratorio de comparabilidad, las comparaciones por pares de carácter confirmatorio, es decir, las seis razones entre zonas de la sección de frecuencia y las seis comparaciones de Dunn por variable en magnitud y profundidad, se ajustaron mediante el procedimiento de Holm [@holm_1979]. A diferencia de Benjamini-Hochberg, que controla la proporción esperada de falsos positivos, Holm controla la probabilidad de cometer al menos un falso positivo en toda la familia, criterio más estricto y apropiado para conclusiones confirmatorias.
+
+El procedimiento ordena los $m$ valores p de menor a mayor, $p_{(1)}\leq p_{(2)}\leq\cdots\leq p_{(m)}$, y calcula el valor ajustado mediante:
+
+$$
+\widetilde p_{(i)}
+=
+\max_{j\leq i}
+\ \min\big((m-j+1)\,p_{(j)},\,1\big).
+$$
+
+El valor p más pequeño se multiplica por $m$; el siguiente, por $m-1$, y así sucesivamente, de modo que solo el primero enfrenta el umbral más estricto. Por eso Holm es uniformemente más potente que la corrección de Bonferroni, que multiplica todos los valores por $m$, mientras controla el mismo error por familia. La implementación se realizó mediante `p.adjust(..., method = "holm")` del paquete `stats` de R [@r_p_adjust].
+
+En la familia de seis comparaciones por pares de la sección de frecuencia, el mayor valor p ajustado fue 0,00045, de modo que las seis diferencias se mantuvieron significativas tras el ajuste.
+
 ## Comparaciones completas Dunn-Holm {#sec-anexo-dunn}
 
 La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después de Kruskal-Wallis. Los valores p ajustados mediante Holm son los que se utilizan para la decisión inferencial.
@@ -1140,7 +1349,119 @@ La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después d
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 
-Este anexo documenta los diagnósticos de especificación: sobredispersión del modelo de conteos, bondad de ajuste, indicios de separación en el modelo multinomial y verificaciones gráficas asociadas. *Pendiente: diagnósticos según los modelos finales.*
+Este anexo documenta los diagnósticos de especificación de los modelos. Los correspondientes al modelo multinomial se incorporarán junto con sus resultados finales.
+
+El modelo Poisson supone que, dentro de cada zona, el valor esperado y la varianza de los conteos coinciden:
+
+$$
+\mathbb{E}(Y)=\operatorname{Var}(Y)=\mu .
+$$
+
+La sobredispersión ocurre cuando la varianza supera a la media, $\operatorname{Var}(Y)>\mu$. Bajo esa condición, el modelo Poisson mantiene los coeficientes aproximadamente correctos, pero subestima sus errores estándar; en consecuencia, los intervalos de confianza resultan demasiado estrechos y la significación queda sobreestimada [@cameron_trivedi_1990]. El modelo binomial negativo agrega un parámetro de dispersión $\theta>0$ que permite que la varianza exceda a la media según
+
+$$
+\operatorname{Var}(Y)=\mu+\frac{\mu^{2}}{\theta} .
+$$
+
+Cuando $\theta$ es muy grande, el segundo término se aproxima a cero, la varianza tiende a $\mu$ y el modelo se reduce a la Poisson; un valor finito de $\theta$ incorpora el exceso de variabilidad observado, sin que los valores estimados cambien de forma apreciable. Lo que se corrige es la amplitud de los intervalos, que recuperan su tamaño realista [@venables_ripley_2002].
+
+En este catálogo, la sobredispersión se evaluó por tres vías concordantes, que se definen a continuación.
+
+La dispersión de Pearson es un índice descriptivo: la suma de los residuos de Pearson al cuadrado dividida por los grados de libertad residuales,
+
+$$
+\hat\phi = \frac{1}{n-p}\sum_{i=1}^{n}\frac{(y_i-\hat\mu_i)^2}{\hat\mu_i},
+$$
+
+con $y_i$ los conteos observados, $\hat\mu_i$ los valores ajustados, $n=104$ observaciones y $p=4$ parámetros. Un valor cercano a 1 indica ausencia de sobredispersión; aquí $\hat\phi=1{,}410$ [@mccullagh_nelder_1989].
+
+La prueba de Cameron-Trivedi contrasta $H_0:\operatorname{Var}(Y)=\mu$ frente a $H_1:\operatorname{Var}(Y)=\mu+\alpha\,\mu$. Mediante una regresión auxiliar estima el parámetro de sobredispersión $\alpha$ y contrasta $\alpha=0$ con un estadístico asintóticamente normal estándar; su forma exacta se encuentra en la fuente original [@cameron_trivedi_1990].
+
+La comparación de verosimilitudes entre Poisson y binomial negativa evalúa si el parámetro de dispersión mejora el ajuste, mediante
+
+$$
+LR = 2\left(\hat\ell_{\text{BN}} - \hat\ell_{\text{P}}\right),
+$$
+
+donde $\hat\ell_{\text{BN}}$ y $\hat\ell_{\text{P}}$ son las log-verosimilitudes maximizadas de la binomial negativa y de la Poisson.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-sobredispersion}
+\hypertarget{dest-tbl-frecuencia-sobredispersion}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\textwidth}
+                >{\centering\arraybackslash}p{0.22\textwidth}
+                >{\raggedright\arraybackslash}p{0.34\textwidth}}
+\toprule
+Índice o prueba & Valor & Lectura \\
+\midrule
+Dispersión de Pearson & 1,410 & Levemente por encima de 1 \\
+Prueba de Cameron-Trivedi & $z=2{,}149$; $p=0{,}0158$ & Rechaza ausencia de sobredispersión \\
+Razón de verosimilitudes Poisson vs binomial negativa & $LR=5{,}628$; $p=0{,}0088$ & Favorece la binomial negativa \\
+Parámetro de dispersión $\theta$ (binomial negativa) & 42,35 & Sobredispersión leve pero consistente \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-frecuencia-sobredispersion}{Diagnóstico de sobredispersión del modelo de frecuencia.}
+\endgroup
+```
+
+Las tres comprobaciones apuntaron a una sobredispersión leve, pero consistente ($\theta=42{,}35$), por lo que se utilizó la binomial negativa. La comparación de verosimilitudes contrasta si hace falta variabilidad adicional respecto de la Poisson. Conviene expresarlo con el inverso del parámetro de dispersión, $\alpha=1/\theta$, que mide la cantidad de varianza extra: la Poisson corresponde a $\alpha=0$ (es decir, $\theta$ infinitamente grande) y la binomial negativa, a $\alpha>0$. Este contraste requiere un ajuste, porque $\alpha$ no puede ser negativo; bajo la hipótesis nula, $\alpha=0$ queda situado en el extremo de su rango posible. En esa situación, el estadístico no sigue la distribución $\chi^2_1$ habitual, que supone que el parámetro puede moverse hacia ambos lados del valor nulo. La distribución de referencia correcta asigna la mitad de la probabilidad al valor cero y la otra mitad a una $\chi^2_1$. Como resultado, el valor p correcto es la mitad del que entrega la prueba ordinaria: 0,0088 en lugar de 0,0177 [@self_liang_1987]. La prueba $\chi^2_1$ sin corregir es demasiado conservadora cuando el parámetro está en el extremo de su rango, de modo que la corrección ajusta el valor p a la baja y refuerza la evidencia de sobredispersión, sin modificar la conclusión.
+
+El contraste global del efecto de zona, en cambio, no requiere esa corrección. A diferencia del parámetro de dispersión, los coeficientes de zona pueden tomar valores positivos o negativos, porque una zona puede presentar mayor o menor frecuencia que la referencia. Bajo la hipótesis nula no quedan, entonces, en el extremo de su rango, sino en su interior, y en esa situación el estadístico sí sigue una distribución $\chi^2$ ordinaria, con tres grados de libertad, uno por cada zona comparada con el Cinturón de Fuego.
+
+Las seis comparaciones por pares se obtuvieron mediante contrastes de Wald, es decir, a partir de los coeficientes ya estimados del modelo binomial negativo y de sus errores estándar, sin volver a ajustar el modelo. El cálculo se realizó sobre las dos versiones: el modelo de tasa anual, sin offset, y el de densidad, con el logaritmo de la superficie como offset. Para cada par, la razón entre dos zonas proviene de la diferencia de sus coeficientes, y el error estándar de esa diferencia, de la matriz de covarianzas del modelo. Los valores p se ajustaron mediante Holm dentro de cada familia de seis comparaciones.
+
+Conviene una precisión de lectura: el ajuste de Holm se aplica solo a los valores p. Los intervalos de confianza del 95 % que acompañan a cada razón son individuales, es decir, no se ensancharon para considerar las seis comparaciones de forma simultánea.
+
+Los intervalos de confianza de las razones frente a la zona de referencia, en la `Tabla~\ref{tbl-frecuencia-zonas}`{=latex}, se obtuvieron por verosimilitud perfilada. La verosimilitud mide qué tan bien el modelo reproduce los datos para cada valor posible del parámetro; su máximo es la estimación. El intervalo perfilado conserva todos los valores de la razón cuya verosimilitud, tras reajustar el resto de los parámetros, permanece dentro de un umbral basado en la $\chi^2$. A diferencia del intervalo de Wald, que toma la estimación más o menos un múltiplo de su error estándar y supone que la incertidumbre es simétrica, la verosimilitud perfilada no impone esa simetría, por lo que es preferible en las zonas con pocos eventos, donde la razón se estima con incertidumbre asimétrica. En este catálogo ambos métodos difieren solo en la tercera cifra, de modo que ninguna conclusión depende de la elección.
+
+## Comparaciones completas por pares de frecuencia {#sec-anexo-pares-frecuencia}
+
+Este anexo presenta las seis comparaciones por pares de la sección de frecuencia en ambas métricas, con el estadístico de Wald y el valor p ajustado por Holm. Todos los valores p ajustados quedan por debajo de 0,001; el mayor es 0,00045, correspondiente al par Cinturón Alpino-Himalayo frente a Dorsal Meso-Atlántica en tasa anual.
+
+```{=latex}
+\begingroup
+\scriptsize
+\centering
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.82}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-frecuencia-pares-completo}
+\hypertarget{dest-tbl-frecuencia-pares-completo}{}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.16\textwidth}
+                >{\raggedright\arraybackslash}p{0.34\textwidth}
+                >{\centering\arraybackslash}p{0.14\textwidth}
+                >{\centering\arraybackslash}p{0.20\textwidth}}
+\toprule
+Métrica & Comparación (zona 1 / zona 2) & $|z|$ (Wald) & $p$ ajustado (Holm) \\
+\midrule
+Tasa anual & C. Fuego / C. Alp.-Him.       & 19,32 & $<0{,}0001$ \\
+Tasa anual & C. Fuego / Dorsal M.-Atl.     & 17,61 & $<0{,}0001$ \\
+Tasa anual & C. Fuego / Resto              & 16,69 & $<0{,}0001$ \\
+Tasa anual & C. Alp.-Him. / Dorsal M.-Atl. & 3,51  & 0,00045 \\
+Tasa anual & C. Alp.-Him. / Resto          & 7,78  & $<0{,}0001$ \\
+Tasa anual & Dorsal M.-Atl. / Resto        & 9,61  & $<0{,}0001$ \\
+\midrule
+Densidad & C. Fuego / C. Alp.-Him.       & 10,64 & $<0{,}0001$ \\
+Densidad & C. Fuego / Dorsal M.-Atl.     & 12,90 & $<0{,}0001$ \\
+Densidad & C. Fuego / Resto              & 41,48 & $<0{,}0001$ \\
+Densidad & C. Alp.-Him. / Dorsal M.-Atl. & 4,66  & $<0{,}0001$ \\
+Densidad & C. Alp.-Him. / Resto          & 14,76 & $<0{,}0001$ \\
+Densidad & Dorsal M.-Atl. / Resto        & 5,54  & $<0{,}0001$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{-0.85em}
+\bottomtablecaption{tbl-frecuencia-pares-completo}{Comparaciones por pares entre zonas en frecuencia: estadístico de Wald y valor p ajustado por Holm.}
+\endgroup
+```
 
 ## Resultados completos del análisis de sensibilidad {#sec-anexo-sensibilidad}
 

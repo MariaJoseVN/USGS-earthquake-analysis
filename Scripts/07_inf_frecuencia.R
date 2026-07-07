@@ -391,3 +391,56 @@ mtext("Frecuencia por zona: el orden cambia al controlar la superficie",
       side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
 
 dev.off()             # saltarse png()/dev.off() cuando quiera ver el gráfico en PLOTS
+
+
+#Figura de bosque: razones con IC 95 % en escala logaritmica----
+# Complementa a la figura de barras. Las barras muestran la MAGNITUD (tasa/densidad);
+# el bosque muestra el TAMANIO DE EFECTO y su INCERTIDUMBRE: cada punto es la razon
+# frente al Cinturon de Fuego (referencia = linea vertical en 1) y el segmento su IC 95 %
+# de perfil. En escala log, un IC alejado de 1 y angosto indica un efecto grande y preciso;
+# el IC mas ancho es el de la Dorsal (28 eventos), que documenta el desbalance del catalogo.
+# Reutiliza rr_tasa y rr_dens ya calculados en el paso 2.5 (matrices con RR, 2.5 %, 97.5 %).
+
+prep_bosque <- function(rr) {
+  rr <- rr[rownames(rr) != "(Intercept)", , drop = FALSE]  # se excluye Fuego (referencia)
+  data.frame(term = rownames(rr), rr = rr[, 1], lo = rr[, 2], hi = rr[, 3],
+             stringsAsFactors = FALSE)
+}
+
+etiquetas_bosque <- c(
+  "zonaCinturon Alpino-Himalayo" = "C. Alpino-H.",
+  "zonaDorsal Meso-Atlantica"    = "Dorsal M.-Atl.",
+  "zonaResto del mundo"          = "Resto"
+)
+colores_bosque <- c(
+  "zonaCinturon Alpino-Himalayo" = "#47cea8",
+  "zonaDorsal Meso-Atlantica"    = "#dfbf8a",
+  "zonaResto del mundo"          = "#9e9e9e"
+)
+
+ruta_forest <- file.path("Informes Quarto", "Imágenes y Recursos",
+                         "inf2-frecuencia-forest.png")
+
+png(filename = ruta_forest, width = 2200, height = 1000, res = 200, bg = "white")
+par(mfrow = c(1, 2), bg = "white", oma = c(0, 0, 3, 0),
+    mar = c(4.5, 7.2, 3, 1.5) + 0.1)
+
+panel_bosque <- function(d, titulo) {
+  d <- d[order(d$rr), ]                       # menor razon abajo, mayor arriba
+  n <- nrow(d)
+  xlim <- range(c(d$lo, d$hi, 1))
+  plot(NA, xlim = xlim, ylim = c(0.5, n + 0.5), log = "x", yaxt = "n",
+       xlab = "Razón (IC 95 %, escala log)", ylab = "", main = titulo, las = 1)
+  abline(v = 1, col = "gray50", lty = 2)
+  segments(d$lo, seq_len(n), d$hi, seq_len(n),
+           col = colores_bosque[d$term], lwd = 2.5)
+  points(d$rr, seq_len(n), pch = 19, col = colores_bosque[d$term], cex = 1.4)
+  axis(2, at = seq_len(n), labels = etiquetas_bosque[d$term], las = 1, cex.axis = 0.9)
+}
+
+panel_bosque(prep_bosque(rr_tasa), "Tasa anual")
+panel_bosque(prep_bosque(rr_dens), "Densidad por superficie")
+mtext("Razones frente al Cinturón de Fuego (referencia = 1). El orden de Resto se invierte",
+      side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
+
+dev.off()
