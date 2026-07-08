@@ -262,6 +262,8 @@ Los cinco contrastes de comparabilidad se trataron como una familia exploratoria
 
 La frecuencia de terremotos es un conteo de eventos por zona y año, por lo que la comparación se realizó con un modelo lineal generalizado de conteos y no con una comparación de medias. La unidad de análisis fue una combinación de zona y año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos medidas complementarias: la tasa anual, comparable con el Informe Asesoría 1, y la densidad por superficie. Las zonas tienen tamaños muy distintos, de modo que comparar solo los conteos favorecería a las más extensas; la densidad corrige esto al expresar los eventos por unidad de superficie. Para ello, la superficie de cada zona se incorpora al modelo como un offset: un término conocido que se suma con un coeficiente fijo, no estimado, y que traslada la comparación de conteos absolutos a conteos por kilómetro cuadrado. El propósito fue convertir la diferencia descriptiva del Informe Asesoría 1 en una afirmación inferencial que, además de establecer si las zonas difieren, cuantifique cuánto difieren y con qué precisión. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas y definición del offset})}.
 
+El corte de este análisis es espacial y su pregunta es una sola: ¿la tasa de ocurrencia difiere entre las cuatro zonas, tanto por año como por unidad de superficie? Para responderla, los 26 años se agregan y cada zona queda resumida por una tasa única del período. Esa agregación es defendible solo si la tasa no cambió de forma relevante dentro del período, condición que se evalúa en la metodología de estructura temporal de la ocurrencia.
+
 El punto de partida fue un modelo Poisson con enlace logarítmico, apropiado para conteos, pero que supone que la varianza condicional iguala a la media. Los datos mostraron sobredispersión, condición que subestima los errores estándar e infla la significación si no se corrige. Se evaluó por tres vías concordantes: la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. Las tres vías evalúan la misma condición, la igualdad entre la varianza y la media frente a una varianza mayor:
 
 ```{=latex}
@@ -371,7 +373,7 @@ Para complementar esas comparaciones, se calculó delta de Cliff en pares sustan
 
 ## Estructura temporal de la ocurrencia {#sec-met-temporal}
 
-El análisis temporal busca formalizar el hallazgo descriptivo del Informe Asesoría 1: la ocurrencia anual fluctúa entre años, pero no muestra una tendencia visual uniforme. Para evaluar si esa lectura se sostiene inferencialmente, se construyeron dos series de conteos a partir del mismo catálogo: una serie anual, útil para comparar con la descripción previa y con los períodos de análisis, y una serie mensual, que entrega mayor número de observaciones para diagnosticar estabilidad temporal, autocorrelación y estacionalidad.
+El análisis temporal busca formalizar el hallazgo descriptivo del Informe Asesoría 1: la ocurrencia anual fluctúa entre años, pero no muestra una tendencia visual uniforme. Su corte complementa el de la comparación de frecuencia entre zonas: aquella agregó los años para contrastar zonas; este análisis agrega las zonas para contrastar el tiempo. Ambos usan los mismos conteos del catálogo, pero responden preguntas distintas. La comparación de frecuencia responde dónde: ¿la tasa de ocurrencia difiere entre zonas? Este análisis responde cuándo: ¿esa tasa se mantuvo estable durante 2000-2025? La segunda pregunta se descompone en cuatro revisiones: si los conteos fluctúan alrededor de un nivel estable (estacionariedad), si un período con muchos eventos tiende a ser seguido por otro igual de alto (autocorrelación), si algún tramo del período o algún mes concentra sistemáticamente más eventos (cambio de nivel y estacionalidad) y si los tiempos entre eventos consecutivos son compatibles con una tasa constante (ajuste exponencial). Para evaluar si esa lectura se sostiene inferencialmente, se generaron dos series de conteos a partir del mismo catálogo: una serie anual, útil para comparar con la descripción previa y con los períodos de análisis, y una serie mensual, que entrega mayor número de observaciones para diagnosticar estabilidad temporal, autocorrelación y estacionalidad.
 
 La estacionariedad se evaluó mediante Dickey-Fuller aumentada (ADF) y KPSS, interpretadas en conjunto porque sus hipótesis nulas son opuestas. La dócima ADF se aplicó con `adfTest()` del paquete `fUnitRoots`, usando la especificación sin constante ni tendencia (`type = "nc"`), ya que esta forma parte desde el contraste más parsimonioso y evita imponer componentes determinísticos adicionales antes de verificar si son necesarios. Se usó un rezago para la serie anual y doce rezagos para la serie mensual. ADF parte desde la hipótesis de raíz unitaria, por lo que rechazarla entrega evidencia a favor de estacionariedad. KPSS parte desde la hipótesis de estacionariedad en nivel, por lo que no rechazarla respalda que la serie no presenta una desviación sistemática respecto de un nivel estable. Usar ambas evita depender de una sola prueba y permite distinguir conclusiones concordantes de situaciones ambiguas, especialmente en la serie anual, donde solo hay 26 observaciones.
 
@@ -397,7 +399,7 @@ H_0^{LB}: \rho_1=\rho_2=\cdots=\rho_m=0
 H_1^{LB}: \rho_j\neq 0 \mid j \leq m
 $$
 
-Además de estas pruebas, se comparó la tasa media anual de eventos entre tres tramos del período observado: 2000-2009, 2010-2019 y 2020-2025. Esta comparación complementa la lectura descriptiva del Informe Asesoría 1: el gráfico permite observar fluctuaciones en los conteos, mientras que el modelo evalúa si las diferencias entre períodos superan la variabilidad esperable del catálogo. Como la variable de respuesta corresponde a conteos anuales de eventos, se utilizó un GLM Poisson. Posteriormente se evaluó si los conteos variaban más de lo esperado bajo Poisson; cuando esto ocurrió, la decisión inferencial se basó en quasi-Poisson, que mantiene la comparación de tasas pero corrige la varianza estimada.
+Además de estas pruebas, se comparó la tasa media anual de eventos entre tres tramos del período observado: 2000-2009, 2010-2019 y 2020-2025. Esta comparación complementa la lectura descriptiva del Informe Asesoría 1: el gráfico permite observar fluctuaciones en los conteos, mientras que el modelo evalúa si las diferencias entre períodos superan la variabilidad esperable del catálogo. Como la variable de respuesta corresponde a conteos anuales de eventos, se utilizó un GLM Poisson. Posteriormente se evaluó si los conteos variaban más de lo esperado bajo Poisson; cuando esto ocurrió, la decisión inferencial se basó en quasi-Poisson, que mantiene la comparación de tasas pero corrige la varianza estimada. Esta corrección se prefirió a la binomial negativa usada en la comparación de frecuencia entre zonas porque aquí el objetivo es únicamente docimar la significación de un factor temporal, para lo cual basta reescalar la varianza y aplicar un contraste F [@mccullagh_nelder_1989]. La binomial negativa se reservó para aquella comparación, donde se requerían razones de tasa con intervalos de confianza y comparación formal de modelos, lo que exige una verosimilitud completa. La regla es la misma en ambos casos: todo modelo de conteos se diagnostica por sobredispersión antes de concluir, y la herramienta de corrección se elige según el objetivo del análisis.
 
 Para la comparación entre períodos, la dócima se formuló como:
 
@@ -706,7 +708,7 @@ La `Figura~\ref{fig-inf2-frecuencia}`{=latex} muestra ambas medidas lado a lado 
 \end{figure}
 ```
 
-Para los terremotos de magnitud $M\geq6{,}5$ registrados por USGS entre 2000 y 2025, existe evidencia de que la frecuencia de ocurrencia difiere entre las zonas adoptadas. El Cinturón de Fuego presenta la mayor frecuencia tanto por año como por unidad de superficie. La posición de Resto del mundo depende de la medida utilizada: es segundo por conteo bruto, pero último por densidad. Esta conclusión se limita al catálogo, el período, el umbral de magnitud y la delimitación espacial analizados; no constituye una comparación de amenaza sísmica ni una explicación causal.
+Para los terremotos de magnitud $M\geq6{,}5$ registrados por USGS entre 2000 y 2025, existe evidencia de que la frecuencia de ocurrencia difiere entre las zonas adoptadas. El Cinturón de Fuego presenta la mayor frecuencia tanto por año como por unidad de superficie. La posición de Resto del mundo depende de la medida utilizada: es segundo por conteo bruto, pero último por densidad. Estas razones resumen cada zona con una tasa única para 2000-2025; la subsección de estructura temporal de la ocurrencia evalúa si esa agregación es defendible, es decir, si la tasa se mantuvo estable entre años, tramos del período y meses. Esta conclusión se limita al catálogo, el período, el umbral de magnitud y la delimitación espacial analizados; no constituye una comparación de amenaza sísmica ni una explicación causal.
 
 ## Magnitud y profundidad entre zonas {#sec-res-magnitud-profundidad}
 
@@ -916,7 +918,7 @@ Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los 
 ```{=latex}
 \begingroup
 \scriptsize
-\centering
+\centering2
 \setlength{\tabcolsep}{2.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
@@ -948,7 +950,7 @@ En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad mu
 
 ## Estructura temporal de la ocurrencia {#sec-res-temporal}
 
-El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos $M \geq 6{,}5$, la serie presenta oscilaciones alrededor de la media, sin una tendencia sostenida claramente identificable a partir del gráfico. La \hyperref[fig-serie-mensual-catalogo]{Figura~\ref*{fig-serie-mensual-catalogo}} retoma esa lectura en escala mensual.
+El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos $M \geq 6{,}5$, la serie presenta oscilaciones alrededor de la media, sin una tendencia sostenida claramente identificable a partir del gráfico. La subsección de frecuencia respondió dónde se concentra la ocurrencia: las tasas difieren entre zonas. Esta subsección responde la pregunta restante: ¿la tasa del catálogo completo se mantuvo estable durante 2000-2025? Para ello los conteos se agregan sobre las cuatro zonas, porque la pregunta ya no distingue territorios sino momentos, y se examina en cuatro pasos: estabilidad del nivel, dependencia entre períodos consecutivos, cambios entre tramos y meses, y ritmo de los tiempos entre eventos. La \hyperref[fig-serie-mensual-catalogo]{Figura~\ref*{fig-serie-mensual-catalogo}} retoma la lectura del Informe Asesoría 1 en escala mensual.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1121,6 +1123,8 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 
 Los resultados muestran que el grupo combinado $M \geq 7{,}0$ no es compatible con un único ajuste exponencial. Sin embargo, al separar por categoría de magnitud, los eventos "Mayor" y "Grande o extremo" sí resultan compatibles con este comportamiento, mientras que los eventos "Fuerte" lo rechazan. Esto sugiere que la mezcla de eventos con ritmos de ocurrencia distintos puede ocultar patrones más específicos: los eventos de mayor magnitud son menos frecuentes y presentan intervalos más largos, por lo que no deberían interpretarse junto con eventos más habituales como si compartieran una misma tasa temporal.
 
+Con este resultado quedan cubiertas las dos caras de la ocurrencia del catálogo: dónde y cuándo. La pregunta espacial tuvo respuesta afirmativa: las tasas difieren entre zonas. La pregunta temporal resultó compatible con la estabilidad: no se identificó evidencia de cambios de nivel, autocorrelación ni estacionalidad durante 2000-2025. La lectura temporal no es una pregunta adicional del informe, sino el respaldo de la primera componente de la pregunta estadística: confirma que una tasa anual única por zona es un resumen adecuado del período.
+
 ## Eventos fuertes y extremos {#sec-res-extremos}
 
 El Informe Asesoría 1 definió las categorías Fuerte, Mayor y Grande o extremo y describió su composición por zona con alcance exploratorio. Esta subsección ejecuta la transición inferencial propuesta allí: primero contrasta si la composición de categorías depende de la zona, luego evalúa mediante regresión logística si la zona y la profundidad explican la probabilidad de que un evento alcance $M \geq 7{,}0$ y cierra con la descripción de los eventos con $M \geq 7{,}8$. La `Tabla~\ref{tbl-extremos-contingencia}`{=latex} presenta los conteos observados y la composición porcentual dentro de cada zona.
@@ -1156,7 +1160,7 @@ Total                    & 799 & 328 & 59 & 1.186 \\
 \endgroup
 ```
 
-Las tres primeras zonas presentan composiciones semejantes: cerca de dos tercios de eventos Fuertes, alrededor de 28 % Mayores y menos de 6 % Grandes o extremos. La Dorsal Meso-Atlántica concentra 89,3 % de sus eventos en la categoría Fuerte y no registra Grandes o extremos, pero reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación. La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo. La lectura conjunta es consistente: el catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua: la categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
+Las tres primeras zonas presentan composiciones semejantes: cerca de dos tercios de eventos Fuertes, alrededor de 28 % Mayores y menos de 6 % Grandes o extremos. La Dorsal Meso-Atlántica concentra 89,3 % de sus eventos en la categoría Fuerte y no registra Grandes o extremos, pero reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación; la matriz completa se detalla en el anexo (véase la @tbl-esperadas-extremos). La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}. La lectura conjunta es consistente: el catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua: la categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
 
 La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$. La `Tabla~\ref{tbl-extremos-lr}`{=latex} presenta el contraste de razón de verosimilitudes por variable.
 
@@ -1556,6 +1560,17 @@ El diagnóstico de las frecuencias esperadas fue el siguiente:
 
 Las tres tablas que cruzan zonas justificaron el uso de simulación por sus frecuencias esperadas reducidas. En la tabla temporal no se presentó esta condición; no obstante, se mantuvo el mismo procedimiento para obtener los valores p categóricos de la comparabilidad bajo una estrategia común.
 
+Para el contraste entre zona y categoría de magnitud de la sección de eventos fuertes y extremos, la matriz completa de frecuencias esperadas bajo independencia fue:
+
+| Zona | Fuerte | Mayor | Grande o extremo |
+|---|---:|---:|---:|
+| Cinturón de Fuego | 600,93 | 246,69 | 44,37 |
+| Resto del mundo | 136,76 | 56,14 | 10,10 |
+| Cinturón Alpino-Himalayo | 42,44 | 17,42 | 3,13 |
+| Dorsal Meso-Atlántica | 18,86 | 7,74 | 1,39 |
+
+: Frecuencias esperadas bajo independencia para el cruce entre zona y categoría de magnitud. Las dos celdas de la columna Grande o extremo (3,13 y 1,39) quedan bajo 5 y motivan el uso de la simulación. {#tbl-esperadas-extremos}
+
 La corrección evita informar $p=0$ cuando ninguna simulación produce un resultado más extremo, pues ese resultado solo indica que el evento no apareció dentro del número finito de réplicas. En consecuencia, la resolución mínima con 10.000 simulaciones es:
 
 $$
@@ -1619,6 +1634,26 @@ V_{\mathrm{corregida}}
 $$
 
 Esta corrección descuenta la asociación positiva que puede aparecer únicamente por variabilidad muestral. Por ello, la medida corregida se utilizó para valorar la importancia práctica de las asociaciones detectadas.
+
+A modo de ilustración, para el cruce entre zona y categoría de magnitud de la sección de eventos fuertes y extremos ($\chi^2=7{,}1222$, $n=1186$, $r=4$, $c=3$) se obtuvo:
+
+$$
+\phi^2=\frac{7{,}1222}{1186}=0{,}0060052,
+\qquad
+\widetilde{\phi}^{\,2}=\max\left(0,\ 0{,}0060052-\frac{6}{1185}\right)=0{,}0009419,
+$$
+
+$$
+\widetilde r=4-\frac{9}{1185}=3{,}9924,
+\qquad
+\widetilde c=3-\frac{4}{1185}=2{,}9966,
+$$
+
+$$
+V_{\mathrm{corregida}}=\sqrt{\frac{0{,}0009419}{\min(2{,}9924;\ 1{,}9966)}}=0{,}02172.
+$$
+
+Sin la corrección, la V convencional habría sido $\sqrt{0{,}0060052/2}=0{,}0548$, más del doble. La diferencia muestra que la mayor parte de la asociación aparente en esta tabla proviene de su estructura muestral (doce celdas, dos con frecuencias esperadas bajo 5) y no de una relación sustantiva entre zona y categoría de magnitud.
 
 ## Cálculo de epsilon cuadrado {#sec-anexo-epsilon}
 

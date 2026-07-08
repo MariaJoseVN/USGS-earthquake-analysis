@@ -53,7 +53,7 @@ addmargins(tabla_zona_magnitud)
 
 
 # 5. Distribucion porcentual dentro de cada zona----
-
+# convierte cada zona en su composición porcentual de severidad. Esto es clave metodológicamente: la pregunta de la Fase 5 no es cuántos eventos tiene cada zona (eso fue la Fase 2), sino cómo se reparte la severidad dentro de cada zona. Por eso se porcentúa por fila y no por columna.
 porcentaje_zona_magnitud <- prop.table(
   tabla_zona_magnitud,
   margin = 1
