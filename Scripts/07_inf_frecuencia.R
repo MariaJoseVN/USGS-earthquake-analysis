@@ -444,3 +444,139 @@ mtext("Razones frente al Cinturón de Fuego (referencia = 1). El orden de Resto 
       side = 3, outer = TRUE, line = 0.5, font = 2, cex = 1.05)
 
 dev.off()
+
+
+## Diagnostico de los modelos binomiales negativos----
+# Este bloque se ejecuta despues de la inferencia para no alterar los objetos ya
+# construidos. Su finalidad es verificar que la variabilidad residual, la influencia
+# de observaciones individuales y la dependencia temporal sean compatibles con la
+# interpretacion de los contrastes e intervalos del modelo final.
+
+# Los modelos completos de tasa y densidad entregan los mismos valores ajustados porque
+# la superficie es constante dentro de cada zona. Se informan ambos para dejar documentada
+# la comprobacion, aunque sus diagnosticos residuales son equivalentes.
+diagnostico_dispersion_nb <- tibble::tibble(
+  modelo = c("Tasa anual", "Densidad por superficie"),
+  dispersion_pearson = c(
+    sum(residuals(m_nb, type = "pearson")^2) / df.residual(m_nb),
+    sum(residuals(m_nb_dens, type = "pearson")^2) / df.residual(m_nb_dens)
+  ),
+  deviance_por_gl = c(
+    deviance(m_nb) / df.residual(m_nb),
+    deviance(m_nb_dens) / df.residual(m_nb_dens)
+  )
+)
+
+diagnostico_dispersion_nb
+
+# Base de diagnostico. Los residuos conservan el mismo orden de tabla_zona_anio.
+diagnostico_residuos_nb <- tabla_zona_anio %>%
+  dplyr::mutate(
+    ajustado = fitted(m_nb),
+    residuo_pearson = residuals(m_nb, type = "pearson"),
+    residuo_deviance = residuals(m_nb, type = "deviance"),
+    leverage = hatvalues(m_nb),
+    distancia_cook = cooks.distance(m_nb)
+  )
+
+# El umbral 4/n identifica observaciones que conviene inspeccionar. No constituye
+# por si solo un criterio para excluirlas del analisis.
+umbral_cook <- 4 / nrow(diagnostico_residuos_nb)
+
+observaciones_influyentes_nb <- diagnostico_residuos_nb %>%
+  dplyr::filter(distancia_cook > umbral_cook) %>%
+  dplyr::arrange(dplyr::desc(distancia_cook)) %>%
+  dplyr::select(
+    zona, año, n, ajustado, residuo_pearson, leverage, distancia_cook
+  )
+
+observaciones_influyentes_nb
+
+# Ljung-Box se aplica a los residuos ordenados por anio dentro de cada zona. El ajuste
+# de Holm considera conjuntamente las cuatro pruebas. Con 26 anios por zona, el resultado
+# se interpreta junto con las ACF y no como una demostracion aislada de independencia.
+diagnostico_temporal_nb <- diagnostico_residuos_nb %>%
+  dplyr::arrange(zona, año) %>%
+  dplyr::group_by(zona) %>%
+  dplyr::group_modify(~ {
+    prueba <- Box.test(
+      .x$residuo_pearson,
+      lag = 5,
+      type = "Ljung-Box",
+      fitdf = 0
+    )
+
+    tibble::tibble(
+      estadistico_Q = unname(prueba$statistic),
+      gl = unname(prueba$parameter),
+      valor_p = prueba$p.value
+    )
+  }) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(valor_p_holm = p.adjust(valor_p, method = "holm"))
+
+diagnostico_temporal_nb
+
+# Graficos generales: se espera una nube centrada en cero sin patron sistematico.
+graficar_diagnostico_nb <- function() {
+  op <- par(mfrow = c(1, 3), bg = "white",
+            mar = c(4.5, 4.5, 3, 1) + 0.1)
+  on.exit(par(op), add = TRUE)
+
+  plot(
+    diagnostico_residuos_nb$ajustado,
+    diagnostico_residuos_nb$residuo_pearson,
+    xlab = "Conteo ajustado",
+    ylab = "Residuo de Pearson",
+    main = "Residuos vs. ajustados",
+    pch = 19,
+    col = adjustcolor("#001632", alpha.f = 0.65)
+  )
+  abline(h = 0, lty = 2, col = "#e31a1c")
+
+  plot(
+    diagnostico_residuos_nb$año,
+    diagnostico_residuos_nb$residuo_pearson,
+    xlab = "Año",
+    ylab = "Residuo de Pearson",
+    main = "Residuos en el tiempo",
+    pch = 19,
+    col = adjustcolor("#00A499", alpha.f = 0.65)
+  )
+  abline(h = 0, lty = 2, col = "#e31a1c")
+
+  plot(
+    diagnostico_residuos_nb$distancia_cook,
+    type = "h",
+    xlab = "Observacion zona-año",
+    ylab = "Distancia de Cook",
+    main = "Influencia"
+  )
+  abline(h = umbral_cook, lty = 2, col = "#e31a1c")
+}
+
+# ACF por zona: barras fuera de las bandas sugieren dependencia temporal residual.
+graficar_acf_residuos_nb <- function() {
+  op <- par(mfrow = c(2, 2), bg = "white",
+            mar = c(4.5, 4.5, 3, 1) + 0.1)
+  on.exit(par(op), add = TRUE)
+
+  for (zona_actual in levels(diagnostico_residuos_nb$zona)) {
+    residuos_zona <- diagnostico_residuos_nb %>%
+      dplyr::filter(zona == zona_actual) %>%
+      dplyr::arrange(año) %>%
+      dplyr::pull(residuo_pearson)
+
+    acf(
+      residuos_zona,
+      lag.max = 8,
+      main = paste("ACF:", zona_actual),
+      xlab = "Rezago (años)"
+    )
+  }
+}
+
+if (interactive()) {
+  graficar_diagnostico_nb()
+  graficar_acf_residuos_nb()
+}
