@@ -453,7 +453,7 @@ donde $F_{\text{cat},\,\text{zona}_h}$ representa la distribución de las tres c
 
 Como las frecuencias esperadas incluían celdas bajo 5 en las zonas de menor tamaño, el valor p del chi-cuadrado se obtuvo con 10.000 simulaciones de Monte Carlo, el mismo criterio definido para la comparabilidad de los procedimientos de reporte [@hope_1968; @patefield_1981]. El grado de asociación se midió con la V de Cramér corregida por sesgo, que descuenta la asociación aparente producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
-Para la regresión logística, las categorías Mayor y Grande o extremo se agruparon en un indicador binario que vale 1 cuando $M \geq 7{,}0$ y 0 en caso contrario. El modelo estima la probabilidad de superar ese umbral en función de la zona y la profundidad consideradas simultáneamente, con el Cinturón de Fuego como referencia por ser la zona de mayor tamaño muestral [@mccullagh_nelder_1989] \asesoriaStyledRef{(véase \hyperref[sec-anexo-logistica]{anexo del modelo de regresión logística})}. Esta especificación conjunta responde la observación docente sobre el posible aporte de la profundidad dentro de un modelo múltiple: una variable con poca asociación marginal podría adquirir relevancia al combinarse con otra. La significación de cada variable se evaluó mediante razón de verosimilitudes por bloque \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}, porque la zona aporta tres coeficientes y debe contrastarse como una sola variable:
+Para la regresión logística, las categorías Mayor y Grande o extremo se agruparon en un indicador binario que vale 1 cuando $M \geq 7{,}0$ y 0 en caso contrario. El modelo estima la probabilidad de superar ese umbral en función de la zona y la profundidad consideradas simultáneamente, con el Cinturón de Fuego como referencia por ser la zona de mayor tamaño muestral [@mccullagh_nelder_1989] \asesoriaStyledRef{(véase \hyperref[sec-anexo-logistica]{anexo del modelo de regresión logística})}. Incluir ambas variables en un mismo modelo pone a prueba una posibilidad que los análisis por separado no cubren: que la profundidad, con poca asociación cuando se examina sola, aporte información una vez considerada la zona. La significación de cada variable se evaluó mediante razón de verosimilitudes por bloque \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}, porque la zona aporta tres coeficientes y debe contrastarse como una sola variable:
 
 ```{=latex}
 \begingroup
@@ -471,7 +471,7 @@ H_1:\ \beta_{\text{zona}_h}\neq 0 \ \text{para algún } h
 
 donde $\beta_{\text{zona}_h}$ es el coeficiente que compara la zona $h$ con el Cinturón de Fuego.
 
-Las pruebas de Wald individuales se reportan solo como contrastes específicos de cada zona frente a la referencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. El tamaño de efecto se expresó como razón de odds (odds ratio), donde las odds son el cociente entre la probabilidad de superar el umbral y la de no superarlo: un valor de 1 indica igualdad con la referencia y un valor menor que 1, menor probabilidad relativa \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}. Cada razón se acompañó de un intervalo de confianza del 95 % obtenido por verosimilitud perfilada, que no supone simetría y es preferible en zonas con pocos eventos [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-ic]{anexo de intervalos de confianza})}. Se descartó una regresión multinomial con la categoría de magnitud como respuesta: la categoría Grande o extremo reúne pocos eventos en las zonas menores, lo que desestabiliza la estimación, y la clasificación multinomial corresponde a la sección siguiente, con la zona como respuesta.
+La inferencia se organiza así en dos niveles. El contraste global decide si una variable aporta en conjunto: es la dócima anterior, con una sola respuesta por variable. Las pruebas de Wald individuales responden una pregunta más específica, cuál zona difiere de la referencia, y se reportan solo como detalle del contraste global, nunca en su reemplazo: elegir entre las tres comparaciones la más significativa, sin un veredicto global previo, aumentaría el riesgo de declarar un efecto por azar \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. El tamaño de efecto se expresó como razón de odds (odds ratio), donde las odds son el cociente entre la probabilidad de superar el umbral y la de no superarlo: un valor de 1 indica igualdad con la referencia y un valor menor que 1, menor probabilidad relativa \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}. Cada razón se acompañó de un intervalo de confianza del 95 % obtenido por verosimilitud perfilada, que no supone simetría y es preferible en zonas con pocos eventos [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-ic]{anexo de intervalos de confianza})}. Se descartó una regresión multinomial con la categoría de magnitud como respuesta: la categoría Grande o extremo reúne pocos eventos en las zonas menores, lo que desestabiliza la estimación, y la clasificación multinomial corresponde a la sección siguiente, con la zona como respuesta.
 
 La profundidad se evaluó en dos representaciones: continua, en kilómetros, y categórica, con las clases Superficial, Intermedio y Profundo heredadas del Informe Asesoría 1. Ambas versiones del modelo se compararon mediante la razón de verosimilitudes de cada variable y el criterio de información de Akaike (AIC), que penaliza los parámetros adicionales para equilibrar ajuste y simplicidad. Una diferencia de AIC menor que 2 se interpretó como respaldo prácticamente equivalente [@burnham_anderson_2004] \asesoriaStyledRef{(véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike})}; en ese caso se privilegió la especificación más parsimoniosa y que no pierde información por categorización.
 
@@ -481,7 +481,7 @@ Los eventos con $M \geq 7{,}8$ se describieron mediante conteos por zona y tasas
 
 ## Clasificación de zonas a partir de magnitud y profundidad {#sec-met-clasificacion}
 
-La clasificación de zonas invierte la pregunta de las subsecciones anteriores: la zona deja de ser el factor que agrupa y pasa a ser la variable respuesta. El objetivo es evaluar si la magnitud y la profundidad, consideradas conjuntamente, permiten identificar la zona a la que pertenece un evento, lo que responde la segunda componente de la pregunta estadística y la sugerencia docente de evaluar el aporte conjunto de ambas variables en un modelo de clasificación. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
+La clasificación de zonas invierte la pregunta de las subsecciones anteriores: la zona deja de ser el factor que agrupa y pasa a ser la variable respuesta. El objetivo es evaluar si la magnitud y la profundidad, consideradas conjuntamente, permiten identificar la zona a la que pertenece un evento, lo que responde la segunda componente de la pregunta estadística: el aporte conjunto de ambas variables en un modelo de clasificación. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
 
 El análisis de correspondencia es una técnica descriptiva para tablas de contingencia: compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017]. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola: esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
 
@@ -1164,7 +1164,7 @@ Total                    & 799 & 328 & 59 & 1.186 \\
 
 Las tres primeras zonas presentan composiciones semejantes: sus porcentajes por categoría no difieren en más de 2,3 puntos entre sí (Fuerte entre 66,0 % y 68,3 %, Mayor entre 27,8 % y 29,1 %, Grande o extremo entre 3,2 % y 5,3 %). La Dorsal Meso-Atlántica se aparta de ese patrón: concentra 89,3 % de sus eventos en la categoría Fuerte y no registra ninguno Grande o extremo, aunque reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación; la matriz completa se detalla en el anexo (véase la @tbl-esperadas-extremos). La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}. La lectura conjunta es consistente: el catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua `\asesoriaStyledRef{(véase la Tabla~\ref{tbl-kruskal-mag-depth})}`{=latex}: la categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
 
-La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$; es decir, si la probabilidad de que un evento sea de los más fuertes se relaciona con la zona y la profundidad en que ocurre. Para ello, las tres categorías de severidad se redujeron a una distinción de sí o no: alcanzar al menos magnitud 7,0 (categorías Mayor y Grande o extremo) o no alcanzarla (categoría Fuerte). Bajo ese criterio, 387 de los 1.186 eventos superan el umbral: 295 en el Cinturón de Fuego, 69 en el Resto del mundo, 20 en el Cinturón Alpino-Himalayo y 3 en la Dorsal Meso-Atlántica. La `Tabla~\ref{tbl-extremos-lr}`{=latex} presenta el contraste de razón de verosimilitudes por variable.
+La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$; es decir, si la probabilidad de que un evento sea de los más fuertes se relaciona con la zona y la profundidad en que ocurre. Para ello, las tres categorías de severidad se redujeron a una distinción de sí o no: alcanzar al menos magnitud 7,0 (categorías Mayor y Grande o extremo) o no alcanzarla (categoría Fuerte). Bajo ese criterio, 387 de los 1.186 eventos superan el umbral: 295 en el Cinturón de Fuego, 69 en el Resto del mundo, 20 en el Cinturón Alpino-Himalayo y 3 en la Dorsal Meso-Atlántica. Los resultados se leen en dos niveles: primero el contraste global de cada variable, que decide si la zona o la profundidad aportan en conjunto, y luego los contrastes individuales, que detallan qué zona se aparta de la referencia. La `Tabla~\ref{tbl-extremos-lr}`{=latex} presenta el primer nivel: el contraste de razón de verosimilitudes por variable.
 
 ```{=latex}
 \begingroup
@@ -1184,8 +1184,8 @@ La regresión logística evaluó si la zona y la profundidad, consideradas simul
 \toprule
 Variable & $LR$ & gl & Valor p & Lectura \\
 \midrule
-Zona        & 7,358 & 3 & 0,0613 & Evidencia débil, no alcanza el criterio del 5 \% \\
-Profundidad & 0,312 & 1 & 0,5766 & Sin aporte tras controlar por zona \\
+Zona        & 7,358 & 3 & 0,0613 & No significativa; queda apenas sobre el umbral \\
+Profundidad & 0,312 & 1 & 0,5766 & No significativa; sin aporte tras controlar por zona \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.7em}
@@ -1193,7 +1193,7 @@ Profundidad & 0,312 & 1 & 0,5766 & Sin aporte tras controlar por zona \\
 \endgroup
 ```
 
-Como bloque, la zona no alcanzó el criterio confirmatorio del 5 % ($p = 0{,}0613$); el resultado se reporta como evidencia insuficiente y no se reclasifica con un umbral posterior. La profundidad no aportó capacidad explicativa ($p = 0{,}5766$): tras conocer la zona, la profundidad de un evento no añade información sobre si alcanza $M \geq 7{,}0$. La `Tabla~\ref{tbl-extremos-or}`{=latex} presenta las razones de odds con sus intervalos y los contrastes específicos de Wald \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. Estas razones se leen así: un valor de 1 indica igual probabilidad relativa que el Cinturón de Fuego, un valor menor que 1 una probabilidad menor de alcanzar $M \geq 7{,}0$ y uno mayor que 1, una probabilidad mayor \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}.
+Ambos valores p superan el criterio de decisión del 5 %, por lo que ninguna de las dos variables muestra un efecto estadísticamente detectable: con estos datos no se puede afirmar que la probabilidad de alcanzar $M \geq 7{,}0$ cambie según la zona ni según la profundidad. La diferencia entre ambas es de grado. La zona quedó apenas sobre el umbral ($p = 0{,}0613$), con la señal concentrada en la Dorsal Meso-Atlántica, como se verá en el segundo nivel; el criterio se fijó antes de observar los resultados y no se modifica después, de modo que esa cercanía se describe pero no cambia el veredicto. La profundidad quedó lejos del umbral ($p = 0{,}5766$): tras conocer la zona, la profundidad de un evento no añade información sobre si alcanza $M \geq 7{,}0$. La `Tabla~\ref{tbl-extremos-or}`{=latex} presenta el segundo nivel: las razones de odds con sus intervalos y los contrastes específicos de Wald \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. Estas razones se leen así: un valor de 1 indica igual probabilidad relativa que el Cinturón de Fuego, un valor menor que 1 una probabilidad menor de alcanzar $M \geq 7{,}0$ y uno mayor que 1, una probabilidad mayor \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}.
 
 ```{=latex}
 \begingroup
@@ -1214,16 +1214,17 @@ Término & OR & IC 95 \% & p de Wald \\
 \midrule
 Resto del mundo          & 1,032  & [0,744; 1,423]   & 0,848 \\
 Cinturón Alpino-Himalayo & 0,950  & [0,538; 1,625]   & 0,855 \\
-Dorsal Meso-Atlántica    & 0,247  & [0,058; 0,712]   & 0,023 \\
+Dorsal Meso-Atlántica    & 0,247  & [0,058; 0,712]   & 0,023* \\
 Profundidad (por km)     & 1,0002 & [0,9995; 1,0009] & 0,575 \\
 \bottomrule
+\multicolumn{4}{l}{* Significativa al 5 \%.} \\
 \end{tabular}
 \par\vspace{-0.7em}
 \bottomtablecaption{tbl-extremos-or}{Razones de odds de alcanzar $M \geq 7{,}0$ respecto del Cinturón de Fuego.}
 \endgroup
 ```
 
-La única señal específica corresponde a la Dorsal: sus odds de alcanzar $M \geq 7{,}0$ se estiman 75,3 % menores que las del Cinturón de Fuego, con un intervalo que excluye el 1 pero es amplio, porque la zona registra solo 3 eventos sobre ese umbral. Este contraste individual no sustituye la evaluación global de zona, que no fue significativa. Resto del mundo y el Cinturón Alpino-Himalayo no se distinguen de la referencia. El efecto de la profundidad, expresado por 100 km para hacerlo legible, equivale a un OR de 1,021 con IC 95 % [0,948; 1,098], compatible con ausencia de efecto. La versión con profundidad categórica no modificó estas conclusiones: su bloque tampoco fue significativo ($LR = 2{,}063$; $p = 0{,}357$) y ambos AIC resultaron prácticamente idénticos (1500,01 continua frente a 1500,26 categórica, diferencia de 0,249, menor que 2), por lo que se conservó la especificación continua \asesoriaStyledRef{(véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike})}. La `Tabla~\ref{tbl-extremos-tasas}`{=latex} resume los eventos Grandes o extremos.
+La única señal específica corresponde a la Dorsal, la fila marcada con asterisco. Su razón de odds es 0,247: sus odds de alcanzar $M \geq 7{,}0$ equivalen al 24,7 % de las del Cinturón de Fuego, una reducción de 75,3 %. El intervalo [0,058; 0,712] respalda esa diferencia, porque no incluye el 1, el valor que indicaría odds iguales. Pero el intervalo es ancho: la reducción real podría ir desde 28,8 % hasta 94,2 % ($1-0{,}712$ y $1-0{,}058$, sus dos extremos). Esa imprecisión se debe a que la Dorsal registra solo 3 eventos sobre el umbral. Este contraste individual no sustituye la evaluación global de zona, que no fue significativa. Resto del mundo y el Cinturón Alpino-Himalayo no se distinguen de la referencia. El efecto de la profundidad es un OR de 1,0002 por kilómetro, con IC 95 % [0,9995; 1,0009]: el valor es prácticamente 1 y el intervalo lo contiene, compatible con ausencia de efecto. La versión con profundidad categórica no modificó estas conclusiones: su bloque tampoco fue significativo ($LR = 2{,}063$; $p = 0{,}357$) y ambos AIC resultaron prácticamente idénticos (1500,01 continua frente a 1500,26 categórica, diferencia de 0,249, menor que 2), por lo que se conservó la especificación continua \asesoriaStyledRef{(véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike})}. La `Tabla~\ref{tbl-extremos-tasas}`{=latex} resume los eventos Grandes o extremos.
 
 ```{=latex}
 \begingroup
@@ -1237,22 +1238,23 @@ La única señal específica corresponde a la Dorsal: sus odds de alcanzar $M \g
 \hypertarget{dest-tbl-extremos-tasas}{}
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}
                 >{\centering\arraybackslash}p{0.12\textwidth}
+                >{\centering\arraybackslash}p{0.12\textwidth}
                 >{\centering\arraybackslash}p{0.12\textwidth}}
 \toprule
-Zona & Eventos & Tasa anual \\
+Zona & Eventos & Porcentaje & Tasa anual \\
 \midrule
-Cinturón de Fuego        & 47 & 1,81 \\
-Resto del mundo          & 10 & 0,385 \\
-Cinturón Alpino-Himalayo &  2 & 0,0769 \\
-Dorsal Meso-Atlántica    &  0 & 0 \\
+Cinturón de Fuego        & 47 & 79,7 \% & 1,81 \\
+Resto del mundo          & 10 & 16,9 \% & 0,385 \\
+Cinturón Alpino-Himalayo &  2 & 3,4 \%  & 0,0769 \\
+Dorsal Meso-Atlántica    &  0 & 0 \%    & 0 \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.7em}
-\bottomtablecaption{tbl-extremos-tasas}{Eventos de magnitud $M \geq 7{,}8$ por zona: conteos y tasas anuales.}
+\bottomtablecaption{tbl-extremos-tasas}{Eventos de magnitud $M \geq 7{,}8$ por zona: conteos, porcentajes y tasas anuales.}
 \endgroup
 ```
 
-Entre 2000 y 2025 se registraron 59 eventos con $M \geq 7{,}8$. El Cinturón de Fuego reunió 47, equivalentes a 79,7 % de los extremos, con una tasa de 1,81 por año. Esa concentración debe leerse junto con el desbalance del catálogo: la zona reúne 75,2 % de todos los eventos analizados, de modo que la sobrerrepresentación es pequeña y coherente con la ausencia de asociación del chi-cuadrado. Las tasas son conteos divididos por los 26 años observados, sin normalizar por superficie. La ausencia de eventos extremos en la Dorsal se limita al catálogo y período analizados.
+Entre 2000 y 2025 se registraron 59 eventos con $M \geq 7{,}8$. El Cinturón de Fuego reunió 47, equivalentes a 79,7 % de los extremos, con una tasa de 1,81 por año. Esa concentración es menos llamativa de lo que parece, porque el catálogo está desbalanceado: el Cinturón de Fuego reúne el 75,2 % de todos los eventos analizados, extremos o no. Si la severidad no dependiera de la zona, le corresponderían de todos modos cerca de 44,4 de los 59 extremos ($59 \times 0{,}752$); los 47 observados quedan apenas 4,5 puntos porcentuales por encima de esa base (79,7 % frente a 75,2 %). La concentración refleja, sobre todo, que en esa zona ocurre la mayoría de los eventos, en concordancia con la ausencia de asociación del chi-cuadrado aplicado a la `Tabla~\ref{tbl-extremos-contingencia}`{=latex} ($p = 0{,}307$). Las tasas son conteos divididos por los 26 años observados, sin normalizar por superficie. La ausencia de eventos extremos en la Dorsal se limita al catálogo y período analizados.
 
 Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, la composición de severidad no difiere de manera estadísticamente detectable entre las zonas adoptadas y la profundidad no explica que un evento supere el umbral $M \geq 7{,}0$. La única señal específica, la menor probabilidad de eventos mayores en la Dorsal, se estima con alta imprecisión y no basta para declarar un efecto global de zona. Estos resultados delimitan la pregunta de la sección siguiente: la profundidad no indica cuán grande es un evento, pero podría ayudar a identificar en qué zona ocurre.
 
@@ -1327,7 +1329,7 @@ Profundidad & 64,906 & 3 & $<0{,}001$  & Aporta aun controlando por magnitud \\
 \endgroup
 ```
 
-La profundidad aporta información global para distinguir las zonas incluso después de controlar por magnitud; la magnitud no. Este resultado responde la observación docente sobre variables que cambian de relevancia según la formulación del modelo: en la subsección anterior la profundidad no predijo si un evento alcanzaba $M \geq 7{,}0$; aquí sí distingue la zona del evento. No hay contradicción: son variables respuesta y preguntas distintas.
+La profundidad aporta información global para distinguir las zonas incluso después de controlar por magnitud; la magnitud no. Este resultado ilustra cómo una misma variable puede cambiar de relevancia según la pregunta del modelo: en la subsección anterior la profundidad no añadió información sobre si un evento alcanzaba $M \geq 7{,}0$; aquí sí distingue la zona del evento. No hay contradicción: son variables respuesta y preguntas distintas.
 
 Al estandarizar los predictores, la ecuación de la Dorsal produjo un coeficiente de profundidad de $-27{,}66$ con error estándar 7,21, un patrón de separación cuasi perfecta: como sus 28 eventos son superficiales, la profundidad la distingue de manera casi determinista y la estimación de máxima verosimilitud diverge. Los coeficientes finales se obtuvieron con la corrección de reducción de sesgo declarada en la metodología. La `Tabla~\ref{tbl-clasificacion-or}`{=latex} presenta las razones de odds del modelo corregido; cada una corresponde a un aumento de una desviación estándar del predictor (0,417 unidades de magnitud o 164,1 km de profundidad).
 
@@ -1571,7 +1573,7 @@ Para el contraste entre zona y categoría de magnitud de la sección de eventos 
 | Cinturón Alpino-Himalayo | 42,44 | 17,42 | 3,13 |
 | Dorsal Meso-Atlántica | 18,86 | 7,74 | 1,39 |
 
-: Frecuencias esperadas bajo independencia para el cruce entre zona y categoría de magnitud. Las dos celdas de la columna Grande o extremo (3,13 y 1,39) quedan bajo 5 y motivan el uso de la simulación. {#tbl-esperadas-extremos}
+: Frecuencias esperadas bajo independencia para el cruce entre zona y categoría de magnitud. {#tbl-esperadas-extremos}
 
 La corrección evita informar $p=0$ cuando ninguna simulación produce un resultado más extremo, pues ese resultado solo indica que el evento no apareció dentro del número finito de réplicas. En consecuencia, la resolución mínima con 10.000 simulaciones es:
 
@@ -1685,13 +1687,23 @@ En este caso, el período se asocia aproximadamente con el 22,1 % de la variabil
 
 ## Verosimilitud y estimación de los modelos {#sec-anexo-verosimilitud}
 
-Los modelos del informe (conteos, logístico y multinomial) se estimaron por máxima verosimilitud [@fisher_1922]. Si $P(y_i \mid \beta)$ es la probabilidad que el modelo con coeficientes $\beta$ asigna a la observación $i$, la verosimilitud del catálogo completo es:
+Estimar un modelo consiste en asignar valores numéricos a sus coeficientes $\beta$ a partir de los datos; esos valores cuantifican la dirección y el tamaño de cada relación, y de ellos derivan todas las cifras reportadas: razones de odds o de tasas, intervalos y contrastes. En este informe esa asignación se realizó por máxima verosimilitud [@fisher_1922]. Para cada observación $i$, $P(y_i \mid \beta)$ denota la probabilidad que el modelo con coeficientes $\beta$ asigna al resultado efectivamente observado $y_i$; en la regresión logística de eventos fuertes, $y_i$ vale 1 si el evento alcanzó $M \geq 7{,}0$ y 0 si no. La verosimilitud del catálogo completo es:
 
 $$
 L(\beta)=\prod_{i=1}^{n} P(y_i \mid \beta),
 $$
 
-y la estimación escoge el vector $\hat\beta$ que la maximiza: los coeficientes que hacen más probable lo efectivamente observado. A partir de ella se define la devianza, igual a $-2\log L$ salvo una constante; mientras menor, mejor el ajuste.
+es decir, la probabilidad de haber observado exactamente el catálogo que se observó. La estimación escoge el vector $\hat\beta$ que maximiza $L$, y de ahí el nombre del criterio: los coeficientes bajo los cuales lo observado resulta más probable, que son los que aparecen en las tablas de resultados de cada modelo.
+
+Existen otros criterios de estimación, como los mínimos cuadrados de la regresión lineal clásica, que escogen los coeficientes que minimizan las diferencias al cuadrado entre lo observado y lo ajustado. Se usó máxima verosimilitud porque es el criterio general para respuestas binarias, de conteo y multinomiales, donde los supuestos de los mínimos cuadrados no se sostienen (con respuesta continua y errores normales ambos criterios coinciden), y porque sus estimadores tienen propiedades conocidas en muestras grandes: errores estándar, intervalos y contrastes derivan de la misma función $L$, propiedades aplicables con los 1.186 eventos del catálogo.
+
+La devianza reexpresa la verosimilitud como medida de desajuste:
+
+$$
+D=-2\log L,
+$$
+
+salvo una constante que depende solo de los datos y se cancela al comparar modelos. Cumple aquí el papel que la suma de cuadrados de residuos cumple en la regresión lineal: mientras menor, mejor el ajuste. El logaritmo convierte el producto de probabilidades en una suma manejable y el factor $-2$ hace que las diferencias de devianza entre modelos anidados sigan una distribución chi-cuadrado, lo que habilita el contraste siguiente.
 
 La razón de verosimilitudes ($LR$) contrasta una variable comparando la devianza del modelo con y sin ella:
 
@@ -1705,7 +1717,18 @@ $$
 LR_{\text{zona}} = 1497{,}37 - 1490{,}01 = 7{,}3582,
 $$
 
-el valor reportado en la tabla de contrastes de esa sección. Ante separación, la estimación de máxima verosimilitud diverge y se reemplaza por la corrección de reducción de sesgo [@kosmidis_firth_2011], según se declara en la clasificación de zonas.
+el valor reportado en la tabla de contrastes de esa sección. Las devianzas de los modelos involucrados fueron:
+
+| Modelo | Devianza | $LR$ frente al completo (gl) | Valor p |
+|---|---:|---:|---:|
+| Completo (zona + profundidad) | 1490,012 | — | — |
+| Sin zona (solo profundidad) | 1497,370 | 7,358 (3) | 0,0613 |
+| Sin profundidad (solo zona) | 1490,323 | 0,312 (1) | 0,5766 |
+| Nulo (solo intercepto) | 1497,995 | — | — |
+
+: Devianzas de los modelos logísticos de eventos fuertes y contrastes de razón de verosimilitudes derivados. {#tbl-devianzas-logistica tbl-colwidths="[36,16,28,12]"}
+
+Ante separación, la estimación de máxima verosimilitud diverge y se reemplaza por la corrección de reducción de sesgo [@kosmidis_firth_2011], según se declara en la clasificación de zonas.
 
 ## Modelo de regresión logística {#sec-anexo-logistica}
 
@@ -1732,10 +1755,37 @@ $$
 Evaluada con el catálogo para la Dorsal Meso-Atlántica frente al Cinturón de Fuego en el umbral $M \geq 7{,}0$:
 
 $$
-OR=\frac{3/25}{295/597}=\frac{0{,}120}{0{,}494}=0{,}243,
+OR=\frac{3/25}{295/597}=\frac{0{,}120}{0{,}494}=0{,}243.
 $$
 
-valor cercano al 0,247 del modelo logístico, que además controla por profundidad. Un valor de 1 indica odds iguales a la referencia; menor que 1, odds menores; mayor que 1, odds mayores. Se reporta esta medida porque es la que entrega la regresión logística (la exponencial de cada coeficiente) y porque no depende del nivel de base de la referencia. La razón de odds no equivale a una razón de probabilidades (riesgo relativo); ambas se aproximan solo cuando el suceso es poco frecuente, por lo que con 32,6 % de eventos sobre el umbral la lectura se mantiene en términos de odds.
+Esta es la razón cruda: proviene solo de los conteos de la tabla. El modelo logístico repite la misma comparación entre eventos de igual profundidad y la estima mediante la exponencial del coeficiente de la Dorsal, $e^{-1{,}3986}=0{,}247$; esa versión ajustada es la que reporta el informe. Para las cuatro zonas:
+
+| Zona | $M{\geq}7{,}0$/resto | Probabilidad | Odds | OR crudo | OR modelo |
+|---|---:|---:|---:|---:|---:|
+| C. de Fuego (ref.) | 295 / 597 | 0,331 | 0,494 | 1 | 1 |
+| Resto del mundo | 69 / 134 | 0,340 | 0,515 | 1,042 | 1,032 |
+| C. Alpino-Himalayo | 20 / 43 | 0,317 | 0,465 | 0,941 | 0,950 |
+| D. Meso-Atlántica | 3 / 25 | 0,107 | 0,120 | 0,243 | 0,247 |
+
+: Probabilidad, odds y razones de odds de alcanzar $M \geq 7{,}0$ por zona. {#tbl-odds-zonas tbl-colwidths="[22,20,15,10,13,13]"}
+
+La cercanía entre las razones crudas y las del modelo muestra que el ajuste por profundidad casi no altera las comparaciones entre zonas, coherente con su contraste no significativo ($LR = 0{,}312$). Un valor de 1 indica odds iguales a la referencia; menor que 1, odds menores; mayor que 1, odds mayores.
+
+La razón de odds se reporta porque es la medida que la regresión logística entrega de forma directa. Su lectura exige una precaución: las odds no son probabilidades, y sus porcentajes no deben confundirse.
+
+La diferencia está en el denominador. En la Dorsal hay 28 eventos y 3 son mayores. La probabilidad divide por el total; las odds dividen por los eventos que no son mayores:
+
+$$
+\text{probabilidad}=\frac{3}{28}=0{,}107,
+\qquad
+\text{odds}=\frac{3}{25}=0{,}120.
+$$
+
+En el Cinturón de Fuego, con 892 eventos y 295 mayores, la probabilidad es $295/892=0{,}331$ y las odds son $295/597=0{,}494$.
+
+Cada medida produce su propia comparación entre zonas. En odds: $0{,}120/0{,}494=0{,}243$, un 75,7 % menos. En probabilidad: $0{,}107/0{,}331=0{,}324$, un 67,6 % menos. Los dos porcentajes son correctos, pero miden cosas distintas y no deben intercambiarse.
+
+Solo cuando el suceso es muy poco frecuente ambas medidas casi coinciden, porque el total y los eventos que no superan el umbral pasan a ser casi el mismo número. En este catálogo no ocurre: 32,6 % de los eventos supera el umbral. Por eso la sección de resultados dice que las odds de la Dorsal son 75,3 % menores y no que un evento mayor sea 75 % menos probable.
 
 ## Intervalos de confianza y el nivel del 95 % {#sec-anexo-ic}
 
@@ -1747,7 +1797,18 @@ $$
 \hat\beta \pm 1{,}96\,\widehat{EE}(\hat\beta),
 $$
 
-en las comparaciones por pares \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}, y el de verosimilitud perfilada, que no supone simetría y es preferible con pocos eventos [@venables_ripley_2002]. La diferencia se aprecia en la razón de odds de la Dorsal Meso-Atlántica: 0,247 con intervalo [0,058; 0,712], asimétrico porque con 3 eventos sobre el umbral la incertidumbre no se reparte por igual a ambos lados.
+en las comparaciones por pares \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}, y el de verosimilitud perfilada, que no supone simetría y es preferible con pocos eventos [@venables_ripley_2002]. La comparación de ambos métodos en el modelo de eventos fuertes muestra dónde difieren:
+
+| Término | OR | IC 95 % de Wald | IC 95 % perfilado |
+|---|---:|---:|---:|
+| Resto del mundo | 1,032 | [0,746; 1,427] | [0,744; 1,423] |
+| C. Alpino-Himalayo | 0,950 | [0,548; 1,646] | [0,538; 1,625] |
+| D. Meso-Atlántica | 0,247 | [0,074; 0,826] | [0,058; 0,712] |
+| Profundidad (por km) | 1,0002 | [0,9995; 1,0009] | [0,9995; 1,0009] |
+
+: Intervalos de Wald y perfilados para las razones de odds del modelo de eventos fuertes. {#tbl-ic-comparacion}
+
+En las zonas de mayor tamaño ambos métodos casi coinciden. En la Dorsal Meso-Atlántica difieren de forma visible: con 3 eventos sobre el umbral la incertidumbre no se reparte por igual a ambos lados, el intervalo perfilado lo refleja y es el que reporta el informe.
 
 ## Contraste de Wald {#sec-anexo-wald}
 
@@ -1765,7 +1826,18 @@ z=\frac{-1{,}3986}{0{,}6159}=-2{,}271,
 p=0{,}0231.
 $$
 
-Se utilizó donde se requieren varias comparaciones a partir de un mismo ajuste: los intervalos de las comparaciones por pares en frecuencia y los contrastes específicos de cada zona frente a la referencia en la regresión logística. No se usó para las decisiones globales por dos razones. Primero, evalúa un coeficiente a la vez, mientras que una variable como la zona aporta tres y debe contrastarse como bloque mediante razón de verosimilitudes \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}. Segundo, cerca de una separación el error estándar crece más rápido que el coeficiente y el estadístico pierde capacidad de detección justo cuando el efecto es más fuerte [@hauck_donner_1977].
+Para el conjunto de coeficientes del modelo:
+
+| Término | $\hat\beta$ | $\widehat{EE}(\hat\beta)$ | $z$ | Valor p |
+|---|---:|---:|---:|---:|
+| Resto del mundo | 0,0317 | 0,1653 | 0,192 | 0,8481 |
+| C. Alpino-Himalayo | -0,0512 | 0,2804 | -0,182 | 0,8552 |
+| D. Meso-Atlántica | -1,3986 | 0,6159 | -2,271 | 0,0231 |
+| Profundidad (por km) | 0,0002 | 0,0004 | 0,560 | 0,5751 |
+
+: Contrastes de Wald de los coeficientes del modelo logístico de eventos fuertes. {#tbl-wald-coeficientes}
+
+El contraste de Wald se utilizó donde se necesitan varias comparaciones de un mismo ajuste, pues todas salen de coeficientes y errores estándar ya calculados: los intervalos por pares en frecuencia y los contrastes de cada zona en la regresión logística (las cuatro filas de la tabla anterior provienen de un único modelo). Las decisiones globales, en cambio, se tomaron con la razón de verosimilitudes, por dos razones. Primero, Wald evalúa un coeficiente a la vez: para la zona entrega tres valores p (0,8481, 0,8552 y 0,0231) y ninguno responde por la variable completa, mientras que la razón de verosimilitudes la contrasta como bloque y entrega una sola respuesta ($LR=7{,}358$, $p=0{,}0613$) \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}. Segundo, Wald falla ante separación, es decir, cuando una zona presenta siempre el mismo resultado. Si la Dorsal tuviera 0 eventos mayores en vez de 3, el efecto sería el más extremo posible; pero el coeficiente estimado crecería sin límite, su error estándar crecería aún más rápido y, como $z$ es el cociente entre ambos, el estadístico se encogería y el valor p se acercaría a 1. Wald concluiría que la zona no tiene efecto justo cuando el efecto es total [@hauck_donner_1977]. Ese escenario ocurre de hecho en la clasificación de zonas y allí se aborda con la corrección de reducción de sesgo.
 
 ## Criterio de información de Akaike {#sec-anexo-aic}
 
@@ -1775,7 +1847,22 @@ $$
 \text{AIC}=-2\log L+2k,
 $$
 
-donde $L$ es la verosimilitud maximizada y $k$ el número de parámetros. La penalización $2k$ protege contra el sobreajuste. El AIC no se interpreta en valor absoluto: solo compara modelos ajustados sobre los mismos datos y se prefiere el menor; una diferencia menor que 2 indica respaldo prácticamente equivalente y se resuelve por parsimonia [@burnham_anderson_2004]. Evaluado en la comparación entre las dos representaciones de la profundidad de los eventos fuertes:
+donde $L$ es la verosimilitud maximizada y $k$ el número de parámetros. La penalización $2k$ protege contra el sobreajuste. El AIC no se interpreta en valor absoluto: solo compara modelos ajustados sobre los mismos datos y se prefiere el menor; una diferencia menor que 2 indica respaldo prácticamente equivalente y se resuelve por parsimonia [@burnham_anderson_2004]. En la comparación entre las dos representaciones de la profundidad de los eventos fuertes, los dos modelos fueron:
+
+| Componente | Profundidad continua | Profundidad categórica |
+|---|---:|---:|
+| Especificación | zona + profundidad (km) | zona + categoría de profundidad |
+| Parámetros estimados ($k$) | 5 | 6 |
+| Devianza residual | 1490,012 | 1488,261 |
+| $LR$ de la profundidad (gl) | 0,312 (1) | 2,063 (2) |
+| Valor p de la profundidad | 0,5766 | 0,3566 |
+| $LR$ de la zona (gl) | 7,358 (3) | 7,471 (3) |
+| Valor p de la zona | 0,0613 | 0,0583 |
+| AIC | 1500,012 | 1500,261 |
+
+: Comparación de los modelos logísticos según la representación de la profundidad. {#tbl-logisticas-profundidad tbl-colwidths="[34,32,32]"}
+
+La versión categórica ajusta apenas mejor (devianza 1,751 menor) al costo de un parámetro adicional, y la penalización del AIC revierte esa ventaja:
 
 $$
 \Delta\text{AIC}=1500{,}261-1500{,}012=0{,}249<2,
