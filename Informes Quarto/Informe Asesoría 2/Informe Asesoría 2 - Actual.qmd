@@ -110,7 +110,7 @@ como 2portada-informe.png) y actualizar la ruta en el bloque siguiente.
 \null
 \newpage
 
-\newgeometry{top=1.25cm,bottom=1.25cm,left=2.00cm,right=2.00cm,footskip=0.65cm}
+\newgeometry{top=1.20cm,bottom=1.20cm,left=1.85cm,right=1.85cm,footskip=0.65cm}
 
 \begingroup
 \color{asesoriaTextColor}
