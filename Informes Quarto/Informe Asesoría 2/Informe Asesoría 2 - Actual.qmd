@@ -224,9 +224,7 @@ La metodología se organiza en seis análisis encadenados más un análisis de s
 
 ## Comparabilidad de los procedimientos de reporte {#sec-met-comparabilidad}
 
-Antes de comparar las zonas, evaluamos si los procedimientos de reporte del catálogo podían introducir diferencias ajenas al comportamiento sísmico. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de localización. Las categorías de baja frecuencia se agruparon solo cuando no alteraban la pregunta sustantiva; el detalle de esas decisiones se documenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
-
-Antes de cualquier comparación sustantiva, esta sección pregunta si los procedimientos de reporte difieren según la zona o según el período. Su respuesta condiciona el resto del informe, porque una asociación fuerte entre el reporte y la zona obligaría a incorporar controles en los modelos posteriores, mientras que una asociación con el período restringiría las comparaciones temporales de magnitud.
+Esta sección evalúa si los procedimientos de reporte varían entre zonas o períodos y, por tanto, podrían condicionar las comparaciones posteriores. Para ello, examinamos la relación de la zona y el período con el tipo de magnitud, la fuente de magnitud y el ajuste residual de localización. Una asociación fuerte con la zona obligaría a incorporar controles en los modelos posteriores, mientras que una asociación con el período restringiría las comparaciones temporales de magnitud. Las categorías de baja frecuencia se agruparon solo cuando no alteraban la pregunta sustantiva; el detalle de esas decisiones se documenta en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
 En esta sección, las dócimas se formularon como contrastes de independencia para las variables categóricas de reporte y como contrastes de igualdad distribucional para el ajuste residual de localización. Por ejemplo, para el tipo de magnitud entre zonas:
 
@@ -256,9 +254,9 @@ Los cinco contrastes de comparabilidad se trataron como una familia exploratoria
 
 ## Comparación de la frecuencia de eventos entre zonas {#sec-met-frecuencia}
 
-La frecuencia de terremotos es un conteo de eventos por zona y año, por lo que la comparación se realizó con un modelo lineal generalizado de conteos y no con una comparación de medias. La unidad de análisis fue una combinación de zona y año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos medidas complementarias: la tasa anual, comparable con el Informe Asesoría 1, y la densidad por superficie. Las zonas tienen tamaños muy distintos, de modo que comparar solo los conteos favorecería a las más extensas; la densidad corrige esto al expresar los eventos por unidad de superficie. Para ello, la superficie de cada zona se incorpora al modelo como un offset: un término conocido que se suma con un coeficiente fijo, no estimado, y que traslada la comparación de conteos absolutos a conteos por kilómetro cuadrado. El propósito fue convertir la diferencia descriptiva del Informe Asesoría 1 en una afirmación inferencial que, además de establecer si las zonas difieren, cuantifique cuánto difieren y con qué precisión. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas y definición del offset})}.
+Esta sección evalúa si la frecuencia de eventos difiere entre zonas, tanto por año como por unidad de superficie. A diferencia del análisis temporal, aquí se comparan zonas resumiendo el período completo; la estabilidad de esa agregación se evalúa posteriormente.
 
-Este análisis se centra en la comparación espacial y pregunta si la tasa de ocurrencia difiere entre las cuatro zonas, tanto por año como por unidad de superficie. Para responderla, los 26 años se agregan y cada zona queda resumida por una tasa única del período. Esa agregación es defendible solo si la tasa no cambió de forma relevante dentro del período, condición que se evalúa en la metodología de estructura temporal de la ocurrencia.
+La frecuencia de terremotos es un conteo de eventos por zona y año, por lo que la comparación se realizó con un modelo lineal generalizado de conteos y no con una comparación de medias. La unidad de análisis fue una combinación de zona y año, con 104 observaciones correspondientes a 26 años y cuatro zonas. Las combinaciones sin eventos se conservaron con conteo cero, porque representan años observados sin terremotos del catálogo y no datos faltantes. Se estimaron dos medidas complementarias: la tasa anual, comparable con el Informe Asesoría 1, y la densidad por superficie. Las zonas tienen tamaños muy distintos, de modo que comparar solo los conteos favorecería a las más extensas; la densidad corrige esto al expresar los eventos por unidad de superficie. Para ello, la superficie de cada zona se incorpora al modelo como un offset: un término conocido que se suma con un coeficiente fijo, no estimado, y que traslada la comparación de conteos absolutos a conteos por kilómetro cuadrado. De este modo, la diferencia descriptiva del Informe Asesoría 1 se convierte en una comparación inferencial que cuantifica cuánto difieren las zonas y con qué precisión. \asesoriaStyledRef{(véase \hyperref[sec-anexo-areas]{anexo de áreas de zonas y definición del offset})}.
 
 El punto de partida fue un modelo Poisson con enlace logarítmico, apropiado para conteos, pero que supone que la varianza condicional iguala a la media. Los datos mostraron sobredispersión, condición que subestima los errores estándar e infla la significación si no se corrige. Se evaluó mediante la dispersión de Pearson, la prueba unilateral de Cameron-Trivedi y una comparación de verosimilitudes entre Poisson y binomial negativa [@cameron_trivedi_1990]. Las tres vías evalúan la misma condición, la igualdad entre la varianza y la media frente a una varianza mayor:
 
@@ -276,7 +274,7 @@ H_1:\ \operatorname{Var}(Y)>\mathbb{E}(Y)
 \endgroup
 ```
 
-Se consideró también la especificación quasi-Poisson, que mantiene la media del modelo Poisson y corrige los errores estándar multiplicándolos por un factor de escala [@mccullagh_nelder_1989]. Esta especificación, sin embargo, no define una distribución de probabilidad completa, sino solo la media y la varianza, por lo que carece de una verosimilitud que permita comparar modelos de forma formal. Se escogió la binomial negativa porque sí es una distribución completa, con verosimilitud explícita, necesaria tanto para el contraste global de zona mediante razón de verosimilitudes como para obtener las razones de tasa con sus intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@venables_ripley_2002]. El detalle de los tres diagnósticos, con sus definiciones, valores y la corrección por frontera del contraste, se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
+Se consideró también la especificación quasi-Poisson, que mantiene la media del modelo Poisson y corrige los errores estándar multiplicándolos por un factor de escala [@mccullagh_nelder_1989]. Esta especificación, sin embargo, no define una distribución de probabilidad completa, sino solo la media y la varianza, por lo que carece de una verosimilitud que permita comparar modelos de forma formal. Se escogió la binomial negativa porque sí es una distribución completa, con verosimilitud explícita, necesaria tanto para el contraste global de zona mediante razón de verosimilitudes como para obtener las razones de tasa con sus intervalos de confianza. El ajuste se realizó con `glm.nb` de `MASS`, siguiendo su documentación oficial [@venables_ripley_2002]. La justificación del modelo se presenta en el anexo correspondiente y el detalle de los tres diagnósticos, con sus definiciones, valores y la corrección por frontera del contraste, se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véanse \hyperref[sec-anexo-binomial-negativa]{anexo del modelo binomial negativo para conteos con sobredispersión} y \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
 
 El efecto global de zona se evaluó mediante una razón de verosimilitudes con tres grados de libertad, que compara el modelo con zonas frente a un modelo sin zonas \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}. Su hipótesis contrasta la igualdad de las cuatro tasas frente a la existencia de al menos una diferencia:
 
@@ -300,7 +298,7 @@ La validez de estas conclusiones descansa en cuatro supuestos. Primero, que los 
 
 ## Comparación de magnitud y profundidad entre zonas {#sec-met-magnitud-profundidad}
 
-Mientras la comparación de frecuencia pregunta cuántos eventos registra cada zona, este análisis examina cómo son esos eventos y evalúa si las distribuciones de magnitud y profundidad difieren entre las cuatro zonas. El Informe Asesoría 1 mostró magnitudes medias casi idénticas (6,90; 6,92 y 6,91) salvo la Dorsal Meso-Atlántica (6,69), y una profundidad con composición claramente distinta por zona; esta sección evalúa si esas diferencias descriptivas son estadísticamente defendibles.
+Mientras la comparación de frecuencia examina cuántos eventos registra cada zona, esta sección evalúa si sus distribuciones de magnitud y profundidad difieren. El Informe Asesoría 1 mostró magnitudes medias casi idénticas (6,90; 6,92 y 6,91) salvo la Dorsal Meso-Atlántica (6,69), y una profundidad con composición claramente distinta por zona; aquí evaluamos si esas diferencias descriptivas son estadísticamente defendibles.
 
 La comparación de magnitud y profundidad se realizó sobre `zona`, `mag` y `depth`, manteniendo la zonificación del Informe Asesoría 1. Antes de contrastar diferencias, evaluamos si era defendible usar una ruta paramétrica multivariante. Esta revisión era necesaria porque MANOVA supone un comportamiento conjunto aproximadamente normal y matrices de dispersión comparables; si esas condiciones no se cumplen, los valores p pueden reflejar colas, empates, valores extremos o heterogeneidad de varianzas más que diferencias reales entre zonas.
 
@@ -373,7 +371,7 @@ Los resultados de esta sección se retoman en la clasificación de zonas, donde 
 
 ## Estructura temporal de la ocurrencia {#sec-met-temporal}
 
-El análisis temporal formaliza el hallazgo descriptivo del \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1}, según el cual la ocurrencia anual fluctúa entre años, pero no muestra una tendencia visual uniforme. Este análisis complementa la comparación de frecuencia entre zonas. En esa sección resumimos el período completo para contrastar zonas; aquí agregamos las zonas para contrastar el tiempo. Ambos análisis usan los mismos conteos del catálogo, pero responden preguntas distintas. La comparación de frecuencia responde si la tasa de ocurrencia difiere entre zonas; este análisis evalúa si esa tasa se mantiene estable durante 2000-2025. Para abordar esa segunda pregunta, revisamos si los conteos fluctúan alrededor de un nivel estable (estacionariedad), si un período con muchos eventos tiende a ser seguido por otro igual de alto (autocorrelación), si algún tramo del período o algún mes concentra sistemáticamente más eventos (cambio de nivel y estacionalidad) y si los tiempos entre eventos consecutivos son compatibles con una tasa constante (ajuste exponencial). En este análisis usamos dos series de conteos construidas a partir del mismo catálogo. La serie anual permite comparar con la descripción previa y con los períodos de análisis, mientras que la serie mensual entrega mayor número de observaciones para diagnosticar estabilidad temporal, autocorrelación y estacionalidad.
+Esta sección evalúa si la tasa de ocurrencia del catálogo se mantiene estable durante 2000-2025. A diferencia de la comparación de frecuencia, que contrasta zonas durante todo el período, aquí se agregan las zonas para estudiar los cambios en el tiempo. El análisis formaliza el hallazgo descriptivo del \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1}, según el cual la ocurrencia anual fluctúa entre años, pero no muestra una tendencia visual uniforme. Revisamos si los conteos fluctúan alrededor de un nivel estable (estacionariedad), si un período con muchos eventos tiende a ser seguido por otro igual de alto (autocorrelación), si algún tramo del período o algún mes concentra sistemáticamente más eventos (cambio de nivel y estacionalidad) y si los tiempos entre eventos consecutivos son compatibles con una tasa constante (ajuste exponencial). Para ello usamos dos series construidas a partir del mismo catálogo. La serie anual permite comparar con la descripción previa y con los períodos de análisis, mientras que la serie mensual entrega más observaciones para diagnosticar estabilidad temporal, autocorrelación y estacionalidad.
 
 Evaluamos la estacionariedad mediante Dickey-Fuller aumentada (ADF) y KPSS, interpretadas en conjunto porque sus hipótesis nulas son opuestas [@said_dickey_1984; @kwiatkowski_etal_1992]. Aplicamos la dócima ADF con `adfTest()` del paquete `fUnitRoots`, usando la especificación sin constante ni tendencia (`type = "nc"`), ya que esta forma parte desde el contraste más parsimonioso y evita imponer componentes determinísticos adicionales antes de verificar si son necesarios. Usamos un rezago para la serie anual y doce rezagos para la serie mensual, con el fin de incorporar la dependencia inmediata entre años y, en la escala mensual, cubrir un ciclo anual completo. ADF parte desde la hipótesis de raíz unitaria, por lo que rechazarla entrega evidencia a favor de estacionariedad. KPSS parte desde la hipótesis de estacionariedad en nivel, por lo que no rechazarla respalda que la serie no presenta una desviación sistemática respecto de un nivel estable. Usar ambas evita depender de una sola prueba y permite distinguir conclusiones concordantes de situaciones ambiguas, especialmente en la serie anual, donde solo hay 26 observaciones [@banerjee_etal_1993].
 
@@ -431,7 +429,7 @@ $$
 
 ## Eventos fuertes y extremos {#sec-met-extremos}
 
-El análisis de eventos fuertes y extremos retoma las categorías de magnitud definidas en el Informe Asesoría 1, correspondientes a Fuerte ($6{,}5 \leq M < 7{,}0$), Mayor ($7{,}0 \leq M < 7{,}8$) y Grande o extremo ($M \geq 7{,}8$). La pregunta es distinta de la abordada en la comparación de frecuencia. Ya no interesa cuántos eventos registra cada zona, sino la composición de severidad dentro de cada una y si la probabilidad de que un evento alcance las categorías superiores cambia según la zona en que ocurrió. El análisis se organizó en cuatro componentes: una tabla de contingencia entre zona y categoría de magnitud, una regresión logística para la probabilidad de que un evento alcance $M \geq 7{,}0$, una comparación entre dos representaciones de la profundidad dentro de ese modelo y una descripción de los eventos con $M \geq 7{,}8$ mediante conteos y tasas anuales.
+Esta sección evalúa si la composición de severidad y la probabilidad de registrar eventos de mayor magnitud difieren entre zonas. A diferencia del análisis de frecuencia, interesa la gravedad relativa de los eventos y no su cantidad total. Para ello retomamos las categorías definidas en el Informe Asesoría 1, correspondientes a Fuerte ($6{,}5 \leq M < 7{,}0$), Mayor ($7{,}0 \leq M < 7{,}8$) y Grande o extremo ($M \geq 7{,}8$). El análisis se organizó en cuatro componentes: una tabla de contingencia entre zona y categoría de magnitud, una regresión logística para la probabilidad de que un evento alcance $M \geq 7{,}0$, una comparación entre dos representaciones de la profundidad dentro de ese modelo y una descripción de los eventos con $M \geq 7{,}8$ mediante conteos y tasas anuales.
 
 La tabla de contingencia cruza las cuatro zonas con las tres categorías de magnitud. Su dócima evalúa si la distribución de categorías es la misma en todas las zonas:
 
@@ -497,7 +495,7 @@ Los eventos con $M \geq 7{,}8$ se describieron mediante conteos por zona y tasas
 
 ## Clasificación de zonas a partir de magnitud y profundidad {#sec-met-clasificacion}
 
-La clasificación de zonas invierte la pregunta de las subsecciones anteriores. La zona deja de ser el factor que agrupa y pasa a ser la variable respuesta. El objetivo es responder la segunda componente de la pregunta estadística y evaluar si la magnitud y la profundidad, consideradas en conjunto, permiten identificar la zona a la que pertenece un evento. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
+Esta sección evalúa si la magnitud y la profundidad permiten identificar la zona de un evento. A diferencia de las comparaciones anteriores, la zona deja de ser el factor de agrupación y pasa a ser la variable respuesta. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
 
 El análisis de correspondencia es una técnica descriptiva para tablas de contingencia que compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017]. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola. Esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
 
@@ -1750,6 +1748,36 @@ $$
 
 Así, bajo una media de 45,5 eventos anuales, observar exactamente 58 eventos tiene probabilidad cercana al 1,1 %. Este cálculo no prueba por sí solo un cambio de tasa; el contraste usa todos los años y compara los períodos completos. Su aporte es mostrar por qué revisamos sobredispersión: si varios años quedan lejos de su media esperada, la variabilidad observada puede superar la prevista por Poisson. En ese caso usamos quasi-Poisson, que conserva la comparación de tasas pero corrige errores estándar y valores p.
 
+## Modelo binomial negativo para conteos con sobredispersión {#sec-anexo-binomial-negativa}
+
+La binomial negativa se usa cuando la respuesta es un conteo, pero la variabilidad observada supera la prevista por Poisson [@mccullagh_nelder_1989; @cameron_trivedi_1990]. En la comparación de frecuencia entre zonas, cada observación corresponde a una combinación zona-año y la respuesta es el número de terremotos registrados. Por eso el punto de partida natural es Poisson; sin embargo, ese modelo supone $\operatorname{Var}(Y_i)=\mu_i$, condición que no siempre se cumple en conteos sísmicos agregados.
+
+El modelo binomial negativo mantiene la media positiva mediante enlace logarítmico, igual que un GLM de conteos, pero incorpora un parámetro de dispersión $\theta$ [@venables_ripley_2002]:
+
+$$
+Y_i \sim \operatorname{BN}(\mu_i,\theta),
+\qquad
+\log(\mu_i)=\beta_0+\beta_1 X_{1i}+\cdots+\beta_p X_{pi}.
+$$
+
+Su diferencia central está en la varianza:
+
+$$
+\operatorname{Var}(Y_i)=\mu_i+\frac{\mu_i^2}{\theta}.
+$$
+
+Cuando $\theta$ es grande, el segundo término se aproxima a cero y el modelo se parece a Poisson. Cuando $\theta$ es finito, la varianza queda por encima de la media y el modelo reconoce la sobredispersión. Esta corrección no cambia la pregunta sustantiva, pero evita que los errores estándar sean demasiado pequeños y que los intervalos de confianza queden artificialmente estrechos.
+
+En este informe se utiliza la binomial negativa en la comparación de frecuencia entre zonas porque se requieren razones de tasa, intervalos de confianza y contraste global mediante verosimilitud. La especificación quasi-Poisson también corrige la varianza, pero no define una verosimilitud completa; por ello es suficiente para contrastes temporales simples, pero menos adecuada cuando se comparan modelos y se reportan razones de tasa.
+
+Como ejemplo con los datos del catálogo, el Cinturón de Fuego registra 892 eventos en 26 años, equivalente a 34,3 eventos por año. El Resto del mundo registra 203 eventos, equivalente a 7,8 eventos por año. La razón descriptiva entre ambas tasas es:
+
+$$
+\frac{7{,}8}{34{,}3}=0{,}228.
+$$
+
+El modelo binomial negativo formaliza esa comparación. Con el Cinturón de Fuego como referencia, una razón de tasa cercana a 0,228 indica que la tasa anual estimada del Resto del mundo equivale aproximadamente al 22,8 % de la tasa del Cinturón de Fuego. El aporte del modelo es acompañar esa razón con incertidumbre corregida por sobredispersión y permitir contrastar si las tasas difieren entre zonas.
+
 ## Medidas de tamaño de efecto {#sec-anexo-efecto}
 
 Un valor p indica si una diferencia es estadísticamente detectable, pero no cuán grande es; con 1.186 eventos, diferencias irrelevantes en la práctica pueden producir valores p pequeños. Por eso cada análisis del informe acompaña su dócima con una medida de tamaño de efecto, que cuantifica la magnitud de la diferencia en una escala interpretable. La medida depende del tipo de análisis y se resume por sección:
@@ -2039,23 +2067,9 @@ La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después d
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 
-Este anexo documenta los diagnósticos de especificación de los modelos de conteo. Los aspectos de separación y ajuste del modelo multinomial se declaran en la metodología y se interpretan junto con sus resultados.
+Este anexo documenta los diagnósticos utilizados para decidir entre los modelos Poisson y binomial negativo en la comparación de frecuencia entre zonas. La formulación, justificación e interpretación del modelo binomial negativo se presentan en el anexo correspondiente \asesoriaStyledRef{(véase \hyperref[sec-anexo-binomial-negativa]{anexo del modelo binomial negativo para conteos con sobredispersión})}. Aquí se presentan únicamente las comprobaciones aplicadas al catálogo y sus resultados.
 
-El modelo Poisson supone que, dentro de cada zona, el valor esperado y la varianza de los conteos coinciden:
-
-$$
-\mathbb{E}(Y)=\operatorname{Var}(Y)=\mu .
-$$
-
-La sobredispersión ocurre cuando la varianza supera a la media, $\operatorname{Var}(Y)>\mu$. Bajo esa condición, el modelo Poisson mantiene los coeficientes aproximadamente correctos, pero subestima sus errores estándar; en consecuencia, los intervalos de confianza resultan demasiado estrechos y la significación queda sobreestimada [@cameron_trivedi_1990]. El modelo binomial negativo agrega un parámetro de dispersión $\theta>0$ que permite que la varianza exceda a la media según
-
-$$
-\operatorname{Var}(Y)=\mu+\frac{\mu^{2}}{\theta} .
-$$
-
-Cuando $\theta$ es muy grande, el segundo término se aproxima a cero, la varianza tiende a $\mu$ y el modelo se reduce a la Poisson; un valor finito de $\theta$ incorpora el exceso de variabilidad observado, sin que los valores estimados cambien de forma apreciable. Lo que se corrige es la amplitud de los intervalos, que recuperan su tamaño realista [@venables_ripley_2002].
-
-En este catálogo, la sobredispersión se evaluó por tres vías concordantes, que se definen a continuación.
+La sobredispersión se evaluó mediante tres vías concordantes.
 
 La dispersión de Pearson es un índice descriptivo: la suma de los residuos de Pearson al cuadrado dividida por los grados de libertad residuales,
 
