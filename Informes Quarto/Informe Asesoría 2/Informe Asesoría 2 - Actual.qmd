@@ -1472,13 +1472,23 @@ La sensibilidad se examina mediante dos escenarios. El primero eleva el umbral a
 
 # Conclusiones y recomendaciones
 
-<!--
-Respuesta directa a las dos componentes de la pregunta estadística, en lenguaje para la
-contraparte, con cifras exactas e intervalos. Cerrar con recomendaciones de uso de los
-resultados y con el alcance declarado (sin predicción, causalidad ni amenaza).
--->
+A partir de los análisis realizados, concluimos que las zonas se distinguen sobre todo por cuántos terremotos ocurren y por la profundidad a la que se originan, no por su magnitud. Esta conclusión se sustenta en 1.186 eventos con $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025. Las diferencias observadas entre zonas tampoco parecen deberse principalmente a las fuentes o a los métodos utilizados para reportar los eventos, por lo que la comparación espacial resulta adecuada para el catálogo analizado.
 
-*Pendiente de redacción final: conclusiones ejecutivas con las cifras exactas de los análisis y recomendaciones para la contraparte.*
+La diferencia más clara corresponde a la frecuencia. El Cinturón de Fuego reunió 892 eventos y registró, en promedio, 34,3 por año. En comparación, Resto del mundo presentó 7,8 eventos anuales, el Cinturón Alpino-Himalayo 2,4 y la Dorsal Meso-Atlántica 1,1. El Cinturón de Fuego también mantuvo la mayor concentración después de considerar la superficie de cada zona. Por tanto, su predominio no se explica únicamente por la extensión territorial utilizada en la delimitación.
+
+La tasa anual y la densidad entregan lecturas complementarias. Resto del mundo ocupa el segundo lugar por cantidad de eventos, pero cae al último al expresar esa ocurrencia por unidad de superficie. Esto significa que acumula más terremotos que algunas zonas porque comprende una extensión muy amplia y heterogénea, no porque presente una mayor concentración espacial. Por esta razón, las comparaciones futuras deberían informar ambas medidas y no basarse solo en los conteos totales.
+
+La actividad presenta años y meses con más eventos que otros, pero esas fluctuaciones no forman un aumento, una disminución ni un patrón estacional sostenido durante 2000-2025. Tampoco se observa que un período con alta ocurrencia sea seguido sistemáticamente por otro similar. En consecuencia, una tasa anual única por zona resume de manera razonable el período estudiado, aunque no debe interpretarse como una predicción de la actividad futura.
+
+La magnitud cambia muy poco entre zonas. Aunque el análisis detectó una diferencia global, su tamaño fue tan reducido que, en términos prácticos, las magnitudes se encuentran ampliamente superpuestas. La profundidad entrega una distinción más clara. La Dorsal Meso-Atlántica se caracteriza por eventos superficiales, mientras que el Cinturón de Fuego comprende eventos superficiales, intermedios y profundos. Así, conocer la profundidad ayuda a reconocer perfiles propios de algunas zonas, pero no permite separarlas completamente.
+
+La mayor cantidad de eventos mayores y extremos en el Cinturón de Fuego tampoco significa que sus terremotos sean proporcionalmente más severos. Esta zona concentra esos eventos principalmente porque reúne la mayor parte de todos los terremotos del catálogo. Una vez considerada esa diferencia de frecuencia, no se encontró evidencia suficiente de que la composición de severidad cambie entre zonas ni de que la profundidad determine si un evento alcanza $M \geq 7{,}0$.
+
+La magnitud y la profundidad no bastan para identificar de manera confiable la zona donde ocurrió un terremoto. La profundidad aporta información y permite reconocer parcialmente el perfil superficial de la Dorsal Meso-Atlántica, pero existe demasiado solapamiento entre las zonas. El modelo terminó asignando todos los eventos al Cinturón de Fuego y alcanzó una exactitud de 75,21 %, el mismo resultado que se obtendría clasificando siempre en la zona mayoritaria. Por ello, este modelo no debe utilizarse como herramienta operativa de clasificación.
+
+En respuesta a la pregunta estadística, las zonas sí difieren en su tasa de ocurrencia y en las distribuciones de magnitud y profundidad. Sin embargo, la diferencia relevante se concentra en la frecuencia y, en menor medida, en la profundidad. La magnitud aporta poca separación práctica y su combinación con la profundidad no permite determinar de forma confiable la zona de un evento.
+
+Para apoyar decisiones futuras, se recomienda informar conjuntamente la tasa anual y la densidad por superficie, interpretar Resto del mundo como una categoría residual y mantener separadas las nociones de frecuencia y severidad. Si la contraparte requiere identificar zonas o desarrollar una herramienta de clasificación, será necesario incorporar ubicación geográfica, cercanía a límites de placas, tipo de contacto tectónico u otras variables espaciales y geológicas. Los resultados de este informe permiten orientar la comparación y comunicación del catálogo, pero no estimar amenaza, riesgo sísmico ni probabilidades futuras de ocurrencia.
 
 \newpage
 
