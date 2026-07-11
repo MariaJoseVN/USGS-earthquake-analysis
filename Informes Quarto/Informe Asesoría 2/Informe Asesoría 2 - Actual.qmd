@@ -213,9 +213,9 @@ El desarrollo se realiza en Positron, como entorno de trabajo para R, y en QGIS 
 
 ## Declaración y lineamientos para el uso responsable de inteligencia artificial
 
-El equipo declara que sí utilizó herramientas de inteligencia artificial generativa como apoyo técnico, documental y editorial durante el desarrollo de esta etapa de la asesoría. Su uso se mantuvo bajo criterios de trazabilidad, revisión humana, contraste con los datos originales y ejecución reproducible. La selección de métodos, la ejecución del análisis, la interpretación de los resultados, las conclusiones y las decisiones finales permanecieron bajo responsabilidad de los integrantes, y ninguna asistencia modificó los datos ni los resultados estadísticos presentados.
+El equipo utilizó herramientas de inteligencia artificial generativa como apoyo en búsquedas metodológicas, revisión documental y aspectos editoriales. Estas consultas surgieron a partir de diagnósticos realizados por los integrantes y se orientaron a localizar alternativas en la documentación de R y en la literatura estadística. Las funciones, paquetes y fuentes sugeridas se revisaron antes de incorporarse al análisis. La selección metodológica, la ejecución de los scripts, la interpretación y las decisiones finales permanecieron bajo responsabilidad del equipo.
 
-La declaración detallada de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas se presenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
+El procedimiento de búsqueda, verificación bibliográfica y uso complementario de NotebookLM, Zotero y QGIS se documenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
 
 \newpage
 # Metodología
