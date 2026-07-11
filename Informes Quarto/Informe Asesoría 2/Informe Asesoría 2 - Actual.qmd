@@ -2237,4 +2237,53 @@ Este anexo presenta las tablas espejo de los dos escenarios de sensibilidad (umb
 
 ## Declaración ampliada de uso de inteligencia artificial {#sec-anexo-declaracion-ia}
 
-*Pendiente: detalle de herramientas, fechas, propósitos, productos asociados, tipos de apoyo y verificaciones realizadas durante esta etapa, en el mismo formato del Informe Asesoría 1.*
+- [X] El equipo declara que sí utilizó herramientas de inteligencia artificial generativa durante el desarrollo de esta etapa de la asesoría, según se detalla a continuación:
+
+```{=latex}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.16}
+\Needspace{18\baselineskip}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-declaracion-uso-ia}
+\hypertarget{dest-tbl-declaracion-uso-ia}{}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.12\textwidth}>{\raggedright\arraybackslash}p{0.09\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}}
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endfirsthead
+\toprule
+Herramienta utilizada & Fecha aproximada de uso & Propósito del uso & Sección o producto asociado & Tipo de apoyo recibido & Verificación realizada por el equipo \\
+\midrule
+\endhead
+Codex de OpenAI & julio de 2026 & Apoyar la búsqueda de alternativas estadísticas frente a supuestos incumplidos o características detectadas por el equipo. & Modelos de conteo, análisis temporal, comparación de distribuciones y clasificación. & Búsqueda dirigida en la documentación de R, sugerencia de funciones y paquetes estadísticos e identificación de publicaciones originales asociadas. & Revisión de la ayuda de R y de la documentación de cada paquete, descarga y lectura de las publicaciones originales y apoyo de NotebookLM para precisar fuentes en inglés. \\
+NotebookLM & julio de 2026 & Apoyar la lectura y revisión de bibliografía publicada en inglés. & Antecedentes, metodología y anexos estadísticos. & Traducción de fragmentos, síntesis de documentos incorporados por el equipo y localización de contenidos dentro de las fuentes. & Comparación de las respuestas con los documentos originales y revisión de su correspondencia con las afirmaciones del informe. \\
+Zotero & julio de 2026 & Organizar y comprobar las fuentes utilizadas durante el análisis. & Biblioteca del proyecto, citas y archivo \texttt{referencias.bib}. & Gestión bibliográfica de autores, títulos, fechas, DOI, URL y documentos consultados. & Contraste de los registros con las publicaciones originales y comprobación de la información bibliográfica. \\
+QGIS & julio de 2026 & Calcular y verificar la superficie de las zonas utilizadas en la comparación espacial. & Variable \texttt{Area}, capa \texttt{zonas\_inf2.geojson} y modelos de frecuencia por superficie. & Cálculo geométrico de las áreas, revisión de los polígonos y preparación de la exposición incorporada como offset. & Comprobación del sistema de referencia, inspección visual de las zonas y contraste de las superficies utilizadas en los modelos. \\
+Codex de OpenAI & julio de 2026 & Apoyar la organización documental y la revisión formal del informe. & Archivo QMD, anexos, citas, referencias cruzadas y presentación final. & Sugerencias de claridad, coherencia y sintaxis Quarto y LaTeX. & Revisión, modificación y aprobación manual de cada cambio por el equipo. \\
+\bottomrule
+\end{longtable}
+\vspace{-3.08em}
+\addtocounter{table}{-1}
+\begin{center}\footnotesize\itshape Tabla~\ref*{tbl-declaracion-uso-ia}. Declaración detallada de las herramientas utilizadas durante el Informe Asesoría 2.\end{center}
+\endgroup
+```
+
+### Detalle aclaratorio del uso
+
+El procedimiento comenzaba con un diagnóstico realizado por el equipo. Cuando los resultados mostraban un supuesto incumplido o una característica que requería otro tratamiento, se consultaba a Codex si existían alternativas documentadas en R o en sus paquetes, de manera similar a una búsqueda mediante `help()`, `?función` o `??término`. En algunos casos, Codex sugirió directamente funciones o paquetes que podían implementar el procedimiento requerido. Estas sugerencias se consideraron puntos de partida y no decisiones metodológicas definitivas.
+
+El equipo revisaba la ayuda de R, la documentación del paquete, los argumentos y ejemplos de las funciones y las referencias bibliográficas indicadas por sus autores. Cuando la documentación remitía a un artículo metodológico, el equipo localizaba y descargaba la publicación original para revisar sus supuestos, fundamentos y condiciones de aplicación. Si el texto estaba en inglés o requería precisar conceptos técnicos, se incorporaba a NotebookLM como apoyo para la lectura, la traducción de fragmentos y el contraste de la interpretación. La decisión final se basaba en la documentación y en el artículo original, no únicamente en la respuesta de Codex o NotebookLM. Solo después de esta revisión se incorporaba la alternativa a los scripts y se contrastaban sus resultados con los diagnósticos iniciales.
+
+Este procedimiento se aplicó frente a la sobredispersión de los conteos, en la revisión de estacionariedad e independencia serial, en la elección de una ruta no paramétrica ante el incumplimiento de los supuestos multivariantes y en las dificultades de estimación del modelo multinomial.
+
+La verificación documental se apoyó además en Zotero, utilizado para organizar las publicaciones, comprobar sus metadatos y conservar la correspondencia entre autores, títulos, DOI, URL y archivos consultados. Zotero no corresponde a una herramienta de inteligencia artificial, pero se declara por su función dentro del proceso de trazabilidad y verificación. La selección de los métodos, su implementación, la ejecución de los análisis y la interpretación de los resultados permanecieron bajo responsabilidad de los integrantes.
+
+QGIS se utilizó para calcular la superficie de los polígonos que representan las zonas de comparación y registrar esos valores en la variable `Area` de la capa `zonas_inf2.geojson`. Las superficies obtenidas se incorporaron posteriormente como exposición en los modelos de densidad. El equipo verificó el sistema de referencia, la delimitación de los polígonos y la correspondencia entre los valores calculados y los utilizados en el análisis. QGIS tampoco corresponde a una herramienta de inteligencia artificial, pero se incluye por su participación directa en la construcción de una variable utilizada por los modelos.
+
+De manera complementaria, Codex se utilizó para organizar referencias bibliográficas y revisar aspectos formales del archivo QMD, como claridad, coherencia, referencias cruzadas y sintaxis Quarto y LaTeX. Las propuestas fueron revisadas y modificadas por el equipo antes de incorporarse al documento.
+
+La inteligencia artificial no se utilizó como fuente de resultados estadísticos ni como sustituto de la evaluación metodológica. Los resultados incluidos en el informe proceden de los scripts reproducibles y fueron comprobados por el equipo mediante sus tablas, gráficos, diagnósticos y fuentes de respaldo. El equipo asume la responsabilidad por la selección metodológica, la exactitud de los resultados, su interpretación y la versión final del informe.
