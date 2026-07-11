@@ -72,6 +72,8 @@ header-includes:
         \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
       }%
     }
+    \RedeclareSectionCommand[afterskip=0.9ex]{subsection}
+    \RedeclareSectionCommand[afterskip=0.8ex]{subsubsection}
     \AtBeginDocument{%
       \color{asesoriaTextColor}%
       \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaLinkColor}%
@@ -106,7 +108,7 @@ como 2portada-informe.png) y actualizar la ruta en el bloque siguiente.
 \null
 \newpage
 
-\newgeometry{top=1.30cm,bottom=1.35cm,left=2.15cm,right=2.15cm,footskip=0.65cm}
+\newgeometry{top=1.25cm,bottom=1.25cm,left=2.00cm,right=2.00cm,footskip=0.65cm}
 
 \begingroup
 \color{asesoriaTextColor}
@@ -153,7 +155,7 @@ La dimensión temporal se aborda para verificar si las fluctuaciones observadas 
 
 El presente informe corresponde a la etapa inferencial de la asesoría y formaliza los patrones descritos en la etapa anterior. El estudio se articula en torno a la siguiente pregunta estadística:
 
-> **¿Difieren formalmente las zonas sísmicas en la tasa de ocurrencia, la magnitud y la profundidad de los terremotos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, y permiten la magnitud y la profundidad, evaluadas en conjunto, clasificar la zona sísmica a la que pertenece un evento?**
+> **¿Difieren formalmente las zonas sísmicas en la tasa de ocurrencia y en las distribuciones de magnitud y profundidad de los terremotos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, y permiten la magnitud y la profundidad, consideradas en conjunto, clasificar la zona sísmica a la que pertenece un evento?**
 
 Esta pregunta conserva la unidad de análisis, el catálogo, el período, el umbral de magnitud y la zonificación definidos en el Informe Asesoría 1, y agrega dos componentes nuevos: la formalización de las comparaciones mediante dócimas y modelos con niveles de significación justificados, y la reformulación de la comparación entre zonas como un problema de clasificación, en el cual se evalúa si las variables físicas del evento (magnitud y profundidad) identifican la zona en que ocurre. El alcance de esta etapa es inferencial sobre el catálogo definido: las conclusiones no representan predicción, causalidad ni estimación de amenaza sísmica.
 
@@ -172,7 +174,7 @@ Finalmente, la reformulación de la comparación entre zonas como un problema de
 
 ## Objetivo general
 
-Contrastar formalmente las diferencias de frecuencia, magnitud y profundidad entre las zonas sísmicas definidas para los terremotos $M \geq 6{,}5$ del catálogo USGS 2000-2025, mediante dócimas y modelos con niveles de significación justificados y controles explícitos de heterogeneidad, y evaluar si la magnitud y la profundidad permiten clasificar la zona sísmica de un evento, con el fin de entregar conclusiones ejecutivas respaldadas y verificadas mediante análisis de sensibilidad.
+Evaluar inferencialmente si los patrones de ocurrencia, magnitud, profundidad y severidad de los terremotos $M \geq 6{,}5$ del catálogo USGS 2000-2025 difieren entre zonas sísmicas, y si la magnitud y la profundidad permiten clasificar la zona de un evento, considerando la comparabilidad del registro y la robustez de las conclusiones.
 
 ## Objetivos específicos
 
@@ -182,17 +184,19 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 \begin{itemize}
 \setlength{\itemsep}{0.9em}
 
-\item \textbf{OE1. Comparar} la frecuencia de eventos entre zonas mediante tasas normalizadas por superficie y modelos de conteo, cuantificando las razones de tasa con sus intervalos de confianza.
+\item \textbf{OE1. Verificar} la comparabilidad del registro entre zonas y períodos, mediante variables de reporte y ajuste de localización, para identificar posibles diferencias asociadas al procedimiento de medición.
 
-\item \textbf{OE2. Contrastar} las distribuciones de magnitud y profundidad entre zonas, evaluando previamente los supuestos multivariantes y aplicando la ruta no paramétrica que corresponda, con tamaños de efecto e intervalos de confianza.
+\item \textbf{OE2. Comparar} la frecuencia de eventos entre zonas mediante tasas anuales, densidades por superficie y modelos de conteo, cuantificando razones de tasa e intervalos de confianza.
 
-\item \textbf{OE3. Analizar} la estructura temporal de la ocurrencia mediante dócimas de estacionariedad e independencia, comparación de tasas entre períodos y ajuste distribucional de los tiempos entre eventos.
+\item \textbf{OE3. Contrastar} las distribuciones de magnitud y profundidad entre zonas, evaluando los supuestos del análisis multivariante y aplicando la ruta no paramétrica correspondiente.
 
-\item \textbf{OE4. Examinar} los eventos fuertes y extremos utilizando las categorías de magnitud definidas en el Informe Asesoría 1, mediante tablas de contingencia y regresión logística.
+\item \textbf{OE4. Analizar} la estructura temporal de la ocurrencia mediante pruebas de estacionariedad, independencia serial, comparación de tasas por período y mes, y ajuste de tiempos entre eventos.
 
-\item \textbf{OE5. Integrar} la magnitud y la profundidad en un modelo de clasificación de zonas, evaluando su capacidad de discriminación con métricas por clase y respondiendo la segunda componente de la pregunta estadística.
+\item \textbf{OE5. Examinar} la composición de eventos fuertes, mayores y grandes o extremos por zona, mediante tablas de contingencia y modelos logísticos para el umbral $M \geq 7{,}0$.
 
-\item \textbf{OE6. Verificar} la robustez de las conclusiones mediante un análisis de sensibilidad ante el umbral de magnitud y la definición de las zonas de comparación.
+\item \textbf{OE6. Evaluar} si la magnitud y la profundidad permiten clasificar la zona sísmica de un evento, mediante análisis de correspondencia, regresión logística multinomial y métricas de desempeño por clase.
+
+\item \textbf{OE7. Verificar} la robustez de las conclusiones ante cambios en el umbral de magnitud y en la definición de las zonas de comparación.
 
 \end{itemize}
 ```
@@ -525,7 +529,6 @@ El área bajo la curva ROC (AUC) resume el equilibrio entre sensibilidad y falso
 La validez del modelo descansa en tres condiciones. Los eventos se tratan como observaciones independientes, las zonas son categorías excluyentes y los predictores continuos entran con relación lineal en la escala de log-odds. La condición adicional de no separación se revisó de manera explícita y no se cumple para la Dorsal; ese incumplimiento se declara y se aborda con la corrección descrita. Los criterios de decisión de estas dócimas se resumen en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
 ## Diseño del análisis de sensibilidad {#sec-diseno-sensibilidad}
-
 
 
 ## Criterios de interpretación estadística
@@ -1494,7 +1497,7 @@ resultados y con el alcance declarado (sin predicción, causalidad ni amenaza).
 
 El análisis conserva la base `sismos` del Informe Asesoría 1, integrada por 1.186 eventos, junto con sus variables derivadas. Entre ellas se encuentra `rms_imp`, versión completada del RMS que incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. La comparación descriptiva realizada en el informe anterior mostró que esta imputación no modificó sustancialmente la media, mediana, dispersión ni cuantiles. El RMS representa el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye por sí solo una medida completa de precisión instrumental o espacial.
 
-También se mantienen `magnitud_cat`, `profundidad_cat`, `zona` y `magType_grupo`. La única información nueva es la superficie de los polígonos de zona, incorporada como exposición en los modelos de conteo. El detalle de los objetos generados y de su correspondencia con los scripts se completará una vez cerrados los modelos finales.
+También se mantienen `magnitud_cat`, `profundidad_cat`, `zona` y `magType_grupo`. La única información nueva es la superficie de los polígonos de zona, incorporada como exposición en los modelos de conteo. La correspondencia entre variables, scripts y objetos derivados se conserva en el flujo reproducible del repositorio.
 
 ## Áreas de zonas y definición del offset {#sec-anexo-areas}
 
@@ -1643,7 +1646,7 @@ $$
 V=\sqrt{\frac{\phi^2}{\min(r-1,c-1)}},
 $$
 
-donde $n$ es el número de observaciones y $r$ y $c$ corresponden al número de filas y columnas de la tabla. Para reducir su sesgo positivo se aplicó la corrección propuesta por @bergsma_2013:
+donde $n$ es el número de observaciones y $r$ y $c$ corresponden al número de filas y columnas de la tabla. Para reducir su sesgo positivo se aplicó la corrección propuesta en la literatura [@bergsma_2013]:
 
 $$
 \widetilde{\phi}^{\,2}
@@ -2039,7 +2042,7 @@ La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después d
 
 ## Diagnósticos de los modelos {#sec-anexo-diagnosticos}
 
-Este anexo documenta los diagnósticos de especificación de los modelos. Los correspondientes al modelo multinomial se incorporarán junto con sus resultados finales.
+Este anexo documenta los diagnósticos de especificación de los modelos de conteo. Los aspectos de separación y ajuste del modelo multinomial se declaran en la metodología y se interpretan junto con sus resultados.
 
 El modelo Poisson supone que, dentro de cada zona, el valor esperado y la varianza de los conteos coinciden:
 
