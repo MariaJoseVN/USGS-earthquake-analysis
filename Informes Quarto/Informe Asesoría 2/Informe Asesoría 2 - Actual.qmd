@@ -54,6 +54,7 @@ header-includes:
           \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
         }{%
           \begingroup
+          \vspace{-0.65em}%
           \setlength{\fboxsep}{3pt}%
           \makebox[\linewidth][l]{%
             \parbox[t]{\linewidth}{%
@@ -72,8 +73,9 @@ header-includes:
         \asesoriaOriginalSectionLinesFormat{#1}{#2}{#3}{#4}%
       }%
     }
-    \RedeclareSectionCommand[afterskip=0.9ex]{subsection}
-    \RedeclareSectionCommand[afterskip=0.8ex]{subsubsection}
+    \RedeclareSectionCommand[beforeskip=1.4ex]{section}
+    \RedeclareSectionCommand[beforeskip=2.2ex,afterskip=0.9ex]{subsection}
+    \RedeclareSectionCommand[beforeskip=1.8ex,afterskip=0.8ex]{subsubsection}
     \AtBeginDocument{%
       \color{asesoriaTextColor}%
       \hypersetup{linkcolor=asesoriaTextColor,urlcolor=asesoriaTextColor,citecolor=asesoriaLinkColor}%
@@ -201,7 +203,6 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 \end{itemize}
 ```
 
-\newpage
 # Alcance del informe
 
 Este informe corresponde a la segunda etapa de la asesoría, de carácter inferencial. La unidad de análisis, el catálogo, el período 2000-2025, el umbral $M \geq 6{,}5$ y la zonificación se heredan sin modificaciones del Informe Asesoría 1, de modo que ambos documentos son directamente comparables. Las conclusiones se derivan exclusivamente del catálogo USGS definido y deben interpretarse dentro de sus límites, cobertura y características.
