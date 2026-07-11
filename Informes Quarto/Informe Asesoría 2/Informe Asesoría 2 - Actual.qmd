@@ -527,9 +527,6 @@ El área bajo la curva ROC (AUC) resume el equilibrio entre sensibilidad y falso
 
 La validez del modelo descansa en tres condiciones. Los eventos se tratan como observaciones independientes, las zonas son categorías excluyentes y los predictores continuos entran con relación lineal en la escala de log-odds. La condición adicional de no separación se revisó de manera explícita y no se cumple para la Dorsal; ese incumplimiento se declara y se aborda con la corrección descrita. Los criterios de decisión de estas dócimas se resumen en el anexo metodológico. \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}.
 
-## Diseño del análisis de sensibilidad {#sec-diseno-sensibilidad}
-
-
 # Resultados y discusión
 
 ## Comparabilidad del registro {#sec-res-comparabilidad}
@@ -1458,6 +1455,20 @@ Magnitud y profundidad & 9 & 1746,76 \\
 Agregar la profundidad al modelo que solo contiene magnitud mejora el ajuste ($LR = 64{,}906$; $p < 0{,}001$); agregar la magnitud al que ya contiene profundidad no lo mejora ($LR = 5{,}102$; $p = 0{,}1645$). El menor AIC corresponde al modelo con solo profundidad y la diferencia con el conjunto, 0,899, favorece al más parsimonioso. La hipótesis de que ambas variables ganarían relevancia al actuar conjuntamente no queda respaldada en su forma completa, ya que el aporte conjunto se reduce al aporte de la profundidad.
 
 Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, la magnitud y la profundidad, incluso consideradas conjuntamente, no permiten clasificar la zona sísmica de un evento con las proporciones observadas. El modelo no supera la base trivial de 75,21 %. La profundidad sí desplaza las probabilidades relativas de zona, con información distribucional real, pero no alcanza para reasignar clases. En conjunto con la sección de frecuencia, la conclusión es que el Cinturón de Fuego se distingue por cuánto y dónde ocurre su actividad, no por la magnitud o la profundidad de sus eventos individuales.
+
+## Alcance, limitaciones y sensibilidad de los resultados {#sec-res-sensibilidad}
+
+Los resultados no presentan el mismo grado de estabilidad en todos los análisis. Las diferencias de frecuencia entre zonas son amplias y se mantienen al considerar tanto las tasas anuales como la superficie, por lo que constituyen el hallazgo más consistente del informe. En cambio, las estimaciones de la Dorsal Meso-Atlántica presentan mayor incertidumbre debido a su menor número de eventos. "Resto del mundo" también requiere una interpretación diferenciada, ya que corresponde a una categoría residual y no a una unidad tectónica única.
+
+La heterogeneidad entre zonas, magnitudes y fuentes de reporte se abordó mediante procedimientos diferenciados. Las zonas se compararon utilizando tasas anuales y densidades por superficie. Para calcular estas últimas, la superficie se incorporó como exposición del modelo mediante un offset, lo que permite distinguir la frecuencia total de la concentración de eventos por unidad espacial. Este ajuste mejora la comparabilidad entre zonas de distinta extensión, pero no elimina sus diferencias tectónicas internas.
+
+La heterogeneidad de las magnitudes se consideró mediante un umbral común de $M \geq 6{,}5$, la comparación de las distribuciones completas y la clasificación de los eventos según su severidad. La posible heterogeneidad del reporte se examinó comparando el tipo y la fuente de magnitud y el ajuste residual de localización entre zonas y períodos. No se identificaron diferencias materiales en estos procedimientos entre zonas, aunque su composición cambia a través del tiempo. Esta revisión permite reconocer posibles efectos del proceso de medición, pero no equivale a homogeneizar instrumentalmente las magnitudes del catálogo.
+
+En la comparación de magnitud y profundidad, el incumplimiento de los supuestos multivariantes llevó a utilizar procedimientos no paramétricos. Esta decisión permite sostener las conclusiones sin imponer normalidad ni homogeneidad de las matrices de covarianza, pero restringe su interpretación a diferencias entre distribuciones. En el análisis temporal, la serie anual contiene solo 26 observaciones, por lo que las pruebas tienen una capacidad limitada para detectar cambios débiles.
+
+La clasificación presenta la principal limitación aplicada del informe. Aunque la profundidad modifica las probabilidades relativas de zona y permite distinguir parcialmente el perfil de la Dorsal Meso-Atlántica, el fuerte desbalance del catálogo lleva al modelo a clasificar todos los eventos en el Cinturón de Fuego. Por ello, la significación de los coeficientes no se interpreta como evidencia de una capacidad clasificatoria suficiente. Las curvas ROC complementan esta evaluación, pero no modifican la conclusión general.
+
+La sensibilidad se examina mediante dos escenarios. El primero eleva el umbral a $M \geq 7{,}0$ para determinar si las conclusiones dependen de los eventos con magnitudes entre 6,5 y 6,9. El segundo excluye "Resto del mundo" y restringe la comparación a los tres cinturones sísmicos definidos. La robustez se evalúa comparando la dirección, la magnitud y la incertidumbre de los resultados con el escenario principal, sin interpretar los escenarios como nuevas familias independientes de contrastes.
 
 # Conclusiones y recomendaciones
 
