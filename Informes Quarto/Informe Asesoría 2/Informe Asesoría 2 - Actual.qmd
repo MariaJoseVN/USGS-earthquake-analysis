@@ -298,7 +298,7 @@ H_1:\ \lambda_{h}\neq\lambda_{h'} \ \text{para algún } h\neq h'
 \endgroup
 ```
 
-Una vez establecido el efecto global, se examinaron las seis comparaciones posibles entre zonas. Sus valores p se ajustaron mediante el procedimiento de Holm, que controla en 5 % la probabilidad de obtener al menos un falso positivo dentro de cada familia de seis contrastes [@holm_1979]. El tamaño del efecto (cuán grande es la diferencia entre zonas, no solo si existe) se expresó como razón de tasa y de densidad: un valor de 1 representa igualdad, un valor mayor que 1 indica mayor frecuencia en la primera zona y un valor menor que 1 indica menor frecuencia. Cada razón se acompañó de un intervalo de confianza del 95 %, obtenido por verosimilitud perfilada en las comparaciones con la zona de referencia, que no supone simetría y es preferible en zonas con pocos eventos, y por el método de Wald en las comparaciones por pares \asesoriaStyledRef{(véanse el \hyperref[sec-anexo-ic]{anexo de intervalos de confianza} y el \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. La decisión combinó el valor p ajustado, la magnitud de la razón y la amplitud del intervalo, con cautela adicional para las zonas de menor conteo. Los desarrollos formales de estas comparaciones se presentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
+Una vez establecido el efecto global, se examinaron las seis comparaciones posibles entre zonas. Sus valores p se ajustaron mediante el procedimiento de Holm, que controla en 5 % la probabilidad de obtener al menos un falso positivo dentro de cada familia de seis contrastes [@holm_1979]. El tamaño del efecto (cuán grande es la diferencia entre zonas, no solo si existe) se expresó como razón de tasa y de densidad: un valor de 1 representa igualdad, un valor mayor que 1 indica mayor frecuencia en la primera zona y un valor menor que 1 indica menor frecuencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-efecto]{anexo de medidas de tamaño de efecto})}. Cada razón se acompañó de un intervalo de confianza del 95 %, obtenido por verosimilitud perfilada en las comparaciones con la zona de referencia, que no supone simetría y es preferible en zonas con pocos eventos, y por el método de Wald en las comparaciones por pares \asesoriaStyledRef{(véanse el \hyperref[sec-anexo-ic]{anexo de intervalos de confianza} y el \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. La decisión combinó el valor p ajustado, la magnitud de la razón y la amplitud del intervalo, con cautela adicional para las zonas de menor conteo. Los desarrollos formales de estas comparaciones se presentan fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}.
 
 La validez de estas conclusiones descansa en cuatro supuestos. Primero, que los conteos de cada zona y año son independientes entre sí una vez descontado el efecto de zona. Segundo, que cada fila cubre el mismo tiempo de observación, un año, lo que permite compararlos como tasas anuales. Tercero, que la superficie de cada zona se mantiene constante durante todo el período. Cuarto, que la forma de varianza de la binomial negativa describe adecuadamente la variabilidad de los conteos. Los supuestos evaluables a partir del ajuste se revisaron mediante la dispersión residual, los residuos de Pearson, la distancia de Cook y la autocorrelación residual dentro de cada zona. Por último, la categoría "Resto del mundo" se trata como un cierre residual y heterogéneo del catálogo, no como un cinturón tectónico, por lo que sus resultados no se interpretan como los de una zona sísmica coherente.
 
@@ -471,7 +471,23 @@ H_1:\ \beta_{\text{zona}_h}\neq 0 \ \text{para algún } h
 
 donde $\beta_{\text{zona}_h}$ es el coeficiente que compara la zona $h$ con el Cinturón de Fuego.
 
-La inferencia se organiza así en dos niveles. El contraste global decide si una variable aporta en conjunto: es la dócima anterior, con una sola respuesta por variable. Las pruebas de Wald individuales responden una pregunta más específica, cuál zona difiere de la referencia, y se reportan solo como detalle del contraste global, nunca en su reemplazo: elegir entre las tres comparaciones la más significativa, sin un veredicto global previo, aumentaría el riesgo de declarar un efecto por azar \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. El tamaño de efecto se expresó como razón de odds (odds ratio), donde las odds son el cociente entre la probabilidad de superar el umbral y la de no superarlo: un valor de 1 indica igualdad con la referencia y un valor menor que 1, menor probabilidad relativa \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}. Cada razón se acompañó de un intervalo de confianza del 95 % obtenido por verosimilitud perfilada, que no supone simetría y es preferible en zonas con pocos eventos [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-ic]{anexo de intervalos de confianza})}. Se descartó una regresión multinomial con la categoría de magnitud como respuesta: la categoría Grande o extremo reúne pocos eventos en las zonas menores, lo que desestabiliza la estimación, y la clasificación multinomial corresponde a la sección siguiente, con la zona como respuesta.
+La inferencia se organiza así en dos niveles. El contraste global decide si una variable aporta en conjunto: es la dócima anterior, con una sola respuesta por variable. Las pruebas de Wald individuales responden una pregunta más específica, cuál zona difiere de la referencia, y contrastan cada coeficiente por separado:
+
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0.35em}
+\setlength{\belowdisplayskip}{0.35em}
+\vspace{-0.6em}
+\[
+H_0:\ \beta_{j}=0
+\quad \text{v/s} \quad
+H_1:\ \beta_{j}\neq 0
+\]
+\vspace{-0.6em}
+\endgroup
+```
+
+donde $\beta_j$ es, por separado, el coeficiente de cada zona frente a la referencia o el de la profundidad. Estas pruebas se reportan solo como detalle del contraste global, nunca en su reemplazo: elegir entre las tres comparaciones la más significativa, sin un veredicto global previo, aumentaría el riesgo de declarar un efecto por azar \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. El tamaño de efecto (cuán grande es la diferencia, no solo si existe) se expresó como razón de odds (odds ratio), donde las odds son el cociente entre la probabilidad de superar el umbral y la de no superarlo: un valor de 1 indica igualdad con la referencia y un valor menor que 1, menor probabilidad relativa \asesoriaStyledRef{(véase \hyperref[sec-anexo-or]{anexo de la razón de odds})}. Cada razón se acompañó de un intervalo de confianza del 95 % obtenido por verosimilitud perfilada, que no supone simetría y es preferible en zonas con pocos eventos [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-ic]{anexo de intervalos de confianza})}. Se descartó una regresión multinomial con la categoría de magnitud como respuesta: la categoría Grande o extremo reúne pocos eventos en las zonas menores, lo que desestabiliza la estimación, y la clasificación multinomial corresponde a la sección siguiente, con la zona como respuesta.
 
 La profundidad se evaluó en dos representaciones: continua, en kilómetros, y categórica, con las clases Superficial, Intermedio y Profundo heredadas del Informe Asesoría 1. Ambas versiones del modelo se compararon mediante la razón de verosimilitudes de cada variable y el criterio de información de Akaike (AIC), que penaliza los parámetros adicionales para equilibrar ajuste y simplicidad. Una diferencia de AIC menor que 2 se interpretó como respaldo prácticamente equivalente [@burnham_anderson_2004] \asesoriaStyledRef{(véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike})}; en ese caso se privilegió la especificación más parsimoniosa y que no pierde información por categorización.
 
@@ -1697,6 +1713,25 @@ $$
 $$
 
 En este caso, el período se asocia aproximadamente con el 22,1 % de la variabilidad de los rangos. Ambos resultados se interpretaron mediante sus valores numéricos y no mediante puntos de corte rígidos.
+
+## Medidas de tamaño de efecto {#sec-anexo-efecto}
+
+Un valor p indica si una diferencia es estadísticamente detectable, pero no cuán grande es; con 1.186 eventos, diferencias irrelevantes en la práctica pueden producir valores p pequeños. Por eso cada análisis del informe acompaña su dócima con una medida de tamaño de efecto, que cuantifica la magnitud de la diferencia en una escala interpretable. La medida depende del tipo de análisis y se resume por sección:
+
+| Sección de resultados | Análisis | Medida de tamaño de efecto |
+|---|---|---|
+| Comparabilidad del registro | Asociaciones categóricas | V de Cramér corregida |
+| Comparabilidad del registro | Kruskal-Wallis del RMS | Epsilon cuadrado |
+| Frecuencia entre zonas | Modelo binomial negativo | Razones de tasa y de densidad |
+| Magnitud y profundidad entre zonas | Kruskal-Wallis | Epsilon cuadrado |
+| Magnitud y profundidad entre zonas | Comparaciones por pares Dunn-Holm | Delta de Cliff |
+| Eventos fuertes y extremos | Tabla de contingencia | V de Cramér corregida |
+| Eventos fuertes y extremos | Regresión logística | Razón de odds |
+| Clasificación de zonas | Regresión multinomial | Razones de odds |
+
+: Medida de tamaño de efecto utilizada en cada sección de resultados. {#tbl-medidas-efecto tbl-colwidths="[34,36,30]"}
+
+La V de Cramér y epsilon cuadrado se mueven entre 0 (sin asociación) y 1; delta de Cliff, entre $-1$ y 1, con 0 indicando superposición total entre las dos distribuciones comparadas; las razones de tasa y de odds comparan cada zona con la referencia, con el 1 como valor de igualdad. La estructura temporal no requirió una medida de asociación: sus resultados se expresan directamente como tasas anuales por período. El desarrollo de cada medida se encuentra en su anexo \asesoriaStyledRef{(véanse los anexos de \hyperref[sec-anexo-cramer]{corrección por sesgo de la V de Cramér}, \hyperref[sec-anexo-epsilon]{cálculo de epsilon cuadrado} y \hyperref[sec-anexo-or]{razón de odds})}; delta de Cliff se define en la especificación de dócimas y modelos \asesoriaStyledRef{(véase \hyperref[sec-anexo-especificacion]{anexo de especificación de dócimas y modelos})}. Ninguna conclusión del informe se establece con el valor p aislado: la decisión combina el valor p, el tamaño de efecto y su intervalo de confianza.
 
 ## Verosimilitud y estimación de los modelos {#sec-anexo-verosimilitud}
 
