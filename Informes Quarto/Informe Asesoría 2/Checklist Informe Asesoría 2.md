@@ -1,8 +1,8 @@
 # Checklist de trabajo: Informe Asesoría 2
 
-**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 4 de julio de 2026
+**Grupo Tetrametric** | Documento de seguimiento interno | Actualizado: 10 de julio de 2026
 
-**Avance:** Fases 0, 1, 2, 4 y 5 cerradas (C0, C1, C2, C5, C6). Fase 3: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Fase 6: C7 sustancialmente cerrado (resultados calculados y verificados en el script 11; falta exportar los biplots del 6.2 y la frase ejecutiva 7.6; el 6.1 se excluyó por decisión del grupo). Siguiente: Fase 7 (sensibilidad, script 12) y redacción final.
+**Avance:** Fases 0, 1, 2, 4 y 5 cerradas (C0, C1, C2, C5, C6); **Fase 5 auditada línea a línea (10 jul 2026):** los 16 bloques del script 10 ejecutados con el usuario en Positron y verificados contra el QMD sin discrepancias. Fase 3: C3 cerrado (ruta no paramétrica), C4 sustancialmente cerrado (falta solo el 3.9, bootstrap de medianas). Fase 6: C7 sustancialmente cerrado (resultados verificados en el script 11; secciones 6.6 y 7.6 redactadas y biplots exportados; el 6.1 se excluyó por decisión del grupo; las cifras siguen sujetas a la edición final del script 11). Redacción del informe: secciones 6.2/7.2 (frecuencia), 6.5/7.5 (extremos) y 6.6/7.6 (clasificación) redactadas en `Informe Asesoría 2 - Actual.qmd` (documento oficial vigente), con una capa de anexos didácticos. Siguiente: cerrar el 3.9, Fase 7 (sensibilidad, script 12) y redacción final (conclusiones, resumen ejecutivo, 7.8, portada).
 
 Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecución con puntos de control (C0 a C9). En cada punto de control se comparten los resultados (salida de consola de R en texto, con los llamados exactos utilizados) para validar el camino antes de avanzar. Las compuertas duras son **C2, C3 y C7**: no se avanza de fase sin cerrarlas.
 
@@ -44,18 +44,24 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 
 ## Fase 2. Frecuencia entre zonas: GLM de conteos (sección 7.2, análisis mínimo 1)
 
-- [x] **2.1** Modelo de conteos con Cinturón de Fuego como referencia. **Hecho:** Poisson de tasa anual (`m_tasa`) como principal, más versión con `offset = log(area_km2)` para densidad.
-- [x] **2.2** Diagnóstico de sobredispersión por las tres vías:
-  - [x] dispersión de Pearson: **1,41**.
-  - [x] `AER::dispersiontest`: **z = 2,149; p = 0,016; dispersión 1,36**.
-  - [x] razón de verosimilitud vs `glm.nb` (p ÷ 2): **LR = 5,63; p = 0,009**.
-- [x] **2.3** Compuerta. **Decisión: binomial negativa** (sobredispersión leve pero consistente en las tres vías).
-- [x] **2.4** Razones de tasa con IC 95 % vs Cinturón de Fuego. **Resultado:** Resto 0,228 [0,191; 0,270]; Alpino 0,071 [0,053; 0,092]; Dorsal 0,031 [0,021; 0,045] (los tres excluyen 1).
-- [x] **2.5** Tabla puente. **Hallazgo:** por densidad el orden se reordena a Fuego 0,720 > Alpino 0,167 > Dorsal 0,057 > Resto 0,018; "Resto del mundo" cae al último por su enorme superficie.
+> Numeración alineada con `07_inf_frecuencia.R` y reverificada por ejecución con Rscript (10 jul 2026). El script se amplió respecto a la versión inicial: se agregaron los contrastes globales (2.4) y los seis pares con Holm (2.6), por lo que la numeración corrió (razones de tasa al 2.5, tabla puente al 2.7).
+
+- [x] **2.1** Modelo Poisson de conteos zona-año con Cinturón de Fuego como referencia (`m_tasa`). **Hecho:** tasa anual base de Fuego 34,3 eventos/año; grilla de 104 filas (4 zonas x 26 años), suma 1.186, sin `NA` en área.
+- [x] **2.2** Diagnóstico de sobredispersión por tres vías convergentes (alfa = 0,05):
+  - [x] dispersión de Pearson: **1,409579** (validada con el quasi-Poisson: 1,409584).
+  - [x] Cameron-Trivedi (`AER::dispersiontest`): **z = 2,149; p = 0,0158; dispersión 1,36** (alternativa lineal). Con `trafo = 2` (alternativa cuadrática, la de la binomial negativa): **z = 2,349; p = 0,0094; alfa = 0,022**.
+  - [x] razón de verosimilitud Poisson vs `glm.nb` con corrección de frontera (p ÷ 2): **LR = 5,63; p = 0,0088** (el `lrtest` sin corregir daría 0,0177, no se reporta). Tercer índice informal: deviance/gl = 1,57.
+- [x] **2.3** Compuerta. **Decisión: binomial negativa** (sobredispersión leve pero consistente en las tres vías). Se ajustan los dos modelos finales: tasa anual (`m_nb`, theta = 42,35) y densidad con `offset(log(area_km2))` (`m_nb_dens`).
+- [x] **2.4** Contrastes globales de zona (cada modelo final vs su nulo, razón de verosimilitud con 3 gl; parámetros interiores, sin corrección de frontera). **Resultado:** tasa anual **LR = 220,37** (p = 1,67e-47); densidad **LR = 225,85** (p = 1,09e-48). Las cuatro zonas no comparten una misma tasa ni una misma densidad.
+- [x] **2.5** Razones de tasa con IC 95 % de perfil vs Cinturón de Fuego. **Resultado (tasa anual):** Resto 0,228 [0,191; 0,270]; Alpino 0,071 [0,053; 0,092]; Dorsal 0,031 [0,021; 0,045] (los tres excluyen 1). **Densidad:** Resto cae a 0,025 [0,021; 0,030], el menor por km².
+- [x] **2.6** Comparaciones por pares (6 parejas, p de Wald ajustados por Holm dentro de cada métrica; validadas con `multcomp::glht`). **Resultado:** las seis son significativas en ambas métricas. En tasa, el p ajustado máximo es 0,00045 (Alpino-Dorsal, el par más apretado: razón 2,25 [1,43; 3,54]). Rankings inferenciales completos: tasa **Fuego > Resto > Alpino > Dorsal**; densidad **Fuego > Alpino > Dorsal > Resto**.
+- [x] **2.7** Tabla puente con el Informe 1. **Hallazgo:** tasa anual bruta 34,3 / 7,81 / 2,42 / 1,08 (reproduce el Informe 1); por densidad el orden se reordena a Fuego 0,720 > Alpino 0,167 > Dorsal 0,057 > Resto 0,018; "Resto del mundo" cae al último por su enorme superficie.
+
+**Diagnóstico del modelo final (bloque posterior a la inferencia):** dispersión de Pearson de la binomial negativa 1,14 y deviance/gl 1,29 (variabilidad residual controlada); Ljung-Box sobre los residuos por zona sin autocorrelación tras Holm (p mínimo 0,262, Dorsal).
 
 **Qué se espera:** sobredispersión leve o moderada (los conteos anuales globales de grandes sismos suelen ser aproximadamente Poisson); razones de tasa muy grandes y significativas contra la Dorsal. Lo interesante es si el orden de las zonas cambia al normalizar por área.
 
-**Checkpoint C2 (compuerta dura):** ✅ **Cerrado (3 jul 2026), script `07_inf_frecuencia.R`.** Modelo binomial negativa elegido. Figura `inf2-frecuencia-tasa-densidad.png` y frase ejecutiva en la sección 7.2 del `.qmd`.
+**Checkpoint C2 (compuerta dura):** ✅ **Cerrado (3 jul 2026; script ampliado y reverificado por ejecución el 10 jul 2026), script `07_inf_frecuencia.R`.** Modelo binomial negativa elegido; contraste global, razones de tasa y densidad, y seis pares con Holm establecidos. Figura `inf2-frecuencia-tasa-densidad.png` y frase ejecutiva en la sección 7.2 del `.qmd`. *Pendiente de limpieza: el bloque del forest plot (`inf2-frecuencia-forest.png`) quedó huérfano tras retirar esa figura del informe por decisión del grupo; el script aún lo genera.*
 
 ---
 
@@ -110,6 +116,8 @@ Este checklist ordena el desarrollo del Informe Asesoría 2 en fases de ejecuci�
 **Qué se espera:** en la logística, la zona Dorsal con odds ratio bajo (su máximo de magnitud es bajo) pero con IC amplio; el efecto de `depth` es la incógnita interesante y conecta con el comentario del profesor sobre variables que ganan relevancia en modelos múltiples.
 
 **Checkpoint C6:** ✅ **Cerrado (3 jul 2026), script `10_inf_extremos.R` (revisado y verificado en ejecución).** La categoría de magnitud no difiere por zona; la profundidad no predice que un evento sea grande (OR ~ 1, coherente con el Bartlett de la Fase 3); solo la Dorsal tiene menor probabilidad de eventos M ≥ 7,0. Contraste clave para la Fase 6: la profundidad no dice qué tan grande es un evento, pero sí ayudará a decir en qué zona ocurre. Frase ejecutiva en la sección 7.5 del `.qmd`.
+
+**Auditoría completa (10 jul 2026):** los 16 bloques del script 10 se ejecutaron con el usuario en Positron y se verificaron contra el QMD sin discrepancias. Bloques 13-16 confirmados: logística con profundidad categórica (Dorsal β = -1,39065, p = 0,024; profundidad categórica no significativa, LR 2,0625, p = 0,357); comparación AIC continua 1500,012 vs categórica 1500,261 (se mantiene la continua, ΔAIC = 0,249, más simple); M ≥ 7,8 por zona 47 / 10 / 2 / 0. Secciones 6.5 (metodología) y 7.5 (resultados) redactadas en el QMD oficial, con una capa de anexos didácticos (verosimilitud, logística, OR, IC, Wald, AIC, tamaño de efecto) y 7 referencias nuevas verificadas en el `.bib`.
 
 ---
 
