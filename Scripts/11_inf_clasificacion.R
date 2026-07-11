@@ -399,26 +399,31 @@ graficar_roc_zonas <- function() {
     "Dorsal Meso-Atlantica" = "#6a3d9a"
   )
 
-  primera_zona <- names(roc_por_zona)[1]
-
   graphics::plot(
-    roc_por_zona[[primera_zona]],
-    col = colores_zona[primera_zona],
-    lwd = 2,
-    legacy.axes = TRUE,
-    identity = FALSE,
+    NA,
+    xlim = c(0, 1),
+    ylim = c(0, 1),
+    xaxs = "i",
+    yaxs = "i",
     main = "Curvas ROC por zona: uno contra el resto",
     xlab = "1 - especificidad",
     ylab = "Sensibilidad"
   )
 
-  for (zona_i in names(roc_por_zona)[-1]) {
-    graphics::plot(
-      roc_por_zona[[zona_i]],
+  graphics::abline(a = 0, b = 1, lty = 2, col = "grey65")
+
+  for (zona_i in names(roc_por_zona)) {
+    curva_i <- roc_por_zona[[zona_i]]
+    x_i <- 1 - curva_i$specificities
+    y_i <- curva_i$sensitivities
+    orden_i <- order(x_i, y_i)
+
+    graphics::lines(
+      x_i[orden_i],
+      y_i[orden_i],
+      type = "s",
       col = colores_zona[zona_i],
-      lwd = 2,
-      identity = FALSE,
-      add = TRUE
+      lwd = 2
     )
   }
 
