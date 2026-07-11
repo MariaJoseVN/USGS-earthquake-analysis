@@ -141,11 +141,13 @@ Se adjuntan los siguientes enlaces como productos derivados del informe.
 
 # Formulación del problema y pregunta estadística
 
-## Síntesis del Informe Asesoría 1 {#sec-sintesis-informe-1}
+## Síntesis del Informe Asesoría 1 y paso a la etapa inferencial {#sec-sintesis-informe-1}
 
-El Informe Asesoría 1 caracterizó 1.186 terremotos de magnitud $M \geq 6{,}5$ registrados por la United States Geological Survey (USGS) entre 2000 y 2025 *[@valderrama_rojas_2026]*. El Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año; el conjunto "Resto del mundo" reúne 203 eventos (17,12 %), el Cinturón Alpino-Himalayo registra 63 (5,31 %) y la Dorsal Meso-Atlántica, 28 (2,36 %). Las magnitudes medias resultaron prácticamente idénticas entre el Cinturón de Fuego, el resto del mundo y el Cinturón Alpino-Himalayo (6,90, 6,92 y 6,91, respectivamente), mientras que la Dorsal Meso-Atlántica presentó una media menor, de 6,69, con la dispersión más baja del conjunto (0,19). La profundidad fue la variable que mejor distinguió a las zonas: el Cinturón de Fuego registra eventos superficiales, intermedios y profundos; el Cinturón Alpino-Himalayo no registra eventos profundos; y la Dorsal Meso-Atlántica concentra únicamente eventos superficiales.
+El \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1} caracterizó 1.186 terremotos de magnitud $M \geq 6{,}5$ registrados por la United States Geological Survey (USGS) entre 2000 y 2025. Los principales hallazgos son la fuerte concentración espacial de la ocurrencia en el Cinturón de Fuego, la similitud general de las magnitudes medias entre zonas, la mayor diferenciación observada en profundidad y una serie temporal con fluctuaciones, pero sin una tendencia uniforme para todo el período.
 
-En la dimensión temporal, la serie anual mostró fluctuaciones sin una tendencia uniforme, y los tiempos entre eventos consecutivos presentaron medianas de 15,6 días para el grupo $M \geq 7{,}0$ y de 123,0 días para la categoría "Grande o extremo". La conclusión central de la etapa descriptiva fue que el Cinturón de Fuego se diferencia principalmente por la frecuencia y continuidad de su actividad, y no por el nivel medio de magnitud de sus eventos.
+Este informe toma esos patrones descriptivos como punto de partida y los reformula como preguntas inferenciales. Primero se revisa la comparabilidad del registro; luego, en frecuencia, se evalúa si las tasas de ocurrencia difieren formalmente entre zonas y si esa diferencia se mantiene al considerar la superficie. En magnitud y profundidad, se contrastan las distribuciones completas, no solo sus promedios, y se retoman las categorías de magnitud para examinar los eventos fuertes y extremos.
+
+La dimensión temporal se aborda para verificar si las fluctuaciones observadas en el catálogo corresponden a cambios sostenidos en la ocurrencia o a variación propia del período analizado. Finalmente, la comparación entre zonas se extiende a un problema de clasificación: evaluar si la magnitud y la profundidad, consideradas en conjunto, aportan información para identificar la zona sísmica del evento.
 
 ## Pregunta estadística de la etapa inferencial
 
@@ -154,21 +156,6 @@ El presente informe corresponde a la etapa inferencial de la asesoría y formali
 > **¿Difieren formalmente las zonas sísmicas en la tasa de ocurrencia, la magnitud y la profundidad de los terremotos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, y permiten la magnitud y la profundidad, evaluadas en conjunto, clasificar la zona sísmica a la que pertenece un evento?**
 
 Esta pregunta conserva la unidad de análisis, el catálogo, el período, el umbral de magnitud y la zonificación definidos en el Informe Asesoría 1, y agrega dos componentes nuevos: la formalización de las comparaciones mediante dócimas y modelos con niveles de significación justificados, y la reformulación de la comparación entre zonas como un problema de clasificación, en el cual se evalúa si las variables físicas del evento (magnitud y profundidad) identifican la zona en que ocurre. El alcance de esta etapa es inferencial sobre el catálogo definido: las conclusiones no representan predicción, causalidad ni estimación de amenaza sísmica.
-
-## Del hallazgo descriptivo a la hipótesis formal {#sec-hilo-conductor}
-
-La @tbl-hilo-conductor conecta cada hallazgo del Informe Asesoría 1 con la hipótesis formal que este informe contrasta y con el método correspondiente. Esta correspondencia ordena el desarrollo de las secciones de resultados.
-
-| Hallazgo del Informe Asesoría 1 | Hipótesis formal | Método |
-|---------------------------------|------------------|--------|
-| Tasas anuales de 34,3; 7,8; 2,4 y 1,1 eventos por año según zona | Las tasas de ocurrencia difieren entre zonas, incluso al normalizar por superficie | GLM de conteos (Poisson o binomial negativa) con offset de área |
-| Magnitudes medias casi idénticas (6,90; 6,92; 6,91) salvo la Dorsal Meso-Atlántica (6,69) | Igualdad de las distribuciones de magnitud entre zonas | Evaluación de supuestos, Kruskal-Wallis y post-hoc de Dunn con Holm |
-| La profundidad separa a las zonas: composición distinta de `profundidad_cat` | Igualdad de las distribuciones de profundidad e independencia entre zona y categoría de profundidad | Kruskal-Wallis y chi-cuadrado con p-valor por simulación |
-| Serie anual con fluctuaciones sin tendencia uniforme | Estacionariedad y estabilidad de la tasa anual de ocurrencia | ADF y KPSS en conjunto, Ljung-Box y comparación de tasas decadales |
-| Medianas de 15,6 días ($M \geq 7{,}0$) y 123,0 días ("Grande o extremo") entre eventos | Los tiempos entre eventos son compatibles con un régimen exponencial | Bondad de ajuste con bootstrap paramétrico y diagnóstico gráfico |
-| Ninguna variable separa a las zonas por sí sola | La magnitud y la profundidad, en conjunto, permiten clasificar la zona del evento | Correlaciones parciales, análisis de correspondencia y regresión logística multinomial |
-
-: Hilo conductor entre la etapa descriptiva y la etapa inferencial. {#tbl-hilo-conductor tbl-colwidths="[36,32,32]"}
 
 \newpage
 # Antecedentes
