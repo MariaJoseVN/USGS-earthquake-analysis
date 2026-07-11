@@ -1490,7 +1490,7 @@ resultados y con el alcance declarado (sin predicción, causalidad ni amenaza).
 
 ## Continuidad de datos y variables {#sec-anexo-continuidad}
 
-El análisis conserva la base `sismos` del Informe Asesoría 1, integrada por 1.186 eventos, junto con sus variables derivadas. Entre ellas se encuentra `rms_imp`, versión completada del RMS que incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. La comparación descriptiva realizada en el informe anterior mostró que esta imputación no modificó sustancialmente la media, mediana, dispersión ni cuantiles. El RMS representa el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye por sí solo una medida completa de precisión instrumental o espacial.
+Este anexo identifica los datos y las variables heredadas del Informe Asesoría 1 y documenta las incorporaciones realizadas en esta etapa. El análisis conserva la base `sismos`, integrada por 1.186 eventos, junto con sus variables derivadas. Entre ellas se encuentra `rms_imp`, versión completada del RMS que incorpora nueve valores ausentes imputados mediante la mediana de la década correspondiente. La comparación descriptiva realizada en el informe anterior mostró que esta imputación no modificó sustancialmente la media, mediana, dispersión ni cuantiles. El RMS representa el ajuste residual entre los tiempos de llegada observados y los estimados por el modelo de localización, pero no constituye por sí solo una medida completa de precisión instrumental o espacial.
 
 También se mantienen `magnitud_cat`, `profundidad_cat`, `zona` y `magType_grupo`. La única información nueva es la superficie de los polígonos de zona, incorporada como exposición en los modelos de conteo. La correspondencia entre variables, scripts y objetos derivados se conserva en el flujo reproducible del repositorio.
 
@@ -1573,6 +1573,8 @@ Los tamaños de efecto se incluyeron para evitar conclusiones basadas solo en si
 
 ## Precisión de la simulación Monte Carlo {#sec-anexo-montecarlo}
 
+Este anexo documenta la precisión de los valores p obtenidos mediante simulación Monte Carlo y las condiciones que justifican su uso.
+
 En cada prueba se generaron $B=10.000$ tablas bajo la hipótesis de independencia y con los mismos totales marginales que la tabla observada [@hope_1968; @patefield_1981]. Si $K$ representa la cantidad de tablas simuladas cuyo estadístico chi-cuadrado es igual o mayor que el observado, el valor p se estima mediante:
 
 $$
@@ -1632,6 +1634,8 @@ $$
 Por tanto, si un valor p simulado se encontrara aproximadamente entre 0,046 y 0,054, se aumentaría el número de simulaciones antes de establecer una conclusión. Se fijó una semilla aleatoria para asegurar la reproducibilidad del procedimiento.
 
 ## Corrección por sesgo de la V de Cramér {#sec-anexo-cramer}
+
+Este anexo explica la corrección aplicada a la V de Cramér para reducir su sobreestimación en tablas pequeñas o con categorías poco frecuentes.
 
 La V de Cramér convencional se obtiene a partir de:
 
@@ -1715,7 +1719,7 @@ En este caso, el período se asocia aproximadamente con el 22,1 % de la variabil
 
 ## Modelo Poisson para conteos temporales {#sec-anexo-poisson-temporal}
 
-El modelo Poisson es el punto de partida para conteos de ocurrencias en unidades de exposición comparables [@mccullagh_nelder_1989; @venables_ripley_2002]. En esta sección, cada observación es un año del catálogo y la respuesta es el número de eventos registrados. Por eso Poisson es más adecuado que una comparación normal de medias: los conteos son enteros, no negativos y su varianza depende del nivel medio de ocurrencia.
+Este anexo explica el modelo Poisson utilizado para comparar conteos entre períodos y meses. A diferencia del modelo binomial negativo, aquí el interés se concentra en los cambios temporales del catálogo. Cada observación es un año o un mes y la respuesta es el número de eventos registrados. Poisson es el punto de partida para conteos de ocurrencias en unidades de exposición comparables y resulta más adecuado que una comparación normal de medias, porque los conteos son enteros, no negativos y su varianza depende del nivel medio de ocurrencia [@mccullagh_nelder_1989; @venables_ripley_2002].
 
 La distribución asigna probabilidad a observar exactamente $y$ eventos cuando la media esperada del intervalo es $\mu$; esta es la parametrización usada por `dpois()` en R [@r_poisson]:
 
@@ -1750,7 +1754,7 @@ Así, bajo una media de 45,5 eventos anuales, observar exactamente 58 eventos ti
 
 ## Modelo binomial negativo para conteos con sobredispersión {#sec-anexo-binomial-negativa}
 
-La binomial negativa se usa cuando la respuesta es un conteo, pero la variabilidad observada supera la prevista por Poisson [@mccullagh_nelder_1989; @cameron_trivedi_1990]. En la comparación de frecuencia entre zonas, cada observación corresponde a una combinación zona-año y la respuesta es el número de terremotos registrados. Por eso el punto de partida natural es Poisson; sin embargo, ese modelo supone $\operatorname{Var}(Y_i)=\mu_i$, condición que no siempre se cumple en conteos sísmicos agregados.
+Este anexo presenta la formulación e interpretación del modelo binomial negativo utilizado para comparar la frecuencia entre zonas. La evidencia que justifica su elección se presenta en el anexo de diagnósticos \asesoriaStyledRef{(véase \hyperref[sec-anexo-diagnosticos]{anexo de diagnósticos de los modelos})}. La binomial negativa se usa cuando la respuesta es un conteo, pero la variabilidad observada supera la prevista por Poisson [@mccullagh_nelder_1989; @cameron_trivedi_1990]. En esta comparación, cada observación corresponde a una combinación zona-año y la respuesta es el número de terremotos registrados. El punto de partida natural es Poisson; sin embargo, ese modelo supone $\operatorname{Var}(Y_i)=\mu_i$, condición que no siempre se cumple en conteos sísmicos agregados.
 
 El modelo binomial negativo mantiene la media positiva mediante enlace logarítmico, igual que un GLM de conteos, pero incorpora un parámetro de dispersión $\theta$ [@venables_ripley_2002]:
 
@@ -1799,6 +1803,8 @@ La V de Cramér y epsilon cuadrado se mueven entre 0 (sin asociación) y 1; delt
 
 ## Verosimilitud y estimación de los modelos {#sec-anexo-verosimilitud}
 
+Este anexo explica cómo se estiman y comparan los modelos mediante máxima verosimilitud. Su propósito es fundamentar los coeficientes y contrastes utilizados en distintas secciones del informe.
+
 Estimar un modelo consiste en asignar valores numéricos a sus coeficientes $\beta$ a partir de los datos; esos valores cuantifican la dirección y el tamaño de cada relación, y de ellos derivan todas las cifras reportadas: razones de odds o de tasas, intervalos y contrastes. En este informe esa asignación se realizó por máxima verosimilitud [@fisher_1922]. Para cada observación $i$, $P(y_i \mid \beta)$ denota la probabilidad que el modelo con coeficientes $\beta$ asigna al resultado efectivamente observado $y_i$; en la regresión logística de eventos fuertes, $y_i$ vale 1 si el evento alcanzó $M \geq 7{,}0$ y 0 si no. La verosimilitud del catálogo completo es:
 
 $$
@@ -1844,6 +1850,8 @@ Ante separación, la estimación de máxima verosimilitud diverge y se reemplaza
 
 ## Modelo de regresión logística {#sec-anexo-logistica}
 
+Este anexo presenta el modelo utilizado para estimar la probabilidad de que un evento alcance $M \geq 7{,}0$.
+
 La regresión logística modela una respuesta binaria (en este informe, si un evento alcanza $M \geq 7{,}0$) en la escala logit [@berkson_1944; @mccullagh_nelder_1989]:
 
 $$
@@ -1856,7 +1864,7 @@ Al aplicar la función exponencial, cada coeficiente se convierte en una razón 
 
 ## Razón de odds {#sec-anexo-or}
 
-Las odds de un suceso son el cociente entre la probabilidad de que ocurra y la de que no ocurra, y la razón de odds compara dos grupos dividiendo sus odds [@bland_altman_2000]:
+Este anexo explica cómo se interpretan los efectos estimados por los modelos logísticos mediante razones de odds. Las odds de un suceso son el cociente entre la probabilidad de que ocurra y la de que no ocurra, y la razón de odds compara dos grupos dividiendo sus odds [@bland_altman_2000]:
 
 $$
 \text{odds}=\frac{p}{1-p},
@@ -1924,7 +1932,7 @@ En las zonas de mayor tamaño ambos métodos casi coinciden. En la Dorsal Meso-A
 
 ## Contraste de Wald {#sec-anexo-wald}
 
-El contraste de Wald evalúa si un coeficiente difiere de cero a partir de su estimación y su error estándar, sin reajustar el modelo:
+Este anexo explica el contraste utilizado para evaluar coeficientes y comparaciones por pares a partir de sus errores estándar. El contraste de Wald determina si un coeficiente difiere de cero sin reajustar el modelo:
 
 $$
 z=\frac{\hat\beta}{\widehat{EE}(\hat\beta)},
@@ -1958,6 +1966,8 @@ $$
 y el modelo logístico, que trabaja con el logaritmo de las odds, necesitaría para esa zona un coeficiente igual a $\log(0)=-\infty$, un valor que ningún algoritmo puede estimar. En la práctica la estimación diverge hacia valores cada vez más extremos y su error estándar crece aún más rápido; como $z$ es el cociente entre ambos, el estadístico se encoge y el valor p se acerca a 1. Wald concluiría que la zona no tiene efecto justo cuando el efecto es total [@hauck_donner_1977]. Por eso la categoría $M \geq 7{,}8$ se describe sin regresión, y en la clasificación de zonas, donde la separación afecta a la profundidad de la Dorsal, la inferencia se aborda con la corrección de reducción de sesgo.
 
 ## Criterio de información de Akaike {#sec-anexo-aic}
+
+Este anexo explica el criterio utilizado para comparar modelos considerando conjuntamente ajuste y complejidad. El AIC orienta la selección, pero no constituye una dócima de hipótesis.
 
 El AIC pondera el ajuste de un modelo y la cantidad de parámetros que necesita para lograrlo [@akaike_1974]:
 
@@ -2046,7 +2056,7 @@ En la familia de seis comparaciones por pares de la sección de frecuencia, el m
 
 ## Comparaciones completas Dunn-Holm {#sec-anexo-dunn}
 
-La tabla siguiente presenta las doce comparaciones post-hoc aplicadas después de Kruskal-Wallis. Los valores p ajustados mediante Holm son los que se utilizan para la decisión inferencial.
+Este anexo presenta los resultados completos de las comparaciones por pares posteriores a Kruskal-Wallis. La justificación del ajuste por multiplicidad se desarrolla en su anexo específico \asesoriaStyledRef{(véase \hyperref[sec-anexo-ajuste-p]{anexo de ajuste de valores p por multiplicidad})}. Los valores p ajustados mediante Holm son los que se utilizan para la decisión inferencial.
 
 | Variable | Comparación | $Z$ | $p$ sin ajustar | $p$ ajustado |
 |---|---|---:|---:|---:|
@@ -2128,7 +2138,7 @@ Los intervalos de confianza de las razones frente a la zona de referencia, en la
 
 ## Comparaciones completas por pares de frecuencia {#sec-anexo-pares-frecuencia}
 
-Este anexo presenta las seis comparaciones por pares de la sección de frecuencia en ambas métricas, con el estadístico de Wald y el valor p ajustado por Holm. Todos los valores p ajustados quedan por debajo de 0,001; el mayor es 0,00045, correspondiente al par Cinturón Alpino-Himalayo frente a Dorsal Meso-Atlántica en tasa anual.
+Este anexo presenta los resultados completos de las comparaciones de frecuencia entre zonas en ambas métricas. El procedimiento de cálculo se explica en el anexo del contraste de Wald \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}. Todos los valores p ajustados mediante Holm quedan por debajo de 0,001; el mayor es 0,00045, correspondiente al par Cinturón Alpino-Himalayo frente a Dorsal Meso-Atlántica en tasa anual.
 
 ```{=latex}
 \begingroup
