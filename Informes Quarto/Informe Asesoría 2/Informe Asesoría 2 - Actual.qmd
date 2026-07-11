@@ -532,10 +532,6 @@ La validez del modelo descansa en tres condiciones. Los eventos se tratan como o
 ## Diseño del análisis de sensibilidad {#sec-diseno-sensibilidad}
 
 
-## Criterios de interpretación estadística
-
-Los resultados se interpretan como inferencia sobre el catálogo definido, compuesto por eventos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, bajo la zonificación adoptada. Ninguna dócima o modelo de este informe representa estimación causal, predicción operacional ni evaluación probabilística de amenaza sísmica.
-
 # Resultados y discusión
 
 ## Comparabilidad del registro {#sec-res-comparabilidad}
