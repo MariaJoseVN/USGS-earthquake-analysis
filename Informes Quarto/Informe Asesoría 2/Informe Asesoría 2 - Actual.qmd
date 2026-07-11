@@ -1388,7 +1388,20 @@ Sensibilidad por zona & 1 / 0 / 0 / 0 & Fuego / Resto / Alpino / Dorsal \\
 \endgroup
 ```
 
-El modelo asignó los 1.186 eventos al Cinturón de Fuego: reconoció sus 892 eventos y ninguno de las tres zonas restantes. El resultado no contradice la significación de la profundidad: la prueba global evalúa si las probabilidades relativas cambian, mientras que la clasificación exige que alguna zona supere al Cinturón de Fuego como categoría más probable. Con un peso muestral de 75,2 % y distribuciones superpuestas, su probabilidad ajustada nunca baja de 0,584 y ninguna zona alternativa supera 0,353. La `Figura~\ref{fig-clasificacion-espacio}`{=latex} muestra ese solapamiento: los eventos del Cinturón de Fuego cubren prácticamente todo el rango conjunto de magnitud y profundidad.
+El modelo asignó los 1.186 eventos al Cinturón de Fuego: reconoció sus 892 eventos y ninguno de las tres zonas restantes. El resultado no contradice la significación de la profundidad: la prueba global evalúa si las probabilidades relativas cambian, mientras que la clasificación exige que alguna zona supere al Cinturón de Fuego como categoría más probable. Con un peso muestral de 75,2 % y distribuciones superpuestas, su probabilidad ajustada nunca baja de 0,584 y ninguna zona alternativa supera 0,353.
+
+Para no limitar la evaluación a esa decisión final, se revisaron las curvas ROC uno contra el resto. Esta herramienta transforma el problema multinomial en cuatro comparaciones binarias: cada zona frente a todas las demás. Técnicamente, el área bajo la curva ROC (AUC) mide si las probabilidades ajustadas ordenan correctamente los eventos de una zona por encima de los que no pertenecen a ella. Un valor cercano a 0,5 indica discriminación similar al azar, mientras que valores más altos indican mejor separación. En términos no técnicos, la matriz de confusión pregunta "¿qué etiqueta final asignó el modelo?", mientras que la curva ROC pregunta "¿el modelo al menos elevó la probabilidad de la zona correcta, aunque no haya sido la etiqueta ganadora?". La `Figura~\ref{fig-clasificacion-roc}`{=latex} muestra esta evaluación complementaria.
+
+```{=latex}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-roc.png}}
+\caption{Curvas ROC por zona bajo comparación uno contra el resto.}
+\label{fig-clasificacion-roc}
+\end{figure}
+```
+
+La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena capacidad para diferenciar sus eventos del resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. Por tanto, ROC matiza pero no revierte la matriz de confusión: el modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para construir una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad. La `Figura~\ref{fig-clasificacion-espacio}`{=latex} muestra el solapamiento que explica este resultado: los eventos del Cinturón de Fuego cubren prácticamente todo el rango conjunto de magnitud y profundidad.
 
 ```{=latex}
 \begin{figure}[H]

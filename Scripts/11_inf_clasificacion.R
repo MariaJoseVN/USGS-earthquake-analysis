@@ -351,3 +351,98 @@ tabla_or_br %>%
 
 sd(base_fase6$mag)
 sd(base_fase6$depth)
+
+
+# 20. Curvas ROC y AUC por zona----
+# Evaluacion complementaria del modelo multinomial corregido.
+# La matriz de confusion evalua la clase final asignada por maxima probabilidad.
+# El AUC evalua si las probabilidades ajustadas ordenan correctamente cada zona
+# frente al resto, aun cuando esa zona no sea finalmente la clase predicha.
+
+if (!requireNamespace("pROC", quietly = TRUE)) {
+  stop("Instalar el paquete 'pROC' para calcular ROC/AUC.")
+}
+
+roc_por_zona <- lapply(
+  levels(base_fase6$zona),
+  function(zona_objetivo) {
+    respuesta_binaria <- as.integer(base_fase6$zona == zona_objetivo)
+
+    pROC::roc(
+      response = respuesta_binaria,
+      predictor = probabilidades_br[, zona_objetivo],
+      quiet = TRUE,
+      direction = "<"
+    )
+  }
+)
+
+names(roc_por_zona) <- levels(base_fase6$zona)
+
+auc_zona <- tibble::tibble(
+  zona = names(roc_por_zona),
+  auc = as.numeric(vapply(roc_por_zona, pROC::auc, numeric(1)))
+)
+
+auc_zona
+
+
+# 21. Grafico ROC uno contra el resto----
+# Ejecutar graficar_roc_zonas() en Positron para revisar el resultado en Plots.
+# La misma funcion se usa para exportar el PNG que consume el informe.
+
+graficar_roc_zonas <- function() {
+  colores_zona <- c(
+    "Cinturon de Fuego" = "#e31a1c",
+    "Resto del mundo" = "#1f78b4",
+    "Cinturon Alpino-Himalayo" = "#33a02c",
+    "Dorsal Meso-Atlantica" = "#6a3d9a"
+  )
+
+  primera_zona <- names(roc_por_zona)[1]
+
+  graphics::plot(
+    roc_por_zona[[primera_zona]],
+    col = colores_zona[primera_zona],
+    lwd = 2,
+    legacy.axes = TRUE,
+    identity = FALSE,
+    main = "Curvas ROC por zona: uno contra el resto",
+    xlab = "1 - especificidad",
+    ylab = "Sensibilidad"
+  )
+
+  for (zona_i in names(roc_por_zona)[-1]) {
+    graphics::plot(
+      roc_por_zona[[zona_i]],
+      col = colores_zona[zona_i],
+      lwd = 2,
+      identity = FALSE,
+      add = TRUE
+    )
+  }
+
+  graphics::legend(
+    "bottomright",
+    legend = sprintf("%s (AUC = %.3f)", auc_zona$zona, auc_zona$auc),
+    col = colores_zona[auc_zona$zona],
+    lwd = 2,
+    bty = "n",
+    cex = 0.75
+  )
+}
+
+graficar_roc_zonas()
+
+png(
+  filename = file.path(
+    "Informes Quarto",
+    "Imágenes y Recursos",
+    "inf2-clasificacion-roc.png"
+  ),
+  width = 1600,
+  height = 1050,
+  res = 150
+)
+graficar_roc_zonas()
+dev.off()
