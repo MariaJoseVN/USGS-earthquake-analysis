@@ -1388,7 +1388,7 @@ Establecido qué variables distinguen las zonas, el paso siguiente es cuantifica
 Zona frente a C. de Fuego & Magnitud: OR (IC 95 \%) & Profundidad: OR (IC 95 \%) \\
 \midrule
 Resto del mundo          & 1,05 [0,91; 1,22] & 1,25 [1,10; 1,43] \\
-Cinturón Alpino-Himalayo & 1,04 [0,81; 1,33] & 0,65 [0,42; 1,01] \\
+Cinturón Alpino-Himalayo & 1,04 [0,81; 1,33] & 0,65 [0,41; 1,01] \\
 Dorsal Meso-Atlántica    & 0,58 [0,31; 1,07] & $\approx 0$ (separación) \\
 \bottomrule
 \end{tabular}
@@ -1439,7 +1439,7 @@ Para no limitar la evaluación a esa decisión final, se revisaron las curvas RO
 \end{figure}
 ```
 
-La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para construir una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad. La `Figura~\ref{fig-clasificacion-espacio}`{=latex} muestra el solapamiento que explica este resultado, con eventos del Cinturón de Fuego que cubren prácticamente todo el rango conjunto de magnitud y profundidad.
+La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para sustentar una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad. La `Figura~\ref{fig-clasificacion-espacio}`{=latex} muestra el solapamiento que explica este resultado, con eventos del Cinturón de Fuego que cubren prácticamente todo el rango conjunto de magnitud y profundidad.
 
 ```{=latex}
 \begin{figure}[H]
