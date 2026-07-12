@@ -1369,7 +1369,7 @@ Profundidad & 64,906 & 3 & $<0{,}001$  & Aporta aun controlando por magnitud \\
 
 La profundidad aporta información global para distinguir las zonas incluso después de controlar por magnitud; la magnitud no. Este resultado ilustra cómo una misma variable puede cambiar de relevancia según la pregunta del modelo: en la subsección anterior la profundidad no añadió información sobre si un evento alcanzaba $M \geq 7{,}0$; aquí sí distingue la zona del evento. No hay contradicción: son variables respuesta y preguntas distintas.
 
-Al estandarizar los predictores, la ecuación de la Dorsal produjo un coeficiente de profundidad de $-27{,}66$ con error estándar 7,21, un patrón de separación cuasi perfecta: como sus 28 eventos son superficiales, la profundidad la distingue de manera casi determinista y la estimación de máxima verosimilitud diverge. Los coeficientes finales se obtuvieron con la corrección de reducción de sesgo declarada en la metodología \asesoriaStyledRef{(véase \hyperref[sec-anexo-separacion]{anexo de separación y reducción de sesgo})}. La `Tabla~\ref{tbl-clasificacion-or}`{=latex} presenta las razones de odds del modelo corregido; cada una corresponde a un aumento de una desviación estándar del predictor (0,417 unidades de magnitud o 164,1 km de profundidad).
+Establecido qué variables distinguen las zonas, el paso siguiente es cuantificar el tamaño de su efecto. Con ese fin, al estandarizar los predictores, la ecuación de la Dorsal produjo un coeficiente de profundidad de $-27{,}66$ con error estándar 7,21, un patrón de separación cuasi perfecta: como sus 28 eventos son superficiales, la profundidad la distingue de manera casi determinista y la estimación de máxima verosimilitud diverge. Los coeficientes finales se obtuvieron con la corrección de reducción de sesgo declarada en la metodología \asesoriaStyledRef{(véase \hyperref[sec-anexo-separacion]{anexo de separación y reducción de sesgo})}. La `Tabla~\ref{tbl-clasificacion-or}`{=latex} presenta las razones de odds del modelo corregido; cada una corresponde a un aumento de una desviación estándar del predictor (0,417 unidades de magnitud o 164,1 km de profundidad).
 
 ```{=latex}
 \begingroup
@@ -1450,7 +1450,7 @@ La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica 
 \end{figure}
 ```
 
-La `Tabla~\ref{tbl-clasificacion-aic}`{=latex} compara los modelos anidados.
+La `Tabla~\ref{tbl-clasificacion-aic}`{=latex} compara los modelos anidados. La columna $\Delta$AIC expresa la diferencia respecto del modelo de menor AIC, y la columna $LR$ mide el aporte de agregar la variable faltante para llegar al modelo conjunto.
 
 ```{=latex}
 \begingroup
@@ -1462,15 +1462,19 @@ La `Tabla~\ref{tbl-clasificacion-aic}`{=latex} compara los modelos anidados.
 \refstepcounter{table}
 \label{tbl-clasificacion-aic}
 \hypertarget{dest-tbl-clasificacion-aic}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}
-                >{\centering\arraybackslash}p{0.14\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\textwidth}
+                >{\centering\arraybackslash}p{0.085\textwidth}
+                >{\centering\arraybackslash}p{0.09\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}
+                >{\centering\arraybackslash}p{0.075\textwidth}
+                >{\centering\arraybackslash}p{0.08\textwidth}
+                >{\raggedright\arraybackslash}p{0.19\textwidth}}
 \toprule
-Modelo & Parámetros & AIC \\
+Modelo & Parámetros & AIC & $\Delta$AIC & $LR$ & Valor p & Lectura \\
 \midrule
-Solo magnitud          & 6 & 1805,66 \\
-Solo profundidad       & 6 & 1745,86 \\
-Magnitud y profundidad & 9 & 1746,76 \\
+Solo magnitud          & 6 & 1805,663 & 59,805 & 64,906 & $<0{,}001$ & Peor ajuste \\
+Solo profundidad       & 6 & 1745,858 & 0      & 5,102  & 0,1645     & Mejor modelo \\
+Magnitud y profundidad & 9 & 1746,757 & 0,899  & —      & —          & La magnitud no aporta \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.7em}
@@ -1478,7 +1482,7 @@ Magnitud y profundidad & 9 & 1746,76 \\
 \endgroup
 ```
 
-Agregar la profundidad al modelo que solo contiene magnitud mejora el ajuste ($LR = 64{,}906$; $p < 0{,}001$); agregar la magnitud al que ya contiene profundidad no lo mejora ($LR = 5{,}102$; $p = 0{,}1645$). El menor AIC corresponde al modelo con solo profundidad y la diferencia con el conjunto, 0,899, favorece al más parsimonioso. La hipótesis de que ambas variables ganarían relevancia al actuar conjuntamente no queda respaldada en su forma completa, ya que el aporte conjunto se reduce al aporte de la profundidad.
+El modelo con solo profundidad obtiene el menor AIC, y agregarle la magnitud no lo mejora. La hipótesis de que ambas variables ganarían relevancia al actuar conjuntamente no queda respaldada: el aporte conjunto se reduce al aporte de la profundidad.
 
 Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, la magnitud y la profundidad, incluso consideradas conjuntamente, no permiten clasificar la zona sísmica de un evento con las proporciones observadas. El modelo no supera la base trivial de 75,21 %. La profundidad sí desplaza las probabilidades relativas de zona, con información distribucional real, pero no alcanza para reasignar clases. En conjunto con la sección de frecuencia, la conclusión es que el Cinturón de Fuego se distingue por cuánto y dónde ocurre su actividad, no por la magnitud o la profundidad de sus eventos individuales.
 
