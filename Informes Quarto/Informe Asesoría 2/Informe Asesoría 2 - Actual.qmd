@@ -190,11 +190,13 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 
 # Alcance del informe
 
-Este informe corresponde a la segunda etapa de la asesoría, de carácter inferencial. La unidad de análisis, el catálogo, el período 2000-2025, el umbral $M \geq 6{,}5$ y la zonificación se heredan sin modificaciones del Informe Asesoría 1, de modo que ambos documentos son directamente comparables. Las conclusiones se derivan exclusivamente del catálogo USGS definido y deben interpretarse dentro de sus límites, cobertura y características.
+El alcance de este informe comprende la comparación inferencial de la ocurrencia, la magnitud, la profundidad y la severidad entre zonas, junto con la evaluación de la estabilidad temporal y de la capacidad de clasificación. Las conclusiones se aplican únicamente a los eventos, variables y delimitaciones evaluados mediante los modelos utilizados.
 
-El estudio no incluye predicción de terremotos, alerta temprana, estimación probabilística de amenaza sísmica ni modelación física del proceso tectónico. Los modelos de clasificación se interpretan como herramientas de discriminación dentro del catálogo observado y no como predictores operacionales.
+La heterogeneidad se aborda de manera diferenciada. Las zonas se comparan mediante tasas anuales y densidades por superficie; las magnitudes comparten un umbral mínimo y se analizan mediante sus distribuciones completas; y las fuentes y métodos de reporte se revisan antes de interpretar las diferencias espaciales y temporales. Resto del mundo se considera una categoría residual y heterogénea, no una unidad tectónica equivalente a los tres cinturones definidos.
 
-El desarrollo se realiza en Positron, como entorno de trabajo para R, y en QGIS para la información georreferenciada, manteniendo el flujo computacional reproducible documentado en el Informe Asesoría 1. \asesoriaStyledRef{(véase \hyperref[sec-anexo-continuidad]{anexo de continuidad de datos y variables})}.
+La superficie permite estandarizar la frecuencia por extensión, pero no representa exposición humana, vulnerabilidad ni riesgo sísmico. Los cambios en el umbral de magnitud y la exclusión de Resto del mundo se utilizan como escenarios de sensibilidad para examinar cuánto dependen las conclusiones de estas decisiones. Los resultados no se extienden a relaciones o escenarios que no hayan sido evaluados mediante un modelo o análisis específico.
+
+Quedan fuera del alcance la predicción de terremotos, la alerta temprana, la estimación de amenaza, la evaluación de daños y la modelación física del proceso tectónico. Los modelos de clasificación examinan si la magnitud y la profundidad permiten distinguir las zonas dentro de los eventos observados, pero no constituyen herramientas para identificar la ubicación de futuros terremotos.
 
 ## Declaración y lineamientos para el uso responsable de inteligencia artificial
 
