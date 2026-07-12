@@ -1590,6 +1590,62 @@ $$
 
 de modo que el modelo describe directamente la densidad $\mu_{jt}/A_j$, es decir, los eventos por unidad de superficie. El modelo de tasa anual es idéntico pero sin el término $\log(A_j)$, y sus coeficientes se leen sobre el conteo $\mu_{jt}$.
 
+## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
+
+Este anexo documenta cómo se prepara la base, se ejecutan los análisis y se generan los resultados del Informe Asesoría 2. Su propósito es facilitar la revisión y reproducción del trabajo, sin repetir las decisiones estadísticas desarrolladas en la metodología y los anexos específicos. El código se encuentra disponible en la \asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/tree/main/Scripts}{carpeta Scripts del repositorio GitHub}.
+
+### Preparación y ejecución en Positron
+
+El análisis se desarrolla en Positron mediante scripts de R organizados dentro del proyecto `USGS-earthquake-analysis`. La etapa inferencial utiliza la base `sismos` construida en el Informe Asesoría 1, que contiene las variables temporales, las categorías de magnitud y profundidad, la zona sísmica y las versiones imputadas de `nst` y `rms`.
+
+El script `00_preparacion_base.R` permite reconstruir directamente esta base sin volver a ejecutar todos los análisis descriptivos. Para ello importa los archivos originales, crea las variables derivadas, aplica las imputaciones definidas anteriormente y asigna cada evento a una zona mediante el cruce espacial. Los módulos inferenciales pueden ejecutarse desde `Código.R` o de manera independiente, porque comprueban la existencia de la base y la preparan cuando es necesario.
+
+### Organización de los análisis
+
+Cada módulo reúne la preparación específica de los datos, el ajuste de modelos, los diagnósticos y la generación de las tablas o figuras correspondientes. Los nombres de la primera columna enlazan directamente con el código utilizado.
+
+```{=latex}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.95}
+\phantomsection
+\refstepcounter{table}
+\label{tbl-flujo-scripts-inf}
+\hypertarget{dest-tbl-flujo-scripts-inf}{}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.35\textwidth} >{\raggedright\arraybackslash}p{0.57\textwidth}}
+\toprule
+Código & Propósito principal \\
+\midrule
+\endfirsthead
+\toprule
+Código & Propósito principal \\
+\midrule
+\endhead
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/C\%C3\%B3digo.R}{\texttt{Código.R}} & Ejecuta de manera secuencial la preparación de la base y los módulos del proyecto. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/00\_preparacion\_base.R}{\texttt{00\_preparacion\_base.R}} & Reconstruye la base analítica utilizada en esta etapa. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/06\_inf\_comparabilidad.R}{\texttt{06\_inf\_comparabilidad.R}} & Revisa la comparabilidad de los procedimientos de reporte. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/07\_inf\_frecuencia.R}{\texttt{07\_inf\_frecuencia.R}} & Compara la tasa anual y la densidad de eventos entre zonas. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/08\_inf\_magnitud\_profundidad.R}{\texttt{08\_inf\_magnitud\_profundidad.R}} & Evalúa las diferencias de magnitud y profundidad entre zonas. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/09\_inf\_temporal.R}{\texttt{09\_inf\_temporal.R}} & Analiza la estabilidad, dependencia y distribución temporal de los eventos. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/10\_inf\_extremos.R}{\texttt{10\_inf\_extremos.R}} & Estudia los eventos fuertes y extremos. \\
+\asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/blob/main/Scripts/11\_inf\_clasificacion.R}{\texttt{11\_inf\_clasificacion.R}} & Evalúa la clasificación de las zonas mediante magnitud y profundidad. \\
+\bottomrule
+\end{longtable}
+\vspace{-2.25em}
+\addtocounter{table}{-1}
+\bottomtablecaption{tbl-flujo-scripts-inf}{Código del flujo reproducible y propósito de cada módulo del Informe Asesoría 2.}
+\endgroup
+```
+
+En los procedimientos que requieren simulación se utiliza la semilla `2026`, lo que permite reproducir los valores obtenidos. La separación por módulos también facilita la revisión de cada análisis sin tener que ejecutar nuevamente el flujo completo.
+
+### QGIS, superficies y control de versiones
+
+La delimitación de las zonas se conserva desde el Informe Asesoría 1. En esta etapa, QGIS también se utiliza para calcular la superficie de los polígonos y construir la capa `MAPA_HTML/zonas_inf2.geojson`. R importa estas superficies para expresar la frecuencia como densidad de eventos y utilizarlas como exposición en los modelos de conteo.
+
+El proyecto se mantiene mediante Git y GitHub. Los scripts, las bases, las capas geográficas, la bibliografía y el archivo QMD permanecen en el mismo repositorio, lo que permite registrar los cambios y conservar la correspondencia entre el código ejecutado y los resultados presentados.
+
 ## Especificación de dócimas y modelos {#sec-anexo-especificacion}
 
 Este anexo reúne las reglas de decisión que sustentan los procedimientos descritos de forma resumida en la metodología.
