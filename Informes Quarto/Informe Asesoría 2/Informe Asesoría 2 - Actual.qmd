@@ -140,21 +140,15 @@ Se adjuntan los siguientes enlaces como productos derivados del informe.
 
 # Formulación del problema y pregunta estadística
 
-## Síntesis del Informe Asesoría 1 y paso a la etapa inferencial {#sec-sintesis-informe-1}
+## Continuidad del estudio y pregunta estadística {#sec-sintesis-informe-1}
 
-El \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1} caracterizó 1.186 terremotos de magnitud $M \geq 6{,}5$ registrados por la United States Geological Survey (USGS) entre 2000 y 2025. Los principales hallazgos son la fuerte concentración espacial de la ocurrencia en el Cinturón de Fuego, la similitud general de las magnitudes medias entre zonas, la mayor diferenciación observada en profundidad y una serie temporal con fluctuaciones, pero sin una tendencia uniforme para todo el período.
+El \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1} construyó y caracterizó el catálogo de 1.186 terremotos con magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025. En esa etapa se definieron la unidad de análisis, las zonas sísmicas, las categorías de magnitud y profundidad y el tratamiento de las variables. Su alcance descriptivo permitió identificar patrones, pero no determinar si estos superaban la variabilidad propia del catálogo, cuál era su relevancia práctica ni si la magnitud y la profundidad aportaban información conjunta para distinguir las zonas.
 
-Este informe toma esos patrones descriptivos como punto de partida y los reformula como preguntas inferenciales. Primero se revisa la comparabilidad del registro; luego, en frecuencia, se evalúa si las tasas de ocurrencia difieren formalmente entre zonas y si esa diferencia se mantiene al considerar la superficie. En magnitud y profundidad, se contrastan las distribuciones completas, no solo sus promedios, y se retoman las categorías de magnitud para examinar los eventos fuertes y extremos.
-
-La dimensión temporal se aborda para verificar si las fluctuaciones observadas en el catálogo corresponden a cambios sostenidos en la ocurrencia o a variación propia del período analizado. Finalmente, la comparación entre zonas se extiende a un problema de clasificación: evaluar si la magnitud y la profundidad, consideradas en conjunto, aportan información para identificar la zona sísmica del evento.
-
-## Pregunta estadística de la etapa inferencial
-
-El presente informe corresponde a la etapa inferencial de la asesoría y formaliza los patrones descritos en la etapa anterior. El estudio se articula en torno a la siguiente pregunta estadística:
+El presente informe mantiene esas definiciones y aborda las preguntas pendientes mediante comparaciones inferenciales, modelos de conteo y evaluación de la capacidad clasificatoria. El estudio se articula en torno a la siguiente pregunta:
 
 > **¿Difieren formalmente las zonas sísmicas en la tasa de ocurrencia y en las distribuciones de magnitud y profundidad de los terremotos $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, y permiten la magnitud y la profundidad, consideradas en conjunto, clasificar la zona sísmica a la que pertenece un evento?**
 
-Esta pregunta conserva la unidad de análisis, el catálogo, el período, el umbral de magnitud y la zonificación definidos en el Informe Asesoría 1, y agrega dos componentes nuevos: la formalización de las comparaciones mediante dócimas y modelos con niveles de significación justificados, y la reformulación de la comparación entre zonas como un problema de clasificación, en el cual se evalúa si las variables físicas del evento (magnitud y profundidad) identifican la zona en que ocurre. El alcance de esta etapa es inferencial sobre el catálogo definido: las conclusiones no representan predicción, causalidad ni estimación de amenaza sísmica.
+La primera parte compara la ocurrencia y las características de los eventos entre zonas, considerando la superficie y la estabilidad temporal del período. La segunda evalúa si la magnitud y la profundidad permiten identificar la zona de un terremoto. La comparabilidad de los procedimientos de reporte se revisa antes de interpretar estas diferencias. Las conclusiones se limitan al catálogo definido y no representan predicción, causalidad ni estimación de amenaza sísmica.
 
 \newpage
 # Antecedentes
