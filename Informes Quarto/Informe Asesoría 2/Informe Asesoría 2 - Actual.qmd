@@ -237,7 +237,7 @@ $$
 
 La comparación del RMS entre períodos se formuló de forma análoga.
 
-Las asociaciones categóricas se evaluaron mediante chi-cuadrado de independencia. Como algunas tablas tenían frecuencias esperadas bajas, especialmente en zonas con pocos eventos, descartamos fusionar categorías relevantes y usamos valores p obtenidos con 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. Esta decisión permite mantener la estructura original de reporte y evita depender de una aproximación chi-cuadrado poco estable en celdas escasas. La precisión de la simulación se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
+Las asociaciones categóricas se evaluaron mediante chi-cuadrado de independencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})}. Como algunas tablas tenían frecuencias esperadas bajas, especialmente en zonas con pocos eventos, descartamos fusionar categorías relevantes y usamos valores p obtenidos con 10.000 simulaciones de Monte Carlo [@hope_1968; @patefield_1981]. Esta decisión permite mantener la estructura original de reporte y evita depender de una aproximación chi-cuadrado poco estable en celdas escasas. La precisión de la simulación se presenta fuera del cuerpo principal. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
 Para medir la intensidad de esas asociaciones se utilizó la V de Cramér corregida por sesgo. La corrección es relevante porque las tablas tienen tamaños de grupo desiguales y categorías poco frecuentes, condiciones que pueden inflar la asociación aparente aun cuando la relación real sea débil. Por ello, la versión corregida permite distinguir una asociación sustantiva de una discrepancia producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}.
 
@@ -442,7 +442,7 @@ H_1: F_{\text{cat},\,\text{zona}_h}\neq F_{\text{cat},\,\text{zona}_{h'}} \mid h
 
 donde $F_{\text{cat},\,\text{zona}_h}$ representa la distribución de las tres categorías de magnitud dentro de la zona $h$.
 
-Como las frecuencias esperadas incluían celdas bajo 5 en las zonas de menor tamaño, el valor p del chi-cuadrado se obtuvo con 10.000 simulaciones de Monte Carlo, el mismo criterio definido para la comparabilidad de los procedimientos de reporte [@hope_1968; @patefield_1981]. El grado de asociación se midió con la V de Cramér corregida por sesgo, que descuenta la asociación aparente producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
+Como las frecuencias esperadas incluían celdas bajo 5 en las zonas de menor tamaño \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})}, el valor p del chi-cuadrado se obtuvo con 10.000 simulaciones de Monte Carlo, el mismo criterio definido para la comparabilidad de los procedimientos de reporte [@hope_1968; @patefield_1981]. El grado de asociación se midió con la V de Cramér corregida por sesgo, que descuenta la asociación aparente producida por la estructura muestral [@bergsma_2013]. \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
 
 Para la regresión logística, las categorías Mayor y Grande o extremo se agruparon en un indicador binario que vale 1 cuando $M \geq 7{,}0$ y 0 en caso contrario. El modelo estima la probabilidad de superar ese umbral en función de la zona y la profundidad consideradas simultáneamente, con el Cinturón de Fuego como referencia por ser la zona de mayor tamaño muestral [@mccullagh_nelder_1989] \asesoriaStyledRef{(véase \hyperref[sec-anexo-logistica]{anexo del modelo de regresión logística})}. Incluir ambas variables en un mismo modelo pone a prueba una posibilidad que los análisis por separado no cubren: que la profundidad, con poca asociación cuando se examina sola, aporte información una vez considerada la zona. La significación de cada variable se evaluó mediante razón de verosimilitudes por bloque \asesoriaStyledRef{(véase \hyperref[sec-anexo-verosimilitud]{anexo de verosimilitud y estimación de los modelos})}, porque la zona aporta tres coeficientes y debe contrastarse como una sola variable:
 
@@ -490,7 +490,7 @@ Los eventos con $M \geq 7{,}8$ se describieron mediante conteos por zona y tasas
 
 Esta sección evalúa si la magnitud y la profundidad permiten identificar la zona de un evento. A diferencia de las comparaciones anteriores, la zona deja de ser el factor de agrupación y pasa a ser la variable respuesta. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
 
-El análisis de correspondencia es una técnica descriptiva para tablas de contingencia que compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017] \asesoriaStyledRef{(véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia})}. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola. Esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
+El análisis de correspondencia es una técnica descriptiva para tablas de contingencia que compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017] \asesoriaStyledRef{(véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia})}. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola. El orden de las etapas responde al carácter de cada una: la correspondencia opera directamente sobre la tabla observada, sin supuestos que verificar, y anticipa la estructura que el modelo multinomial, sujeto a condiciones de validez que se revisan al final de esta sección, contrasta después de manera formal. Esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
 
 La regresión logística multinomial modela la probabilidad de pertenecer a cada zona en función de la magnitud y la profundidad, con el Cinturón de Fuego como referencia por ser la zona de mayor tamaño muestral. El modelo estima tres ecuaciones, una por cada zona alternativa frente a la referencia [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-multinomial]{anexo del modelo de regresión logística multinomial})}. La significación de cada variable se evaluó mediante razón de verosimilitudes por bloque, con tres grados de libertad por variable, porque cada una aporta un coeficiente en cada ecuación:
 
@@ -528,7 +528,7 @@ Esta subsección evalúa si las comparaciones entre zonas y periodos pueden esta
 
 ### Comparabilidad entre zonas
 
-Para evaluar si las comparaciones espaciales podían estar condicionadas por los procedimientos de reporte, la asociación de la zona con el tipo y la fuente de magnitud se examinó mediante pruebas chi-cuadrado de Pearson con valores p obtenidos a partir de 10.000 simulaciones de Monte Carlo. Estas pruebas comparan las frecuencias observadas en cada combinación de categorías con las que se esperarían si las variables no estuvieran asociadas. El diagnóstico previo identificó frecuencias esperadas inferiores a cinco en 3 de las 16 celdas de la tabla zona por tipo de magnitud y en 4 de las 16 celdas de la tabla zona por fuente, lo que fundamentó el uso de la simulación. \asesoriaStyledRef{(véase \hyperref[tbl-diagnostico-esperadas]{tabla de diagnóstico de frecuencias esperadas})}. Adicionalmente, el RMS de localización se comparó entre las cuatro zonas mediante la prueba no paramétrica de Kruskal-Wallis, que determina si sus distribuciones presentan diferencias globales.
+Para evaluar si las comparaciones espaciales podían estar condicionadas por los procedimientos de reporte, la asociación de la zona con el tipo y la fuente de magnitud se examinó mediante pruebas chi-cuadrado de Pearson con valores p obtenidos a partir de 10.000 simulaciones de Monte Carlo. Estas pruebas comparan las frecuencias observadas en cada combinación de categorías con las que se esperarían si las variables no estuvieran asociadas \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})}. El diagnóstico previo identificó frecuencias esperadas inferiores a cinco en 3 de las 16 celdas de la tabla zona por tipo de magnitud y en 4 de las 16 celdas de la tabla zona por fuente, lo que fundamentó el uso de la simulación. \asesoriaStyledRef{(véase \hyperref[tbl-diagnostico-esperadas]{tabla de diagnóstico de frecuencias esperadas})}. Adicionalmente, el RMS de localización se comparó entre las cuatro zonas mediante la prueba no paramétrica de Kruskal-Wallis, que determina si sus distribuciones presentan diferencias globales.
 
 En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado. Cuanto mayor es la discrepancia entre las frecuencias observadas y esperadas, mayor es su valor. El símbolo $H(3)$ corresponde al estadístico de Kruskal-Wallis y el número entre paréntesis indica sus tres grados de libertad, obtenidos al comparar cuatro zonas. Los valores p presentados incorporan el ajuste conjunto de los cinco contrastes de comparabilidad. Finalmente, la V de Cramér corregida por sesgo cuantifica la magnitud de la asociación entre variables categóricas, mientras que $\varepsilon^2$ aproxima la proporción de variabilidad de los rangos del RMS atribuible a la zona. Ambos tamaños de efecto se interpretan directamente a partir de su valor numérico, sin asignarles categorías mediante puntos de corte rígidos. \asesoriaStyledRef{(véase \hyperref[sec-anexo-epsilon]{anexo de cálculo de epsilon cuadrado})}.
 
@@ -951,7 +951,7 @@ Profundidad & C. Fuego - C. Alp.-Him. & 0,269 & [0,109; 0,416] & Pequeña \\
 
 En magnitud, C. Fuego presenta valores algo mayores que Dorsal M.-Atl., pero el efecto es pequeño ($\delta=0{,}298$). Frente a C. Alp.-Him., la diferencia es despreciable ($\delta=-0{,}011$), coherente con la ausencia de diferencia post-hoc. En profundidad, la separación entre C. Fuego y Dorsal M.-Atl. es grande ($\delta=0{,}783$), mientras que frente a C. Alp.-Him. es pequeña ($\delta=0{,}269$).
 
-En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad muestra una capacidad de diferenciación más clara, especialmente entre C. Fuego y Dorsal M.-Atl. Esta conclusión es consistente con el análisis descriptivo del Informe Asesoría 1 y con los contrastes globales de esta fase.
+En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad muestra una capacidad de diferenciación más clara, especialmente entre C. Fuego y Dorsal M.-Atl. Esta conclusión es consistente con el análisis descriptivo del Informe Asesoría 1 y con los contrastes globales de esta fase. Ninguna de las dos variables discrimina por sí sola a las cuatro zonas; queda abierta la posibilidad de que ganen capacidad al actuar en conjunto, hipótesis que se retoma en la clasificación de zonas.
 
 ## Estructura temporal de la ocurrencia {#sec-res-temporal}
 
@@ -1325,7 +1325,7 @@ Zona por categoría de profundidad & 0,0321 & 81,9 \% & 18,1 \% & Categoría Pro
 \endgroup
 ```
 
-La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión concentra 92,9 % de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas. Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores (dos en la Dorsal Meso-Atlántica por profundidad y dos en la columna Grande o extremo por magnitud), de modo que la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
+La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión concentra 92,9 % de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas. Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})}. En profundidad corresponden a las casillas Intermedio y Profundo de la Dorsal Meso-Atlántica, con esperadas de 3,54 y 2,90; en magnitud, a las dos de la columna Grande o extremo (3,13 y 1,39, detalladas en la @tbl-esperadas-extremos). Por eso, la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
 
 Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre sí, salvo la particularidad de la Dorsal; al mirar la profundidad, aparecen perfiles más distinguibles. Esa diferencia se explica principalmente por la presencia o ausencia de eventos profundos y por el carácter exclusivamente superficial de la Dorsal Meso-Atlántica. Por eso el análisis de correspondencia funciona aquí como una primera lectura visual. No concluye por sí mismo, pero muestra que la profundidad contiene más información para separar zonas que la magnitud. La `Figura~\ref{fig-clasificacion-correspondencia}`{=latex} muestra ambos planos.
 
@@ -1482,7 +1482,7 @@ Magnitud y profundidad & 9 & 1746,757 & 0,899  & —      & —          & La ma
 \endgroup
 ```
 
-El modelo con solo profundidad obtiene el menor AIC, y agregarle la magnitud no lo mejora. La hipótesis de que ambas variables ganarían relevancia al actuar conjuntamente no queda respaldada: el aporte conjunto se reduce al aporte de la profundidad.
+El modelo con solo profundidad obtiene el menor AIC, y agregarle la magnitud no lo mejora. La hipótesis planteada al cierre de la comparación de magnitud y profundidad entre zonas, que ambas variables ganarían relevancia al actuar conjuntamente, no queda respaldada: el aporte conjunto se reduce al aporte de la profundidad.
 
 Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, la magnitud y la profundidad, incluso consideradas conjuntamente, no permiten clasificar la zona sísmica de un evento con las proporciones observadas. El modelo no supera la base trivial de 75,21 %. La profundidad sí desplaza las probabilidades relativas de zona, con información distribucional real, pero no alcanza para reasignar clases. En conjunto con la sección de frecuencia, la conclusión es que el Cinturón de Fuego se distingue por cuánto y dónde ocurre su actividad, no por la magnitud o la profundidad de sus eventos individuales.
 
@@ -1680,6 +1680,36 @@ El segundo bloque corresponde a las comparaciones no paramétricas. En Kruskal-W
 
 Los tamaños de efecto se incluyeron para evitar conclusiones basadas solo en significación estadística. Epsilon cuadrado resume la magnitud global del efecto de zona en Kruskal-Wallis y se interpreta como un análogo no paramétrico del $R^2$ aplicado a rangos. Delta de Cliff compara dos zonas y se define como la diferencia entre la probabilidad de que una observación de la primera zona sea mayor que una de la segunda y la probabilidad inversa. Valores cercanos a cero indican fuerte superposición entre distribuciones; valores alejados de cero indican mayor separación práctica.
 
+## Contraste chi-cuadrado de independencia y frecuencias esperadas {#sec-anexo-chi-esperadas}
+
+Este anexo explica el contraste chi-cuadrado de independencia y el papel de las frecuencias esperadas, que sustentan los contrastes categóricos del informe, la V de Cramér y la inercia del análisis de correspondencia.
+
+La frecuencia esperada de una casilla es el conteo que tendría si las dos variables de la tabla fueran independientes. Se obtiene de los totales marginales:
+
+$$
+E_{ij}=\frac{n_{i\cdot}\,n_{\cdot j}}{n},
+$$
+
+donde $n_{i\cdot}$ es el total de la fila $i$, $n_{\cdot j}$ el total de la columna $j$ y $n$ el total de eventos. Es el punto de referencia de la no asociación: las desviaciones entre lo observado y lo esperado son la materia prima del contraste.
+
+El estadístico chi-cuadrado acumula esas desviaciones, relativizadas por lo esperado en cada casilla:
+
+$$
+\chi^2=\sum_{i,j}\frac{(O_{ij}-E_{ij})^2}{E_{ij}},
+$$
+
+con $O_{ij}$ el conteo observado. Bajo independencia, el estadístico sigue aproximadamente una distribución chi-cuadrado con $(r-1)(c-1)$ grados de libertad, donde $r$ y $c$ son el número de filas y columnas. La aproximación es asintótica y se vuelve imprecisa cuando alguna esperada es pequeña, porque el denominador $E_{ij}$ amplifica la contribución de casillas con pocos eventos. La regla práctica habitual exige esperadas de al menos 5; la recomendación original es más matizada y admite un mínimo de 1 cuando son pocas las casillas bajo ese umbral [@cochran_1954]. Cuando la condición no se cumple, el valor p asintótico se reemplaza por uno simulado \asesoriaStyledRef{(véase \hyperref[sec-anexo-montecarlo]{anexo de precisión de la simulación Monte Carlo})}.
+
+Como ejemplo con el catálogo, en el cruce entre zona y categoría de magnitud la casilla de la Dorsal Meso-Atlántica en Grande o extremo tiene esperada
+
+$$
+E=\frac{28\times 59}{1186}=1{,}39,
+$$
+
+es decir, si la Dorsal se comportara como el catálogo completo, se esperaría poco más de un evento en esa casilla. Se observaron 0, y la contribución de la casilla al estadístico es $(0-1{,}39)^2/1{,}39=1{,}39$, cerca de un quinto del $\chi^2=7{,}1222$ total aportado por una sola casilla casi vacía. Por eso las esperadas reducidas obligan a simular el valor p y moderan la lectura de la posición extrema de la Dorsal en el análisis de correspondencia.
+
+El mismo estadístico alimenta las dos medidas descriptivas del informe: dividido por $n$ produce $\phi^2$, la base de la V de Cramér corregida \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})} y de la inercia total del análisis de correspondencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia})}.
+
 ## Precisión de la simulación Monte Carlo {#sec-anexo-montecarlo}
 
 Este anexo documenta la precisión de los valores p obtenidos mediante simulación Monte Carlo y las condiciones que justifican su uso.
@@ -1774,7 +1804,7 @@ $$
 V=\sqrt{\frac{\phi^2}{\min(r-1,c-1)}},
 $$
 
-donde $n$ es el número de observaciones y $r$ y $c$ corresponden al número de filas y columnas de la tabla. Para reducir su sesgo positivo se aplicó la corrección propuesta en la literatura [@bergsma_2013]:
+donde $n$ es el número de observaciones, $r$ y $c$ corresponden al número de filas y columnas de la tabla y $\chi^2$ es el estadístico del contraste de independencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})}. Para reducir su sesgo positivo se aplicó la corrección propuesta en la literatura [@bergsma_2013]:
 
 $$
 \widetilde{\phi}^{\,2}
@@ -2156,7 +2186,7 @@ por lo que se conservó la especificación continua, más simple y sin pérdida 
 
 Este anexo explica el análisis de correspondencia utilizado para explorar la relación entre las zonas y las categorías de magnitud y de profundidad. Es una técnica descriptiva para tablas de contingencia: resume en un plano de pocas dimensiones cuánto se apartan los perfiles observados de la independencia, la situación en que todas las zonas compartirían una misma composición [@greenacre_2017].
 
-La medida de partida es la inercia total, que cuantifica la asociación global de la tabla. Equivale al estadístico chi-cuadrado dividido por el número de observaciones:
+La medida de partida es la inercia total, que cuantifica la asociación global de la tabla. Equivale al estadístico chi-cuadrado de independencia \asesoriaStyledRef{(véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas})} dividido por el número de observaciones:
 
 $$
 \text{inercia total}=\frac{\chi^2}{n}=\phi^2,
@@ -2232,7 +2262,7 @@ $$
 
 un coeficiente extremo cuyo error estándar crece junto con él, lo que invalida la prueba de Wald sobre ese término [@hauck_donner_1977] \asesoriaStyledRef{(véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald})}.
 
-La corrección aplicada, implementada en `brglm2::brmultinom`, ajusta las ecuaciones de estimación para reducir el sesgo medio de los estimadores; en los modelos logísticos equivale a maximizar una verosimilitud penalizada [@kosmidis_firth_2011]:
+La corrección aplicada, conocida como corrección de Firth e implementada en `brglm2::brmultinom` en su extensión multinomial, ajusta las ecuaciones de estimación para reducir el sesgo medio de los estimadores; en los modelos logísticos equivale a maximizar una verosimilitud penalizada [@kosmidis_firth_2011]:
 
 $$
 \ell^{*}(\beta)=\ell(\beta)+\tfrac{1}{2}\log\det I(\beta),
