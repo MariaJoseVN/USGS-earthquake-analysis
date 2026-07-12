@@ -91,7 +91,14 @@ header-includes:
 ---
 
 ```{=latex}
-\newcommand{\bottomtablecaption}[2]{\par\vspace{-0.2em}\begin{center}\footnotesize\itshape Tabla~\ref*{#1}. #2\end{center}}
+\newcommand{\bottomtablecaption}[2]{%
+  \par\vspace{0.10em}%
+  \begingroup
+  \centering\footnotesize\itshape
+  Tabla~\ref*{#1}. #2\par
+  \endgroup
+  \vspace{-0.55em}%
+}
 ```
 
 <!--
@@ -541,11 +548,11 @@ En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado. Cuanto 
                 >{\centering\arraybackslash}p{0.15\textwidth}
                 >{\raggedright\arraybackslash}p{0.23\textwidth}}
 \toprule
-Contraste & Estadístico & Valor p & Tamaño de efecto & Resultado \\
+Contraste & Estadístico & Valor p & Tamaño de efecto & Lectura \\
 \midrule
-Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Asociación estimada nula \\
-Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación cercana a cero \\
-RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Menos del 1 \% de variabilidad de los rangos \\
+Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Asociación nula \\
+Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación mínima \\
+RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Efecto menor al 1 \% \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -916,7 +923,7 @@ Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los 
 ```{=latex}
 \begingroup
 \scriptsize
-\centering2
+\centering
 \setlength{\tabcolsep}{2.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
