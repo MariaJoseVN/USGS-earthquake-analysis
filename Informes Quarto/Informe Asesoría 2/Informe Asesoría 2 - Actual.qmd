@@ -1345,7 +1345,7 @@ Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre
 \end{figure}
 ```
 
-El modelo multinomial cuantifica ese contraste de manera formal. La `Tabla~\ref{tbl-clasificacion-lr}`{=latex} presenta la razón de verosimilitudes por variable.
+El modelo multinomial cuantifica ese contraste de manera formal. La `Tabla~\ref{tbl-clasificacion-lr}`{=latex} presenta la razón de verosimilitudes por variable, calculada sobre el ajuste de máxima verosimilitud; la corrección de sesgo se aplica solo a los coeficientes reportados más adelante.
 
 ```{=latex}
 \begingroup
