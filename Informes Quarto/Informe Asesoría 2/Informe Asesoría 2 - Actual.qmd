@@ -514,7 +514,7 @@ Los predictores se estandarizaron a puntajes Z, es decir, se expresaron en desvi
 
 La capacidad clasificatoria se evaluó primero con la matriz de confusión bajo la regla de máxima probabilidad, que asigna cada evento a la zona con mayor probabilidad ajustada. A partir de ella se calcularon tres métricas \asesoriaStyledRef{(véase \hyperref[sec-anexo-metricas-clasificacion]{anexo de métricas de clasificación})}. La exactitud global se comparó con la base trivial de clasificar siempre la zona mayoritaria (75,2 % de los eventos); la exactitud balanceada se obtuvo como promedio de las sensibilidades por zona, decisiva ante el desbalance porque pondera igual a las cuatro zonas; y la sensibilidad de cada zona se definió como la proporción de eventos de esa zona correctamente identificados.
 
-Como complemento, se evaluó la discriminación probabilística mediante curvas ROC uno contra el resto [@robin_2011]. Aunque la respuesta del modelo es multinomial, cada zona puede examinarse por separado como una comparación binaria: pertenecer a esa zona frente a pertenecer a cualquiera de las demás. En esa lectura, la sensibilidad corresponde a la proporción de eventos de la zona evaluada que el modelo logra reconocer como tales cuando se fija un umbral de probabilidad; por ejemplo, para la Dorsal Meso-Atlántica indica qué proporción de sus eventos queda capturada al exigir cierto nivel de probabilidad asignada a Dorsal. La especificidad corresponde a la proporción de eventos que no pertenecen a esa zona y que el modelo deja correctamente fuera. Por eso el eje horizontal se presenta como $1-\text{especificidad}$: representa los falsos positivos, es decir, eventos de otras zonas que serían incluidos erróneamente como si fueran de la zona evaluada.
+Como complemento, se evaluó la discriminación probabilística mediante curvas ROC uno contra el resto [@robin_2011] \asesoriaStyledRef{(véase \hyperref[sec-anexo-roc]{anexo de curvas ROC y área bajo la curva})}. Aunque la respuesta del modelo es multinomial, cada zona puede examinarse por separado como una comparación binaria: pertenecer a esa zona frente a pertenecer a cualquiera de las demás. En esa lectura, la sensibilidad corresponde a la proporción de eventos de la zona evaluada que el modelo logra reconocer como tales cuando se fija un umbral de probabilidad; por ejemplo, para la Dorsal Meso-Atlántica indica qué proporción de sus eventos queda capturada al exigir cierto nivel de probabilidad asignada a Dorsal. La especificidad corresponde a la proporción de eventos que no pertenecen a esa zona y que el modelo deja correctamente fuera. Por eso el eje horizontal se presenta como $1-\text{especificidad}$: representa los falsos positivos, es decir, eventos de otras zonas que serían incluidos erróneamente como si fueran de la zona evaluada.
 
 El área bajo la curva ROC (AUC) resume el equilibrio entre sensibilidad y falsos positivos a través de todos los umbrales posibles. Un AUC cercano a 0,5 indica que las probabilidades del modelo ordenan los eventos de forma similar al azar; valores más altos indican que los eventos de la zona evaluada tienden a recibir probabilidades mayores que los eventos del resto. Esta métrica no reemplaza la matriz de confusión, porque no entrega una clase final; permite detectar señal discriminante en las probabilidades aun cuando la regla de máxima probabilidad no reasigne eventos a esa zona. Dado el fuerte desbalance entre zonas, especialmente en la Dorsal Meso-Atlántica, los AUC se interpretaron como evidencia complementaria y con cautela cuando la clase positiva tuvo pocos eventos. Además, el aporte de cada variable se contrastó con modelos anidados (solo magnitud, solo profundidad y conjunto), comparados por razón de verosimilitudes y por AIC con el criterio ya definido de diferencia menor que 2 [@burnham_anderson_2004] \asesoriaStyledRef{(véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike})}.
 
@@ -1428,7 +1428,7 @@ Sensibilidad por zona & 1 / 0 / 0 / 0 & Fuego / Resto / Alpino / Dorsal \\
 
 El modelo asignó los 1.186 eventos al Cinturón de Fuego. Reconoció sus 892 eventos y ninguno de las tres zonas restantes. El resultado no contradice la significación de la profundidad, porque la prueba global evalúa si las probabilidades relativas cambian, mientras que la clasificación exige que alguna zona supere al Cinturón de Fuego como categoría más probable. Con un peso muestral de 75,2 % y distribuciones superpuestas, su probabilidad ajustada nunca baja de 0,584 y ninguna zona alternativa supera 0,353.
 
-Para no limitar la evaluación a esa decisión final, se revisaron las curvas ROC uno contra el resto. Esta herramienta transforma el problema multinomial en cuatro comparaciones binarias, cada zona frente a todas las demás. Técnicamente, el área bajo la curva ROC (AUC) mide si las probabilidades ajustadas ordenan correctamente los eventos de una zona por encima de los que no pertenecen a ella. Un valor cercano a 0,5 indica discriminación similar al azar, mientras que valores más altos indican mejor separación. En términos no técnicos, la matriz de confusión pregunta "¿qué etiqueta final asignó el modelo?", mientras que la curva ROC pregunta "¿el modelo al menos elevó la probabilidad de la zona correcta, aunque no haya sido la etiqueta ganadora?". La `Figura~\ref{fig-clasificacion-roc}`{=latex} muestra esta evaluación complementaria.
+Para no limitar la evaluación a esa decisión final, se revisaron las curvas ROC uno contra el resto \asesoriaStyledRef{(véase \hyperref[sec-anexo-roc]{anexo de curvas ROC y área bajo la curva})}. Esta herramienta transforma el problema multinomial en cuatro comparaciones binarias, cada zona frente a todas las demás. Técnicamente, el área bajo la curva ROC (AUC) mide si las probabilidades ajustadas ordenan correctamente los eventos de una zona por encima de los que no pertenecen a ella. Un valor cercano a 0,5 indica discriminación similar al azar, mientras que valores más altos indican mejor separación. En términos no técnicos, la matriz de confusión pregunta "¿qué etiqueta final asignó el modelo?", mientras que la curva ROC pregunta "¿el modelo al menos elevó la probabilidad de la zona correcta, aunque no haya sido la etiqueta ganadora?". La `Figura~\ref{fig-clasificacion-roc}`{=latex} muestra esta evaluación complementaria.
 
 ```{=latex}
 \begin{figure}[H]
@@ -2226,7 +2226,31 @@ $$
 \text{exactitud balanceada}=\frac{1+0+0+0}{4}=0{,}25,
 $$
 
-el mismo valor de la regla trivial, que también reconoce solo a la zona mayoritaria. La lectura conjunta es directa: el modelo no aporta capacidad clasificatoria adicional sobre la regla que asigna todo al Cinturón de Fuego. Las curvas ROC de la sección de resultados complementan esta evaluación: examinan si las probabilidades ajustadas contienen señal discriminante aunque la regla de máxima probabilidad no la convierta en asignaciones distintas.
+el mismo valor de la regla trivial, que también reconoce solo a la zona mayoritaria. La lectura conjunta es directa: el modelo no aporta capacidad clasificatoria adicional sobre la regla que asigna todo al Cinturón de Fuego. Las curvas ROC complementan esta evaluación: examinan si las probabilidades ajustadas contienen señal discriminante aunque la regla de máxima probabilidad no la convierta en asignaciones distintas \asesoriaStyledRef{(véase \hyperref[sec-anexo-roc]{anexo de curvas ROC y área bajo la curva})}.
+
+## Curvas ROC y área bajo la curva {#sec-anexo-roc}
+
+Este anexo explica la evaluación complementaria de la discriminación probabilística mediante curvas ROC y su resumen, el área bajo la curva (AUC), implementados con `pROC` [@robin_2011].
+
+Como la respuesta es multinomial, la evaluación se realiza una zona a la vez bajo el esquema uno contra el resto: los eventos de la zona evaluada son la clase positiva y todos los demás, la negativa. Para un umbral de probabilidad $t$, se definen:
+
+$$
+\text{sensibilidad}(t)=P(\hat p \geq t \mid \text{zona}),
+\qquad
+\text{especificidad}(t)=P(\hat p < t \mid \text{otra zona}),
+$$
+
+donde $\hat p$ es la probabilidad que el modelo asigna a la zona evaluada. La curva ROC dibuja la sensibilidad contra $1-\text{especificidad}$ (los falsos positivos) al recorrer todos los umbrales posibles; su lectura no depende, por tanto, de fijar un umbral particular.
+
+El AUC resume la curva en un número con una lectura de ordenamiento: es la probabilidad de que, tomados al azar un evento de la zona y otro de fuera de ella, el modelo asigne mayor probabilidad al primero:
+
+$$
+\text{AUC}=P\!\left(\hat p_{\text{evento de la zona}} > \hat p_{\text{evento de otra zona}}\right).
+$$
+
+Un AUC de 0,5 equivale a ordenar al azar y un AUC de 1, a un ordenamiento perfecto. Evaluado con el catálogo, el AUC de la Dorsal Meso-Atlántica fue 0,877: si se toma al azar un evento de la Dorsal y otro de fuera, en el 87,7 % de los pares el modelo asigna mayor probabilidad de Dorsal al evento que efectivamente le pertenece. Los AUC restantes fueron 0,689 (Cinturón de Fuego), 0,528 (Cinturón Alpino-Himalayo) y 0,470 (Resto del mundo), este último bajo 0,5 y por tanto sin señal discriminante útil, coherente con su carácter residual y heterogéneo.
+
+La curva ROC complementa a la matriz de confusión porque responde otra pregunta \asesoriaStyledRef{(véase \hyperref[sec-anexo-metricas-clasificacion]{anexo de métricas de clasificación})}. La matriz juzga la etiqueta final: bajo la regla de máxima probabilidad la Dorsal nunca gana y su sensibilidad es 0. El AUC juzga el ordenamiento de las probabilidades: el 0,877 muestra que el modelo sí eleva la probabilidad de Dorsal en los eventos correctos, aunque nunca lo suficiente para superar al Cinturón de Fuego. Esa es la diferencia entre contener señal y convertirla en clasificación. Con solo 28 eventos en la clase positiva, el AUC de la Dorsal se interpreta además con cautela, como se declara en los resultados.
 
 ## Ajuste de valores p por multiplicidad {#sec-anexo-ajuste-p}
 
