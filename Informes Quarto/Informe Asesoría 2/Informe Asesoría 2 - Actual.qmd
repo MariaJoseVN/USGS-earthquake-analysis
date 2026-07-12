@@ -125,16 +125,11 @@ como 2portada-informe.png) y actualizar la ruta en el bloque siguiente.
 
 # Resumen ejecutivo
 
-<!--
-Redactar al final, cuando los análisis estén ejecutados. Estructura sugerida (estilo
-declarativo, transversal y con cifras exactas, igual que el Informe Asesoría 1):
-(1) respuesta a la comparación de tasas entre zonas, con razones de tasa e IC 95 %;
-(2) veredicto de las comparaciones de magnitud y profundidad, con tamaños de efecto;
-(3) resultado del modelo de clasificación y su lectura ejecutiva;
-(4) robustez de las conclusiones según el análisis de sensibilidad.
--->
+Este informe evalúa inferencialmente los principales patrones descritos en el Informe Asesoría 1 sobre 1.186 terremotos con $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025. Se confirma que la principal diferencia entre zonas corresponde a la frecuencia. El Cinturón de Fuego concentra 892 eventos y una tasa de 34,3 por año, muy por encima de las demás zonas, y mantiene la mayor concentración después de considerar la superficie. Las fuentes y los métodos de reporte no condicionan materialmente esta comparación.
 
-*Pendiente de redacción final: este resumen se completa con las cifras exactas de los análisis ejecutados, manteniendo el estilo declarativo del Informe Asesoría 1.*
+También se mantiene la similitud práctica de las magnitudes, cuyas distribuciones permanecen ampliamente superpuestas. La profundidad diferencia mejor a las zonas, especialmente por el carácter superficial de la Dorsal Meso-Atlántica y el rango más amplio presente en el Cinturón de Fuego. En cambio, las fluctuaciones observadas entre períodos no constituyen evidencia de un cambio sostenido en la tasa de ocurrencia. Tampoco se identifica estacionalidad mensual ni una composición de severidad diferente entre zonas.
+
+La magnitud y la profundidad, consideradas conjuntamente, no permiten clasificar de manera confiable la zona de un evento. El modelo asigna todos los terremotos al Cinturón de Fuego y obtiene una exactitud de 75,21 %, igual a clasificar siempre en la zona mayoritaria. En consecuencia, los patrones descriptivos de frecuencia y profundidad quedan respaldados, mientras que las diferencias temporales y de severidad requieren una interpretación más acotada. Los resultados se limitan al catálogo analizado y no permiten estimar amenaza, riesgo sísmico ni probabilidades futuras de ocurrencia.
 
 Se adjuntan los siguientes enlaces como productos derivados del informe.
 
@@ -186,19 +181,15 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 \begin{itemize}
 \setlength{\itemsep}{0.9em}
 
-\item \textbf{OE1. Verificar} la comparabilidad del registro entre zonas y períodos, mediante variables de reporte y ajuste de localización, para identificar posibles diferencias asociadas al procedimiento de medición.
+\item \textbf{OE1. Verificar} la comparabilidad del registro entre zonas y períodos, considerando las fuentes, los métodos de magnitud y el ajuste de localización.
 
-\item \textbf{OE2. Comparar} la frecuencia de eventos entre zonas mediante tasas anuales, densidades por superficie y modelos de conteo, cuantificando razones de tasa e intervalos de confianza.
+\item \textbf{OE2. Comparar} la ocurrencia de terremotos entre zonas y a través del tiempo, mediante tasas anuales, densidades por superficie y evaluación de la estabilidad temporal.
 
-\item \textbf{OE3. Contrastar} las distribuciones de magnitud y profundidad entre zonas, evaluando los supuestos del análisis multivariante y aplicando la ruta no paramétrica correspondiente.
+\item \textbf{OE3. Contrastar} las distribuciones de magnitud, profundidad y severidad entre zonas, considerando tanto la significación estadística como la relevancia práctica de las diferencias.
 
-\item \textbf{OE4. Analizar} la estructura temporal de la ocurrencia mediante pruebas de estacionariedad, independencia serial, comparación de tasas por período y mes, y ajuste de tiempos entre eventos.
+\item \textbf{OE4. Evaluar} si la magnitud y la profundidad, consideradas conjuntamente, permiten clasificar la zona sísmica de un evento.
 
-\item \textbf{OE5. Examinar} la composición de eventos fuertes, mayores y grandes o extremos por zona, mediante tablas de contingencia y modelos logísticos para el umbral $M \geq 7{,}0$.
-
-\item \textbf{OE6. Evaluar} si la magnitud y la profundidad permiten clasificar la zona sísmica de un evento, mediante análisis de correspondencia, regresión logística multinomial y métricas de desempeño por clase.
-
-\item \textbf{OE7. Verificar} la robustez de las conclusiones ante cambios en el umbral de magnitud y en la definición de las zonas de comparación.
+\item \textbf{OE5. Examinar} la robustez de las conclusiones ante cambios en el umbral de magnitud y en la definición de las zonas de comparación.
 
 \end{itemize}
 ```
