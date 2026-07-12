@@ -417,7 +417,7 @@ H_0: \lambda_1=\lambda_2=\cdots=\lambda_{12}
 H_1: \lambda_m\neq\lambda_{m'} \mid m \neq m'
 $$
 
-Por último, analizamos los tiempos transcurridos entre eventos consecutivos para el grupo $M \geq 7{,}0$ y para cada categoría de magnitud. Esta revisión complementa los modelos de conteo. Mientras Poisson evalúa cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Si la ocurrencia fuera compatible con una tasa constante, los tiempos de espera deberían aproximarse a una distribución exponencial. Contrastamos el ajuste mediante Kolmogorov-Smirnov [@conover_1971; @marsaglia_etal_2003] con bootstrap paramétrico, porque la tasa de la distribución se estima con los mismos datos y esa estimación modifica la distribución nula del estadístico [@durbin_1973].
+Por último, analizamos los tiempos transcurridos entre eventos consecutivos para el grupo $M \geq 7{,}0$ y para cada categoría de magnitud. Esta revisión complementa los modelos de conteo. Mientras Poisson evalúa cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Si la ocurrencia fuera compatible con una tasa constante, los tiempos de espera deberían aproximarse a una distribución exponencial. Contrastamos el ajuste mediante Kolmogorov-Smirnov [@conover_1971; @marsaglia_etal_2003] con bootstrap paramétrico, porque la tasa de la distribución se estima con los mismos datos y esa estimación modifica la distribución nula del estadístico [@durbin_1973] \asesoriaStyledRef{(véanse el \hyperref[sec-anexo-exponencial-ks]{anexo del modelo exponencial y la prueba de ajuste de los tiempos entre eventos} y el \hyperref[sec-anexo-bootstrap-parametrico]{anexo de bootstrap paramétrico para pruebas de ajuste})}.
 
 La dócima de ajuste se formula como:
 
@@ -1689,6 +1689,26 @@ $$
 
 Por tanto, si un valor p simulado se encontrara aproximadamente entre 0,046 y 0,054, se aumentaría el número de simulaciones antes de establecer una conclusión. Se fijó una semilla aleatoria para asegurar la reproducibilidad del procedimiento.
 
+## Bootstrap paramétrico para pruebas de ajuste {#sec-anexo-bootstrap-parametrico}
+
+Este anexo explica cómo obtuvimos el valor p de la prueba de ajuste exponencial. El bootstrap paramétrico permite evaluar si la diferencia entre los tiempos observados y el modelo es mayor que la que podría aparecer por variación aleatoria. Es necesario porque la tasa de ocurrencia no se conoce previamente, sino que se calcula con los mismos tiempos que luego se comparan. En esa situación, el valor p convencional de Kolmogorov-Smirnov no representa correctamente la incertidumbre del ajuste [@durbin_1973].
+
+El procedimiento reproduce muchas veces el análisis bajo un escenario en que el modelo exponencial sí fuera adecuado. En cada repetición se genera una muestra artificial con el mismo número de observaciones, se vuelve a calcular la tasa y se mide nuevamente la distancia entre los datos simulados y su distribución exponencial. Finalmente, la distancia observada se compara con las 10.000 distancias obtenidas mediante simulación.
+
+En términos formales, si $D_{\mathrm{obs}}$ es la distancia observada y $D_b^*$ la obtenida en la simulación $b$, el valor p bootstrap corresponde a
+
+$$
+\widehat p_{\mathrm{boot}}
+=\frac{1}{B}\sum_{b=1}^{B}I\!\left(D_b^*\geq D_{\mathrm{obs}}\right),
+\qquad B=10.000.
+$$
+
+Un valor p pequeño indica que pocas muestras generadas bajo el modelo presentan una discrepancia tan grande como la observada. Un valor mayor indica que esa diferencia puede aparecer razonablemente aun cuando el modelo exponencial sea adecuado. La semilla se fijó en 2026 para que las simulaciones puedan reproducirse.
+
+Para el grupo $M\geq7{,}0$, la distancia observada fue $D=0{,}0778$ y el valor p bootstrap fue 0,001. Esto significa que solo cerca del 0,1 % de las muestras simuladas presentó una discrepancia igual o mayor. Por ello, los tiempos del grupo combinado no se describen adecuadamente mediante una única distribución exponencial. Este resultado no surge de comparar solo la media o la mediana, sino la forma completa de la distribución.
+
+La simulación Monte Carlo y el bootstrap paramétrico utilizan repeticiones computacionales, pero responden preguntas distintas. Monte Carlo aproxima el resultado de una prueba de independencia en tablas de frecuencias. El bootstrap paramétrico reproduce el ajuste completo de una distribución y considera que su tasa fue estimada con los mismos datos. En ambos casos, las simulaciones permiten obtener una referencia más adecuada que la aproximación convencional para las condiciones específicas del análisis.
+
 ## Corrección por sesgo de la V de Cramér {#sec-anexo-cramer}
 
 Este anexo explica la corrección aplicada a la V de Cramér para reducir su sobreestimación en tablas pequeñas o con categorías poco frecuentes.
@@ -1807,6 +1827,31 @@ P(Y=58)=\frac{e^{-45{,}5}45{,}5^{58}}{58!}
 $$
 
 Así, bajo una media de 45,5 eventos anuales, observar exactamente 58 eventos tiene probabilidad cercana al 1,1 %. Este cálculo no prueba por sí solo un cambio de tasa; el contraste usa todos los años y compara los períodos completos. Su aporte es mostrar por qué revisamos sobredispersión: si varios años quedan lejos de su media esperada, la variabilidad observada puede superar la prevista por Poisson. En ese caso usamos quasi-Poisson, que conserva la comparación de tasas pero corrige errores estándar y valores p.
+
+## Modelo exponencial y prueba de ajuste de los tiempos entre eventos {#sec-anexo-exponencial-ks}
+
+Este anexo explica el modelo utilizado para evaluar los tiempos transcurridos entre terremotos consecutivos. Mientras el modelo Poisson describe el número de eventos en intervalos fijos, la distribución exponencial describe cuánto tiempo transcurre hasta el siguiente evento. Bajo un proceso de ocurrencia con tasa constante, ambas representaciones son complementarias [@ogata_1988].
+
+Si $T$ representa el tiempo de espera en días y $\lambda$ la tasa diaria de ocurrencia, su función de distribución es
+
+$$
+F(t)=P(T\leq t)=1-e^{-\lambda t},
+\qquad t\geq0.
+$$
+
+La media esperada es $1/\lambda$ y la mediana teórica es $\log(2)/\lambda$. Una tasa mayor implica esperas más breves; una tasa menor, intervalos más largos. En cada grupo estimamos la tasa mediante $\widehat\lambda=1/\overline T$, donde $\overline T$ es el promedio de los intervalos observados.
+
+La prueba de Kolmogorov-Smirnov compara la distribución acumulada empírica de los tiempos, $\widehat F_n(t)$, con la distribución exponencial ajustada, $F_{\widehat\lambda}(t)$ [@conover_1971; @marsaglia_etal_2003]. El estadístico es la mayor distancia vertical entre ambas curvas:
+
+$$
+D=\sup_t\left|\widehat F_n(t)-F_{\widehat\lambda}(t)\right|.
+$$
+
+Un valor de $D$ mayor indica una discrepancia más marcada, pero su interpretación depende del tamaño muestral. Además, el valor p convencional de Kolmogorov-Smirnov supone que la distribución de referencia está completamente especificada. En este análisis $\lambda$ se estima con los mismos tiempos que se contrastan, por lo que el valor p se obtuvo mediante bootstrap paramétrico [@durbin_1973] \asesoriaStyledRef{(véase \hyperref[sec-anexo-bootstrap-parametrico]{anexo de bootstrap paramétrico para pruebas de ajuste})}.
+
+Como ejemplo, para los 386 intervalos del grupo $M\geq7{,}0$ estimamos una tasa de 0,0408 eventos por día. Esta tasa corresponde a una espera media aproximada de $1/0{,}0408=24{,}5$ días y a una mediana teórica de $\log(2)/0{,}0408=17{,}0$ días, cercana a la mediana observada de 15,6 días. Sin embargo, la prueba considera la distribución completa y no solo su centro. El resultado $D=0{,}0778$ y $p_{\mathrm{boot}}=0{,}001$ indica que las diferencias a lo largo de la distribución son demasiado grandes para describir el grupo combinado mediante una única exponencial.
+
+Al separar los eventos por categoría de magnitud, los grupos Mayor ($p=0{,}102$) y Grande o extremo ($p=0{,}531$) resultaron compatibles con el ajuste exponencial, mientras que el grupo Fuerte lo rechazó ($p<0{,}001$). Esto no demuestra que los primeros sigan exactamente un proceso de tasa constante; indica que, con los datos disponibles, no se detectó una discrepancia suficiente para descartar ese modelo. La diferencia entre el resultado combinado y los resultados por categoría muestra que reunir eventos con ritmos distintos puede producir un ajuste inadecuado.
 
 ## Modelo binomial negativo para conteos con sobredispersión {#sec-anexo-binomial-negativa}
 
