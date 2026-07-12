@@ -202,7 +202,6 @@ El equipo utilizó herramientas de inteligencia artificial generativa como apoyo
 
 El procedimiento de búsqueda, verificación bibliográfica y uso complementario de NotebookLM, Zotero y QGIS se documenta en el anexo correspondiente. \asesoriaStyledRef{(véase \hyperref[sec-anexo-declaracion-ia]{anexo de uso de inteligencia artificial})}.
 
-\newpage
 # Metodología
 
 La metodología se organiza en seis análisis encadenados más un análisis de sensibilidad. El primero revisa la comparabilidad del registro, porque si los procedimientos de reporte difirieran entre zonas, las comparaciones posteriores mezclarían diferencias sísmicas con diferencias de medición. Establecida esa base, tres análisis abordan la primera componente de la pregunta estadística desde enfoques complementarios. La frecuencia compara cuántos eventos registra cada zona, la comparación de magnitud y profundidad examina cómo son esos eventos, y la estructura temporal evalúa si la tasa se mantuvo estable durante el período, condición que respalda la agregación de años empleada por las anteriores. El quinto análisis cruza ambas miradas al examinar la composición de severidad dentro de cada zona, y el sexto invierte la pregunta para responder la segunda componente, es decir, si la magnitud y la profundidad, en conjunto, identifican la zona de un evento. El análisis de sensibilidad final verifica la robustez de las conclusiones ante el umbral de magnitud y la definición de las zonas.
