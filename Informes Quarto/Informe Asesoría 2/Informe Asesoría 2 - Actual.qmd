@@ -488,7 +488,7 @@ Los eventos con $M \geq 7{,}8$ se describieron mediante conteos por zona y tasas
 
 Esta sección evalúa si la magnitud y la profundidad permiten identificar la zona de un evento. A diferencia de las comparaciones anteriores, la zona deja de ser el factor de agrupación y pasa a ser la variable respuesta. El análisis tiene dos etapas: una exploración de correspondencias entre las zonas y las categorías de magnitud y profundidad, y una regresión logística multinomial confirmatoria. Se consideraron correlaciones parciales entre las variables numéricas como alternativa inicial, pero se descartaron porque no integran las variables categóricas y porque las relaciones individuales ya fueron examinadas en la comparación de magnitud y profundidad entre zonas; el aporte conjunto se evalúa de forma directa con el modelo.
 
-El análisis de correspondencia es una técnica descriptiva para tablas de contingencia que compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017]. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola. Esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
+El análisis de correspondencia es una técnica descriptiva para tablas de contingencia que compara los perfiles porcentuales de filas y columnas mediante distancias chi-cuadrado y los representa en un plano de pocas dimensiones [@greenacre_2017] \asesoriaStyledRef{(véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia})}. La inercia total cuantifica cuánto se apartan los perfiles observados de la independencia y se reparte entre las dimensiones; las contribuciones indican qué zonas y categorías definen cada eje. Se aplicó a las tablas que cruzan las zonas con las categorías de magnitud y de profundidad; como ambas tienen cuatro filas y tres columnas, dos dimensiones representan la totalidad de su geometría. La cercanía entre puntos sugiere perfiles semejantes, pero no constituye evidencia inferencial por sí sola. Esta etapa se interpreta junto con las frecuencias esperadas de cada tabla y se confirma con el modelo multinomial.
 
 La regresión logística multinomial modela la probabilidad de pertenecer a cada zona en función de la magnitud y la profundidad, con el Cinturón de Fuego como referencia por ser la zona de mayor tamaño muestral. El modelo estima tres ecuaciones, una por cada zona alternativa frente a la referencia [@venables_ripley_2002] \asesoriaStyledRef{(véase \hyperref[sec-anexo-logistica]{anexo del modelo de regresión logística})}. La significación de cada variable se evaluó mediante razón de verosimilitudes por bloque, con tres grados de libertad por variable, porque cada una aporta un coeficiente en cada ecuación:
 
@@ -1261,7 +1261,7 @@ Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y
 
 ## Clasificación de zonas a partir de magnitud y profundidad {#sec-res-clasificacion}
 
-Las subsecciones anteriores establecieron que la magnitud apenas distingue a las zonas y que la profundidad presenta diferencias más claras. Esta subsección evalúa la segunda componente de la pregunta estadística: si ambas variables, consideradas conjuntamente, permiten identificar la zona de un evento. Primero se explora la estructura de las tablas categóricas mediante análisis de correspondencia y luego se ajusta el modelo multinomial. En términos aplicados, el análisis de correspondencia funciona como un mapa de asociación: ubica cerca a las zonas y categorías con perfiles parecidos, y separa aquellas cuya composición es distinta. Los porcentajes que acompañan a cada dimensión en los mapas no corresponden al porcentaje de eventos, sino a la proporción de inercia explicada por cada eje; es decir, indican cuánta parte de la asociación entre zonas y categorías queda resumida horizontal y verticalmente. El análisis se calcula sobre la composición de categorías dentro de cada zona. La de magnitud se presentó en la `Tabla~\ref{tbl-extremos-contingencia}`{=latex}; la `Tabla~\ref{tbl-clasificacion-profundidad}`{=latex} presenta la de profundidad.
+Las subsecciones anteriores establecieron que la magnitud apenas distingue a las zonas y que la profundidad presenta diferencias más claras. Esta subsección evalúa la segunda componente de la pregunta estadística: si ambas variables, consideradas conjuntamente, permiten identificar la zona de un evento. Primero se explora la estructura de las tablas categóricas mediante análisis de correspondencia y luego se ajusta el modelo multinomial. En términos aplicados, el análisis de correspondencia funciona como un mapa de asociación: ubica cerca a las zonas y categorías con perfiles parecidos, y separa aquellas cuya composición es distinta \asesoriaStyledRef{(véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia})}. Los porcentajes que acompañan a cada dimensión en los mapas no corresponden al porcentaje de eventos, sino a la proporción de inercia explicada por cada eje; es decir, indican cuánta parte de la asociación entre zonas y categorías queda resumida horizontal y verticalmente. El análisis se calcula sobre la composición de categorías dentro de cada zona. La de magnitud se presentó en la `Tabla~\ref{tbl-extremos-contingencia}`{=latex}; la `Tabla~\ref{tbl-clasificacion-profundidad}`{=latex} presenta la de profundidad.
 
 ```{=latex}
 \begingroup
@@ -2089,6 +2089,36 @@ $$
 $$
 
 por lo que se conservó la especificación continua, más simple y sin pérdida de información por categorización. Se usó AIC y no una prueba de significación porque las dos representaciones no son modelos anidados en el sentido requerido por la razón de verosimilitudes.
+
+## Análisis de correspondencia {#sec-anexo-correspondencia}
+
+Este anexo explica el análisis de correspondencia utilizado para explorar la relación entre las zonas y las categorías de magnitud y de profundidad. Es una técnica descriptiva para tablas de contingencia: resume en un plano de pocas dimensiones cuánto se apartan los perfiles observados de la independencia, la situación en que todas las zonas compartirían una misma composición [@greenacre_2017].
+
+La medida de partida es la inercia total, que cuantifica la asociación global de la tabla. Equivale al estadístico chi-cuadrado dividido por el número de observaciones:
+
+$$
+\text{inercia total}=\frac{\chi^2}{n}=\phi^2,
+$$
+
+donde $n$ es el número de eventos. Es la misma cantidad $\phi^2$ que sustenta la V de Cramér \asesoriaStyledRef{(véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér})}: una inercia cercana a cero indica perfiles casi idénticos entre zonas, y una inercia mayor, perfiles más distinguibles.
+
+La inercia se reparte en dimensiones, análogas a los ejes de un mapa. Cada dimensión tiene un autovalor $\lambda_k$, y su porcentaje sobre la inercia total indica cuánta asociación resume ese eje:
+
+$$
+\text{porcentaje de la dimensión }k=\frac{\lambda_k}{\sum_j \lambda_j}\times 100.
+$$
+
+Como las dos tablas tienen cuatro filas (zonas) y tres columnas (categorías), su geometría se agota en $\min(4-1,\,3-1)=2$ dimensiones: dos ejes representan la totalidad de la asociación. Las contribuciones señalan qué zonas y categorías definen cada eje, es decir, cuáles se apartan más del centro.
+
+Como ejemplo con el catálogo, la tabla de zona por categoría de magnitud tiene $\chi^2=7{,}1222$ y $n=1186$, de modo que su inercia total es
+
+$$
+\frac{7{,}1222}{1186}=0{,}0060,
+$$
+
+el mismo valor de la sección de resultados. La tabla de profundidad alcanza una inercia de 0,0321, unas 5,3 veces mayor, y su primera dimensión concentra el 81,9 % de esa asociación: sus perfiles por zona son más distintos, sobre todo por la presencia o ausencia de eventos profundos.
+
+La lectura del plano sigue tres reglas simples. Los puntos cercanos entre sí corresponden a perfiles semejantes; un punto próximo al origen tiene un perfil cercano al promedio del catálogo; y un punto alejado del origen es distintivo. Por eso, en el mapa de profundidad la Dorsal Meso-Atlántica queda apartada por ser exclusivamente superficial, mientras que el Cinturón de Fuego queda cerca del origen por cubrir todas las categorías. Esta etapa es descriptiva: sugiere qué variable separa mejor las zonas, pero no constituye prueba por sí sola, y su lectura se confirma con el modelo multinomial.
 
 ## Ajuste de valores p por multiplicidad {#sec-anexo-ajuste-p}
 
