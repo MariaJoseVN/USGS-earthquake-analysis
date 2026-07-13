@@ -97,7 +97,7 @@ header-includes:
   - \captionsetup{font={footnotesize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
   - \captionsetup[table]{position=bottom,justification=centering,singlelinecheck=false}
   - \captionsetup[longtable]{position=bottom,justification=centering,singlelinecheck=false}
-  - \captionsetup[figure]{position=bottom,font={scriptsize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
+  - \captionsetup[figure]{position=bottom,font={scriptsize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor},skip=0pt}
 ---
 
 ```{=latex}
@@ -235,19 +235,39 @@ Esta sección evalúa si los procedimientos de reporte varían entre zonas o per
 
 En esta sección, las dócimas se formularon como contrastes de independencia para las variables categóricas de reporte y como contrastes de igualdad distribucional para el ajuste residual de localización. Por ejemplo, para el tipo de magnitud entre zonas:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0: F_{\text{tipo},\,\text{zona}_1}=F_{\text{tipo},\,\text{zona}_2}=\cdots=F_{\text{tipo},\,\text{zona}_k}
 \quad \text{v/s} \quad
 H_1: F_{\text{tipo},\,\text{zona}_h}\neq F_{\text{tipo},\,\text{zona}_{h'}} \mid h \neq h'
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 El mismo criterio se aplicó a las asociaciones entre zona y fuente de magnitud, y entre período y tipo de magnitud. Para las comparaciones del ajuste residual de localización, la hipótesis se expresa en términos de igualdad de distribuciones; por ejemplo, entre zonas:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0: F_{\text{RMS},\,\text{zona}_1}=F_{\text{RMS},\,\text{zona}_2}=\cdots=F_{\text{RMS},\,\text{zona}_k}
 \quad \text{v/s} \quad
 H_1: F_{\text{RMS},\,\text{zona}_h}\neq F_{\text{RMS},\,\text{zona}_{h'}} \mid h \neq h'
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 La comparación del RMS entre períodos se formuló de forma análoga.
 
@@ -269,15 +289,17 @@ El punto de partida fue un modelo Poisson con enlace logarítmico, apropiado par
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0:\ \operatorname{Var}(Y)=\mathbb{E}(Y)
 \quad \text{v/s} \quad
 H_1:\ \operatorname{Var}(Y)>\mathbb{E}(Y)
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -287,15 +309,17 @@ El efecto global de zona se evaluó mediante una razón de verosimilitudes con t
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0:\ \lambda_{1}=\lambda_{2}=\lambda_{3}=\lambda_{4}
 \quad \text{v/s} \quad
 H_1:\ \lambda_{h}\neq\lambda_{h'} \ \text{para algún } h\neq h'
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -313,28 +337,28 @@ La evaluación combinó diagnóstico gráfico y pruebas formales, incluyendo QQ-
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\setlength{\abovedisplayshortskip}{0.2em}
-\setlength{\belowdisplayshortskip}{0.2em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
 ```
 
 La decisión de ruta se organizó mediante las siguientes dócimas principales. Para la normalidad multivariada del vector formado por magnitud y profundidad:
 
 ```{=latex}
-\vspace{-0.85em}
+\vspace{-1.10em}
 \[
 H_0: \mathbf{X}_{\text{zona}_h}\sim N_2(\boldsymbol{\mu}_h,\boldsymbol{\Sigma}_h)
 \quad \text{v/s} \quad
 H_1: \mathbf{X}_{\text{zona}_h}\not\sim N_2(\boldsymbol{\mu}_h,\boldsymbol{\Sigma}_h) \mid h=1,\ldots,k
 \]
-\vspace{-0.85em}
+\vspace{-1.15em}
 ```
 
 Para la homogeneidad de matrices de varianza-covarianza entre zonas:
 
 ```{=latex}
-\vspace{-0.85em}
+\vspace{-1.10em}
 \[
 H_0: \boldsymbol{\Sigma}_{\text{zona}_1}
 =\boldsymbol{\Sigma}_{\text{zona}_2}
@@ -345,7 +369,7 @@ H_1: \boldsymbol{\Sigma}_{\text{zona}_h}
 \neq
 \boldsymbol{\Sigma}_{\text{zona}_{h'}} \mid h \neq h'
 \]
-\vspace{-0.85em}
+\vspace{-1.15em}
 ```
 
 Como los supuestos no se sostuvieron, no se utilizó MANOVA como procedimiento principal. En su lugar, comparamos las distribuciones de magnitud y profundidad mediante Kruskal-Wallis [@kruskal_wallis_1952], prueba basada en rangos que no exige normalidad y mantiene la pregunta central de comparación entre zonas. Cada contraste se acompañó con epsilon cuadrado ($\varepsilon^2$) para evaluar relevancia práctica [@mangiafico_rcompanion_2026].
@@ -353,13 +377,13 @@ Como los supuestos no se sostuvieron, no se utilizó MANOVA como procedimiento p
 Para esta comparación no paramétrica de magnitud y profundidad, la dócima se formuló como:
 
 ```{=latex}
-\vspace{-0.85em}
+\vspace{-1.10em}
 \[
 H_0: F_{Y,\,\text{zona}_1}=F_{Y,\,\text{zona}_2}=\cdots=F_{Y,\,\text{zona}_k}
 \quad \text{v/s} \quad
 H_1: F_{Y,\,\text{zona}_h}\neq F_{Y,\,\text{zona}_{h'}} \mid h \neq h'
 \]
-\vspace{-0.85em}
+\vspace{-1.15em}
 ```
 
 donde $Y \in \{\text{magnitud},\text{profundidad}\}$.
@@ -384,55 +408,115 @@ Evaluamos la estacionariedad mediante Dickey-Fuller aumentada (ADF) y KPSS, inte
 
 Las dócimas se expresan como:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0^{ADF}: \text{raíz unitaria}
 \quad \text{v/s} \quad
 H_1^{ADF}: \text{estacionariedad}
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0^{KPSS}: \text{estacionariedad en nivel}
 \quad \text{v/s} \quad
 H_1^{KPSS}: \text{no estacionariedad}
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 Revisamos la independencia serial mediante Ljung-Box, porque una serie puede ser estacionaria y aun así presentar autocorrelación [@ljung_box_1978]. Esta revisión permite evaluar si los conteos de un período dependen sistemáticamente de los períodos anteriores; si no hay autocorrelación relevante, las fluctuaciones observadas se interpretan como variación propia del catálogo y no como rachas temporales persistentes. Esta prueba evalúa si las autocorrelaciones hasta un rezago definido son conjuntamente nulas. Como diagnóstico gráfico complementario, examinamos la ACF y la PACF de la serie mensual; priorizamos la escala mensual porque entrega más observaciones que la serie anual y permite observar rezagos específicos con mayor estabilidad.
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0^{LB}: \rho_1=\rho_2=\cdots=\rho_m=0
 \quad \text{v/s} \quad
 H_1^{LB}: \rho_j\neq 0 \mid j \leq m
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 Además de estas pruebas, comparamos la tasa media anual de eventos entre tres tramos del período observado: 2000-2009, 2010-2019 y 2020-2025. Esta comparación complementa la lectura descriptiva del \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Informe Asesoría 1}. El gráfico permite observar fluctuaciones en los conteos, mientras que el modelo evalúa si las diferencias entre períodos superan la variabilidad esperable del catálogo. Como la variable de respuesta corresponde a conteos anuales de eventos, usamos un GLM Poisson, que es el punto de partida natural para modelar números de ocurrencias en intervalos de exposición comparables. En este caso, cada observación corresponde a un año del catálogo, por lo que el modelo permite estimar y contrastar tasas medias de ocurrencia entre períodos sin tratar los conteos como si fueran variables continuas normales. Su resultado indica si algún tramo presenta una tasa anual estadísticamente distinta de los demás; si no se detectan diferencias, la lectura temporal respalda el uso de una tasa agregada para todo el período \asesoriaParenRef{véase el \hyperref[sec-anexo-poisson-temporal]{anexo del modelo Poisson para conteos temporales}}. Luego evaluamos si los conteos varían más de lo esperado bajo Poisson; cuando esto ocurre, la decisión inferencial se basa en quasi-Poisson, que mantiene la comparación de tasas pero corrige la varianza estimada. En esta parte usamos esa corrección en lugar de la binomial negativa aplicada en la comparación de frecuencia entre zonas, porque aquí el objetivo es únicamente docimar la significación de un factor temporal, para lo cual basta reescalar la varianza y aplicar un contraste F [@mccullagh_nelder_1989]. La binomial negativa queda reservada para aquella comparación, donde se requieren razones de tasa con intervalos de confianza y comparación formal de modelos, lo que exige una verosimilitud completa. La regla es la misma en ambos casos. Todo modelo de conteos se diagnostica por sobredispersión antes de concluir, y la herramienta de corrección se elige según el objetivo del análisis.
 
 Para la comparación entre períodos, la dócima se formula como:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0: \lambda_{\text{2000-2009}}=\lambda_{\text{2010-2019}}=\lambda_{\text{2020-2025}}
 \quad \text{v/s} \quad
 H_1: \lambda_a\neq\lambda_b \mid a \neq b
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 Con el mismo criterio, evaluamos la estacionalidad mensual mediante un GLM Poisson aplicado a los conteos mensuales, usando el mes calendario como factor. Este contraste revisa si algún mes concentra sistemáticamente más eventos que otros dentro del período del catálogo. La inferencia también se verifica con quasi-Poisson cuando la variabilidad observada supera la esperada bajo Poisson \asesoriaParenRef{véase el \hyperref[sec-anexo-poisson-temporal]{anexo del modelo Poisson para conteos temporales}}.
 
 Para la estacionalidad mensual, la dócima se expresa como:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0: \lambda_1=\lambda_2=\cdots=\lambda_{12}
 \quad \text{v/s} \quad
 H_1: \lambda_m\neq\lambda_{m'} \mid m \neq m'
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 Por último, analizamos los tiempos transcurridos entre eventos consecutivos para el grupo $M \geq 7{,}0$ y para cada categoría de magnitud. Esta revisión complementa los modelos de conteo. Mientras Poisson evalúa cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Si la ocurrencia fuera compatible con una tasa constante, los tiempos de espera deberían aproximarse a una distribución exponencial. Contrastamos el ajuste mediante Kolmogorov-Smirnov [@conover_1971; @marsaglia_etal_2003] con bootstrap paramétrico, porque la tasa de la distribución se estima con los mismos datos y esa estimación modifica la distribución nula del estadístico [@durbin_1973] \asesoriaParenRef{véanse el \hyperref[sec-anexo-exponencial-ks]{anexo del modelo exponencial y la prueba de ajuste de los tiempos entre eventos} y el \hyperref[sec-anexo-bootstrap-parametrico]{anexo de bootstrap paramétrico para pruebas de ajuste}}.
 
 La dócima de ajuste se formula como:
 
-$$
+```{=latex}
+\begingroup
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
+\[
 H_0: T \sim \text{Exponencial}(\lambda)
 \quad \text{v/s} \quad
 H_1: T \not\sim \text{Exponencial}(\lambda)
-$$
+\]
+\vspace{-1.15em}
+\endgroup
+```
 
 ## Eventos fuertes y extremos {#sec-met-extremos}
 
@@ -442,15 +526,17 @@ La tabla de contingencia cruza las cuatro zonas con las tres categorías de magn
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0: F_{\text{cat},\,\text{zona}_1}=F_{\text{cat},\,\text{zona}_2}=\cdots=F_{\text{cat},\,\text{zona}_k}
 \quad \text{v/s} \quad
 H_1: F_{\text{cat},\,\text{zona}_h}\neq F_{\text{cat},\,\text{zona}_{h'}} \mid h \neq h'
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -462,15 +548,17 @@ Para la regresión logística, las categorías Mayor y Grande o extremo se agrup
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0:\ \beta_{\text{zona}_2}=\beta_{\text{zona}_3}=\beta_{\text{zona}_4}=0
 \quad \text{v/s} \quad
 H_1:\ \beta_{\text{zona}_h}\neq 0 \ \text{para algún } h
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -480,15 +568,17 @@ La inferencia se organiza así en dos niveles. El contraste global decide si una
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0:\ \beta_{j}=0
 \quad \text{v/s} \quad
 H_1:\ \beta_{j}\neq 0
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -510,15 +600,17 @@ La regresión logística multinomial modela la probabilidad de pertenecer a cada
 
 ```{=latex}
 \begingroup
-\setlength{\abovedisplayskip}{0.35em}
-\setlength{\belowdisplayskip}{0.35em}
-\vspace{-0.6em}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\vspace{-1.10em}
 \[
 H_0:\ \beta_{Y,\text{zona}_2}=\beta_{Y,\text{zona}_3}=\beta_{Y,\text{zona}_4}=0
 \quad \text{v/s} \quad
 H_1:\ \beta_{Y,\text{zona}_h}\neq 0 \ \text{para algún } h
 \]
-\vspace{-0.6em}
+\vspace{-1.15em}
 \endgroup
 ```
 
@@ -564,9 +656,9 @@ En la tabla siguiente, $\chi^2$ representa el estadístico chi-cuadrado. Cuanto 
 \toprule
 Contraste & Estadístico & Valor p & Tamaño de efecto & Lectura \\
 \midrule
-Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Asociación nula \\
-Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación mínima \\
-RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Efecto menor al 1 \% \\
+Zona por tipo de magnitud & $\chi^2=6{,}736$ & 0,671 & $V_{c}=0{,}000$ & Asociación nula. \\
+Zona por fuente de magnitud & $\chi^2=10{,}761$ & 0,351 & $V_{c}=0{,}022$ & Asociación mínima. \\
+RMS por zona & $H(3)=10{,}348$ & 0,026 & $\varepsilon^2=0{,}009$ & Efecto menor al 1 \%.\\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -590,16 +682,12 @@ Los dos contrastes temporales completan la familia de cinco pruebas ajustadas co
 \refstepcounter{table}
 \label{tbl-comparabilidad-temporal}
 \hypertarget{dest-tbl-comparabilidad-temporal}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.25\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.13\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\raggedright\arraybackslash}p{0.22\textwidth}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
 Contraste & Estadístico & Valor p & Tamaño de efecto & Resultado \\
 \midrule
-RMS por período & $H(2)=261{,}930$ & $<0{,}001$ & $\varepsilon^2=0{,}221$ & 22,1 \% de variabilidad de los rangos \\
-Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608$ & Asociación marcadamente alejada de cero \\
+RMS por período & $H(2)=261{,}930$ & $<0{,}001$ & $\varepsilon^2=0{,}221$ & 22,1 \% de variabilidad de los rangos. \\
+Período por tipo de magnitud & $\chi^2=882{,}090$ & $<0{,}001$ & $V_{c}=0{,}608$ & Asociación marcadamente alejada de cero. \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -637,8 +725,8 @@ Una vez comprobada la adecuación del modelo, la primera pregunta fue si la zona
 \toprule
 Modelo & $LR$ & gl & Valor p & Lectura \\
 \midrule
-Tasa anual & 220,37 & 3 & $<0{,}001$ & La zona modifica la tasa de ocurrencia \\
-Densidad por superficie & 225,85 & 3 & $<0{,}001$ & La zona modifica la densidad por km\textsuperscript{2} \\
+Tasa anual & 220,37 & 3 & $<0{,}001$ & La zona modifica la tasa de ocurrencia. \\
+Densidad por superficie & 225,85 & 3 & $<0{,}001$ & La zona modifica la densidad por km\textsuperscript{2}. \\
 \bottomrule
 \end{tabular}
 \par\vspace{-0.85em}
@@ -646,7 +734,7 @@ Densidad por superficie & 225,85 & 3 & $<0{,}001$ & La zona modifica la densidad
 \endgroup
 ```
 
-Ambos contrastes resultaron significativos ($p<0{,}001$), de modo que las cuatro zonas no comparten una misma tasa de ocurrencia ni una misma densidad por superficie. Establecida esa diferencia, la `\asesoriaTableRef{tbl-frecuencia-zonas}`{=latex} cuantifica su magnitud. La razón de tasa mide cuánto difiere cada zona del Cinturón de Fuego, tomado como referencia: un valor de 1 indica igual frecuencia y un valor menor que 1, una frecuencia menor. El intervalo de confianza del 95 % indica con qué precisión se conoce esa razón, es decir, el rango de valores compatibles con los datos.
+Ambos contrastes resultaron significativos ($p<0{,}001$), de modo que las cuatro zonas no comparten una misma tasa de ocurrencia ni una misma densidad por superficie. Establecida esa diferencia, la `\asesoriaTableRef{tbl-frecuencia-zonas}`{=latex} cuantifica su magnitud. La razón de tasa mide cuánto difiere cada zona del Cinturón de Fuego, tomado como referencia: un valor de 1 indica igual frecuencia y un valor menor que 1, una frecuencia menor. La razón de densidad cumple la misma función para la densidad por superficie. El intervalo de confianza del 95 % indica con qué precisión se conoce cada razón, es decir, el rango de valores compatibles con los datos.
 
 ```{=latex}
 \begingroup
@@ -658,11 +746,8 @@ Ambos contrastes resultaron significativos ($p<0{,}001$), de modo que las cuatro
 \refstepcounter{table}
 \label{tbl-frecuencia-zonas}
 \hypertarget{dest-tbl-frecuencia-zonas}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.21\textwidth}
-                r r
-                >{\centering\arraybackslash}p{0.19\textwidth}
-                r
-                >{\centering\arraybackslash}p{0.19\textwidth}}
+\makebox[\textwidth][c]{%
+\begin{tabular}{@{}lrrccc@{}}
 \toprule
 Zona & Eventos & Tasa anual & Razón de tasa (IC 95 \%) & Densidad & Razón de densidad (IC 95 \%) \\
 \midrule
@@ -671,7 +756,8 @@ Resto del mundo          & 203 &  7,81 & 0,228 [0,191; 0,270]   & 0,018 & 0,025 
 Cinturón Alpino-Himalayo &  63 &  2,42 & 0,071 [0,053; 0,092]   & 0,167 & 0,232 [0,176; 0,302] \\
 Dorsal Meso-Atlántica    &  28 &  1,08 & 0,031 [0,021; 0,045]   & 0,057 & 0,079 [0,053; 0,114] \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \par\vspace{-0.7em}
 \bottomtablecaption{tbl-frecuencia-zonas}{Frecuencia anual bruta y densidad de eventos por zona.}
 \endgroup
@@ -691,21 +777,20 @@ La `\asesoriaTableRef{tbl-frecuencia-pares}`{=latex} detalla las seis comparacio
 \refstepcounter{table}
 \label{tbl-frecuencia-pares}
 \hypertarget{dest-tbl-frecuencia-pares}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}
-                >{\centering\arraybackslash}p{0.22\textwidth}
-                >{\centering\arraybackslash}p{0.22\textwidth}
-                >{\raggedright\arraybackslash}p{0.20\textwidth}}
+\makebox[\textwidth][c]{%
+\begin{tabular}{@{}lccc@{}}
 \toprule
 Comparación (zona 1 / zona 2) & Razón de tasa (IC 95 \%) & Razón de densidad (IC 95 \%) & Lectura \\
 \midrule
-C. Fuego / C. Alp.-Him.       & 14,16 [10,82; 18,53] & 4,30 [3,29; 5,63]    & Fuego mayor en ambas \\
-C. Fuego / Dorsal M.-Atl.     & 31,86 [21,67; 46,83] & 12,64 [8,60; 18,58]  & Fuego mayor en ambas \\
-C. Fuego / Resto              & 4,39 [3,69; 5,23]    & 39,57 [33,26; 47,09] & Fuego mayor en ambas \\
-C. Alp.-Him. / Dorsal M.-Atl. & 2,25 [1,43; 3,54]    & 2,94 [1,87; 4,62]    & Alpino mayor en ambas \\
-C. Alp.-Him. / Resto          & 0,31 [0,23; 0,42]    & 9,20 [6,85; 12,35]   & Resto mayor en tasa, menor en densidad \\
-Dorsal M.-Atl. / Resto        & 0,14 [0,09; 0,21]    & 3,13 [2,09; 4,69]    & Resto mayor en tasa, menor en densidad \\
+C. Fuego / C. Alp.-Him.       & 14,16 [10,82; 18,53] & 4,30 [3,29; 5,63]    & Fuego mayor en ambas. \\
+C. Fuego / Dorsal M.-Atl.     & 31,86 [21,67; 46,83] & 12,64 [8,60; 18,58]  & Fuego mayor en ambas. \\
+C. Fuego / Resto              & 4,39 [3,69; 5,23]    & 39,57 [33,26; 47,09] & Fuego mayor en ambas. \\
+C. Alp.-Him. / Dorsal M.-Atl. & 2,25 [1,43; 3,54]    & 2,94 [1,87; 4,62]    & Alpino mayor en ambas. \\
+C. Alp.-Him. / Resto          & 0,31 [0,23; 0,42]    & 9,20 [6,85; 12,35]   & Resto mayor en tasa, menor en densidad. \\
+Dorsal M.-Atl. / Resto        & 0,14 [0,09; 0,21]    & 3,13 [2,09; 4,69]    & Resto mayor en tasa, menor en densidad. \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \par\vspace{-0.7em}
 \bottomtablecaption{tbl-frecuencia-pares}{Comparaciones por pares entre zonas en tasa anual y densidad.}
 \endgroup
@@ -721,7 +806,7 @@ La `\asesoriaFigureRef{fig-inf2-frecuencia}`{=latex} muestra ambas medidas lado 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
-\vspace{-2.0em}
+\vspace{-2.75em}
 \caption{Frecuencia de eventos por zona: tasa anual y densidad por superficie.}
 \label{fig-inf2-frecuencia}
 \end{figure}
