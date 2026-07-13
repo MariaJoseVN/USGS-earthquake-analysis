@@ -1760,6 +1760,7 @@ La clasificación presenta la principal limitación aplicada del informe. Aunque
 
 La sensibilidad se examina mediante dos escenarios. El primero eleva el umbral a $M \geq 7{,}0$ para determinar si las conclusiones dependen de los eventos con magnitudes entre 6,5 y 6,9. El segundo excluye "Resto del mundo" y restringe la comparación a los tres cinturones sísmicos definidos. La robustez se evalúa comparando la dirección, la magnitud y la incertidumbre de los resultados con el escenario principal, sin interpretar los escenarios como nuevas familias independientes de contrastes.
 
+\newpage
 # Conclusiones y recomendaciones
 
 A partir de los análisis realizados, concluimos que las zonas se distinguen sobre todo por cuántos terremotos ocurren y por la profundidad a la que se originan, no por su magnitud. Esta conclusión se sustenta en 1.186 eventos con $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025. Las diferencias observadas entre zonas tampoco parecen deberse principalmente a las fuentes o a los métodos utilizados para reportar los eventos, por lo que la comparación espacial resulta adecuada para el catálogo analizado.
@@ -1779,6 +1780,10 @@ La magnitud y la profundidad no bastan para identificar de manera confiable la z
 Los resultados de esta etapa respaldan gran parte de los patrones descritos en el Informe Asesoría 1. Se confirma que el Cinturón de Fuego concentra la mayor ocurrencia, incluso después de considerar la superficie de las zonas. También se sostiene que las magnitudes son muy similares en términos prácticos y que la profundidad entrega una diferenciación más clara, especialmente por el carácter superficial de la Dorsal Meso-Atlántica y el rango más amplio de profundidades presente en el Cinturón de Fuego. Del mismo modo, la revisión de las variables de reporte respalda que estas comparaciones espaciales no están materialmente condicionadas por la fuente o el tipo de magnitud utilizado.
 
 Algunos hallazgos descriptivos requieren, sin embargo, una interpretación más acotada. Las diferencias observadas entre períodos en el Informe Asesoría 1 no se mantienen como evidencia de un cambio temporal después de considerar la variabilidad adicional de los conteos. Por ello, las fluctuaciones entre años se interpretan como compatibles con una tasa estable durante 2000-2025. Asimismo, la mayor cantidad de eventos mayores y extremos en el Cinturón de Fuego no implica una mayor severidad proporcional, sino que responde principalmente a que esa zona concentra la mayoría de los terremotos del catálogo. En respuesta a la pregunta estadística, las zonas sí difieren en su tasa de ocurrencia y en las distribuciones de magnitud y profundidad, pero la magnitud aporta poca separación práctica y su combinación con la profundidad no permite determinar de forma confiable la zona de un evento.
+
+```{=latex}
+\enlargethispage{2.2\baselineskip}
+```
 
 Para apoyar decisiones futuras, se recomienda informar conjuntamente la tasa anual y la densidad por superficie, interpretar Resto del mundo como una categoría residual y mantener separadas las nociones de frecuencia y severidad. Si la contraparte requiere identificar zonas o desarrollar una herramienta de clasificación, será necesario incorporar ubicación geográfica, cercanía a límites de placas, tipo de contacto tectónico u otras variables espaciales y geológicas. Los resultados de este informe permiten orientar la comparación y comunicación del catálogo, pero no estimar amenaza, riesgo sísmico ni probabilidades futuras de ocurrencia.
 
@@ -1854,6 +1859,7 @@ $$
 
 de modo que el modelo describe directamente la densidad $\mu_{jt}/A_j$, es decir, los eventos por unidad de superficie. El modelo de tasa anual es idéntico pero sin el término $\log(A_j)$, y sus coeficientes se leen sobre el conteo $\mu_{jt}$.
 
+\newpage
 ## Flujo de trabajo e implementación computacional {#sec-anexo-flujo-trabajo}
 
 Este anexo documenta cómo se prepara la base, se ejecutan los análisis y se generan los resultados del Informe Asesoría 2. Su propósito es facilitar la revisión y reproducción del trabajo, sin repetir las decisiones estadísticas desarrolladas en la metodología y los anexos específicos. El código se encuentra disponible en la \asesoriaExternalLink{https://github.com/MariaJoseVN/USGS-earthquake-analysis/tree/main/Scripts}{carpeta Scripts del repositorio GitHub}.
@@ -1910,6 +1916,7 @@ La delimitación de las zonas se conserva desde el Informe Asesoría 1. El proce
 
 El proyecto se mantiene mediante Git y GitHub. Los scripts, las bases, las capas geográficas, la bibliografía y el archivo QMD permanecen en el mismo repositorio, lo que permite registrar los cambios y conservar la correspondencia entre el código ejecutado y los resultados presentados.
 
+\newpage
 ## Especificación de dócimas y modelos {#sec-anexo-especificacion}
 
 Este anexo reúne las reglas de decisión que sustentan los procedimientos descritos de forma resumida en la metodología.
@@ -2682,6 +2689,7 @@ El valor p más pequeño se multiplica por $m$; el siguiente, por $m-1$, y así 
 
 En la familia de seis comparaciones por pares de la sección de frecuencia, el mayor valor p ajustado fue 0,00045, de modo que las seis diferencias se mantuvieron significativas tras el ajuste.
 
+\newpage
 ## Comparaciones completas Dunn-Holm {#sec-anexo-dunn}
 
 Este anexo presenta los resultados completos de las comparaciones por pares posteriores a Kruskal-Wallis. La justificación del ajuste por multiplicidad se desarrolla en su anexo específico \asesoriaParenRef{véase \hyperref[sec-anexo-ajuste-p]{anexo de ajuste de valores p por multiplicidad}}. Los valores p ajustados mediante Holm son los que se utilizan para la decisión inferencial.
@@ -2721,11 +2729,21 @@ La prueba de Cameron-Trivedi contrasta $H_0:\operatorname{Var}(Y)=\mu$ frente a 
 
 La comparación de verosimilitudes entre Poisson y binomial negativa evalúa si el parámetro de dispersión mejora el ajuste, mediante
 
+```{=latex}
+\enlargethispage{2.2\baselineskip}
+\begingroup
+\postdisplaypenalty=10000
+```
+
 $$
 LR = 2\left(\hat\ell_{\text{BN}} - \hat\ell_{\text{P}}\right),
 $$
 
 donde $\hat\ell_{\text{BN}}$ y $\hat\ell_{\text{P}}$ son las log-verosimilitudes maximizadas de la binomial negativa y de la Poisson.
+
+```{=latex}
+\endgroup
+```
 
 ```{=latex}
 \begingroup
@@ -2764,6 +2782,7 @@ Conviene una precisión de lectura: el ajuste de Holm se aplica solo a los valor
 
 Los intervalos de confianza de las razones frente a la zona de referencia, en la `\asesoriaTableRef{tbl-frecuencia-zonas}`{=latex}, se obtuvieron por verosimilitud perfilada. La verosimilitud mide qué tan bien el modelo reproduce los datos para cada valor posible del parámetro; su máximo es la estimación. El intervalo perfilado conserva todos los valores de la razón cuya verosimilitud, tras reajustar el resto de los parámetros, permanece dentro de un umbral basado en la $\chi^2$. A diferencia del intervalo de Wald, que toma la estimación más o menos un múltiplo de su error estándar y supone que la incertidumbre es simétrica, la verosimilitud perfilada no impone esa simetría, por lo que es preferible en las zonas con pocos eventos, donde la razón se estima con incertidumbre asimétrica. En este catálogo ambos métodos difieren solo en la tercera cifra, de modo que ninguna conclusión depende de la elección.
 
+\newpage
 ## Comparaciones completas por pares de frecuencia {#sec-anexo-pares-frecuencia}
 
 Este anexo presenta los resultados completos de las comparaciones de frecuencia entre zonas en ambas métricas. El procedimiento de cálculo se explica en el anexo del contraste de Wald \asesoriaParenRef{véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald}}. Todos los valores p ajustados mediante Holm quedan por debajo de 0,001; el mayor es 0,00045, correspondiente al par Cinturón Alpino-Himalayo frente a Dorsal Meso-Atlántica en tasa anual.
