@@ -1083,13 +1083,18 @@ El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos 
 \vspace{-1.0em}
 ```
 
-Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, estacionariedad e independencia serial. En este contexto, evaluar estacionariedad significa revisar si los conteos fluctúan alrededor de un nivel relativamente estable durante el período del catálogo, o si existen señales de un cambio persistente en la ocurrencia. La \hyperref[tbl-temporal-adf-kpss]{Tabla~\ref*{tbl-temporal-adf-kpss}} resume los resultados de ADF, KPSS y Ljung-Box para las escalas anual y mensual.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.39\textwidth}
+\vspace{0pt}
+Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, estacionariedad e independencia serial. En este contexto, evaluar estacionariedad significa revisar si los conteos fluctúan alrededor de un nivel relativamente estable durante el período del catálogo, o si existen señales de un cambio persistente en la ocurrencia. La \hyperref[tbl-temporal-adf-kpss]{Tabla~\ref*{tbl-temporal-adf-kpss}} resume los resultados.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{3.0pt}
+\setlength{\tabcolsep}{2.2pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
@@ -1107,9 +1112,11 @@ Mensual & KPSS & 5 & 0,270 & $>0{,}10$ \\
 Mensual & Ljung-Box & 12 & 16,883 & 0,154 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-temporal-adf-kpss}{Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-temporal-adf-kpss}. Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.\par}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
 En ambas escalas, KPSS no entrega evidencia de que los conteos se alejen de un nivel estable. ADF, en cambio, no permite descartar formalmente un comportamiento no estacionario al 5 %. En conjunto, los resultados no muestran una ruptura clara de estabilidad temporal en el período 2000-2025, pero la conclusión debe leerse con cautela porque las dos pruebas no entregan una señal completamente concordante.
@@ -1183,13 +1190,18 @@ Quasi-Poisson & $F$ & 1,91 & 0,170 \\
 
 Las medias muestran un aumento leve entre 2000-2009 y 2010-2019, seguido de una disminución en 2020-2025. El modelo Poisson inicial sugería diferencias entre períodos, pero el diagnóstico de dispersión indicó que los conteos anuales variaban más de lo esperado bajo ese modelo. Por ello, la decisión se basó en quasi-Poisson. Al considerar esta mayor variabilidad entre años, la diferencia entre períodos ya no resulta suficientemente clara como para afirmar que la tasa anual de eventos haya cambiado. En otras palabras, el catálogo muestra años con más y menos eventos, pero no entrega evidencia suficiente para concluir que un período tenga una tasa anual de ocurrencia distinta a los demás.
 
-De forma complementaria, se evaluó si la ocurrencia mensual presentaba una señal de estacionalidad, es decir, si ciertos meses del calendario concentraban sistemáticamente más eventos que otros.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\vspace{0pt}
+De forma complementaria, se evaluó si la ocurrencia mensual presentaba una señal de estacionalidad, es decir, si ciertos meses del calendario concentraban sistemáticamente más eventos que otros.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{4.0pt}
+\setlength{\tabcolsep}{3.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
@@ -1204,20 +1216,27 @@ Dispersión & $\phi$ & 1,79 & - \\
 Quasi-Poisson & $F$ & 1,03 & 0,416 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-temporal-estacionalidad-mensual}{Contraste de estacionalidad mensual en los conteos del catálogo.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-temporal-estacionalidad-mensual}. Contraste de estacionalidad mensual en los conteos del catálogo.\par}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
 El contraste Poisson inicial fue limítrofe, pero los conteos mensuales variaron más de lo esperado bajo ese modelo. Al corregir esta variabilidad mediante quasi-Poisson, no se observa evidencia suficiente para afirmar que la tasa de ocurrencia difiera entre meses calendario. En términos del catálogo, los eventos no muestran un patrón mensual claro; las diferencias entre meses pueden explicarse por fluctuaciones propias del registro observado.
 
-Como cierre de la revisión temporal, se retomaron los tiempos transcurridos entre eventos consecutivos descritos en el Informe Asesoría 1. Esta mirada complementa el análisis de conteos: mientras los modelos Poisson evalúan cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.35\textwidth}
+\vspace{0pt}
+Como cierre de la revisión temporal, se retomaron los tiempos transcurridos entre eventos consecutivos descritos en el Informe Asesoría 1.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.61\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{3.0pt}
+\setlength{\tabcolsep}{1.8pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
@@ -1233,10 +1252,14 @@ Mayor & 327 & 0,0345 & 19,6 & 0,0543 & 0,102 \\
 Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-temporal-exponencial}{Ajuste exponencial de los tiempos entre eventos consecutivos.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-temporal-exponencial}. Ajuste exponencial de los tiempos entre eventos consecutivos.\par}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
+
+Esta mirada complementa el análisis de conteos: mientras los modelos Poisson evalúan cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
 
 ```{=latex}
 \begin{figure}[H]
