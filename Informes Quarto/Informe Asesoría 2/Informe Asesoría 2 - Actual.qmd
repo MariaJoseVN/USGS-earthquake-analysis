@@ -2709,3 +2709,14 @@ QGIS se utilizó para calcular la superficie de los polígonos que representan l
 De manera complementaria, Codex se utilizó para organizar referencias bibliográficas y revisar aspectos formales del archivo QMD, como claridad, coherencia, referencias cruzadas y sintaxis Quarto y LaTeX. Las propuestas fueron revisadas y modificadas por el equipo antes de incorporarse al documento.
 
 La inteligencia artificial no se utilizó como fuente de resultados estadísticos ni como sustituto de la evaluación metodológica. Los resultados incluidos en el informe proceden de los scripts reproducibles y fueron comprobados por el equipo mediante sus tablas, gráficos, diagnósticos y fuentes de respaldo. El equipo asume la responsabilidad por la selección metodológica, la exactitud de los resultados, su interpretación y la versión final del informe.
+
+```{=latex}
+\clearpage
+\thispagestyle{empty}
+\AddToHookNext{shipout/background}{
+  \put(-4pt,-\dimexpr\paperheight+4pt\relax){
+    \includegraphics[width=\dimexpr\paperwidth+8pt\relax,height=\dimexpr\paperheight+8pt\relax]{\detokenize{../Imágenes y Recursos/Contraportada pagina final.png}}
+  }
+}
+\null
+```
