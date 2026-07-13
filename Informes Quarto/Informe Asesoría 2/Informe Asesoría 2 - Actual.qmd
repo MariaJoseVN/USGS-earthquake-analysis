@@ -1472,13 +1472,13 @@ Total                    & 913 & 150 & 123 & 1.186 \\
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.36\textwidth}
+\begin{minipage}[t]{0.38\textwidth}
 \vspace{0pt}
 La \asesoriaTableRef{tbl-clasificacion-inercia} resume la inercia de ambas tablas.
 
-La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión concentra 92,9 \% de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas.
+La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión
 \end{minipage}\hfill
-\begin{minipage}[t]{0.60\textwidth}
+\begin{minipage}[t]{0.58\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -1493,8 +1493,8 @@ La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de mag
 \toprule
 Tabla & Inercia total & Dim. 1 & Dim. 2 & Punto dominante \\
 \midrule
-Zona por categoría de magnitud    & 0,0060 & 92,9 \% & 7,1 \%  & Dorsal Meso-Atlántica (95,1 \% de la dim. 1) \\
-Zona por categoría de profundidad & 0,0321 & 81,9 \% & 18,1 \% & Categoría Profundo (87,8 \% de la dim. 1) \\
+Zona x categoría magnitud    & 0,0060 & 92,9 \% & 7,1 \%  & Dorsal Meso-Atlántica\newline (95,1 \% de la dim. 1) \\
+Zona x categoría profundidad & 0,0321 & 81,9 \% & 18,1 \% & Categoría Profundo\newline (87,8 \% de la dim. 1) \\
 \bottomrule
 \end{tabular*}
 \par\vspace{0.10em}
@@ -1504,7 +1504,7 @@ Zona por categoría de profundidad & 0,0321 & 81,9 \% & 18,1 \% & Categoría Pro
 \par\vspace{-0.25em}
 ```
 
-Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores \asesoriaParenRef{véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas}}. En profundidad corresponden a las casillas Intermedio y Profundo de la Dorsal Meso-Atlántica, con esperadas de 3,54 y 2,90; en magnitud, a las dos de la columna Grande o extremo (3,13 y 1,39, detalladas en la @tbl-esperadas-extremos). Por eso, la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
+concentra 92,9 % de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas. Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores \asesoriaParenRef{véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas}}. En profundidad corresponden a las casillas Intermedio y Profundo de la Dorsal Meso-Atlántica, con esperadas de 3,54 y 2,90; en magnitud, a las dos de la columna Grande o extremo (3,13 y 1,39, detalladas en la `\asesoriaTableRef{tbl-esperadas-extremos}`{=latex}). Por eso, la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
 
 Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre sí, salvo la particularidad de la Dorsal; al mirar la profundidad, aparecen perfiles más distinguibles. Esa diferencia se explica principalmente por la presencia o ausencia de eventos profundos y por el carácter exclusivamente superficial de la Dorsal Meso-Atlántica. Por eso el análisis de correspondencia funciona aquí como una primera lectura visual. No concluye por sí mismo, pero muestra que la profundidad contiene más información para separar zonas que la magnitud. La `\asesoriaFigureRef{fig-clasificacion-correspondencia}`{=latex} muestra ambos planos.
 
