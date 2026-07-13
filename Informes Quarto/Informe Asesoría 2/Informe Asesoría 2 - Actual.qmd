@@ -165,6 +165,7 @@ Se adjuntan los siguientes enlaces como productos derivados del informe.
 - Mapa Georreferenciado Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA_HTML/mapa_interactivo_sismos_v2.html}{Abrir mapa interactivo}
 - Dashboard Interactivo: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Dashboard/dashboard.html}{Abrir dashboard interactivo}
 - Informe Asesoría 1: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/Informes\%20Quarto/Informe\%20Asesor\%C3\%ADa\%201/Informe\%20Asesor\%C3\%ADa\%201\%20-\%20Actual.pdf}{Abrir Informe Asesoría 1}
+- Guía Metodológica de Delimitación de Zonas en QGIS: \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA\_HTML/Gu\%C3\%ADa\%20metodol\%C3\%B3gica\%20para\%20la\%20delimitaci\%C3\%B3n\%20de\%20zonas\%20s\%C3\%ADsmicas\%20globales\%20en\%20QGIS.pdf}{Abrir guía metodológica}
 
 # Formulación del problema y pregunta estadística
 
@@ -1764,7 +1765,7 @@ En los procedimientos que requieren simulación se utiliza la semilla `2026`, lo
 
 ### QGIS, superficies y control de versiones
 
-La delimitación de las zonas se conserva desde el Informe Asesoría 1. En esta etapa, QGIS también se utiliza para calcular la superficie de los polígonos y construir la capa `MAPA_HTML/zonas_inf2.geojson`. R importa estas superficies para expresar la frecuencia como densidad de eventos y utilizarlas como exposición en los modelos de conteo.
+La delimitación de las zonas se conserva desde el Informe Asesoría 1. El procedimiento completo de delimitación, elaborado por el equipo, se documenta en la \asesoriaExternalLink{https://mariajosevn.github.io/USGS-earthquake-analysis/MAPA\_HTML/Gu\%C3\%ADa\%20metodol\%C3\%B3gica\%20para\%20la\%20delimitaci\%C3\%B3n\%20de\%20zonas\%20s\%C3\%ADsmicas\%20globales\%20en\%20QGIS.pdf}{guía metodológica de delimitación de zonas sísmicas globales en QGIS}. En esta etapa, QGIS también se utiliza para calcular la superficie de los polígonos y construir la capa `MAPA_HTML/zonas_inf2.geojson`. R importa estas superficies para expresar la frecuencia como densidad de eventos y utilizarlas como exposición en los modelos de conteo.
 
 El proyecto se mantiene mediante Git y GitHub. Los scripts, las bases, las capas geográficas, la bibliografía y el archivo QMD permanecen en el mismo repositorio, lo que permite registrar los cambios y conservar la correspondencia entre el código ejecutado y los resultados presentados.
 
