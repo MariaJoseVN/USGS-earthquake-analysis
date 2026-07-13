@@ -210,6 +210,7 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos específ
 \end{itemize}
 ```
 
+\newpage
 # Alcance del informe
 
 El alcance de este informe comprende la comparación inferencial de la ocurrencia, la magnitud, la profundidad y la severidad entre zonas, junto con la evaluación de la estabilidad temporal y de la capacidad de clasificación. Las conclusiones se aplican únicamente a los eventos, variables y delimitaciones evaluados mediante los modelos utilizados.
@@ -806,11 +807,13 @@ La `\asesoriaFigureRef{fig-inf2-frecuencia}`{=latex} muestra ambas medidas lado 
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
+\vspace{-1.2em}
+\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/inf2-frecuencia-tasa-densidad.png}}
 \vspace{-2.75em}
 \caption{Frecuencia de eventos por zona: tasa anual y densidad por superficie.}
 \label{fig-inf2-frecuencia}
 \end{figure}
+\vspace{-1.15em}
 ```
 
 Para los terremotos de magnitud $M\geq6{,}5$ registrados por USGS entre 2000 y 2025, existe evidencia de que la frecuencia de ocurrencia difiere entre las zonas adoptadas. El Cinturón de Fuego presenta la mayor frecuencia tanto por año como por unidad de superficie. La posición de Resto del mundo depende de la medida utilizada: es segundo por conteo bruto, pero último por densidad. Estas razones resumen cada zona con una tasa única para 2000-2025; la subsección de estructura temporal de la ocurrencia evalúa si esa agregación es defendible, es decir, si la tasa se mantuvo estable entre años, tramos del período y meses. Esta conclusión se limita al catálogo, el período, el umbral de magnitud y la delimitación espacial analizados; no constituye una comparación de amenaza sísmica ni una explicación causal.
@@ -827,10 +830,12 @@ El primer diagnóstico revisó si la magnitud de cada zona se aproxima a una dis
 ```{=latex}
 \begin{figure}[H]
 \centering
+\vspace{-1.2em}
 \includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 1.png}}
 \caption{QQ-plots de magnitud por zona sísmica.}
 \label{fig-qq-magnitud-zona}
 \end{figure}
+\vspace{-1.15em}
 ```
 
 Los QQ-plots de magnitud muestran desviaciones sistemáticas en las cuatro zonas. En C. Fuego y Resto se observa acumulación en $M=6{,}5$ y curvatura ascendente en la cola superior, patrón coherente con el truncamiento del catálogo, los valores repetidos y la presencia de eventos de mayor magnitud.
@@ -844,10 +849,12 @@ El segundo diagnóstico evaluó la profundidad. Esta variable presenta mayor ran
 ```{=latex}
 \begin{figure}[H]
 \centering
+\vspace{-1.2em}
 \includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 2.png}}
 \caption{QQ-plots de profundidad por zona sísmica.}
 \label{fig-qq-profundidad-zona}
 \end{figure}
+\vspace{-1.15em}
 ```
 
 Los QQ-plots de profundidad presentan desviaciones más marcadas que los de magnitud. En C. Fuego y Resto aparece una fuerte curvatura ascendente, asociada con eventos intermedios y profundos que generan colas derechas extensas.
@@ -863,10 +870,12 @@ El diagnóstico multivariante se realizó con distancias de Mahalanobis. Esta di
 ```{=latex}
 \begin{figure}[H]
 \centering
+\vspace{-1.2em}
 \includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 3.png}}
 \caption{QQ-plots multivariantes de Mahalanobis por zona sísmica.}
 \label{fig-qq-mahalanobis-zona}
 \end{figure}
+\vspace{-0.8em}
 ```
 
 Los QQ-plots multivariantes también se separan de la línea de referencia. En C. Fuego la desviación es marcada en los cuantiles superiores; Resto se ajusta parcialmente en la zona central, pero se separa en la cola; C. Alp.-Him. muestra desviaciones crecientes hacia valores altos; y Dorsal M.-Atl. queda dominada por baja variabilidad y pocos eventos alejados.
@@ -1065,6 +1074,7 @@ El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos 
 \caption{Serie mensual de eventos del catálogo completo.}
 \label{fig-serie-mensual-catalogo}
 \end{figure}
+\vspace{-1.0em}
 ```
 
 Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, estacionariedad e independencia serial. En este contexto, evaluar estacionariedad significa revisar si los conteos fluctúan alrededor de un nivel relativamente estable durante el período del catálogo, o si existen señales de un cambio persistente en la ocurrencia. La \hyperref[tbl-temporal-adf-kpss]{Tabla~\ref*{tbl-temporal-adf-kpss}} resume los resultados de ADF, KPSS y Ljung-Box para las escalas anual y mensual.
