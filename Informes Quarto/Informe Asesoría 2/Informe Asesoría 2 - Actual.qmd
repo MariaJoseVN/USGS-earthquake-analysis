@@ -1115,10 +1115,12 @@ En conjunto, Ljung-Box no detectó autocorrelación relevante en la serie anual 
 Una vez revisada la estabilidad general de la serie, se evaluó si el nivel de ocurrencia anual cambió entre tramos del catálogo. Esta pregunta no se resuelve solo con una comparación descriptiva, porque dos períodos pueden tener promedios distintos y aun así diferir únicamente por fluctuaciones propias del registro. Se utilizó un modelo Poisson porque la variable analizada corresponde a un conteo de eventos por año; este tipo de modelo se emplea habitualmente para contrastar tasas de ocurrencia en intervalos definidos de tiempo. Así, permite evaluar si las diferencias descriptivas entre períodos reflejan un cambio formal en la tasa anual de eventos o solo variaciones propias del catálogo. Luego se revisó si la variabilidad de los datos era compatible con ese modelo o si requería la corrección quasi-Poisson.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{4.0pt}
+\setlength{\tabcolsep}{3.6pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
@@ -1133,16 +1135,15 @@ Período & Media anual & Mín. & Máx. \\
 2020-2025 & 40,3 & 28 & 53 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-temporal-tasas-periodo}{Conteos anuales por período del catálogo.}
+\par\vspace{0.15em}
+{\footnotesize\itshape Tabla~\ref*{tbl-temporal-tasas-periodo}. Conteos anuales por período del catálogo.\par}
 \endgroup
-```
-
-```{=latex}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.52\textwidth}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{4.0pt}
+\setlength{\tabcolsep}{3.6pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
@@ -1157,9 +1158,11 @@ Dispersión & $\phi$ & 1,57 & - \\
 Quasi-Poisson & $F$ & 1,91 & 0,170 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-temporal-modelo-periodo}{Contraste del efecto período en los conteos anuales.}
+\par\vspace{0.15em}
+{\footnotesize\itshape Tabla~\ref*{tbl-temporal-modelo-periodo}. Contraste del efecto período en los conteos anuales.\par}
 \endgroup
+\end{minipage}
+\par\vspace{0.45em}
 ```
 
 Las medias muestran un aumento leve entre 2000-2009 y 2010-2019, seguido de una disminución en 2020-2025. El modelo Poisson inicial sugería diferencias entre períodos, pero el diagnóstico de dispersión indicó que los conteos anuales variaban más de lo esperado bajo ese modelo. Por ello, la decisión se basó en quasi-Poisson. Al considerar esta mayor variabilidad entre años, la diferencia entre períodos ya no resulta suficientemente clara como para afirmar que la tasa anual de eventos haya cambiado. En otras palabras, el catálogo muestra años con más y menos eventos, pero no entrega evidencia suficiente para concluir que un período tenga una tasa anual de ocurrencia distinta a los demás.
@@ -1222,7 +1225,7 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.66\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
+\includegraphics[width=0.50\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
 \caption{QQ exponencial de los tiempos entre eventos para $M \geq 7{,}0$.}
 \label{fig-temporal-qq-exponencial}
 \end{figure}
