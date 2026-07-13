@@ -923,9 +923,14 @@ Mardia rechaza la normalidad multivariada en las cuatro zonas. La única excepci
 
 ### Homogeneidad de covarianzas y relación entre variables
 
-Después de evaluar normalidad, se revisó la homogeneidad de matrices de varianza-covarianza mediante M de Box. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+Después de evaluar normalidad, se revisó la homogeneidad de matrices de varianza-covarianza mediante M de Box. Bartlett y Spearman se usaron solo como diagnósticos complementarios de la relación entre magnitud y profundidad.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.51\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
@@ -944,9 +949,11 @@ Bartlett & $\chi^2(1)=0{,}265$ & 0,607 \\
 Spearman & $\rho=0{,}130$ & $<0{,}001$ \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-diagnosticos-complementarios-mag-depth}{Diagnósticos complementarios para magnitud y profundidad.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-diagnosticos-complementarios-mag-depth}. Diagnósticos complementarios para magnitud y profundidad.\par}
 \endgroup
+\end{minipage}
+\par\vspace{0.15em}
 ```
 
 La M de Box rechazó la igualdad de matrices de varianza-covarianza entre zonas ($p<0{,}001$). Aunque esta prueba es sensible al incumplimiento de normalidad y al desbalance muestral, el resultado es coherente con la heterogeneidad descriptiva observada en profundidad y dispersión. Por tanto, MANOVA no se justifica como procedimiento principal.
@@ -957,19 +964,24 @@ Con base en estos resultados, la comparación formal entre zonas continúa media
 
 ### Contrastes de distribución
 
-Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas no se sostienen, la comparación global entre zonas se realizó mediante Kruskal-Wallis. Esta prueba compara los rangos de la variable entre grupos, no sus medias, por lo que es adecuada para distribuciones asimétricas, con empates y tamaños muestrales desiguales. Se aplicó por separado a magnitud y profundidad.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.36\textwidth}
+\vspace{0pt}
+Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas no se sostienen, la comparación global entre zonas se realizó mediante Kruskal-Wallis. Esta prueba compara los rangos de la variable entre grupos, no sus medias.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.2pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-kruskal-mag-depth}
 \hypertarget{dest-tbl-kruskal-mag-depth}{}
-\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.4em}}l@{}}
+\begin{tabular}{@{}l@{\hspace{0.8em}}c@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.8em}}l@{}}
 \toprule
 Variable & $H$ & gl & Valor p & $\varepsilon^2$ & Lectura del efecto \\
 \midrule
@@ -977,12 +989,14 @@ Magnitud & 8,324 & 3 & 0,0398 & 0,007 & Prácticamente nulo \\
 Profundidad & 69,498 & 3 & $<0{,}001$ & 0,059 & Pequeño \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-kruskal-mag-depth}{Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-kruskal-mag-depth}. Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.\par}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-Kruskal-Wallis detectó diferencias globales entre zonas tanto en magnitud como en profundidad. Sin embargo, los tamaños de efecto muestran que estas diferencias no tienen la misma relevancia práctica. En magnitud, la evidencia es estadísticamente detectable ($p=0{,}0398$), pero el efecto global es prácticamente nulo ($\varepsilon^2=0{,}007$). En profundidad, la evidencia es más clara ($p<0{,}001$) y el efecto global es mayor, aunque todavía pequeño ($\varepsilon^2=0{,}059$). Este patrón coincide con el Informe Asesoría 1: las magnitudes eran similares entre zonas, mientras que la profundidad mostraba diferencias más marcadas.
+Por ello, es adecuada para distribuciones asimétricas, con empates y tamaños muestrales desiguales. Se aplicó por separado a magnitud y profundidad. Kruskal-Wallis detectó diferencias globales entre zonas tanto en magnitud como en profundidad. Sin embargo, los tamaños de efecto muestran que estas diferencias no tienen la misma relevancia práctica. En magnitud, la evidencia es estadísticamente detectable ($p=0{,}0398$), pero el efecto global es prácticamente nulo ($\varepsilon^2=0{,}007$). En profundidad, la evidencia es más clara ($p<0{,}001$) y el efecto global es mayor, aunque todavía pequeño ($\varepsilon^2=0{,}059$). Este patrón coincide con el Informe Asesoría 1: las magnitudes eran similares entre zonas, mientras que la profundidad mostraba diferencias más marcadas.
 
 Como la prueba global no identifica qué pares de zonas difieren, el análisis continúa con comparaciones post-hoc de Dunn-Holm.
 
@@ -1016,19 +1030,24 @@ Profundidad & C. Alp.-Him. - Dorsal M.-Atl. & 3,893 & $<0{,}001$ & Dorsal con ra
 
 En magnitud, las únicas diferencias significativas involucran a Dorsal M.-Atl. frente a C. Fuego y Resto. Las comparaciones entre C. Fuego, Resto y C. Alp.-Him. no presentan diferencias, y C. Alp.-Him. frente a Dorsal M.-Atl. queda bajo el umbral convencional ($p_{aj}=0{,}070$). En profundidad, Dorsal M.-Atl. difiere de todas las demás zonas, y C. Fuego también difiere de Resto y C. Alp.-Him. La única comparación no significativa es Resto frente a C. Alp.-Him. ($p_{aj}=0{,}283$). La tabla completa se presenta en el \hyperref[sec-anexo-dunn]{anexo de comparaciones Dunn-Holm}.
 
-Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los pares principales definidos para contrastar C. Fuego con zonas de referencia. Este tamaño de efecto no paramétrico mide la dirección y magnitud práctica de la separación entre dos distribuciones. Valores positivos indican que C. Fuego tiende a presentar valores mayores que la zona comparada; valores cercanos a cero indican escasa separación.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.37\textwidth}
+\vspace{0pt}
+Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los pares principales definidos para contrastar C. Fuego con zonas de referencia. Este tamaño de efecto no paramétrico mide la dirección y magnitud práctica de la separación entre dos distribuciones.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.59\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-cliff-mag-depth}
 \hypertarget{dest-tbl-cliff-mag-depth}{}
-\begin{tabular}{@{}l@{\hspace{1.4em}}l@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.4em}}l@{}}
+\begin{tabular}{@{}l@{\hspace{0.8em}}l@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.8em}}l@{}}
 \toprule
 Variable & Comparación & $\delta$ & IC 95 \% & Lectura \\
 \midrule
@@ -1038,12 +1057,14 @@ Profundidad & C. Fuego - Dorsal M.-Atl. & 0,783 & [0,679; 0,856] & Grande \\
 Profundidad & C. Fuego - C. Alp.-Him. & 0,269 & [0,109; 0,416] & Pequeña \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.85em}
-\bottomtablecaption{tbl-cliff-mag-depth}{Tamaños de efecto por pares mediante delta de Cliff.}
+\par\vspace{0.10em}
+{\footnotesize\itshape Tabla~\ref*{tbl-cliff-mag-depth}. Tamaños de efecto por pares mediante delta de Cliff.\par}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-En magnitud, C. Fuego presenta valores algo mayores que Dorsal M.-Atl., pero el efecto es pequeño ($\delta=0{,}298$). Frente a C. Alp.-Him., la diferencia es despreciable ($\delta=-0{,}011$), coherente con la ausencia de diferencia post-hoc. En profundidad, la separación entre C. Fuego y Dorsal M.-Atl. es grande ($\delta=0{,}783$), mientras que frente a C. Alp.-Him. es pequeña ($\delta=0{,}269$).
+Valores positivos indican que C. Fuego tiende a presentar valores mayores que la zona comparada; valores cercanos a cero indican escasa separación. En magnitud, C. Fuego presenta valores algo mayores que Dorsal M.-Atl., pero el efecto es pequeño ($\delta=0{,}298$). Frente a C. Alp.-Him., la diferencia es despreciable ($\delta=-0{,}011$), coherente con la ausencia de diferencia post-hoc. En profundidad, la separación entre C. Fuego y Dorsal M.-Atl. es grande ($\delta=0{,}783$), mientras que frente a C. Alp.-Him. es pequeña ($\delta=0{,}269$).
 
 En conjunto, la magnitud separa poco a las zonas, mientras que la profundidad muestra una capacidad de diferenciación más clara, especialmente entre C. Fuego y Dorsal M.-Atl. Esta conclusión es consistente con el análisis descriptivo del Informe Asesoría 1 y con los contrastes globales de esta fase. Ninguna de las dos variables discrimina por sí sola a las cuatro zonas; queda abierta la posibilidad de que ganen capacidad al actuar en conjunto, hipótesis que se retoma en la clasificación de zonas.
 
