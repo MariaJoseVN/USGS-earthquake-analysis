@@ -890,21 +890,21 @@ Los diagnósticos gráficos se complementaron con pruebas formales de normalidad
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.8pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-normalidad-mag-depth}
 \hypertarget{dest-tbl-normalidad-mag-depth}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}
-                >{\centering\arraybackslash}p{0.105\textwidth}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\textwidth}
+                >{\centering\arraybackslash}p{0.090\textwidth}
+                >{\centering\arraybackslash}p{0.060\textwidth}
+                >{\centering\arraybackslash}p{0.090\textwidth}
+                >{\centering\arraybackslash}p{0.060\textwidth}
                 >{\centering\arraybackslash}p{0.075\textwidth}
-                >{\centering\arraybackslash}p{0.105\textwidth}
+                >{\centering\arraybackslash}p{0.060\textwidth}
                 >{\centering\arraybackslash}p{0.075\textwidth}
-                >{\centering\arraybackslash}p{0.09\textwidth}
-                >{\centering\arraybackslash}p{0.075\textwidth}
-                >{\centering\arraybackslash}p{0.09\textwidth}
-                >{\centering\arraybackslash}p{0.075\textwidth}}
+                >{\centering\arraybackslash}p{0.060\textwidth}}
 \toprule
 Zona & Mardia asim. & $p$ & Mardia curt. & $p$ & SW mag. & $p$ & SW prof. & $p$ \\
 \midrule
@@ -929,15 +929,13 @@ Después de evaluar normalidad, se revisó la homogeneidad de matrices de varian
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.6pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-diagnosticos-complementarios-mag-depth}
 \hypertarget{dest-tbl-diagnosticos-complementarios-mag-depth}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.36\textwidth}
-                >{\centering\arraybackslash}p{0.26\textwidth}
-                >{\centering\arraybackslash}p{0.18\textwidth}}
+\begin{tabular}{@{}l@{\hspace{2.2em}}c@{\hspace{2.2em}}c@{}}
 \toprule
 Diagnóstico & Estadístico & Valor p \\
 \midrule
@@ -965,18 +963,13 @@ Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas 
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.2pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-kruskal-mag-depth}
 \hypertarget{dest-tbl-kruskal-mag-depth}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\textwidth}
-                >{\centering\arraybackslash}p{0.13\textwidth}
-                >{\centering\arraybackslash}p{0.08\textwidth}
-                >{\centering\arraybackslash}p{0.14\textwidth}
-                >{\centering\arraybackslash}p{0.13\textwidth}
-                >{\raggedright\arraybackslash}p{0.22\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.4em}}l@{}}
 \toprule
 Variable & $H$ & gl & Valor p & $\varepsilon^2$ & Lectura del efecto \\
 \midrule
@@ -997,17 +990,13 @@ Como la prueba global no identifica qué pares de zonas difieren, el análisis c
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.5pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-dunn-resumen-mag-depth}
 \hypertarget{dest-tbl-dunn-resumen-mag-depth}{}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.12\textwidth}
-                >{\raggedright\arraybackslash}p{0.34\textwidth}
-                >{\centering\arraybackslash}p{0.07\textwidth}
-                >{\centering\arraybackslash}p{0.08\textwidth}
-                >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+\begin{tabular}{@{}l@{\hspace{1.2em}}l@{\hspace{0.9em}}c@{\hspace{0.9em}}c@{\hspace{1.2em}}l@{}}
 \toprule
 Variable & Comparación relevante & $Z$ & $p_{aj}$ & Lectura \\
 \midrule
@@ -1033,17 +1022,13 @@ Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los 
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.0pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.82}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-cliff-mag-depth}
 \hypertarget{dest-tbl-cliff-mag-depth}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\textwidth}
-                >{\raggedright\arraybackslash}p{0.25\textwidth}
-                >{\centering\arraybackslash}p{0.13\textwidth}
-                >{\centering\arraybackslash}p{0.22\textwidth}
-                >{\raggedright\arraybackslash}p{0.15\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.4em}}l@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.4em}}l@{}}
 \toprule
 Variable & Comparación & $\delta$ & IC 95 \% & Lectura \\
 \midrule
@@ -1253,17 +1238,13 @@ El Informe Asesoría 1 definió las categorías Fuerte, Mayor y Grande o extremo
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-extremos-contingencia}
 \hypertarget{dest-tbl-extremos-contingencia}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}
-                >{\centering\arraybackslash}p{0.15\textwidth}
-                >{\centering\arraybackslash}p{0.15\textwidth}
-                >{\centering\arraybackslash}p{0.17\textwidth}
-                >{\centering\arraybackslash}p{0.08\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.0em}}c@{\hspace{0.9em}}c@{\hspace{0.9em}}c@{\hspace{1.0em}}c@{}}
 \toprule
 Zona & Fuerte & Mayor & Grande o extremo & Total \\
 \midrule
@@ -1288,17 +1269,13 @@ La regresión logística evaluó si la zona y la profundidad, consideradas simul
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-extremos-lr}
 \hypertarget{dest-tbl-extremos-lr}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.10\textwidth}
-                >{\centering\arraybackslash}p{0.06\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}
-                >{\raggedright\arraybackslash}p{0.38\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.2em}}l@{}}
 \toprule
 Variable & $LR$ & gl & Valor p & Lectura \\
 \midrule
@@ -1317,16 +1294,13 @@ Ambos valores p superan el criterio de decisión del 5 %, por lo que ninguna de 
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-extremos-or}
 \hypertarget{dest-tbl-extremos-or}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}
-                >{\centering\arraybackslash}p{0.10\textwidth}
-                >{\centering\arraybackslash}p{0.20\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{}}
 \toprule
 Término & OR & IC 95 \% & p de Wald \\
 \midrule
@@ -1348,16 +1322,13 @@ La única señal específica corresponde a la Dorsal, la fila marcada con asteri
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-extremos-tasas}
 \hypertarget{dest-tbl-extremos-tasas}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{}}
 \toprule
 Zona & Eventos & Porcentaje & Tasa anual \\
 \midrule
@@ -1384,17 +1355,13 @@ Las subsecciones anteriores establecieron que la magnitud apenas distingue a las
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-profundidad}
 \hypertarget{dest-tbl-clasificacion-profundidad}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.08\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.0em}}c@{\hspace{0.9em}}c@{\hspace{0.9em}}c@{\hspace{1.0em}}c@{}}
 \toprule
 Zona & Superficial & Intermedio & Profundo & Total \\
 \midrule
@@ -1417,17 +1384,13 @@ Las casillas en cero (el Cinturón Alpino-Himalayo y la Dorsal sin eventos profu
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-inercia}
 \hypertarget{dest-tbl-clasificacion-inercia}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.27\textwidth}
-                >{\centering\arraybackslash}p{0.11\textwidth}
-                >{\centering\arraybackslash}p{0.09\textwidth}
-                >{\centering\arraybackslash}p{0.09\textwidth}
-                >{\raggedright\arraybackslash}p{0.32\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.0em}}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{\hspace{1.0em}}l@{}}
 \toprule
 Tabla & Inercia total & Dim. 1 & Dim. 2 & Punto dominante \\
 \midrule
@@ -1459,17 +1422,13 @@ El modelo multinomial cuantifica ese contraste de manera formal \asesoriaParenRe
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-lr}
 \hypertarget{dest-tbl-clasificacion-lr}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.16\textwidth}
-                >{\centering\arraybackslash}p{0.10\textwidth}
-                >{\centering\arraybackslash}p{0.06\textwidth}
-                >{\centering\arraybackslash}p{0.12\textwidth}
-                >{\raggedright\arraybackslash}p{0.38\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.2em}}l@{}}
 \toprule
 Variable & $LR$ & gl & Valor p & Lectura \\
 \midrule
@@ -1490,15 +1449,13 @@ Establecido qué variables distinguen las zonas, el paso siguiente es cuantifica
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-or}
 \hypertarget{dest-tbl-clasificacion-or}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth}
-                >{\centering\arraybackslash}p{0.22\textwidth}
-                >{\centering\arraybackslash}p{0.22\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}c@{}}
 \toprule
 Zona frente a C. de Fuego & Magnitud: OR (IC 95 \%) & Profundidad: OR (IC 95 \%) \\
 \midrule
@@ -1518,15 +1475,13 @@ El único intervalo que excluye el 1 es el de la profundidad para el Resto del m
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-metricas}
 \hypertarget{dest-tbl-clasificacion-metricas}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}
-                >{\centering\arraybackslash}p{0.16\textwidth}
-                >{\raggedright\arraybackslash}p{0.40\textwidth}}
+\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}l@{}}
 \toprule
 Métrica & Valor & Lectura \\
 \midrule
@@ -1571,19 +1526,13 @@ La `\asesoriaTableRef{tbl-clasificacion-aic}`{=latex} compara los modelos anidad
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{2.2pt}
+\setlength{\tabcolsep}{1.0pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-aic}
 \hypertarget{dest-tbl-clasificacion-aic}{}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\textwidth}
-                >{\centering\arraybackslash}p{0.085\textwidth}
-                >{\centering\arraybackslash}p{0.09\textwidth}
-                >{\centering\arraybackslash}p{0.075\textwidth}
-                >{\centering\arraybackslash}p{0.075\textwidth}
-                >{\centering\arraybackslash}p{0.08\textwidth}
-                >{\raggedright\arraybackslash}p{0.19\textwidth}}
+\begin{tabular}{@{}l@{\hspace{0.9em}}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{\hspace{0.9em}}l@{}}
 \toprule
 Modelo & Parámetros & AIC & $\Delta$AIC & $LR$ & Valor p & Lectura \\
 \midrule
