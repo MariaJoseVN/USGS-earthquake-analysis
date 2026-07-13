@@ -1224,6 +1224,7 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 \caption{QQ exponencial de los tiempos entre eventos para $M \geq 7{,}0$.}
 \label{fig-temporal-qq-exponencial}
 \end{figure}
+\vspace{-1.0em}
 ```
 
 Los resultados muestran que el grupo combinado $M \geq 7{,}0$ no es compatible con un único ajuste exponencial. Sin embargo, al separar por categoría de magnitud, los eventos "Mayor" y "Grande o extremo" sí resultan compatibles con este comportamiento, mientras que los eventos "Fuerte" lo rechazan. Esto sugiere que la mezcla de eventos con ritmos de ocurrencia distintos puede ocultar patrones más específicos. Los eventos de mayor magnitud son menos frecuentes y presentan intervalos más largos, por lo que no deberían interpretarse junto con eventos más habituales como si compartieran una misma tasa temporal.
@@ -1414,6 +1415,7 @@ Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre
 \caption{Mapas de correspondencia entre zonas y categorías de magnitud y profundidad.}
 \label{fig-clasificacion-correspondencia}
 \end{figure}
+\vspace{-1.0em}
 ```
 
 El modelo multinomial cuantifica ese contraste de manera formal \asesoriaParenRef{véase \hyperref[sec-anexo-multinomial]{anexo del modelo de regresión logística multinomial}}. La `\asesoriaTableRef{tbl-clasificacion-lr}`{=latex} presenta la razón de verosimilitudes por variable, calculada sobre el ajuste de máxima verosimilitud; la corrección de sesgo se aplica solo a los coeficientes reportados más adelante.
@@ -1503,10 +1505,11 @@ Para no limitar la evaluación a esa decisión final, se revisaron las curvas RO
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-roc.png}}
+\includegraphics[width=0.60\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-roc.png}}
 \caption{Curvas ROC por zona bajo comparación uno contra el resto.}
 \label{fig-clasificacion-roc}
 \end{figure}
+\vspace{-1.0em}
 ```
 
 La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza, pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para sustentar una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad. La `\asesoriaFigureRef{fig-clasificacion-espacio}`{=latex} muestra el solapamiento que explica este resultado, con eventos del Cinturón de Fuego que cubren prácticamente todo el rango conjunto de magnitud y profundidad.
@@ -1514,10 +1517,11 @@ La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica 
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-espacio.png}}
+\includegraphics[width=0.62\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-espacio.png}}
 \caption{Espacio de clasificación: magnitud y profundidad por zona.}
 \label{fig-clasificacion-espacio}
 \end{figure}
+\vspace{-1.0em}
 ```
 
 La `\asesoriaTableRef{tbl-clasificacion-aic}`{=latex} compara los modelos anidados. La columna $\Delta$AIC expresa la diferencia respecto del modelo de menor AIC, y la columna $LR$ mide el aporte de agregar la variable faltante para llegar al modelo conjunto.
