@@ -110,6 +110,12 @@ header-includes:
   \endgroup
   \vspace{-0.55em}%
 }
+\newcommand{\localtablecaption}[3][0.85\linewidth]{%
+  \par\vspace{0.10em}%
+  \makebox[\linewidth][c]{%
+    \parbox{#1}{\centering\footnotesize\itshape Tabla~\ref*{#2}. #3\par}%
+  }%
+}
 ```
 
 <!--
@@ -950,7 +956,7 @@ Spearman & $\rho=0{,}130$ & $<0{,}001$ \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-diagnosticos-complementarios-mag-depth}. Diagnósticos complementarios para magnitud y profundidad.\par}
+\localtablecaption[0.78\linewidth]{tbl-diagnosticos-complementarios-mag-depth}{Diagnósticos complementarios para magnitud y profundidad.}
 \endgroup
 \end{minipage}
 \par\vspace{0.15em}
@@ -966,11 +972,11 @@ Con base en estos resultados, la comparación formal entre zonas continúa media
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.36\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas no se sostienen, la comparación global entre zonas se realizó mediante Kruskal-Wallis. Esta prueba compara los rangos de la variable entre grupos, no sus medias.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.60\textwidth}
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -990,7 +996,7 @@ Profundidad & 69,498 & 3 & $<0{,}001$ & 0,059 & Pequeño \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-kruskal-mag-depth}. Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.\par}
+\localtablecaption[0.82\linewidth]{tbl-kruskal-mag-depth}{Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1032,11 +1038,11 @@ En magnitud, las únicas diferencias significativas involucran a Dorsal M.-Atl. 
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.37\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los pares principales definidos para contrastar C. Fuego con zonas de referencia. Este tamaño de efecto no paramétrico mide la dirección y magnitud práctica de la separación entre dos distribuciones.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.59\textwidth}
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -1058,7 +1064,7 @@ Profundidad & C. Fuego - C. Alp.-Him. & 0,269 & [0,109; 0,416] & Pequeña \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-cliff-mag-depth}. Tamaños de efecto por pares mediante delta de Cliff.\par}
+\localtablecaption[0.84\linewidth]{tbl-cliff-mag-depth}{Tamaños de efecto por pares mediante delta de Cliff.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1085,11 +1091,11 @@ El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos 
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.39\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, estacionariedad e independencia serial. En este contexto, evaluar estacionariedad significa revisar si los conteos fluctúan alrededor de un nivel relativamente estable durante el período del catálogo, o si existen señales de un cambio persistente en la ocurrencia. La \hyperref[tbl-temporal-adf-kpss]{Tabla~\ref*{tbl-temporal-adf-kpss}} resume los resultados.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.57\textwidth}
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -1113,7 +1119,7 @@ Mensual & Ljung-Box & 12 & 16,883 & 0,154 \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-temporal-adf-kpss}. Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.\par}
+\localtablecaption[0.84\linewidth]{tbl-temporal-adf-kpss}{Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1159,7 +1165,7 @@ Período & Media anual & Mín. & Máx. \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.15em}
-{\footnotesize\itshape Tabla~\ref*{tbl-temporal-tasas-periodo}. Conteos anuales por período del catálogo.\par}
+\localtablecaption[0.78\linewidth]{tbl-temporal-tasas-periodo}{Conteos anuales por período del catálogo.}
 \endgroup
 \end{minipage}\hfill
 \begin{minipage}[t]{0.52\textwidth}
@@ -1182,7 +1188,7 @@ Quasi-Poisson & $F$ & 1,91 & 0,170 \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.15em}
-{\footnotesize\itshape Tabla~\ref*{tbl-temporal-modelo-periodo}. Contraste del efecto período en los conteos anuales.\par}
+\localtablecaption[0.82\linewidth]{tbl-temporal-modelo-periodo}{Contraste del efecto período en los conteos anuales.}
 \endgroup
 \end{minipage}
 \par\vspace{0.45em}
@@ -1192,11 +1198,11 @@ Las medias muestran un aumento leve entre 2000-2009 y 2010-2019, seguido de una 
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.42\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 De forma complementaria, se evaluó si la ocurrencia mensual presentaba una señal de estacionalidad, es decir, si ciertos meses del calendario concentraban sistemáticamente más eventos que otros.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.54\textwidth}
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -1217,7 +1223,7 @@ Quasi-Poisson & $F$ & 1,03 & 0,416 \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-temporal-estacionalidad-mensual}. Contraste de estacionalidad mensual en los conteos del catálogo.\par}
+\localtablecaption[0.78\linewidth]{tbl-temporal-estacionalidad-mensual}{Contraste de estacionalidad mensual en los conteos del catálogo.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1227,11 +1233,11 @@ El contraste Poisson inicial fue limítrofe, pero los conteos mensuales variaron
 
 ```{=latex}
 \noindent
-\begin{minipage}[t]{0.35\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 Como cierre de la revisión temporal, se retomaron los tiempos transcurridos entre eventos consecutivos descritos en el Informe Asesoría 1.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.61\textwidth}
+\begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
 \begingroup
 \scriptsize
@@ -1253,7 +1259,7 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 \bottomrule
 \end{tabular}
 \par\vspace{0.10em}
-{\footnotesize\itshape Tabla~\ref*{tbl-temporal-exponencial}. Ajuste exponencial de los tiempos entre eventos consecutivos.\par}
+\localtablecaption[0.88\linewidth]{tbl-temporal-exponencial}{Ajuste exponencial de los tiempos entre eventos consecutivos.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
