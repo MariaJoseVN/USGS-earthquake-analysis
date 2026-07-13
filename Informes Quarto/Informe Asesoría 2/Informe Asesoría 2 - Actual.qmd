@@ -947,7 +947,7 @@ Después de evaluar normalidad, se revisó la homogeneidad de matrices de varian
 \refstepcounter{table}
 \label{tbl-diagnosticos-complementarios-mag-depth}
 \hypertarget{dest-tbl-diagnosticos-complementarios-mag-depth}{}
-\begin{tabular}{@{}l@{\hspace{2.2em}}c@{\hspace{2.2em}}c@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcc@{}}
 \toprule
 Diagnóstico & Estadístico & Valor p \\
 \midrule
@@ -955,9 +955,9 @@ M de Box & $\chi^2(9)=286{,}503$ & $<0{,}001$ \\
 Bartlett & $\chi^2(1)=0{,}265$ & 0,607 \\
 Spearman & $\rho=0{,}130$ & $<0{,}001$ \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.78\linewidth]{tbl-diagnosticos-complementarios-mag-depth}{Diagnósticos complementarios para magnitud y profundidad.}
+\localtablecaption[\linewidth]{tbl-diagnosticos-complementarios-mag-depth}{Diagnósticos complementarios para magnitud y profundidad.}
 \endgroup
 \end{minipage}
 \par\vspace{0.15em}
@@ -988,16 +988,16 @@ Dado que los supuestos de normalidad multivariada y homogeneidad de covarianzas 
 \refstepcounter{table}
 \label{tbl-kruskal-mag-depth}
 \hypertarget{dest-tbl-kruskal-mag-depth}{}
-\begin{tabular}{@{}l@{\hspace{0.8em}}c@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.8em}}l@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccccc@{}}
 \toprule
 Variable & $H$ & gl & Valor p & $\varepsilon^2$ & Lectura del efecto \\
 \midrule
 Magnitud & 8,324 & 3 & 0,0398 & 0,007 & Prácticamente nulo \\
 Profundidad & 69,498 & 3 & $<0{,}001$ & 0,059 & Pequeño \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.82\linewidth]{tbl-kruskal-mag-depth}{Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.}
+\localtablecaption[\linewidth]{tbl-kruskal-mag-depth}{Comparación global de magnitud y profundidad entre zonas mediante Kruskal-Wallis y tamaño de efecto.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1054,7 +1054,7 @@ Para complementar las comparaciones post-hoc, se calculó delta de Cliff en los 
 \refstepcounter{table}
 \label{tbl-cliff-mag-depth}
 \hypertarget{dest-tbl-cliff-mag-depth}{}
-\begin{tabular}{@{}l@{\hspace{0.8em}}l@{\hspace{0.7em}}c@{\hspace{0.7em}}c@{\hspace{0.8em}}l@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llccc@{}}
 \toprule
 Variable & Comparación & $\delta$ & IC 95 \% & Lectura \\
 \midrule
@@ -1063,9 +1063,9 @@ Magnitud & C. Fuego - C. Alp.-Him. & -0,011 & [-0,159; 0,137] & Despreciable \\
 Profundidad & C. Fuego - Dorsal M.-Atl. & 0,783 & [0,679; 0,856] & Grande \\
 Profundidad & C. Fuego - C. Alp.-Him. & 0,269 & [0,109; 0,416] & Pequeña \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.84\linewidth]{tbl-cliff-mag-depth}{Tamaños de efecto por pares mediante delta de Cliff.}
+\localtablecaption[\linewidth]{tbl-cliff-mag-depth}{Tamaños de efecto por pares mediante delta de Cliff.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1107,7 +1107,7 @@ Para complementar la lectura visual, se aplicaron pruebas de raíz unitaria, est
 \refstepcounter{table}
 \label{tbl-temporal-adf-kpss}
 \hypertarget{dest-tbl-temporal-adf-kpss}{}
-\begin{tabular}{@{}llrrr@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llrrr@{}}
 \toprule
 Escala & Prueba & Rezagos & Estadístico & Valor p \\
 \midrule
@@ -1118,9 +1118,9 @@ Mensual & ADF & 12 & -0,969 & 0,308 \\
 Mensual & KPSS & 5 & 0,270 & $>0{,}10$ \\
 Mensual & Ljung-Box & 12 & 16,883 & 0,154 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.84\linewidth]{tbl-temporal-adf-kpss}{Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.}
+\localtablecaption[\linewidth]{tbl-temporal-adf-kpss}{Resultados de estacionariedad e independencia serial para las series anual y mensual de conteos.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1156,7 +1156,7 @@ Una vez revisada la estabilidad general de la serie, se evaluó si el nivel de o
 \refstepcounter{table}
 \label{tbl-temporal-tasas-periodo}
 \hypertarget{dest-tbl-temporal-tasas-periodo}{}
-\begin{tabular}{@{}lrrr@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrrr@{}}
 \toprule
 Período & Media anual & Mín. & Máx. \\
 \midrule
@@ -1164,9 +1164,9 @@ Período & Media anual & Mín. & Máx. \\
 2010-2019 & 48,9 & 33 & 61 \\
 2020-2025 & 40,3 & 28 & 53 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.15em}
-\localtablecaption[0.78\linewidth]{tbl-temporal-tasas-periodo}{Conteos anuales por período del catálogo.}
+\localtablecaption[\linewidth]{tbl-temporal-tasas-periodo}{Conteos anuales por período del catálogo.}
 \endgroup
 \end{minipage}\hfill
 \begin{minipage}[t]{0.52\textwidth}
@@ -1179,7 +1179,7 @@ Período & Media anual & Mín. & Máx. \\
 \refstepcounter{table}
 \label{tbl-temporal-modelo-periodo}
 \hypertarget{dest-tbl-temporal-modelo-periodo}{}
-\begin{tabular}{@{}llrr@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llrr@{}}
 \toprule
 Evaluación & Estadístico & Valor & Valor p \\
 \midrule
@@ -1187,9 +1187,9 @@ Poisson inicial & LRT & 6,13 & 0,047 \\
 Dispersión & $\phi$ & 1,57 & - \\
 Quasi-Poisson & $F$ & 1,91 & 0,170 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.15em}
-\localtablecaption[0.82\linewidth]{tbl-temporal-modelo-periodo}{Contraste del efecto período en los conteos anuales.}
+\localtablecaption[\linewidth]{tbl-temporal-modelo-periodo}{Contraste del efecto período en los conteos anuales.}
 \endgroup
 \end{minipage}
 \par\vspace{0.45em}
@@ -1214,7 +1214,7 @@ De forma complementaria, se evaluó si la ocurrencia mensual presentaba una señ
 \refstepcounter{table}
 \label{tbl-temporal-estacionalidad-mensual}
 \hypertarget{dest-tbl-temporal-estacionalidad-mensual}{}
-\begin{tabular}{@{}llrr@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llrr@{}}
 \toprule
 Evaluación & Estadístico & Valor & Valor p \\
 \midrule
@@ -1222,9 +1222,9 @@ Poisson inicial & LRT & 19,65 & 0,050 \\
 Dispersión & $\phi$ & 1,79 & - \\
 Quasi-Poisson & $F$ & 1,03 & 0,416 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.78\linewidth]{tbl-temporal-estacionalidad-mensual}{Contraste de estacionalidad mensual en los conteos del catálogo.}
+\localtablecaption[\linewidth]{tbl-temporal-estacionalidad-mensual}{Contraste de estacionalidad mensual en los conteos del catálogo.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
@@ -1237,6 +1237,8 @@ El contraste Poisson inicial fue limítrofe, pero los conteos mensuales variaron
 \begin{minipage}[t]{0.45\textwidth}
 \vspace{0pt}
 Como cierre de la revisión temporal, se retomaron los tiempos transcurridos entre eventos consecutivos descritos en el Informe Asesoría 1.
+
+Esta mirada complementa el análisis de conteos: mientras los modelos Poisson evalúan cuántos eventos
 \end{minipage}\hfill
 \begin{minipage}[t]{0.51\textwidth}
 \vspace{0pt}
@@ -1249,7 +1251,7 @@ Como cierre de la revisión temporal, se retomaron los tiempos transcurridos ent
 \refstepcounter{table}
 \label{tbl-temporal-exponencial}
 \hypertarget{dest-tbl-temporal-exponencial}{}
-\begin{tabular}{@{}lrrrrr@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrrrrr@{}}
 \toprule
 Grupo & $n$ & Tasa diaria & Mediana días & $D$ & Valor p \\
 \midrule
@@ -1258,15 +1260,15 @@ Fuerte & 798 & 0,0841 & 7,3 & 0,0636 & $<0{,}001$ \\
 Mayor & 327 & 0,0345 & 19,6 & 0,0543 & 0,102 \\
 Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \par\vspace{0.10em}
-\localtablecaption[0.88\linewidth]{tbl-temporal-exponencial}{Ajuste exponencial de los tiempos entre eventos consecutivos.}
+\localtablecaption[\linewidth]{tbl-temporal-exponencial}{Ajuste exponencial de los tiempos entre eventos consecutivos.}
 \endgroup
 \end{minipage}
 \par\vspace{-0.25em}
 ```
 
-Esta mirada complementa el análisis de conteos: mientras los modelos Poisson evalúan cuántos eventos ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
+ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
 
 ```{=latex}
 \begin{figure}[H]
@@ -1315,9 +1317,16 @@ Total                    & 799 & 328 & 59 & 1.186 \\
 
 Las tres primeras zonas presentan composiciones semejantes. Sus porcentajes por categoría no difieren en más de 2,3 puntos entre sí (Fuerte entre 66,0 % y 68,3 %, Mayor entre 27,8 % y 29,1 %, Grande o extremo entre 3,2 % y 5,3 %). La Dorsal Meso-Atlántica se aparta de ese patrón, ya que concentra 89,3 % de sus eventos en la categoría Fuerte y no registra ninguno Grande o extremo, aunque reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación; la matriz completa se detalla en el anexo `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-esperadas-extremos}}`{=latex}. La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo \asesoriaParenRef{véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér}}. La lectura conjunta es consistente. El catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-kruskal-mag-depth}}`{=latex}. La categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
 
-La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$; es decir, si la probabilidad de que un evento sea de los más fuertes se relaciona con la zona y la profundidad en que ocurre. Para ello, las tres categorías de severidad se redujeron a una distinción de sí o no: alcanzar al menos magnitud 7,0 (categorías Mayor y Grande o extremo) o no alcanzarla (categoría Fuerte). Bajo ese criterio, 387 de los 1.186 eventos superan el umbral: 295 en el Cinturón de Fuego, 69 en el Resto del mundo, 20 en el Cinturón Alpino-Himalayo y 3 en la Dorsal Meso-Atlántica. Los resultados se leen en dos niveles: primero el contraste global de cada variable, que decide si la zona o la profundidad aportan en conjunto, y luego los contrastes individuales, que detallan qué zona se aparta de la referencia. La `\asesoriaTableRef{tbl-extremos-lr}`{=latex} presenta el primer nivel: el contraste de razón de verosimilitudes por variable.
+La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$; es decir, si la probabilidad de que un evento sea de los más fuertes se relaciona con la zona y la profundidad en que ocurre. Para ello, las tres categorías de severidad se redujeron a una distinción de sí o no: alcanzar al menos magnitud 7,0 (categorías Mayor y Grande o extremo) o no alcanzarla (categoría Fuerte). Bajo ese criterio, 387 de los 1.186 eventos superan el umbral: 295 en el Cinturón de Fuego, 69 en el Resto del mundo, 20 en el Cinturón Alpino-Himalayo y 3 en la Dorsal Meso-Atlántica.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+Los resultados se leen en dos niveles: primero el contraste global de cada variable, que decide si la zona o la profundidad aportan en conjunto, y luego los contrastes individuales, que detallan qué zona se aparta de la referencia. La \asesoriaTableRef{tbl-extremos-lr} presenta el primer nivel: el contraste de razón de verosimilitudes por variable.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.51\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
@@ -1327,32 +1336,41 @@ La regresión logística evaluó si la zona y la profundidad, consideradas simul
 \refstepcounter{table}
 \label{tbl-extremos-lr}
 \hypertarget{dest-tbl-extremos-lr}{}
-\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.2em}}l@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccc>{\raggedright\arraybackslash}p{0.36\linewidth}@{}}
 \toprule
 Variable & $LR$ & gl & Valor p & Lectura \\
 \midrule
 Zona        & 7,358 & 3 & 0,0613 & No significativa; queda apenas sobre el umbral \\
 Profundidad & 0,312 & 1 & 0,5766 & No significativa; sin aporte tras controlar por zona \\
 \bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-extremos-lr}{Contraste de razón de verosimilitudes por variable en la regresión logística.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-extremos-lr}{Contraste de razón de verosimilitudes por variable en la regresión logística.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-Ambos valores p superan el criterio de decisión del 5 %, por lo que ninguna de las dos variables muestra un efecto estadísticamente detectable. Con estos datos no se puede afirmar que la probabilidad de alcanzar $M \geq 7{,}0$ cambie según la zona ni según la profundidad. La diferencia entre ambas es de grado. La zona quedó apenas sobre el umbral ($p = 0{,}0613$), con la señal concentrada en la Dorsal Meso-Atlántica, como se verá en el segundo nivel; el criterio se fijó antes de observar los resultados y no se modifica después, de modo que esa cercanía se describe pero no cambia el veredicto. La profundidad quedó lejos del umbral ($p = 0{,}5766$). Tras conocer la zona, la profundidad de un evento no añade información sobre si alcanza $M \geq 7{,}0$. La `\asesoriaTableRef{tbl-extremos-or}`{=latex} presenta el segundo nivel, con las razones de odds, sus intervalos y los contrastes específicos de Wald \asesoriaParenRef{véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald}}. En estas razones, un valor de 1 indica igual probabilidad relativa que el Cinturón de Fuego, un valor menor que 1 una probabilidad menor de alcanzar $M \geq 7{,}0$ y uno mayor que 1, una probabilidad mayor \asesoriaParenRef{véase \hyperref[sec-anexo-or]{anexo de la razón de odds}}.
+Ambos valores p superan el criterio de decisión del 5 %, por lo que ninguna de las dos variables muestra un efecto estadísticamente detectable. Con estos datos no se puede afirmar que la probabilidad de alcanzar $M \geq 7{,}0$ cambie según la zona ni según la profundidad. La diferencia entre ambas es de grado. La zona quedó apenas sobre el umbral ($p = 0{,}0613$), con la señal concentrada en la Dorsal Meso-Atlántica, como se verá en el segundo nivel; el criterio se fijó antes de observar los resultados y no se modifica después, de modo que esa cercanía se describe pero no cambia el veredicto. La profundidad quedó lejos del umbral ($p = 0{,}5766$). Tras conocer la zona, la profundidad de un evento no añade información sobre si alcanza $M \geq 7{,}0$.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+La \asesoriaTableRef{tbl-extremos-or} presenta el segundo nivel, con las razones de odds, sus intervalos y los contrastes específicos de Wald \asesoriaParenRef{véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald}}. En estas razones, un valor de 1 indica igual probabilidad relativa que el Cinturón de Fuego, un valor menor que 1 una probabilidad menor de alcanzar $M \geq 7{,}0$ y uno mayor que 1, una probabilidad mayor \asesoriaParenRef{véase \hyperref[sec-anexo-or]{anexo de la razón de odds}}.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.51\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-extremos-or}
 \hypertarget{dest-tbl-extremos-or}{}
-\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccc@{}}
 \toprule
 Término & OR & IC 95 \% & p de Wald \\
 \midrule
@@ -1362,15 +1380,24 @@ Dorsal Meso-Atlántica    & 0,247  & [0,058; 0,712]   & 0,023* \\
 Profundidad (por km)     & 1,0002 & [0,9995; 1,0009] & 0,575 \\
 \bottomrule
 \multicolumn{4}{l}{* Significativa al 5 \%.} \\
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-extremos-or}{Razones de odds de alcanzar $M \geq 7{,}0$ respecto del Cinturón de Fuego.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-extremos-or}{Razones de odds de alcanzar $M \geq 7{,}0$ respecto del Cinturón de Fuego.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
 La única señal específica corresponde a la Dorsal, la fila marcada con asterisco. Su razón de odds es 0,247: sus odds de alcanzar $M \geq 7{,}0$ equivalen al 24,7 % de las del Cinturón de Fuego, una reducción de 75,3 %. El intervalo [0,058; 0,712] respalda esa diferencia, porque no incluye el 1, el valor que indicaría odds iguales. Pero el intervalo es ancho: la reducción real podría ir desde 28,8 % hasta 94,2 % ($1-0{,}712$ y $1-0{,}058$, sus dos extremos). Esa imprecisión se debe a que la Dorsal registra solo 3 eventos sobre el umbral. Este contraste individual no sustituye la evaluación global de zona, que no fue significativa. Resto del mundo y el Cinturón Alpino-Himalayo no se distinguen de la referencia. El efecto de la profundidad es un OR de 1,0002 por kilómetro, con IC 95 % [0,9995; 1,0009]: el valor es prácticamente 1 y el intervalo lo contiene, compatible con ausencia de efecto. La versión con profundidad categórica no modificó estas conclusiones: su bloque tampoco fue significativo ($LR = 2{,}063$; $p = 0{,}357$) y ambos AIC resultaron prácticamente idénticos (1500,01 continua frente a 1500,26 categórica, diferencia de 0,249, menor que 2), por lo que se conservó la especificación continua \asesoriaParenRef{véase \hyperref[sec-anexo-aic]{anexo del criterio de información de Akaike}}. La `\asesoriaTableRef{tbl-extremos-tasas}`{=latex} resume los eventos Grandes o extremos.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\vspace{0pt}
+Entre 2000 y 2025 se registraron 59 eventos con \mbox{$M \geq 7{,}8$}. El Cinturón de Fuego reunió 47, equivalentes a 79,7 \% de los extremos, con una tasa de 1,81 por año. Esa concentración es menos llamativa de lo que parece, porque el catálogo está desbalanceado: el Cinturón de Fuego reúne el 75,2 \% de todos los eventos analizados, extremos o no.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
@@ -1380,7 +1407,7 @@ La única señal específica corresponde a la Dorsal, la fila marcada con asteri
 \refstepcounter{table}
 \label{tbl-extremos-tasas}
 \hypertarget{dest-tbl-extremos-tasas}{}
-\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.2em}}c@{\hspace{1.2em}}c@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccc@{}}
 \toprule
 Zona & Eventos & Porcentaje & Tasa anual \\
 \midrule
@@ -1389,31 +1416,42 @@ Resto del mundo          & 10 & 16,9 \% & 0,385 \\
 Cinturón Alpino-Himalayo &  2 & 3,4 \%  & 0,0769 \\
 Dorsal Meso-Atlántica    &  0 & 0 \%    & 0 \\
 \bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-extremos-tasas}{Eventos de magnitud $M \geq 7{,}8$ por zona: conteos, porcentajes y tasas anuales.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-extremos-tasas}{Eventos de magnitud $M \geq 7{,}8$ por zona: conteos, porcentajes y tasas anuales.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-Entre 2000 y 2025 se registraron 59 eventos con $M \geq 7{,}8$. El Cinturón de Fuego reunió 47, equivalentes a 79,7 % de los extremos, con una tasa de 1,81 por año. Esa concentración es menos llamativa de lo que parece, porque el catálogo está desbalanceado: el Cinturón de Fuego reúne el 75,2 % de todos los eventos analizados, extremos o no. Si la severidad no dependiera de la zona, le corresponderían de todos modos cerca de 44,4 de los 59 extremos ($59 \times 0{,}752$); los 47 observados quedan apenas 4,5 puntos porcentuales por encima de esa base (79,7 % frente a 75,2 %). La concentración refleja, sobre todo, que en esa zona ocurre la mayoría de los eventos, en concordancia con la ausencia de asociación del chi-cuadrado aplicado a la `\asesoriaTableRef{tbl-extremos-contingencia}`{=latex} ($p = 0{,}307$). Las tasas son conteos divididos por los 26 años observados, sin normalizar por superficie. Para este umbral no se estimó ninguna regresión: con una zona sin eventos, el modelo produciría separación \asesoriaParenRef{véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald}}. La ausencia de eventos extremos en la Dorsal se limita al catálogo y período analizados.
+Si la severidad no dependiera de la zona, le corresponderían de todos modos cerca de 44,4 de los 59 extremos ($59 \times 0{,}752$); los 47 observados quedan apenas 4,5 puntos porcentuales por encima de esa base (79,7 % frente a 75,2 %). La concentración refleja, sobre todo, que en esa zona ocurre la mayoría de los eventos, en concordancia con la ausencia de asociación del chi-cuadrado aplicado a la `\asesoriaTableRef{tbl-extremos-contingencia}`{=latex} ($p = 0{,}307$). Las tasas son conteos divididos por los 26 años observados, sin normalizar por superficie. Para este umbral no se estimó ninguna regresión: con una zona sin eventos, el modelo produciría separación \asesoriaParenRef{véase \hyperref[sec-anexo-wald]{anexo del contraste de Wald}}. La ausencia de eventos extremos en la Dorsal se limita al catálogo y período analizados.
 
 Para los terremotos de magnitud $M \geq 6{,}5$ registrados por USGS entre 2000 y 2025, la composición de severidad no difiere de manera estadísticamente detectable entre las zonas adoptadas y la profundidad no explica que un evento supere el umbral $M \geq 7{,}0$. La única señal específica, la menor probabilidad de eventos mayores en la Dorsal, se estima con alta imprecisión y no basta para declarar un efecto global de zona. Estos resultados delimitan la pregunta de la sección siguiente: la profundidad no indica cuán grande es un evento, pero podría ayudar a identificar en qué zona ocurre.
 
 ## Clasificación de zonas a partir de magnitud y profundidad {#sec-res-clasificacion}
 
-Las subsecciones anteriores establecieron que la magnitud apenas distingue a las zonas y que la profundidad presenta diferencias más claras. Esta subsección evalúa la segunda componente de la pregunta estadística: si ambas variables, consideradas conjuntamente, permiten identificar la zona de un evento. Primero se explora la estructura de las tablas categóricas mediante análisis de correspondencia y luego se ajusta el modelo multinomial. En términos aplicados, el análisis de correspondencia funciona como un mapa de asociación: ubica cerca a las zonas y categorías con perfiles parecidos, y separa aquellas cuya composición es distinta \asesoriaParenRef{véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia}}. Los porcentajes que acompañan a cada dimensión en los mapas no corresponden al porcentaje de eventos, sino a la proporción de inercia explicada por cada eje; es decir, indican cuánta parte de la asociación entre zonas y categorías queda resumida horizontal y verticalmente. El análisis se calcula sobre la composición de categorías dentro de cada zona. La de magnitud se presentó en la `\asesoriaTableRef{tbl-extremos-contingencia}`{=latex}; la `\asesoriaTableRef{tbl-clasificacion-profundidad}`{=latex} presenta la de profundidad.
+Las subsecciones anteriores establecieron que la magnitud apenas distingue a las zonas y que la profundidad presenta diferencias más claras. Esta subsección evalúa la segunda componente de la pregunta estadística: si ambas variables, consideradas conjuntamente, permiten identificar la zona de un evento. Primero se explora la estructura de las tablas categóricas mediante análisis de correspondencia y luego se ajusta el modelo multinomial. En términos aplicados, el análisis de correspondencia funciona como un mapa de asociación: ubica cerca a las zonas y categorías con perfiles parecidos, y separa aquellas cuya composición es distinta \asesoriaParenRef{véase \hyperref[sec-anexo-correspondencia]{anexo de análisis de correspondencia}}. Los porcentajes que acompañan a cada dimensión en los mapas no corresponden al porcentaje de eventos, sino a la proporción de inercia explicada por cada eje; es decir, indican cuánta parte de la asociación entre zonas y categorías queda resumida horizontal y verticalmente.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.38\textwidth}
+\vspace{0pt}
+El análisis se calcula sobre la composición de categorías dentro de cada zona. La de magnitud se presentó en la \asesoriaTableRef{tbl-extremos-contingencia}; la \asesoriaTableRef{tbl-clasificacion-profundidad} presenta la de profundidad.
+
+Las casillas en cero (el Cinturón Alpino-Himalayo y la Dorsal sin eventos profundos, y la Dorsal tampoco con intermedios) anticipan la separación que más adelante obliga a corregir el modelo multinomial.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-profundidad}
 \hypertarget{dest-tbl-clasificacion-profundidad}{}
-\begin{tabular}{@{}l@{\hspace{1.0em}}c@{\hspace{0.9em}}c@{\hspace{0.9em}}c@{\hspace{1.0em}}c@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccc@{}}
 \toprule
 Zona & Superficial & Intermedio & Profundo & Total \\
 \midrule
@@ -1424,38 +1462,49 @@ Dorsal Meso-Atlántica    & 28 (100,0 \%) & 0 (0,0 \%)    & 0 (0,0 \%)   & 28 \\
 \midrule
 Total                    & 913 & 150 & 123 & 1.186 \\
 \bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-clasificacion-profundidad}{Composición de categorías de profundidad por zona: conteos y porcentajes por fila.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-clasificacion-profundidad}{Composición de categorías de profundidad por zona: conteos y porcentajes por fila.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-Las casillas en cero (el Cinturón Alpino-Himalayo y la Dorsal sin eventos profundos, y la Dorsal tampoco con intermedios) anticipan la separación que más adelante obliga a corregir el modelo multinomial. La `\asesoriaTableRef{tbl-clasificacion-inercia}`{=latex} resume la inercia de ambas tablas.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.36\textwidth}
+\vspace{0pt}
+La \asesoriaTableRef{tbl-clasificacion-inercia} resume la inercia de ambas tablas.
+
+La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión concentra 92,9 \% de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-inercia}
 \hypertarget{dest-tbl-clasificacion-inercia}{}
-\begin{tabular}{@{}l@{\hspace{1.0em}}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{\hspace{1.0em}}l@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccc>{\raggedright\arraybackslash}p{0.28\linewidth}@{}}
 \toprule
 Tabla & Inercia total & Dim. 1 & Dim. 2 & Punto dominante \\
 \midrule
 Zona por categoría de magnitud    & 0,0060 & 92,9 \% & 7,1 \%  & Dorsal Meso-Atlántica (95,1 \% de la dim. 1) \\
 Zona por categoría de profundidad & 0,0321 & 81,9 \% & 18,1 \% & Categoría Profundo (87,8 \% de la dim. 1) \\
 \bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-clasificacion-inercia}{Inercia y contribuciones dominantes del análisis de correspondencia.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-clasificacion-inercia}{Inercia y contribuciones dominantes del análisis de correspondencia.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-La tabla de profundidad presenta una inercia total 5,3 veces mayor que la de magnitud (0,0321 frente a 0,0060), por lo que entrega una estructura más útil para distinguir zonas. En magnitud, aunque la primera dimensión concentra 92,9 % de la inercia, esta proviene de una asociación total muy baja; por tanto, no indica una separación fuerte entre zonas. Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores \asesoriaParenRef{véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas}}. En profundidad corresponden a las casillas Intermedio y Profundo de la Dorsal Meso-Atlántica, con esperadas de 3,54 y 2,90; en magnitud, a las dos de la columna Grande o extremo (3,13 y 1,39, detalladas en la @tbl-esperadas-extremos). Por eso, la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
+Su señal se concentra casi únicamente en la Dorsal Meso-Atlántica, donde 89,3 % de los eventos son Fuertes. En profundidad, la primera dimensión concentra 81,9 % de la asociación y separa principalmente la categoría Profundo de las zonas que no registran esos eventos. El Resto del mundo aparece relativamente asociado a eventos profundos, mientras que el Cinturón Alpino-Himalayo y la Dorsal no presentan ninguno; la Dorsal, además, es exclusivamente superficial. El Cinturón de Fuego queda cerca del origen, con un perfil próximo al promedio del catálogo. Esta lectura requiere cautela: en ambas tablas, las frecuencias esperadas bajo independencia caen bajo cinco en cuatro casillas de las zonas menores \asesoriaParenRef{véase \hyperref[sec-anexo-chi-esperadas]{anexo del contraste chi-cuadrado y frecuencias esperadas}}. En profundidad corresponden a las casillas Intermedio y Profundo de la Dorsal Meso-Atlántica, con esperadas de 3,54 y 2,90; en magnitud, a las dos de la columna Grande o extremo (3,13 y 1,39, detalladas en la @tbl-esperadas-extremos). Por eso, la posición extrema de la Dorsal en los mapas refleja en parte su escaso número de eventos y no una separación robusta por sí sola.
 
 Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre sí, salvo la particularidad de la Dorsal; al mirar la profundidad, aparecen perfiles más distinguibles. Esa diferencia se explica principalmente por la presencia o ausencia de eventos profundos y por el carácter exclusivamente superficial de la Dorsal Meso-Atlántica. Por eso el análisis de correspondencia funciona aquí como una primera lectura visual. No concluye por sí mismo, pero muestra que la profundidad contiene más información para separar zonas que la magnitud. La `\asesoriaFigureRef{fig-clasificacion-correspondencia}`{=latex} muestra ambos planos.
 
