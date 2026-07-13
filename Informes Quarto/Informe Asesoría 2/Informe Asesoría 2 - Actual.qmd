@@ -1138,6 +1138,7 @@ La independencia serial se revisó de forma conjunta mediante Ljung-Box y el gr�
 \caption{ACF y PACF de la serie mensual de conteos del catálogo.}
 \label{fig-temporal-acf-pacf-mensual}
 \end{figure}
+\vspace{-1.15em}
 ```
 
 En conjunto, Ljung-Box no detectó autocorrelación relevante en la serie anual ($p=0{,}58$) ni en la mensual ($p=0{,}15$ a rezago 12). La ACF y la PACF mensual refuerzan esta lectura, ya que no muestran un patrón persistente entre rezagos. En términos del catálogo, esto sugiere que un año o mes con más eventos no queda seguido sistemáticamente por otro período también alto, ni uno bajo por otro igualmente bajo.
@@ -1271,16 +1272,23 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 ocurren en un intervalo fijo, el ajuste exponencial evalúa cuánto tiempo pasa entre un evento y el siguiente. Ambas miradas están conectadas: si la ocurrencia temporal fuera compatible con una tasa constante, entonces los conteos por intervalo se describen mediante un modelo Poisson y los tiempos de espera entre eventos mediante una distribución exponencial. Por ello, se contrastó si los intervalos observados eran compatibles con una distribución exponencial usando Kolmogorov-Smirnov con bootstrap paramétrico.
 
 ```{=latex}
-\begin{figure}[H]
+\vspace{-0.6em}
+\noindent
+\raisebox{1.3em}[0pt][0pt]{%
+\begin{minipage}[c]{0.46\textwidth}
+\vspace{0pt}
+Los resultados muestran que el grupo combinado \mbox{$M \geq 7{,}0$} no es compatible con un único ajuste exponencial. Sin embargo, al separar por categoría de magnitud, los eventos ``Mayor'' y ``Grande o extremo'' sí resultan compatibles con este comportamiento, mientras que los eventos ``Fuerte'' lo rechazan. Esto sugiere que la mezcla de eventos con ritmos de ocurrencia distintos puede ocultar patrones más específicos. Los eventos de mayor magnitud son menos frecuentes y presentan intervalos más largos, por lo que no deberían interpretarse junto con eventos más habituales como si compartieran una misma tasa temporal.
+\end{minipage}%
+}\hfill
+\begin{minipage}[c]{0.48\textwidth}
+\vspace{0pt}
 \centering
-\includegraphics[width=0.50\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
-\caption{QQ exponencial de los tiempos entre eventos para $M \geq 7{,}0$.}
+\includegraphics[width=\linewidth,trim=0 18bp 0 25bp,clip]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
+\captionof{figure}{QQ exponencial de los tiempos entre eventos para \mbox{$M \geq 7{,}0$}.}
 \label{fig-temporal-qq-exponencial}
-\end{figure}
-\vspace{-1.0em}
+\end{minipage}
+\par\vspace{0.45em}
 ```
-
-Los resultados muestran que el grupo combinado $M \geq 7{,}0$ no es compatible con un único ajuste exponencial. Sin embargo, al separar por categoría de magnitud, los eventos "Mayor" y "Grande o extremo" sí resultan compatibles con este comportamiento, mientras que los eventos "Fuerte" lo rechazan. Esto sugiere que la mezcla de eventos con ritmos de ocurrencia distintos puede ocultar patrones más específicos. Los eventos de mayor magnitud son menos frecuentes y presentan intervalos más largos, por lo que no deberían interpretarse junto con eventos más habituales como si compartieran una misma tasa temporal.
 
 Con este resultado quedan cubiertas las dos caras de la ocurrencia del catálogo, dónde y cuándo. La pregunta espacial tuvo respuesta afirmativa, ya que las tasas difieren entre zonas. La pregunta temporal resultó compatible con la estabilidad, sin evidencia de cambios de nivel, autocorrelación ni estacionalidad durante 2000-2025. La lectura temporal no es una pregunta adicional del informe, sino el respaldo de la primera componente de la pregunta estadística. En concreto, confirma que una tasa anual única por zona es un resumen adecuado del período.
 
@@ -1509,119 +1517,170 @@ concentra 92,9 % de la inercia, esta proviene de una asociación total muy baja;
 Dicho de forma directa, al mirar la magnitud las zonas se parecen bastante entre sí, salvo la particularidad de la Dorsal; al mirar la profundidad, aparecen perfiles más distinguibles. Esa diferencia se explica principalmente por la presencia o ausencia de eventos profundos y por el carácter exclusivamente superficial de la Dorsal Meso-Atlántica. Por eso el análisis de correspondencia funciona aquí como una primera lectura visual. No concluye por sí mismo, pero muestra que la profundidad contiene más información para separar zonas que la magnitud. La `\asesoriaFigureRef{fig-clasificacion-correspondencia}`{=latex} muestra ambos planos.
 
 ```{=latex}
+\vspace{-0.9em}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-correspondencia.png}}
+\includegraphics[width=0.92\textwidth,trim=0 0 0 15bp,clip]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-correspondencia.png}}
 \caption{Mapas de correspondencia entre zonas y categorías de magnitud y profundidad.}
 \label{fig-clasificacion-correspondencia}
 \end{figure}
 \vspace{-1.0em}
 ```
 
-El modelo multinomial cuantifica ese contraste de manera formal \asesoriaParenRef{véase \hyperref[sec-anexo-multinomial]{anexo del modelo de regresión logística multinomial}}. La `\asesoriaTableRef{tbl-clasificacion-lr}`{=latex} presenta la razón de verosimilitudes por variable, calculada sobre el ajuste de máxima verosimilitud; la corrección de sesgo se aplica solo a los coeficientes reportados más adelante.
-
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{0pt}
+El modelo multinomial cuantifica ese contraste de manera formal \asesoriaParenRef{véase \hyperref[sec-anexo-multinomial]{anexo del modelo de regresión logística multinomial}}. La \asesoriaTableRef{tbl-clasificacion-lr} presenta la razón de verosimilitudes por variable, calculada sobre el ajuste de máxima verosimilitud; la corrección de sesgo se aplica solo a los coeficientes reportados más adelante.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.51\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
+\setlength{\tabcolsep}{0.8pt}
 \renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-lr}
 \hypertarget{dest-tbl-clasificacion-lr}{}
-\begin{tabular}{@{}l@{\hspace{1.2em}}c@{\hspace{1.0em}}c@{\hspace{1.0em}}c@{\hspace{1.2em}}l@{}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccc>{\raggedright\arraybackslash}p{0.39\linewidth}@{}}
 \toprule
 Variable & $LR$ & gl & Valor p & Lectura \\
 \midrule
 Magnitud    & 5,102  & 3 & 0,1645      & No mejora la distinción entre zonas \\
 Profundidad & 64,906 & 3 & $<0{,}001$  & Aporta aun controlando por magnitud \\
 \bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-clasificacion-lr}{Contraste de razón de verosimilitudes por variable en el modelo multinomial.}
+\end{tabular*}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-clasificacion-lr}{Contraste de razón de verosimilitudes por variable en el modelo multinomial.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
 La profundidad aporta información global para distinguir las zonas incluso después de controlar por magnitud; la magnitud no. Este resultado ilustra cómo una misma variable puede cambiar de relevancia según la pregunta del modelo: en la subsección anterior la profundidad no añadió información sobre si un evento alcanzaba $M \geq 7{,}0$; aquí sí distingue la zona del evento. No hay contradicción: son variables respuesta y preguntas distintas.
 
-Establecido qué variables distinguen las zonas, el paso siguiente es cuantificar el tamaño de su efecto. Con ese fin, al estandarizar los predictores, la ecuación de la Dorsal produjo un coeficiente de profundidad de $-27{,}66$ con error estándar 7,21, un patrón de separación cuasi perfecta: como sus 28 eventos son superficiales, la profundidad la distingue de manera casi determinista y la estimación de máxima verosimilitud diverge. Los coeficientes finales se obtuvieron con la corrección de reducción de sesgo declarada en la metodología \asesoriaParenRef{véase \hyperref[sec-anexo-separacion]{anexo de separación y reducción de sesgo}}. La `\asesoriaTableRef{tbl-clasificacion-or}`{=latex} presenta las razones de odds del modelo corregido; cada una corresponde a un aumento de una desviación estándar del predictor (0,417 unidades de magnitud o 164,1 km de profundidad).
+Establecido qué variables distinguen las zonas, el paso siguiente es cuantificar el tamaño de su efecto. Con ese fin, al estandarizar los predictores, la ecuación de la Dorsal produjo un coeficiente de profundidad de $-27{,}66$ con error estándar 7,21, un patrón de separación cuasi perfecta: como sus 28 eventos son superficiales, la profundidad la distingue de manera casi determinista y la estimación de máxima verosimilitud diverge. Los coeficientes finales se obtuvieron con la corrección de reducción de sesgo declarada en la metodología \asesoriaParenRef{véase \hyperref[sec-anexo-separacion]{anexo de separación y reducción de sesgo}}.
 
 ```{=latex}
+\newsavebox{\tblClasificacionORBox}
+\savebox{\tblClasificacionORBox}{%
+  \begingroup
+  \scriptsize
+  \setlength{\tabcolsep}{1.0pt}
+  \renewcommand{\arraystretch}{0.90}
+  \begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}c@{}}
+  \toprule
+  Zona frente a C. de Fuego & Magnitud: OR (IC 95 \%) & Profundidad: OR (IC 95 \%) \\
+  \midrule
+  Resto del mundo          & 1,05 [0,91; 1,22] & 1,25 [1,10; 1,43] \\
+  Cinturón Alpino-Himalayo & 1,04 [0,81; 1,33] & 0,65 [0,41; 1,01] \\
+  Dorsal Meso-Atlántica    & 0,58 [0,31; 1,07] & $\approx 0$ (separación) \\
+  \bottomrule
+  \end{tabular}%
+  \endgroup
+}
+\noindent
+\begin{minipage}[t]{\dimexpr\linewidth-\wd\tblClasificacionORBox-1em\relax}
+\vspace{0pt}
+La \asesoriaTableRef{tbl-clasificacion-or} presenta las razones de odds del modelo corregido; cada una corresponde a un aumento de una desviación estándar del predictor (0,417 unidades de magnitud o 164,1 km de profundidad).
+\end{minipage}\hfill
+\begin{minipage}[t]{\wd\tblClasificacionORBox}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
-\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-or}
 \hypertarget{dest-tbl-clasificacion-or}{}
-\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}c@{}}
-\toprule
-Zona frente a C. de Fuego & Magnitud: OR (IC 95 \%) & Profundidad: OR (IC 95 \%) \\
-\midrule
-Resto del mundo          & 1,05 [0,91; 1,22] & 1,25 [1,10; 1,43] \\
-Cinturón Alpino-Himalayo & 1,04 [0,81; 1,33] & 0,65 [0,41; 1,01] \\
-Dorsal Meso-Atlántica    & 0,58 [0,31; 1,07] & $\approx 0$ (separación) \\
-\bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-clasificacion-or}{Razones de odds del modelo corregido por un aumento de una desviación estándar.}
+\usebox{\tblClasificacionORBox}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-clasificacion-or}{Razones de odds del modelo corregido por un aumento de una desviación estándar.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-El único intervalo que excluye el 1 es el de la profundidad para el Resto del mundo. Una desviación estándar adicional, unos 164 km, aumenta 25,2 % las odds de pertenecer a esa zona frente al Cinturón de Fuego, coherente con su mayor proporción de eventos profundos. El intervalo del Cinturón Alpino-Himalayo queda en el límite, compatible con menores odds a mayor profundidad. La razón de la Dorsal en profundidad se muestra como aproximadamente cero, pero no se interpreta como estimación precisa, ya que refleja la separación producida por su perfil exclusivamente superficial. La magnitud no presenta intervalos que excluyan el 1 en ninguna comparación. La `\asesoriaTableRef{tbl-clasificacion-metricas}`{=latex} resume la capacidad clasificatoria del modelo corregido bajo la regla de máxima probabilidad \asesoriaParenRef{véase \hyperref[sec-anexo-metricas-clasificacion]{anexo de métricas de clasificación}}.
+El único intervalo que excluye el 1 es el de la profundidad para el Resto del mundo. Una desviación estándar adicional, unos 164 km, aumenta 25,2 % las odds de pertenecer a esa zona frente al Cinturón de Fuego, coherente con su mayor proporción de eventos profundos. El intervalo del Cinturón Alpino-Himalayo queda en el límite, compatible con menores odds a mayor profundidad. La razón de la Dorsal en profundidad se muestra como aproximadamente cero, pero no se interpreta como estimación precisa, ya que refleja la separación producida por su perfil exclusivamente superficial. La magnitud no presenta intervalos que excluyan el 1 en ninguna comparación.
 
 ```{=latex}
+\newsavebox{\tblClasificacionMetricasBox}
+\savebox{\tblClasificacionMetricasBox}{%
+  \begingroup
+  \scriptsize
+  \setlength{\tabcolsep}{1.0pt}
+  \renewcommand{\arraystretch}{0.90}
+  \begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}l@{}}
+  \toprule
+  Métrica & Valor & Lectura \\
+  \midrule
+  Exactitud global     & 0,7521        & Igual a la base trivial \\
+  Base trivial         & 0,7521        & Clasificar siempre Cinturón de Fuego \\
+  Exactitud balanceada & 0,25          & Reconoce solo una de las cuatro zonas \\
+  Sensibilidad por zona & 1 / 0 / 0 / 0 & Fuego / Resto / Alpino / Dorsal \\
+  \bottomrule
+  \end{tabular}%
+  \endgroup
+}
+\noindent
+\begin{minipage}[t]{\dimexpr\linewidth-\wd\tblClasificacionMetricasBox-1em\relax}
+\vspace{0pt}
+La \asesoriaTableRef{tbl-clasificacion-metricas} resume la capacidad clasificatoria del modelo corregido bajo la regla de máxima probabilidad \asesoriaParenRef{véase \hyperref[sec-anexo-metricas-clasificacion]{anexo de métricas de clasificación}}. El modelo asignó los 1.186 eventos al Cinturón de Fuego. Reconoció sus 892 eventos y ninguno de las tres zonas restantes.
+\end{minipage}\hfill
+\begin{minipage}[t]{\wd\tblClasificacionMetricasBox}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
-\setlength{\tabcolsep}{1.0pt}
-\renewcommand{\arraystretch}{0.90}
 \phantomsection
 \refstepcounter{table}
 \label{tbl-clasificacion-metricas}
 \hypertarget{dest-tbl-clasificacion-metricas}{}
-\begin{tabular}{@{}l@{\hspace{1.4em}}c@{\hspace{1.4em}}l@{}}
-\toprule
-Métrica & Valor & Lectura \\
-\midrule
-Exactitud global     & 0,7521        & Igual a la base trivial \\
-Base trivial         & 0,7521        & Clasificar siempre Cinturón de Fuego \\
-Exactitud balanceada & 0,25          & Reconoce solo una de las cuatro zonas \\
-Sensibilidad por zona & 1 / 0 / 0 / 0 & Fuego / Resto / Alpino / Dorsal \\
-\bottomrule
-\end{tabular}
-\par\vspace{-0.7em}
-\bottomtablecaption{tbl-clasificacion-metricas}{Métricas de clasificación del modelo corregido.}
+\usebox{\tblClasificacionMetricasBox}
+\par\vspace{0.10em}
+\localtablecaption[\linewidth]{tbl-clasificacion-metricas}{Métricas de clasificación del modelo corregido.}
 \endgroup
+\end{minipage}
+\par\vspace{-0.25em}
 ```
 
-El modelo asignó los 1.186 eventos al Cinturón de Fuego. Reconoció sus 892 eventos y ninguno de las tres zonas restantes. El resultado no contradice la significación de la profundidad, porque la prueba global evalúa si las probabilidades relativas cambian, mientras que la clasificación exige que alguna zona supere al Cinturón de Fuego como categoría más probable. El Cinturón de Fuego parte como zona más probable porque reúne el 75,21 % del catálogo, y la magnitud y la profundidad, al distribuirse de forma similar entre zonas, no aportan evidencia suficiente para revertir esa ventaja: su probabilidad ajustada nunca baja de 0,584 y ninguna zona alternativa supera 0,353.
-
-Para no limitar la evaluación a esa decisión final, se revisaron las curvas ROC uno contra el resto \asesoriaParenRef{véase \hyperref[sec-anexo-roc]{anexo de curvas ROC y área bajo la curva}}. Esta herramienta transforma el problema multinomial en cuatro comparaciones binarias, cada zona frente a todas las demás. Técnicamente, el área bajo la curva ROC (AUC) mide si las probabilidades ajustadas ordenan correctamente los eventos de una zona por encima de los que no pertenecen a ella. Un valor cercano a 0,5 indica discriminación similar al azar, mientras que valores más altos indican mejor separación. En términos no técnicos, la matriz de confusión pregunta "¿qué etiqueta final asignó el modelo?", mientras que la curva ROC pregunta "¿el modelo al menos elevó la probabilidad de la zona correcta, aunque no haya sido la etiqueta ganadora?". La `\asesoriaFigureRef{fig-clasificacion-roc}`{=latex} muestra esta evaluación complementaria.
+El resultado no contradice la significación de la profundidad, porque la prueba global evalúa si las probabilidades relativas cambian, mientras que la clasificación exige que alguna zona supere al Cinturón de Fuego como categoría más probable. El Cinturón de Fuego parte como zona más probable porque reúne el 75,21 % del catálogo, y la magnitud y la profundidad, al distribuirse de forma similar entre zonas, no aportan evidencia suficiente para revertir esa ventaja: su probabilidad ajustada nunca baja de 0,584 y ninguna zona alternativa supera 0,353.
 
 ```{=latex}
-\begin{figure}[H]
+\vspace{0.55em}
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+\vspace{0pt}
+Para no limitar la evaluación a esa decisión final, se revisaron las curvas ROC uno contra el resto \asesoriaParenRef{véase \hyperref[sec-anexo-roc]{anexo de curvas ROC y área bajo la curva}}. Esta herramienta transforma el problema multinomial en cuatro comparaciones binarias, cada zona frente a todas las demás. Técnicamente, el área bajo la curva ROC (AUC) mide si las probabilidades ajustadas ordenan correctamente los eventos de una zona por encima de los que no pertenecen a ella. Un valor cercano a 0,5 indica discriminación similar al azar, mientras que valores más altos indican mejor separación. En términos no técnicos, la matriz de confusión pregunta ``¿qué etiqueta final asignó el modelo?'', mientras que la curva ROC pregunta ``¿el modelo al menos elevó la probabilidad de la zona correcta, aunque no haya sido la etiqueta ganadora?''. La \asesoriaFigureRef{fig-clasificacion-roc} muestra esta evaluación complementaria.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\textwidth}
+\vspace{0pt}
 \centering
-\includegraphics[width=0.60\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-roc.png}}
-\caption{Curvas ROC por zona bajo comparación uno contra el resto.}
+\includegraphics[width=\linewidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-roc.png}}
+\captionof{figure}{Curvas ROC por zona bajo comparación uno contra el resto.}
 \label{fig-clasificacion-roc}
-\end{figure}
-\vspace{-1.0em}
-```
+\end{minipage}
+\par\vspace{0.65em}
 
-La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza, pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para sustentar una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad. La `\asesoriaFigureRef{fig-clasificacion-espacio}`{=latex} muestra el solapamiento que explica este resultado, con eventos del Cinturón de Fuego que cubren prácticamente todo el rango conjunto de magnitud y profundidad.
+La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza, pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para sustentar una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad.
+\par\vspace{0.45em}
 
-```{=latex}
-\begin{figure}[H]
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+\vspace{0pt}
+La \asesoriaFigureRef{fig-clasificacion-espacio} muestra el solapamiento que explica este resultado, con eventos del Cinturón de Fuego que cubren prácticamente todo el rango conjunto de magnitud y profundidad.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\textwidth}
+\vspace{0pt}
 \centering
-\includegraphics[width=0.62\textwidth]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-espacio.png}}
-\caption{Espacio de clasificación: magnitud y profundidad por zona.}
+\includegraphics[width=\linewidth,trim=0 7bp 0 0,clip]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-espacio.png}}
+\par\vspace{0pt}
+\captionof{figure}{Espacio de clasificación: magnitud y profundidad por zona.}
 \label{fig-clasificacion-espacio}
-\end{figure}
-\vspace{-1.0em}
+\end{minipage}
+\par\vspace{0.65em}
 ```
 
 La `\asesoriaTableRef{tbl-clasificacion-aic}`{=latex} compara los modelos anidados. La columna $\Delta$AIC expresa la diferencia respecto del modelo de menor AIC, y la columna $LR$ mide el aporte de agregar la variable faltante para llegar al modelo conjunto.
