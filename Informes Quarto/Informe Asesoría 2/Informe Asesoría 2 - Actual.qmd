@@ -835,57 +835,78 @@ El Informe Asesoría 1 mostró que las zonas presentan magnitudes similares, mie
 El primer diagnóstico revisó si la magnitud de cada zona se aproxima a una distribución normal. En un QQ-plot, una normalidad razonable se observa cuando los puntos siguen la línea punteada sin curvaturas sistemáticas.
 
 ```{=latex}
-\begin{figure}[H]
-\centering
-\vspace{-1.2em}
-\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 1.png}}
-\caption{QQ-plots de magnitud por zona sísmica.}
-\label{fig-qq-magnitud-zona}
-\end{figure}
-\vspace{-1.15em}
-```
-
+\vspace{-1.4em}
+\noindent
+\begin{minipage}[t]{0.31\textwidth}
+\vspace{2.7em}
 Los QQ-plots de magnitud muestran desviaciones sistemáticas en las cuatro zonas. En C. Fuego y Resto se observa acumulación en $M=6{,}5$ y curvatura ascendente en la cola superior, patrón coherente con el truncamiento del catálogo, los valores repetidos y la presencia de eventos de mayor magnitud.
 
-En C. Alp.-Him. y Dorsal M.-Atl. la desviación es menos extrema, pero persisten empates y separaciones en los extremos. Por tanto, la magnitud no muestra un comportamiento compatible con normalidad dentro de las zonas.
+En C. Alp.-Him. y Dorsal M.-Atl. la desviación es menos extrema, pero persisten empates y separaciones en los extremos.
+\end{minipage}\hspace*{0.02\textwidth}
+\begin{minipage}[t]{0.67\textwidth}
+\vspace{0pt}
+\raggedleft
+\includegraphics[width=\linewidth,trim=0 0 18bp 0,clip]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 1.png}}
+\par\vspace{0.1em}
+\captionof{figure}{QQ-plots de magnitud por zona sísmica.}
+\label{fig-qq-magnitud-zona}
+\end{minipage}
+\par\vspace{0.55em}
+```
+
+Por tanto, la magnitud no muestra un comportamiento compatible con normalidad dentro de las zonas.
 
 ### Diagnóstico gráfico de la profundidad
 
 El segundo diagnóstico evaluó la profundidad. Esta variable presenta mayor rango y heterogeneidad entre zonas, por lo que el QQ-plot permite revisar si su distribución mantiene una forma aproximadamente normal.
 
 ```{=latex}
-\begin{figure}[H]
-\centering
-\vspace{-1.2em}
-\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 2.png}}
-\caption{QQ-plots de profundidad por zona sísmica.}
-\label{fig-qq-profundidad-zona}
-\end{figure}
-\vspace{-1.15em}
-```
-
+\vspace{-1.4em}
+\noindent
+\begin{minipage}[t]{0.31\textwidth}
+\vspace{1.5em}
 Los QQ-plots de profundidad presentan desviaciones más marcadas que los de magnitud. En C. Fuego y Resto aparece una fuerte curvatura ascendente, asociada con eventos intermedios y profundos que generan colas derechas extensas.
 
 En C. Alp.-Him. también se observa cola derecha, aunque menos extrema. En Dorsal M.-Atl. predomina la concentración en torno a 10 km, lo que produce una línea de referencia casi horizontal y revela escasa variabilidad, empates y algunos valores superiores aislados.
+\end{minipage}\hspace*{0.02\textwidth}
+\begin{minipage}[t]{0.67\textwidth}
+\vspace{0pt}
+\raggedleft
+\includegraphics[width=\linewidth,trim=0 0 18bp 0,clip]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 2.png}}
+\par\vspace{0.1em}
+\captionof{figure}{QQ-plots de profundidad por zona sísmica.}
+\label{fig-qq-profundidad-zona}
+\end{minipage}
+\par\vspace{0.55em}
+```
 
 En conjunto, la profundidad no presenta normalidad gráfica en ninguna zona. Este resultado refuerza la necesidad de evitar una comparación paramétrica multivariada.
+
+```{=latex}
+\Needspace{0.52\textheight}
+```
 
 ### Diagnóstico gráfico multivariante
 
 El diagnóstico multivariante se realizó con distancias de Mahalanobis. Esta distancia mide qué tan alejado está cada evento del centro conjunto de magnitud y profundidad, considerando la dispersión y covariación de ambas variables. Bajo normalidad multivariada, las distancias ordenadas deberían aproximarse a los cuantiles teóricos de una distribución chi-cuadrado con dos grados de libertad.
 
 ```{=latex}
-\begin{figure}[H]
-\centering
-\vspace{-1.2em}
-\includegraphics[width=0.65\textwidth]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 3.png}}
-\caption{QQ-plots multivariantes de Mahalanobis por zona sísmica.}
-\label{fig-qq-mahalanobis-zona}
-\end{figure}
-\vspace{-0.8em}
-```
-
+\vspace{-1.4em}
+\noindent
+\begin{minipage}[t]{0.31\textwidth}
+\vspace{4.2em}
 Los QQ-plots multivariantes también se separan de la línea de referencia. En C. Fuego la desviación es marcada en los cuantiles superiores; Resto se ajusta parcialmente en la zona central, pero se separa en la cola; C. Alp.-Him. muestra desviaciones crecientes hacia valores altos; y Dorsal M.-Atl. queda dominada por baja variabilidad y pocos eventos alejados.
+\end{minipage}\hspace*{0.02\textwidth}
+\begin{minipage}[t]{0.67\textwidth}
+\vspace{0pt}
+\raggedleft
+\includegraphics[width=\linewidth,trim=0 0 10bp 0,clip]{\detokenize{../Imágenes y Recursos/Informe 2/Fase 3 - 3.png}}
+\par\vspace{0.1em}
+\captionof{figure}{QQ-plots multivariantes de Mahalanobis por zona sísmica.}
+\label{fig-qq-mahalanobis-zona}
+\end{minipage}
+\par\vspace{0.55em}
+```
 
 Por tanto, el diagnóstico multivariante tampoco respalda la normalidad conjunta de magnitud y profundidad, resultado coherente con los QQ-plots univariados.
 
@@ -1294,9 +1315,16 @@ Con este resultado quedan cubiertas las dos caras de la ocurrencia del catálogo
 
 ## Eventos fuertes y extremos {#sec-res-extremos}
 
-El Informe Asesoría 1 definió las categorías Fuerte, Mayor y Grande o extremo y describió su composición por zona con alcance exploratorio. Esta subsección ejecuta la transición inferencial propuesta allí. Primero contrasta si la composición de categorías depende de la zona, luego evalúa mediante regresión logística si la zona y la profundidad explican la probabilidad de que un evento alcance $M \geq 7{,}0$ y cierra con la descripción de los eventos con $M \geq 7{,}8$. La `\asesoriaTableRef{tbl-extremos-contingencia}`{=latex} presenta los conteos observados y la composición porcentual dentro de cada zona.
+El Informe Asesoría 1 definió las categorías Fuerte, Mayor y Grande o extremo y describió su composición por zona con alcance exploratorio. Esta subsección ejecuta la transición inferencial propuesta allí. Primero contrasta si la composición de categorías depende de la zona, luego evalúa mediante regresión logística si la zona y la profundidad explican la probabilidad de que un evento alcance $M \geq 7{,}0$ y cierra con la descripción de los eventos con $M \geq 7{,}8$.
 
 ```{=latex}
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+\vspace{0pt}
+La \asesoriaTableRef{tbl-extremos-contingencia} presenta los conteos observados y la composición porcentual dentro de cada zona. Las tres primeras zonas presentan composiciones semejantes. Sus porcentajes por categoría no difieren en más de 2,3 puntos entre sí (Fuerte entre 66,0 \% y 68,3 \%, Mayor entre 27,8 \% y 29,1 \%, Grande o extremo entre 3,2 \% y 5,3 \%).
+\end{minipage}\hfill
+\begin{minipage}[t]{0.52\textwidth}
+\vspace{0pt}
 \begingroup
 \scriptsize
 \centering
@@ -1310,20 +1338,22 @@ El Informe Asesoría 1 definió las categorías Fuerte, Mayor y Grande o extremo
 \toprule
 Zona & Fuerte & Mayor & Grande o extremo & Total \\
 \midrule
-Cinturón de Fuego        & 597 (66,9 \%) & 248 (27,8 \%) & 47 (5,3 \%) & 892 \\
-Resto del mundo          & 134 (66,0 \%) &  59 (29,1 \%) & 10 (4,9 \%) & 203 \\
-Cinturón Alpino-Himalayo &  43 (68,3 \%) &  18 (28,6 \%) &  2 (3,2 \%) &  63 \\
-Dorsal Meso-Atlántica    &  25 (89,3 \%) &   3 (10,7 \%) &  0 (0,0 \%) &  28 \\
+C. de Fuego        & 597 (66,9 \%) & 248 (27,8 \%) & 47 (5,3 \%) & 892 \\
+R. del mundo          & 134 (66,0 \%) &  59 (29,1 \%) & 10 (4,9 \%) & 203 \\
+C. Alpino-Himalayo &  43 (68,3 \%) &  18 (28,6 \%) &  2 (3,2 \%) &  63 \\
+D. Meso-Atlántica    &  25 (89,3 \%) &   3 (10,7 \%) &  0 (0,0 \%) &  28 \\
 \midrule
 Total                    & 799 & 328 & 59 & 1.186 \\
 \bottomrule
 \end{tabular}
-\par\vspace{-0.7em}
+\par\vspace{0em}
 \bottomtablecaption{tbl-extremos-contingencia}{Composición de categorías de magnitud por zona: conteos y porcentajes por fila.}
 \endgroup
+\end{minipage}
+\par\vspace{0.45em}
 ```
 
-Las tres primeras zonas presentan composiciones semejantes. Sus porcentajes por categoría no difieren en más de 2,3 puntos entre sí (Fuerte entre 66,0 % y 68,3 %, Mayor entre 27,8 % y 29,1 %, Grande o extremo entre 3,2 % y 5,3 %). La Dorsal Meso-Atlántica se aparta de ese patrón, ya que concentra 89,3 % de sus eventos en la categoría Fuerte y no registra ninguno Grande o extremo, aunque reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación; la matriz completa se detalla en el anexo `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-esperadas-extremos}}`{=latex}. La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo \asesoriaParenRef{véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér}}. La lectura conjunta es consistente. El catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-kruskal-mag-depth}}`{=latex}. La categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
+La Dorsal Meso-Atlántica se aparta de ese patrón, ya que concentra 89,3 % de sus eventos en la categoría Fuerte y no registra ninguno Grande o extremo, aunque reúne solo 28 eventos. El contraste chi-cuadrado produjo $X^2 = 7{,}122$ con valor p simulado de 0,307 (10.000 réplicas), por lo que no se rechaza la independencia entre zona y categoría de magnitud. Dos de las doce frecuencias esperadas quedaron bajo 5 (3,13 y 1,39, ambas en la columna Grande o extremo), lo que confirma la pertinencia de la simulación; la matriz completa se detalla en el anexo `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-esperadas-extremos}}`{=latex}. La V de Cramér corregida fue 0,022, un grado de asociación prácticamente nulo \asesoriaParenRef{véase \hyperref[sec-anexo-cramer]{anexo de corrección por sesgo de la V de Cramér}}. La lectura conjunta es consistente. El catálogo no entrega evidencia de que la composición de severidad difiera entre zonas, y la diferencia descriptiva de la Dorsal no basta para establecer una asociación, en parte por su tamaño muestral reducido. Este resultado no contradice la diferencia global detectada en la magnitud continua `\asesoriaParenRef{véase la \asesoriaTableLink{tbl-kruskal-mag-depth}}`{=latex}. La categorización agrupa valores y pierde detalle, y ambos análisis coinciden en que la relevancia práctica de la magnitud es reducida.
 
 La regresión logística evaluó si la zona y la profundidad, consideradas simultáneamente, explican la probabilidad de alcanzar $M \geq 7{,}0$; es decir, si la probabilidad de que un evento sea de los más fuertes se relaciona con la zona y la profundidad en que ocurre. Para ello, las tres categorías de severidad se redujeron a una distinción de sí o no: alcanzar al menos magnitud 7,0 (categorías Mayor y Grande o extremo) o no alcanzarla (categoría Fuerte). Bajo ese criterio, 387 de los 1.186 eventos superan el umbral: 295 en el Cinturón de Fuego, 69 en el Resto del mundo, 20 en el Cinturón Alpino-Himalayo y 3 en la Dorsal Meso-Atlántica.
 
@@ -1665,7 +1695,7 @@ Para no limitar la evaluación a esa decisión final, se revisaron las curvas RO
 \par\vspace{0.65em}
 
 La señal discriminante no es homogénea entre zonas. La Dorsal Meso-Atlántica alcanza el mayor AUC (0,877), compatible con una buena separación de sus eventos frente al resto del catálogo; esto es coherente con su perfil físico, exclusivamente superficial y de magnitud más acotada. Sin embargo, esta lectura debe tomarse con cautela, porque la clase positiva contiene solo 28 eventos. Por tanto, el AUC sugiere una señal discriminante clara asociada a su perfil superficial, pero no constituye evidencia suficiente de una clasificación estable para esa zona. El Cinturón de Fuego presenta discriminación moderada (AUC = 0,689), porque cubre buena parte del rango conjunto de magnitud y profundidad. El Cinturón Alpino-Himalayo queda cercano al azar (AUC = 0,528) y el Resto del mundo no muestra capacidad útil de discriminación (AUC = 0,470), consistente con su carácter residual y heterogéneo. En conjunto, ROC matiza, pero no revierte la matriz de confusión. El modelo contiene señal para reconocer parcialmente el perfil de la Dorsal, pero esa señal no alcanza para sustentar una clasificación operativa de las cuatro zonas bajo la regla de máxima probabilidad.
-\par\vspace{0.45em}
+\par\vspace{-1.00em}
 
 \noindent
 \begin{minipage}[c]{0.44\textwidth}
@@ -1674,11 +1704,14 @@ La \asesoriaFigureRef{fig-clasificacion-espacio} muestra el solapamiento que exp
 \end{minipage}\hfill
 \begin{minipage}[c]{0.52\textwidth}
 \vspace{0pt}
+\raggedleft
+\begin{minipage}{0.90\linewidth}
 \centering
 \includegraphics[width=\linewidth,trim=0 7bp 0 0,clip]{\detokenize{../Imágenes y Recursos/inf2-clasificacion-espacio.png}}
 \par\vspace{0pt}
 \captionof{figure}{Espacio de clasificación: magnitud y profundidad por zona.}
 \label{fig-clasificacion-espacio}
+\end{minipage}
 \end{minipage}
 \par\vspace{0.65em}
 ```

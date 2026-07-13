@@ -1517,6 +1517,7 @@ Las asociaciones observadas también tienen límites. Spearman resume relaciones
 
 La sensibilidad se evaluó solo en los aspectos modificados durante el análisis, principalmente el efecto de la imputación del RMS. No se realizó una sensibilidad formal variando el umbral de magnitud, las categorías o los polígonos de zonificación. Por ello, las conclusiones deben interpretarse bajo los criterios metodológicos definidos en este informe.
 
+\newpage
 # Conclusiones y recomendaciones
 
 El informe caracterizó 1.186 terremotos de magnitud igual o superior a 6,5 registrados por USGS entre 2000 y 2025. Los resultados muestran que la distribución global de estos eventos no es espacialmente uniforme. El Cinturón de Fuego concentra 892 eventos, equivalentes al 75,21 % del catálogo y a una tasa de 34,3 eventos por año, muy por encima del resto de las zonas analizadas. Esta concentración confirma que la principal diferencia espacial observada corresponde a la frecuencia de ocurrencia y continuidad temporal de los eventos, más que al nivel medio de magnitud.
