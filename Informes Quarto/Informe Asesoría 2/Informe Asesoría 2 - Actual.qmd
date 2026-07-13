@@ -98,7 +98,7 @@ header-includes:
   - \captionsetup{font={footnotesize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor}}
   - \captionsetup[table]{position=bottom,justification=centering,singlelinecheck=false}
   - \captionsetup[longtable]{position=bottom,justification=centering,singlelinecheck=false}
-  - \captionsetup[figure]{position=bottom,font={scriptsize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor},skip=0pt}
+  - \captionsetup[figure]{position=bottom,font={footnotesize,it,color=asesoriaTextColor},labelfont={it,color=asesoriaTextColor},skip=0pt}
 ---
 
 ```{=latex}
@@ -1060,7 +1060,8 @@ El Informe Asesoría 1 mostró que, para el catálogo USGS 2000-2025 de eventos 
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{\detokenize{../Imágenes y Recursos/serie-mensual-catalogo.png}}
+\vspace{-0.8em}
+\includegraphics[width=0.66\textwidth]{\detokenize{../Imágenes y Recursos/serie-mensual-catalogo.png}}
 \caption{Serie mensual de eventos del catálogo completo.}
 \label{fig-serie-mensual-catalogo}
 \end{figure}
@@ -1102,7 +1103,8 @@ La independencia serial se revisó de forma conjunta mediante Ljung-Box y el gr�
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.96\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-acf-pacf-mensual.png}}
+\vspace{-0.8em}
+\includegraphics[width=0.76\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-acf-pacf-mensual.png}}
 \caption{ACF y PACF de la serie mensual de conteos del catálogo.}
 \label{fig-temporal-acf-pacf-mensual}
 \end{figure}
@@ -1220,7 +1222,7 @@ Grande o extremo & 58 & 0,0063 & 122,8 & 0,0884 & 0,531 \\
 ```{=latex}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
+\includegraphics[width=0.66\textwidth]{\detokenize{../Imágenes y Recursos/inf2-temporal-qq-exponencial.png}}
 \caption{QQ exponencial de los tiempos entre eventos para $M \geq 7{,}0$.}
 \label{fig-temporal-qq-exponencial}
 \end{figure}
