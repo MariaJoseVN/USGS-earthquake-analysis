@@ -12,6 +12,7 @@ crossref:
 format:
   pdf:
     pdf-engine: lualatex
+    fontsize: 10pt
     block-headings: true
     toc: false
     toc-title: "Índice"
