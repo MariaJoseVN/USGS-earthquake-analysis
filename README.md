@@ -159,7 +159,7 @@ quarto render "Informes Quarto/Informe Asesoría 2/Informe Asesoría 2 - Actual.
 - **Límites de placas tectónicas**: capa geojson de límites tectónicos globales.
 - **Zonas sísmicas**: polígonos propios delimitados en QGIS (ver [guía metodológica](MAPA_HTML/Guía%20metodológica%20para%20la%20delimitación%20de%20zonas%20sísmicas%20globales%20en%20QGIS.pdf)).
 
-## ✍️ Autoras
+## ✍️ Autores
 
 **María José Valderrama Núñez** · [@MariaJoseVN](https://github.com/MariaJoseVN)
 
